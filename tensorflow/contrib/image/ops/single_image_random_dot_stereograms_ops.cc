@@ -43,7 +43,8 @@ REGISTER_OP("SingleImageRandomDotStereograms")
     .Attr("output_data_window: shape = { dim {size:1022} dim {size: 757}}")
     .SetShapeFn([](InferenceContext* c) {
       // Validate that the output_image_shape attr is correct.
-      // NOTE: The output_image_shape is [X, Y, C]
+      // NOTE: The output_image_shape is [X, Y, C] id:904
+      // https://github.com/imdone/tensorflow/issues/905
       // while the output data is [Y, X, C] (or [H, W, C]).
       // As a result, by default the output_image_shape has the value
       // of [1024, 768, 1] but the output data will be [768, 1024, 1].

@@ -59,7 +59,8 @@ bool ParseFile(flatbuffers::Parser *parser, const std::string &filename,
 // incompatibility.
 TEST(SchemaTest, TestCompatibility) {
   // Read file contents of schemas into strings
-  // TODO(aselle): Need a reliable way to load files.
+  // TODO (aselle): Need a reliable way to load files. id:2019
+  // https://github.com/imdone/tensorflow/issues/2019
   std::string base_contents, current_contents;
   const char *base_filename =
       TFLITE_TF_PREFIX "contrib/lite/schema/schema_v3.fbs";

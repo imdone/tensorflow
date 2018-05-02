@@ -301,7 +301,8 @@ class ScatterTest(test.TestCase):
           with self.assertRaisesOpError(r'indices\[2\] = 6 is not in \[0, 6\)'):
             op(ref, indices, updates).eval()
 
-  # TODO(fpmc): Re-enable this test when gpu_pip test actually runs on a GPU.
+  # TODO (fpmc): Re-enable this test when gpu_pip test actually runs on a GPU. id:3853
+  # https://github.com/imdone/tensorflow/issues/3852
   def _disabledTestScatterOutOfRangeGpu(self):
     if test.is_gpu_available():
       return

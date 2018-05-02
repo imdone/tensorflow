@@ -465,7 +465,8 @@ struct FloatDepthwiseConvKernel<true, 3, 4> {
     }
     // Handle one output pixel at a time.
     for (int outp = 0; outp < num_output_pixels; outp++) {
-      // NOTE: we only want 3 values, so we read it as two ops where
+      // NOTE: we only want 3 values, so we read it as two ops where id:1522
+      // https://github.com/imdone/tensorflow/issues/1523
       // the second op just duplicates the lane
       const float32x2_t input01 = vld1_f32(input_ptr);
       const float32x2_t input2 = vld1_dup_f32(input_ptr + 2);
@@ -898,7 +899,8 @@ inline void FloatDepthwiseConvAccumRowGeneric(
 inline void DepthwiseConvInitAccBuffer(int num_output_pixels, int output_depth,
                                        const float* bias_data,
                                        float* acc_buffer) {
-  // TODO(benoitjacob): This might need optimized specializations
+  // TODO (benoitjacob): This might need optimized specializations id:1813
+  // https://github.com/imdone/tensorflow/issues/1813
   // for small output_depth values, if that ever becomes an important
   // case (like it was for some quantized DepthwiseConv cases).
   for (int i = 0; i < num_output_pixels; i++) {
@@ -1025,7 +1027,8 @@ inline void DepthwiseConv(const float* input_data, const Dims<4>& input_dims,
         // Finished accumulating. Now store to destination.
         const int num_output_values = output_depth * num_output_pixels;
         int i = 0;
-// TODO(benoitjacob) optimized code goes here
+// TODO (benoitjacob) optimized code goes here id:1425
+// https://github.com/imdone/tensorflow/issues/1426
 #ifdef USE_NEON
         // Handle 16 values at a time
         for (; i <= num_output_values - 16; i += 16) {

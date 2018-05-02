@@ -22,7 +22,8 @@ namespace tensorflow {
 namespace {
 constexpr float kLayerByLayerTreeWeight = 1.0;
 
-// TODO(nponomareva, youngheek): consider using vector.
+// TODO (nponomareva, youngheek): consider using vector. id:2327
+// https://github.com/imdone/tensorflow/issues/2326
 struct SplitCandidate {
   SplitCandidate() {}
 
@@ -128,7 +129,8 @@ class BoostedTreesUpdateEnsembleOp : public OpKernel {
         }
       }
       // For now assume that the weights vectors are one dimensional.
-      // TODO(nponomareva): change here for multiclass.
+      // TODO (nponomareva): change here for multiclass. id:3098
+      // https://github.com/imdone/tensorflow/issues/3097
       const float left_contrib =
           learning_rate *
           left_node_contribs[feature_idx].matrix<float>()(candidate_idx, 0);

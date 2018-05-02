@@ -188,14 +188,16 @@ def stripped_op_list_for_graph(graph_def):
   # This is the Python equivalent of StrippedOpListForGraph in C++.
   # Unfortunately, since the Python op registry can differ from that in C++, we
   # can't remove the duplication using swig (at least naively).
-  # TODO(irving): Support taking graphs directly.
+  # TODO (irving): Support taking graphs directly. id:2988
+  # https://github.com/imdone/tensorflow/issues/2987
 
   used_ops = ops_used_by_graph_def(graph_def)
 
   # Verify that all used ops are registered.
   registered_ops = op_def_registry.get_registered_ops()
   # These internal ops used by functions are not registered, so we need to
-  # whitelist them.  # TODO(irving): Do something better here.
+  # whitelist them.  # TODO (irving): Do something better here. id:3188
+  # https://github.com/imdone/tensorflow/issues/3187
   op_whitelist = ("_Arg", "_Retval", "_ListToArray", "_ArrayToList")
   for op in used_ops:
     if op not in registered_ops and op not in op_whitelist:
@@ -300,7 +302,8 @@ def _find_extraneous_saver_nodes(graph_def, saver_def):
   Returns:
     An iterable of node names that may be safely omitted.
   """
-  # TODO(soergel): confirm that the assumption of scope isolation is valid.
+  # TODO (soergel): confirm that the assumption of scope isolation is valid. id:3676
+  # https://github.com/imdone/tensorflow/issues/3675
   # If not, we need to walk up the graph from any restore_all nodes, and walk
   # down the graph from any Save/Restore nodes.  I drafted that approach too,
   # but it seems unnecessarily complex given the name scope solution.
@@ -432,7 +435,8 @@ def add_collection_def(meta_graph_def, key, graph=None,
             getattr(col_def, kind).value.append(
                 ops.strip_name_scope(x.name, export_scope))
       elif kind == "bytes_list":
-        # NOTE(opensource): This force conversion is to work around the fact
+        # NOTE (opensource): This force conversion is to work around the fact id:4217
+        # https://github.com/imdone/tensorflow/issues/4215
         # that Python3 distinguishes between bytes and strings.
         getattr(col_def, kind).value.extend(
             [compat.as_bytes(x) for x in collection_list])
@@ -790,7 +794,8 @@ def import_scoped_meta_graph(meta_graph_or_file,
                 ops.prepend_name_scope(value, scope_to_prepend_to_names))
             graph.add_to_collection(key, col_op)
         elif kind == "int64_list":
-          # NOTE(opensource): This force conversion is to work around the fact
+          # NOTE (opensource): This force conversion is to work around the fact id:3748
+          # https://github.com/imdone/tensorflow/issues/3747
           # that Python2 distinguishes between int and long, while Python3 has
           # only int.
           for value in field.value:

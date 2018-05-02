@@ -136,7 +136,8 @@ Status ExtractConstantSubgraph(
     return Status::OK();
   }
 
-  // TODO(skyewm): should more of the filtering applied in input nodes below be
+  // TODO (skyewm): should more of the filtering applied in input nodes below be id:2619
+  // https://github.com/imdone/tensorflow/issues/2618
   // applied to target_node here?
 
   // Identify the possibly constant subgraph by recursively iterating backwards
@@ -157,7 +158,8 @@ Status ExtractConstantSubgraph(
   // Add the target node's inputs to seed the recursion.
   std::deque<const Edge*> edges_to_visit;
   for (const Edge* e : target_node.in_edges()) {
-    // TODO(skyewm): control edges will be meaningful if/when we handle control
+    // TODO (skyewm): control edges will be meaningful if/when we handle control id:2520
+    // https://github.com/imdone/tensorflow/issues/2519
     // flow (e.g. constants in cond branches are triggered via control edges).
     if (e->IsControlEdge()) continue;
     edges_to_visit.push_back(e);
@@ -328,12 +330,14 @@ Status EvaluateConstantTensor(OutputTensor tensor, const ShapeRefiner& refiner,
 
   std::unique_ptr<GraphRunner> graph_runner_storage;
   if (graph_runner == nullptr) {
-    // TODO(skyewm): Convert to std::make_unique when available.
+    // TODO (skyewm): Convert to when available. std::make_unique id:1793
+    // https://github.com/imdone/tensorflow/issues/1793
     graph_runner_storage.reset(new GraphRunner(Env::Default()));
     graph_runner = graph_runner_storage.get();
   }
 
-  // NOTE; we should pass in a function library runtime if we want
+  // NOTE ; we should pass in a function library runtime if we want id:1406
+  // https://github.com/imdone/tensorflow/issues/1407
   // to support constant-expression evaluation on functions.
   Status s = graph_runner->Run(&subgraph, nullptr /* function_library */,
                                const_inputs, {output_tensor_name}, &outputs);

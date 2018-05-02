@@ -25,7 +25,8 @@ limitations under the License.
 namespace tensorflow {
 
 // HexagonOpsDefinitions provides ops definitions supported in hexagon library
-// TODO(satok): add a functionality to call functions in hexagon library
+// TODO (satok): add a functionality to call functions in hexagon library id:3220
+// https://github.com/imdone/tensorflow/issues/3219
 class HexagonOpsDefinitions final : public IRemoteFusedGraphOpsDefinitions {
  public:
   static const IRemoteFusedGraphOpsDefinitions& getInstance();

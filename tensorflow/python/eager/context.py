@@ -76,7 +76,8 @@ class _TensorCache(object):
     self._data = {}
 
 
-# TODO(agarwal): better name ?
+# TODO (agarwal): better name ? id:3618
+# https://github.com/imdone/tensorflow/issues/3617
 class _EagerContext(threading.local):
   """Thread local eager context."""
 
@@ -136,12 +137,15 @@ class _ContextSwitchStack(threading.local):
     self.stack.pop()
 
 
-# TODO(agarwal): rename to EagerContext / EagerRuntime ?
-# TODO(agarwal): consider keeping the corresponding Graph here.
+# TODO (agarwal): rename to EagerContext / EagerRuntime ? id:4187
+# https://github.com/imdone/tensorflow/issues/4184
+# TODO (agarwal): consider keeping the corresponding Graph here. id:3657
+# https://github.com/imdone/tensorflow/issues/3656
 class Context(object):
   """Environment in which eager operations execute."""
 
-  # TODO(agarwal): create and link in some documentation for `execution_mode`.
+  # TODO (agarwal): create and link in some documentation for `execution_mode`. id:2919
+  # https://github.com/imdone/tensorflow/issues/2918
   # pylint: disable=redefined-outer-name
   def __init__(self, config=None, device_policy=None, execution_mode=None):
     """Creates a new Context.
@@ -484,7 +488,8 @@ class Context(object):
       `outputs` is the `list` of output `Tensor`(s) from the op.
        Return value(s) from the callback are ignored.
     """
-    # TODO(cais): (b/64674139) Allow access to function-internal operations.
+    # TODO (cais): (b/64674139) Allow access to function-internal operations. id:3131
+    # https://github.com/imdone/tensorflow/issues/3130
     self._post_execution_callbacks.append(callback)
 
   def clear_post_execution_callbacks(self):
@@ -568,7 +573,8 @@ def context_safe():
   return _context
 
 
-# TODO(agarwal): remove this.
+# TODO (agarwal): remove this. id:3619
+# https://github.com/imdone/tensorflow/issues/3618
 def get_default_context():
   """Same as context."""
   if _context is None:
@@ -617,7 +623,8 @@ def eager_mode():
   return context()._mode(EAGER_MODE)  # pylint: disable=protected-access
 
 
-# TODO(agarwal): get rid of this and use ops.name_scope instead.
+# TODO (agarwal): get rid of this and use ops.name_scope instead. id:4188
+# https://github.com/imdone/tensorflow/issues/4186
 @contextlib.contextmanager
 def namescope(name):
   """ContextManager for creating hierarchical name scopes."""

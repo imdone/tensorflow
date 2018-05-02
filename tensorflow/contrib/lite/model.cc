@@ -320,7 +320,8 @@ TfLiteStatus ParseOpData(const Operator* op, BuiltinOperator op_type,
   *builtin_data = nullptr;
   switch (op_type) {
     case BuiltinOperator_CALL:
-      // TODO(aselle): Implement call in BuiltinOptions, but nullptrs are
+      // TODO (aselle): Implement call in BuiltinOptions, but nullptrs are id:1202
+      // https://github.com/imdone/tensorflow/issues/1203
       // ok for now, since there is no call implementation either.
       break;
     case BuiltinOperator_CUSTOM:
@@ -672,7 +673,8 @@ TfLiteStatus ParseOpData(const Operator* op, BuiltinOperator op_type,
       break;
     }
     case BuiltinOperator_DELEGATE: {
-      // TODO(ycling): Revisit when supporting saving delegated models.
+      // TODO (ycling): Revisit when supporting saving delegated models. id:991
+      // https://github.com/imdone/tensorflow/issues/992
       error_reporter->Report("DELEGATE op shouldn't exist in model.");
       return kTfLiteError;
     }
@@ -755,8 +757,10 @@ TfLiteStatus InterpreterBuilder::ParseTensors(
     if (q_params) {
       // Note that the schema could hold per-channel quantization parameters
       // but we really only support one value for the whole tensor.
-      // TODO(aselle): This breaks as well if these are nullptr's.
-      // TODO(aselle): This assumes non per-channel quantization.
+      // TODO (aselle): This breaks as well if these are nullptr's. id:1566
+      // https://github.com/imdone/tensorflow/issues/1566
+      // TODO (aselle): This assumes non per-channel quantization. id:2007
+      // https://github.com/imdone/tensorflow/issues/2007
 
       if (q_params->scale()) {
         if (q_params->scale()->size() != 1) {
@@ -788,7 +792,8 @@ TfLiteStatus InterpreterBuilder::ParseTensors(
     }
     auto get_readonly_data = [&](const char** buffer_data,
                                  size_t* buffer_size) {
-      // TODO(aselle): Check what happens if we have an unspecified size
+      // TODO (aselle): Check what happens if we have an unspecified size id:1460
+      // https://github.com/imdone/tensorflow/issues/1461
       // constant.
       *buffer_data = nullptr;
       if (tensor->buffer() == 0) return kTfLiteOk;

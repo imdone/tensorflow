@@ -154,7 +154,8 @@ class SinhArcsinh(bijector.Bijector):
     return (
         math_ops.log(math_ops.cosh(
             math_ops.asinh(y) / self.tailweight - self.skewness)
-                     # TODO(srvasude): Consider using cosh(arcsinh(x)) in cases
+                     # TODO (srvasude): Consider using cosh(arcsinh(x)) in cases id:660
+                     # https://github.com/imdone/tensorflow/issues/661
                      # where (arcsinh(x) / tailweight) - skewness ~= arcsinh(x).
                      / _sqrtx2p1(y))
         - math_ops.log(self.tailweight))
@@ -170,7 +171,8 @@ class SinhArcsinh(bijector.Bijector):
     return (
         math_ops.log(math_ops.cosh(
             (math_ops.asinh(x) + self.skewness) * self.tailweight)
-                     # TODO(srvasude): Consider using cosh(arcsinh(x)) in cases
+                     # TODO (srvasude): Consider using cosh(arcsinh(x)) in cases id:1119
+                     # https://github.com/imdone/tensorflow/issues/1120
                      # where (arcsinh(x) + skewness) * tailweight ~= arcsinh(x).
                      / _sqrtx2p1(x))
         + math_ops.log(self.tailweight))

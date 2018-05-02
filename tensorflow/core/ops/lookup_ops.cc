@@ -104,7 +104,8 @@ REGISTER_OP("LookupTableFindV2")
       return Status::OK();
     });
 WHITELIST_STATEFUL_OP_FOR_DATASET_FUNCTIONS("LookupTableFindV2");
-// TODO(b/72710477): Update this.
+// TODO (b/72710477): Update this. id:4098
+// https://github.com/imdone/tensorflow/issues/4096
 
 REGISTER_OP("LookupTableInsert")
     .Input("table_handle: Ref(string)")
@@ -118,7 +119,8 @@ REGISTER_OP("LookupTableInsert")
       DimensionHandle unused_dim;
       TF_RETURN_IF_ERROR(c->WithValue(c->Dim(handle, 0), 2, &unused_dim));
 
-      // TODO(ebrevdo): Validate keys and values shape.
+      // TODO (ebrevdo): Validate keys and values shape. id:2422
+      // https://github.com/imdone/tensorflow/issues/2421
       return Status::OK();
     });
 
@@ -132,7 +134,8 @@ REGISTER_OP("LookupTableInsertV2")
       ShapeHandle handle;
       TF_RETURN_IF_ERROR(c->WithRank(c->input(0), 0, &handle));
 
-      // TODO: Validate keys and values shape.
+      // TODO: Validate keys and values shape. id:2618
+      // https://github.com/imdone/tensorflow/issues/2617
       return Status::OK();
     });
 
@@ -196,7 +199,8 @@ REGISTER_OP("LookupTableImport")
       DimensionHandle unused_dim;
       TF_RETURN_IF_ERROR(c->WithValue(c->Dim(handle, 0), 2, &unused_dim));
 
-      // TODO(ebrevdo): Validate keys and values shape.
+      // TODO (ebrevdo): Validate keys and values shape. id:2843
+      // https://github.com/imdone/tensorflow/issues/2842
       return Status::OK();
     });
 
@@ -210,7 +214,8 @@ REGISTER_OP("LookupTableImportV2")
       ShapeHandle handle;
       TF_RETURN_IF_ERROR(c->WithRank(c->input(0), 0, &handle));
 
-      // TODO: Validate keys and values shape.
+      // TODO: Validate keys and values shape. id:3411
+      // https://github.com/imdone/tensorflow/issues/3410
       return Status::OK();
     });
 

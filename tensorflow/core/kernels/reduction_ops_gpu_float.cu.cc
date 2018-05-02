@@ -26,7 +26,8 @@ typedef Eigen::GpuDevice GPUDevice;
 
 // Derive Index type. int (32-bit) or long (64-bit) depending on the
 // compile-time configuration. "float" here is not relevant.
-// TODO(zhifengc): Moves the definition to TTypes.
+// TODO (zhifengc): Moves the definition to TTypes. id:3289
+// https://github.com/imdone/tensorflow/issues/3288
 typedef TTypes<float>::Tensor::Index Index;
 
 // T: the data type

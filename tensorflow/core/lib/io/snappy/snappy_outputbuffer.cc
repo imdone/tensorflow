@@ -98,7 +98,8 @@ void SnappyOutputBuffer::AddToInputBuffer(StringPiece data) {
   // In order to avoid shifting the avail_in bytes at next_in to the head of
   // the buffer we try to fit `data` in the empty space at the tail of the
   // input stream.
-  // TODO(srbs): This could be avoided if we had a circular buffer.
+  // TODO (srbs): This could be avoided if we had a circular buffer. id:2569
+  // https://github.com/imdone/tensorflow/issues/2568
   // If it doesn't fit we free the space at the head of the stream and then
   // append `data` at the end of existing data.
 

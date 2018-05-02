@@ -37,7 +37,8 @@ from tensorflow.python.util.tf_export import tf_export
 __all__ = ["LinearOperator"]
 
 
-# TODO(langmore) Use matrix_solve_ls for singular or non-square matrices.
+# TODO (langmore) Use matrix_solve_ls for singular or non-square matrices. id:4297
+# https://github.com/imdone/tensorflow/issues/4295
 @tf_export("linalg.LinearOperator")
 class LinearOperator(object):
   """Base class defining a [batch of] linear operator[s].
@@ -446,7 +447,8 @@ class LinearOperator(object):
       return self.assert_positive_definite()
     else:
       singular_values = linalg_ops.svd(self.to_dense(), compute_uv=False)
-      # TODO(langmore) Add .eig and .cond as methods.
+      # TODO (langmore) Add .eig and .cond as methods. id:3916
+      # https://github.com/imdone/tensorflow/issues/3914
       cond = (math_ops.reduce_max(singular_values, axis=-1) /
               math_ops.reduce_min(singular_values, axis=-1))
       return check_ops.assert_less(
@@ -907,6 +909,7 @@ class LinearOperator(object):
       return self._add_to_tensor(x)
 
   def _can_use_cholesky(self):
-    # TODO(langmore) Add complex types when tf.cholesky can use them.
+    # TODO (langmore) Add complex types when tf.cholesky can use them. id:3516
+    # https://github.com/imdone/tensorflow/issues/3515
     return (not self.dtype.is_complex and self.is_self_adjoint and
             self.is_positive_definite)

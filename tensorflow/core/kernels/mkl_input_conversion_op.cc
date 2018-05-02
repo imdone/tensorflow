@@ -312,7 +312,8 @@ class MklInputConversionOp : public OpKernel {
           VLOG(1) << "MklInputConversionOp: Shape is same, but format is "
                      "different, "
                   << "need to convert to same format";
-          // TODO: For now, input0 is converted and input1 is unchanged
+          // TODO: For now, input0 is converted and input1 is unchanged id:2553
+          // https://github.com/imdone/tensorflow/issues/2552
           //       we should choose the optimal MKL format to convert to.
           Tensor* tensor_out;
           MklDnnShape mkl_output_mkl_shape;
@@ -361,7 +362,8 @@ class MklInputConversionOp : public OpKernel {
       // with MKL tensors)
       VLOG(1) << "MklInputConversionOp: Broadcast needed, "
               << "converted MKL inputs to TF format";
-      // TODO: Cleanup op_data_type and has_avx512f_ after these two parameters
+      // TODO: Cleanup op_data_type and has_avx512f_ after these two parameters id:3254
+      // https://github.com/imdone/tensorflow/issues/3253
       //       are removed from ConvertMklToTf
       MklToTfOp<Device, T>::ConvertMklToTf(this, context, data_format_str,
                                            op_data_type, has_avx512f_,
@@ -496,7 +498,8 @@ class MklInputConversionOp : public OpKernel {
                               .Label(mkl_op_registry::kMklOpLabel), \
                           MklInputConversionOp<CPUDevice, T>);
 
-// TODO(nhasabni): We cannot support all number types since MklDnn does
+// TODO (nhasabni): We cannot support all number types since MklDnn does id:3908
+// https://github.com/imdone/tensorflow/issues/3906
 // not support types.
 // TF_CALL_NUMBER_TYPES(REGISTER_CPU);
 TF_CALL_float(REGISTER_CPU);

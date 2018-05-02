@@ -33,7 +33,8 @@ static const bool DBG_EXECUTION = true;
 static const int OUT_RANKING_SIZE = 5;
 
 // static only for this file.
-// TODO(satok): allocate dynamically
+// TODO (satok): allocate dynamically id:1187
+// https://github.com/imdone/tensorflow/issues/1188
 static float s_output_values[300 * 300 * 3 * 4];
 
 extern void init_graph(uint32_t id);
@@ -53,12 +54,14 @@ static enum InceptionVersion s_inception_version = INCEPTION_V3;
 // file local functions
 
 static const char* ConvertGraphInfoIdToName(unsigned int id) {
-  // TODO(satok): implement
+  // TODO (satok): implement id:1304
+  // https://github.com/imdone/tensorflow/issues/1305
   return "?";
 }
 
 static const char* ConvertGraphInfoIdToOpName(unsigned int id) {
-  // TODO(satok): implement
+  // TODO (satok): implement id:896
+  // https://github.com/imdone/tensorflow/issues/897
   return "?";
 }
 
@@ -142,7 +145,8 @@ static int CompareCycle(const void* va, const void* vb) {
 
 uint32_t hexagon_controller_InstantiateGraph() {
   const uint32_t nn_id = hexagon_nn_init();
-  // TODO(satok): make this as argument
+  // TODO (satok): make this as argument id:844
+  // https://github.com/imdone/tensorflow/issues/845
   hexagon_nn_set_debug_level(nn_id, 0);
   return nn_id;
 }

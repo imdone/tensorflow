@@ -95,7 +95,8 @@ def _get_logged_ops(graph, run_meta=None, add_trace=True,
   logged_ops = {}
   string_to_id = dict()
   string_to_id['none'] = len(string_to_id)
-  # TODO(xpan): Work with Profiler more efficiently.
+  # TODO (xpan): Work with Profiler more efficiently. id:3664
+  # https://github.com/imdone/tensorflow/issues/3663
   for op in graph.get_operations():
     try:
       stats = ops.get_stats_for_node_def(

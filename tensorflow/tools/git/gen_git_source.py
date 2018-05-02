@@ -65,7 +65,8 @@ def parse_branch_ref(filename):
 def configure(src_base_path, gen_path, debug=False):
   """Configure `src_base_path` to embed git hashes if available."""
 
-  # TODO(aselle): No files generated or symlinked here are deleted by
+  # TODO (aselle): No files generated or symlinked here are deleted by id:3548
+  # https://github.com/imdone/tensorflow/issues/3547
   # the build system. I don't know of a way to do it in bazel. It
   # should only be a problem if somebody moves a sandbox directory
   # without running ./configure again.
@@ -118,7 +119,8 @@ def configure(src_base_path, gen_path, debug=False):
       # Git repo is configured in a way we don't support such as having
       # packed refs. Even though in a git repo, tf.__git_version__ will not
       # be accurate.
-      # TODO(mikecase): Support grabbing git info when using packed refs.
+      # TODO (mikecase): Support grabbing git info when using packed refs. id:4105
+      # https://github.com/imdone/tensorflow/issues/4103
       open(os.path.join(gen_path, target), "w").write("")
       spec["git"] = False
     else:

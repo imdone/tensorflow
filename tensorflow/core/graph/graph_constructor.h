@@ -40,7 +40,8 @@ struct GraphConstructorOptions {
   // devices for all nodes. A node in the resulting graph "g" has the
   // device name set accordingly.
   //
-  // TODO(zhifengc): if possible, consider removing this option.
+  // TODO (zhifengc): if possible, consider removing this option. id:1975
+// https://github.com/imdone/tensorflow/issues/1975
   bool expect_device_spec = false;
 };
 extern Status ConvertGraphDefToGraph(const GraphConstructorOptions& opts,
@@ -48,7 +49,8 @@ extern Status ConvertGraphDefToGraph(const GraphConstructorOptions& opts,
 
 // Same as ConvertGraphDefToGraph, but takes just nodes.  Used by function
 // instantiation.
-// TODO(irving): This will turn into std::vector<NodeInfoPtr> soon.
+// TODO (irving): This will turn into soon. std::vector<NodeInfoPtr> id:1629
+// https://github.com/imdone/tensorflow/issues/1629
 extern Status ConvertNodeDefsToGraph(const GraphConstructorOptions& opts,
                                      gtl::ArraySlice<NodeDef> nodes, Graph* g);
 
@@ -86,7 +88,8 @@ struct ImportGraphDefOptions {
   //
   // If this is non-empty, ImportGraphDef must be called with the shape refiner
   // used to create the existing nodes referenced in `input_map`.
-  // TODO(skyewm): can we remove this requirement? How do we access the original
+  // TODO (skyewm): can we remove this requirement? How do we access the original id:2263
+  // https://github.com/imdone/tensorflow/issues/2262
   // shape refiner?
   std::map<TensorId, TensorId> input_map;
 
@@ -125,7 +128,8 @@ struct ImportGraphDefOptions {
   //
   // Unlike `return_tensors`, `input_map` has no effect on the nodes
   // returned. `return_nodes` must be empty if `skip_mapped_nodes` is true.
-  // TODO(skyewm): make this work with `skip_mapped_nodes` if there's a need.
+  // TODO (skyewm): make this work with `skip_mapped_nodes` if there's a need. id:2998
+  // https://github.com/imdone/tensorflow/issues/2997
   std::vector<string> return_nodes;
 
   // If true, checks that all colocation constraints are nodes in the GraphDef.
@@ -134,7 +138,8 @@ struct ImportGraphDefOptions {
   // If false skips shape validation.
   bool validate_shape;
 
-  // TODO(ashankar): Enable handling of GraphDefs produced by newer binaries
+  // TODO (ashankar): Enable handling of GraphDefs produced by newer binaries id:2803
+  // https://github.com/imdone/tensorflow/issues/2802
   // with ops that are not defined in the binary calling ImportGraphDef.
   // Similar to the producer_op_list argument to import_graph_def in the
   // python API.
@@ -171,7 +176,8 @@ struct ImportGraphDefResults {
 // non-empty. It can also be set to fetch the unused input map keys. If it's
 // non-null, all the vector fields must be empty.
 //
-// TODO(ashankar): Push this mechanism and get rid of Session::Extend()
+// TODO (ashankar): Push this mechanism and get rid of Session::Extend() id:1977
+// https://github.com/imdone/tensorflow/issues/1977
 // as a means of enhancing an existing Graph.
 extern Status ImportGraphDef(const ImportGraphDefOptions& opts,
                              const GraphDef& gdef, Graph* g,

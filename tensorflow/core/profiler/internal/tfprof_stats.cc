@@ -30,7 +30,8 @@ namespace {
 const char* const kProfilePrefix = "Profile:\n";
 
 bool CreateRunMetadataNode(const string& name, NodeDef* def) {
-  // TODO(xpan): Better solution than blacklisting this 2 nodes. They
+  // TODO (xpan): Better solution than blacklisting this 2 nodes. They id:3450
+  // https://github.com/imdone/tensorflow/issues/3449
   // actually cost some resources, maybe include them. Some nodes, such
   // as _SOURCE appear in multiple devices, which breaks tfprof's assumption.
   if (name == "RecvTensor" || name == "_SOURCE" ||
@@ -38,7 +39,8 @@ bool CreateRunMetadataNode(const string& name, NodeDef* def) {
     return false;
   }
   def->set_name(name);
-  // TODO(xpan): Better operation type.
+  // TODO (xpan): Better operation type. id:2667
+  // https://github.com/imdone/tensorflow/issues/2666
   // This is because some times a node doesn't have a op type,
   // so we use node name as the op type.
   def->set_op(name);

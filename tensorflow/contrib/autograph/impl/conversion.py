@@ -52,7 +52,8 @@ from tensorflow.contrib.autograph.utils import type_hints
 from tensorflow.python.util import tf_inspect
 
 
-# TODO(mdan): Might we not need any renaming at all?
+# TODO (mdan): Might we not need any renaming at all? id:511
+# https://github.com/imdone/tensorflow/issues/512
 
 
 class ConversionMap(object):
@@ -76,7 +77,8 @@ class ConversionMap(object):
         to avoid circular dependencies.
   """
 
-  # TODO(mdan): Rename to ConversionContext, and pull in additional flags.
+  # TODO (mdan): Rename to ConversionContext, and pull in additional flags. id:970
+  # https://github.com/imdone/tensorflow/issues/971
 
   def __init__(self, recursive, nocompile_decorators, partial_types,
                api_module):
@@ -158,7 +160,8 @@ def entity_to_graph(o, conversion_map, arg_values, arg_types):
   if tf_inspect.isclass(o):
     node, name, ns = class_to_graph(o, conversion_map)
   elif tf_inspect.isfunction(o):
-    # TODO(mdan): This is not a reliable mechanism.
+    # TODO (mdan): This is not a reliable mechanism. id:619
+    # https://github.com/imdone/tensorflow/issues/620
     # The most reliable way is to check the source code, the AST will contain
     # a Lambda node instead of a FunctionDef
     if o.__name__ == '<lambda>':
@@ -222,7 +225,8 @@ def class_to_graph(c, conversion_map):
   namer = conversion_map.new_namer(class_namespace)
   class_name = namer.compiled_class_name(c.__name__, c)
 
-  # TODO(mdan): This needs to be explained more thoroughly.
+  # TODO (mdan): This needs to be explained more thoroughly. id:673
+  # https://github.com/imdone/tensorflow/issues/674
   # Process any base classes: if the sueprclass if of a whitelisted type, an
   # absolute import line is generated. Otherwise, it is marked for conversion
   # (as a side effect of the call to namer.compiled_class_name() followed by
@@ -260,7 +264,8 @@ def class_to_graph(c, conversion_map):
 
   # Make a final pass to replace references to the class or its base classes.
   # Most commonly, this occurs when making super().__init__() calls.
-  # TODO(mdan): Making direct references to superclass' superclass will fail.
+  # TODO (mdan): Making direct references to superclass' superclass will fail. id:521
+  # https://github.com/imdone/tensorflow/issues/522
   node = qual_names.resolve(node)
   renames[qual_names.QN(c.__name__)] = qual_names.QN(class_name)
   node = ast_util.rename_symbols(node, renames)
@@ -287,7 +292,8 @@ def _add_self_references(namespace, api_module):
     ag_internal = imp.new_module('autograph')
     ag_internal.converted_call = api_module.converted_call
     ag_internal.utils = utils
-    # TODO(mdan): Add safeguards against name clashes.
+    # TODO (mdan): Add safeguards against name clashes. id:514
+    # https://github.com/imdone/tensorflow/issues/515
     # We don't want to create a submodule because we want the operators to be
     # accessible as ag__.<operator>
     ag_internal.__dict__.update(operators.__dict__)
@@ -317,7 +323,8 @@ def function_to_graph(f, conversion_map, arg_values, arg_types,
       type_annotation_func=type_hints.set_element_type)
   node, deps = node_to_graph(node, ctx, conversion_map.nocompile_decorators)
 
-  # TODO(mdan): This somewhat duplicates the call rename logic in call_treest.py
+  # TODO (mdan): This somewhat duplicates the call rename logic in call_treest.py id:972
+  # https://github.com/imdone/tensorflow/issues/973
   new_name, did_rename = namer.compiled_function_name(f.__name__, f, owner_type)
   if not did_rename:
     new_name = f.__name__
@@ -326,7 +333,8 @@ def function_to_graph(f, conversion_map, arg_values, arg_types,
 
   node.name = new_name
   conversion_map.update_name_map(namer)
-  # TODO(mdan): Use this at compilation.
+  # TODO (mdan): Use this at compilation. id:624
+  # https://github.com/imdone/tensorflow/issues/625
   conversion_map.additional_imports.update(deps)
 
   return node, new_name, namespace
@@ -355,9 +363,11 @@ def node_to_graph(node, ctx, nocompile_decorators):
         * deps: A set of strings, the fully qualified names of entity
             dependencies that this node has.
   """
-  # TODO(mdan): Verify arguments for correctness.
+  # TODO (mdan): Verify arguments for correctness. id:676
+  # https://github.com/imdone/tensorflow/issues/677
 
-  # TODO(mdan): Factor out common elements.
+  # TODO (mdan): Factor out common elements. id:524
+  # https://github.com/imdone/tensorflow/issues/525
   # These include:
   #   * code move between blocks
   #   * visiting blocks in transformers
@@ -368,12 +378,14 @@ def node_to_graph(node, ctx, nocompile_decorators):
 
   node = _static_analysis_pass(node, ctx)
 
-  # TODO(mdan): Clean this up.
+  # TODO (mdan): Clean this up. id:517
+  # https://github.com/imdone/tensorflow/issues/518
   # Some intermediate analyses are not required, and some comments got orphaned.
 
   # Past this point, line numbers are no longer accurate so we ignore the
   # source.
-  # TODO(mdan): Is it feasible to reconstruct intermediate source code?
+  # TODO (mdan): Is it feasible to reconstruct intermediate source code? id:973
+  # https://github.com/imdone/tensorflow/issues/974
   ctx.source_code = None
   node = ifexp.transform(node, ctx)
   node, deps = decorators.transform(node, nocompile_decorators)

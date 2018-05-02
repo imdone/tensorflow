@@ -87,7 +87,8 @@ class XLATestCase(test.TestCase):
     # disable
     self.disabled_regex = None
     self._method_types_filter = dict()
-    # TODO(xpan): Make it text proto if it doesn't scale.
+    # TODO (xpan): Make it text proto if it doesn't scale. id:333
+    # https://github.com/imdone/tensorflow/issues/334
     # Each line of the manifest file specifies an entry. The entry can be
     # 1) TestNameRegex  // E.g. CumprodTest.* Or
     # 2) TestName TypeName  // E.g. AdamOptimizerTest.testSharing DT_BFLOAT16

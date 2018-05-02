@@ -39,7 +39,8 @@ from tensorflow.python.summary import summary
 __all__ = ['SdcaModel']
 
 
-# TODO(sibyl-Aix6ihai): add name_scope to appropriate methods.
+# TODO (sibyl-Aix6ihai): add name_scope to appropriate methods. id:1413
+# https://github.com/imdone/tensorflow/issues/1414
 class SdcaModel(object):
   """Stochastic dual coordinate ascent solver for linear models.
 
@@ -164,7 +165,8 @@ class SdcaModel(object):
 
   def _num_loss_partitions(self):
     # Number of partitions of the global objective.
-    # TODO(andreasst): set num_loss_partitions automatically based on the number
+    # TODO (andreasst): set num_loss_partitions automatically based on the number id:1595
+    # https://github.com/imdone/tensorflow/issues/1595
     # of workers
     return self._options.get('num_loss_partitions', 1)
 
@@ -175,12 +177,14 @@ class SdcaModel(object):
   def _num_table_shards(self):
     # Number of hash table shards.
     # Return 1 if not specified or if the value is 'None'
-    # TODO(andreasst): set num_table_shards automatically based on the number
+    # TODO (andreasst): set num_table_shards automatically based on the number id:1177
+    # https://github.com/imdone/tensorflow/issues/1178
     # of parameter servers
     num_shards = self._options.get('num_table_shards')
     return 1 if num_shards is None else num_shards
 
-  # TODO(sibyl-Aix6ihai): Use optimizer interface to make use of slot creation logic.
+  # TODO (sibyl-Aix6ihai): Use optimizer interface to make use of slot creation logic. id:1059
+  # https://github.com/imdone/tensorflow/issues/1060
   def _create_slots(self):
     # Make internal variables which have the updates before applying L1
     # regularization.
@@ -188,7 +192,8 @@ class SdcaModel(object):
     for name in ['sparse_features_weights', 'dense_features_weights']:
       for var in self._variables[name]:
         with ops.device(var.device):
-          # TODO(andreasst): remove SDCAOptimizer suffix once bug 30843109 is
+          # TODO (andreasst): remove SDCAOptimizer suffix once bug 30843109 is id:887
+          # https://github.com/imdone/tensorflow/issues/888
           # fixed
           self._slots['unshrinked_' + name].append(
               var_ops.Variable(
@@ -242,7 +247,8 @@ class SdcaModel(object):
           'sparse_features_weights'])
       result_sparse = 0.0
       for sfc, sv in zip(examples['sparse_features'], sparse_variables):
-        # TODO(sibyl-Aix6ihai): following does not take care of missing features.
+        # TODO (sibyl-Aix6ihai): following does not take care of missing features. id:1415
+        # https://github.com/imdone/tensorflow/issues/1416
         result_sparse += math_ops.segment_sum(
             math_ops.multiply(
                 array_ops.gather(sv, sfc.feature_indices), sfc.feature_values),

@@ -22,7 +22,8 @@ limitations under the License.
 namespace xla {
 
 Despecializer::Despecializer() : pipeline_("despecializer") {
-  // TODO(b/70588125): Also deal with window reversal in a fast way.
+  // TODO (b/70588125): Also deal with window reversal in a fast way. id:360
+  // https://github.com/imdone/tensorflow/issues/361
   pipeline_.AddPass<Defuser>();
   pipeline_.AddPass<ImplicitBroadcastRemover>();
   pipeline_.AddPass<BFloat16MixedPrecisionRemoval>();

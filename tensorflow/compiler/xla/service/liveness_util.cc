@@ -244,7 +244,8 @@ bool CanShareOperandBufferWithUser(
     return operand_indices.size() == 1 && operand_indices[0] == 0;
   }
   if (user->opcode() == HloOpcode::kCall) {
-    // TODO(b/62548313): Remove when buffer assignment is module scoped and
+    // TODO (b/62548313): Remove when buffer assignment is module scoped and id:402
+    // https://github.com/imdone/tensorflow/issues/403
     // does not assign buffers to calls.
     // Find called computation parameter associated with 'operand'.
     const std::vector<int64> operand_indices = user->OperandIndices(operand);

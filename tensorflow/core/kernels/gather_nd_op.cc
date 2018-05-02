@@ -65,13 +65,14 @@ class GatherNdOp : public OpKernel {
 
 #define REGISTER_GATHER_ND_CPU(type) REGISTER_GATHER_ND_ALL_INDICES(CPU, type)
 
-// TODO(ebrevdo): This is a pure data-movement kernel. It shouldn't be
+// TODO (ebrevdo): This is a pure data-movement kernel. It shouldn't be id:2178
+// https://github.com/imdone/tensorflow/issues/2177
 // instantiated for all different types. Instead, all the types should
 // be coalesced. So we should only have int8, int16, int32, int64 support.
 // And float is redirected to int32, double is redirected to int64,
 // and complex<float> is redirected to int32 with twice the number of
 // entries, similarly for complex<double>.
-//
+// 
 // Same for the GPU kernel.
 TF_CALL_ALL_TYPES(REGISTER_GATHER_ND_CPU);
 

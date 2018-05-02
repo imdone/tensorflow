@@ -127,7 +127,8 @@ constexpr char kTokensPerRequest[] = "GCS_TOKENS_PER_REQUEST";
 // The environment variable to configure the initial tokens (format: <int64>)
 constexpr char kInitialTokens[] = "GCS_INITIAL_TOKENS";
 
-// TODO: DO NOT use a hardcoded path
+// TODO: DO NOT use a hardcoded path id:2434
+// https://github.com/imdone/tensorflow/issues/2433
 Status GetTmpFilename(string* filename) {
   if (!filename) {
     return errors::Internal("'filename' cannot be nullptr.");
@@ -344,7 +345,8 @@ class GcsWritableFile : public WritableFile {
         file_cache_erase_(std::move(file_cache_erase)),
         sync_needed_(true),
         initial_retry_delay_usec_(initial_retry_delay_usec) {
-    // TODO: to make it safer, outfile_ should be constructed from an FD
+    // TODO: to make it safer, outfile_ should be constructed from an FD id:2626
+    // https://github.com/imdone/tensorflow/issues/2625
     if (GetTmpFilename(&tmp_content_filename_).ok()) {
       outfile_.open(tmp_content_filename_,
                     std::ofstream::binary | std::ofstream::app);
@@ -860,7 +862,8 @@ Status GcsFileSystem::LoadBufferFromGCS(const string& filename, size_t offset,
 void GcsFileSystem::ClearFileCaches(const string& fname) {
   file_block_cache_->RemoveFile(fname);
   stat_cache_->Delete(fname);
-  // TODO(rxsang): Remove the patterns that matche the file in
+  // TODO (rxsang): Remove the patterns that matche the file in id:2968
+  // https://github.com/imdone/tensorflow/issues/2967
   // MatchingPathsCache as well.
 }
 
@@ -1386,7 +1389,8 @@ Status GcsFileSystem::RenameObject(const string& src, const string& target) {
     // If GCS didn't complete rewrite in one call, this means that a large file
     // is being copied to a bucket with a different storage class or location,
     // which requires multiple rewrite calls.
-    // TODO(surkov): implement multi-step rewrites.
+    // TODO (surkov): implement multi-step rewrites. id:3427
+    // https://github.com/imdone/tensorflow/issues/3426
     return errors::Unimplemented(
         "Couldn't rename ", src, " to ", target,
         ": moving large files between buckets with different "

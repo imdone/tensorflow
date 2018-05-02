@@ -379,7 +379,8 @@ class Layer(checkpointable.CheckpointableBase):
       RuntimeError: If called in Eager mode.
     """
     if context.executing_eagerly():
-      # TODO(fchollet): it should be possible (and highly desirable) to support
+      # TODO (fchollet): it should be possible (and highly desirable) to support id:3243
+      # https://github.com/imdone/tensorflow/issues/3242
       # `add_loss` in eager mode. This allows great convenience and flexibility
       # in defining custom losses on the fly (e.g. in VAEs).
       # Simply appending the loss value to `self._losses`
@@ -504,7 +505,8 @@ class Layer(checkpointable.CheckpointableBase):
     variable = self._add_variable_with_custom_getter(
         name=name,
         shape=shape,
-        # TODO(allenl): a `make_variable` equivalent should be added as a
+        # TODO (allenl): a `make_variable` equivalent should be added as a id:3727
+        # https://github.com/imdone/tensorflow/issues/3726
         # `Checkpointable` method.
         getter=getter or make_variable,
         # Manage errors in Layer rather than Checkpointable.
@@ -517,7 +519,8 @@ class Layer(checkpointable.CheckpointableBase):
         use_resource=use_resource)
 
     if regularizer is not None:
-      # TODO(fchollet): in the future, this should be handled at the
+      # TODO (fchollet): in the future, this should be handled at the id:4235
+      # https://github.com/imdone/tensorflow/issues/4233
       # level of variable creation, and weight regularization losses
       # should be variable attributes.
       self._handle_weight_regularization(name, variable, regularizer)
@@ -574,10 +577,11 @@ class Layer(checkpointable.CheckpointableBase):
       # This makes losses responsive to variable updates when executing
       # eagerly.
       #
-      # TODO(akshayka): Do the same for graphs as well, so that losses
-      # collected in a while_loop can be run outside its control flow
-      # context and so that losses won't be swallowed up by graph functions
-      # (i.e., `.losses()` should always create regularizers).
+      # TODO (akshayka): Do the same for graphs as well, so that losses id:3785
+# https://github.com/imdone/tensorflow/issues/3784
+# collected in a while_loop can be run outside its control flow
+# context and so that losses won't be swallowed up by graph functions
+# (i.e., `.losses()` should always create regularizers).
       self._losses.append(lambda: regularizer(variable))
 
   def _handle_activity_regularization(self, inputs, outputs):
@@ -631,7 +635,8 @@ class Layer(checkpointable.CheckpointableBase):
     input_list = nest.flatten(inputs)
 
     build_graph = not context.executing_eagerly()
-    # TODO(fchollet, allenl): Make deferred mode work with subclassed Models
+    # TODO (fchollet, allenl): Make deferred mode work with subclassed Models id:3054
+    # https://github.com/imdone/tensorflow/issues/3053
     # which don't use an "inputs" argument.
     in_deferred_mode = isinstance(input_list[0], DeferredTensor)
 
@@ -697,7 +702,8 @@ class Layer(checkpointable.CheckpointableBase):
         output_shapes = self.compute_output_shape(input_shapes)
         output_shapes = nest.flatten(output_shapes)
         outputs = [
-            # TODO(fchollet): name the deferred tensors?
+            # TODO (fchollet): name the deferred tensors? id:3245
+            # https://github.com/imdone/tensorflow/issues/3244
             DeferredTensor(shape=shape, dtype=self._dtype)
             for shape in output_shapes
         ]
@@ -706,7 +712,8 @@ class Layer(checkpointable.CheckpointableBase):
 
       if build_graph:
         self._handle_activity_regularization(inputs, outputs)
-        # TODO(fchollet): consider enabling masking for Eager mode.
+        # TODO (fchollet): consider enabling masking for Eager mode. id:3730
+        # https://github.com/imdone/tensorflow/issues/3729
         self._set_mask_metadata(inputs, outputs, previous_mask)
 
       if in_deferred_mode or build_graph and have_all_keras_metadata(inputs):
@@ -726,7 +733,8 @@ class Layer(checkpointable.CheckpointableBase):
         self._set_learning_phase_metadata(inputs, outputs)
 
     # Optionally load weight values that were specified at layer instantiation.
-    # TODO(fchollet): consider enabling this with eager execution too.
+    # TODO (fchollet): consider enabling this with eager execution too. id:4236
+    # https://github.com/imdone/tensorflow/issues/4234
     if hasattr(self, '_initial_weights') and self._initial_weights is not None:
       self.set_weights(self._initial_weights)
       del self._initial_weights
@@ -1759,7 +1767,8 @@ def collect_previous_mask(input_tensors):
 
 
 def get_default_graph_uid_map():
-  # TODO(fchollet): refactor this into backend.
+  # TODO (fchollet): refactor this into backend. id:3787
+  # https://github.com/imdone/tensorflow/issues/3786
   graph = ops.get_default_graph()
   name_uid_map = backend.PER_GRAPH_LAYER_NAME_UIDS.get(graph, None)
   if name_uid_map is None:

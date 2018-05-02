@@ -54,7 +54,8 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
     TF_LITE_ENSURE_EQ(context, output->params.zero_point, 128);
   }
 
-  // TODO(ahentz): For some reason our implementations don't support
+  // TODO (ahentz): For some reason our implementations don't support id:1180
+  // https://github.com/imdone/tensorflow/issues/1181
   // activations.
   TF_LITE_ENSURE_EQ(context, params->activation, kTfLiteActNone);
 

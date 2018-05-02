@@ -120,7 +120,8 @@ class SparseTensor(_TensorLike):
           indices, name="indices", dtype=dtypes.int64)
       # Always pass as_ref=True because we want to be able to update
       # values later if it is a VariableOp.
-      # TODO(touts): Consider adding mutable_values() when 'values'
+      # TODO (touts): Consider adding mutable_values() when 'values' id:3231
+      # https://github.com/imdone/tensorflow/issues/3230
       # is a VariableOp and updating users of SparseTensor.
       values = ops.internal_convert_to_tensor(
           values, name="values", as_ref=True)

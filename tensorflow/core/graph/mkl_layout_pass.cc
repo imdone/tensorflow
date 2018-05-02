@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// TODO(intel): Improve error handling in this file; instead of CHECK failing
+// TODO (intel): Improve error handling in this file; instead of CHECK failing id:2811
+// https://github.com/imdone/tensorflow/issues/2810
 // all over the place, we should log an error and execute the original graph.
 #ifdef INTEL_MKL
 
@@ -259,7 +260,8 @@ namespace tensorflow {
 class MklLayoutRewritePass : public GraphOptimizationPass {
  public:
   MklLayoutRewritePass() {
-    // NOTE: names are alphabetically sorted.
+    // NOTE: names are alphabetically sorted. id:1985
+    // https://github.com/imdone/tensorflow/issues/1985
     csinfo_.addn = "AddN";
     csinfo_.avg_pool = "AvgPool";
     csinfo_.avg_pool_grad = "AvgPoolGrad";
@@ -298,7 +300,8 @@ class MklLayoutRewritePass : public GraphOptimizationPass {
     csinfo_.sub = "Sub";
     // End - element-wise ops. See note above.
 
-    // NOTE: names are alphabetically sorted.
+    // NOTE: names are alphabetically sorted. id:1642
+    // https://github.com/imdone/tensorflow/issues/1642
     rinfo_.push_back({csinfo_.addn, mkl_op_registry::GetMklOpName(csinfo_.addn),
                       CopyAttrsAddN, AddNRewrite, nullptr});
     rinfo_.push_back({csinfo_.add, mkl_op_registry::GetMklOpName(csinfo_.add),
@@ -454,7 +457,8 @@ class MklLayoutRewritePass : public GraphOptimizationPass {
   } MergeInfo;
 
   /// Structure to store all constant strings
-  /// NOTE: names are alphabetically sorted.
+  /// NOTE: names are alphabetically sorted. id:2268
+  // https://github.com/imdone/tensorflow/issues/2267
   typedef struct {
     string addn;
     string add;
@@ -941,7 +945,8 @@ class MklLayoutRewritePass : public GraphOptimizationPass {
   // Functions specific to operators to copy attributes
   // We need operator-specific function to copy attributes because the framework
   // does not provide any generic function for it.
-  // NOTE: names are alphabetically sorted.
+  // NOTE: names are alphabetically sorted. id:3012
+  // https://github.com/imdone/tensorflow/issues/3011
   static void CopyAttrsAddN(const Node* orig_node, NodeBuilder* nb);
   static void CopyAttrsBiasAddGrad(const Node* orig_node, NodeBuilder* nb);
   static void CopyAttrsConcat(const Node* orig_node, NodeBuilder* nb);
@@ -957,7 +962,8 @@ class MklLayoutRewritePass : public GraphOptimizationPass {
 
   // Generate a graph node in graph 'g' representing a dummy Mkl tensor node,
   // using node for original node 'orig_node' and return it in '*out'.
-  // TODO(nhasabni) We should move this to mkl_util.h
+  // TODO (nhasabni) We should move this to mkl_util.h id:2812
+  // https://github.com/imdone/tensorflow/issues/2811
   void GetDummyMklTensorNode(std::unique_ptr<Graph>* g, Node** out,
                              Node* orig_node);
   void GetDummyWorkspaceTensorNode(std::unique_ptr<Graph>* g, Node** out,
@@ -1023,7 +1029,8 @@ void MklLayoutRewritePass::GetNodesProducingTFTensorList(
   }
 }
 
-// TODO(nhasabni) We should move this to mkl_util.h.
+// TODO (nhasabni) We should move this to mkl_util.h. id:1987
+// https://github.com/imdone/tensorflow/issues/1987
 void MklLayoutRewritePass::GetDummyMklTensorNode(std::unique_ptr<Graph>* g,
                                                  Node** out, Node* orig_node) {
   // We use a tensor of shape {8} and value 0,0,0,0,0,0,0,0 to represent
@@ -1132,7 +1139,8 @@ int MklLayoutRewritePass::SetUpContiguousInputs(
   CHECK_NOTNULL(workspace_tensors);
   CHECK_EQ(kTensorOrdering, MklTfTensorOrdering::TENSORS_CONTIGUOUS);
 
-  // TODO(nhasabni): Temporary solution to connect filter input of
+  // TODO (nhasabni): Temporary solution to connect filter input of id:1646
+  // https://github.com/imdone/tensorflow/issues/1646
   // BackpropInput with the converted filter from Conv2D.
   bool do_connect_conv2d_backprop_input_filter = false;
   Node* conv2d_node = nullptr;
@@ -1279,7 +1287,8 @@ Status MklLayoutRewritePass::SetUpInputs(
 
   int new_node_input_slots = 0;
   if (kTensorOrdering == MklTfTensorOrdering::TENSORS_INTERLEAVED) {
-    // TODO(nhasabni): implement this function just for same of completion.
+    // TODO (nhasabni): implement this function just for same of completion. id:2269
+    // https://github.com/imdone/tensorflow/issues/2268
     // We do not use interleaved ordering right now.
     return Status(
         error::Code::UNIMPLEMENTED,
@@ -1315,7 +1324,8 @@ Status MklLayoutRewritePass::SetUpInputs(
 //           Helper functions related to workspace pass
 //////////////////////////////////////////////////////////////////////////
 
-// TODO(nhasabni) We should move this to mkl_util.h.
+// TODO (nhasabni) We should move this to mkl_util.h. id:3015
+// https://github.com/imdone/tensorflow/issues/3015
 void MklLayoutRewritePass::GetDummyWorkspaceTensorNode(
     std::unique_ptr<Graph>* g, Node** out, Node* orig_node) {
   // We use a tensor of shape {1} and value 0 to represent
@@ -1674,7 +1684,8 @@ void MklLayoutRewritePass::CopyAttrsFusedBatchNorm(const Node* orig_node,
 //////////////////////////////////////////////////////////////////////////
 
 Node* MklLayoutRewritePass::CheckForNodeMerge(const Node* a) const {
-  // TODO(nhasabni) Add check for type of node similar to CheckForNodeRewrite
+  // TODO (nhasabni) Add check for type of node similar to CheckForNodeRewrite id:2814
+  // https://github.com/imdone/tensorflow/issues/2813
   // once we support BiasAddGrad as Mkl layer.
 
   // Search for all matching mergeinfo.
@@ -1701,7 +1712,8 @@ Node* MklLayoutRewritePass::CheckForNodeMerge(const Node* a) const {
     Node* b = nullptr;
     b = a_in[mi->op].first;
     if (b == nullptr || (b->type_string() != mi->pred)) {
-      // NOTE: Should the first check be assert?
+      // NOTE: Should the first check be assert? id:1990
+      // https://github.com/imdone/tensorflow/issues/1990
       continue;
     }
 
@@ -2079,8 +2091,9 @@ MklLayoutRewritePass::CheckForNodeRewrite(const Node* n) const {
   // replace the elementwise node only if at least one of its parents is a MKL
   // node.
   //
-  // TODO(vrane): Add implementation for element-wise ops that doesn't reuse
-  // eigen code to reduce cross-library dependency.
+  // TODO (vrane): Add implementation for element-wise ops that doesn't reuse id:1651
+// https://github.com/imdone/tensorflow/issues/1651
+// eigen code to reduce cross-library dependency.
   if (mkl_op_registry::IsMklElementWiseOp(
           mkl_op_registry::GetMklOpName(n->type_string()), T)) {
     bool incoming_mkl_edge = false;
@@ -2405,7 +2418,8 @@ Status MklLayoutRewritePass::Run(const GraphOptimizationPassOptions& options) {
 class MklLayoutRewritePass : public GraphOptimizationPass {
  public:
   MklLayoutRewritePass() {
-    // NOTE: names are alphabetically sorted.
+    // NOTE: names are alphabetically sorted. id:2270
+    // https://github.com/imdone/tensorflow/issues/2269
     csinfo_.addn = "AddN";
     csinfo_.avg_pool = "AvgPool";
     csinfo_.avg_pool_grad = "AvgPoolGrad";
@@ -2450,7 +2464,8 @@ class MklLayoutRewritePass : public GraphOptimizationPass {
     csinfo_.sub = "Sub";
     // End - element-wise ops. See note above.
 
-    // NOTE: names are alphabetically sorted.
+    // NOTE: names are alphabetically sorted. id:3018
+    // https://github.com/imdone/tensorflow/issues/3017
     rinfo_.push_back({csinfo_.addn, mkl_op_registry::GetMklOpName(csinfo_.addn),
                       CopyAttrsAddN, AddNRewrite});
     rinfo_.push_back({csinfo_.add, mkl_op_registry::GetMklOpName(csinfo_.add),
@@ -2600,7 +2615,8 @@ class MklLayoutRewritePass : public GraphOptimizationPass {
   } MergeInfo;
 
   /// Structure to store all constant strings
-  /// NOTE: names are alphabetically sorted.
+  /// NOTE: names are alphabetically sorted. id:2815
+  // https://github.com/imdone/tensorflow/issues/2814
   typedef struct {
     string addn;
     string add;
@@ -3018,7 +3034,8 @@ class MklLayoutRewritePass : public GraphOptimizationPass {
   // Functions specific to operators to copy attributes
   // We need operator-specific function to copy attributes because the framework
   // does not provide any generic function for it.
-  // NOTE: names are alphabetically sorted.
+  // NOTE: names are alphabetically sorted. id:1993
+  // https://github.com/imdone/tensorflow/issues/1993
   static void CopyAttrsAddN(const Node* orig_node, NodeBuilder* nb);
   static void CopyAttrsBiasAddGrad(const Node* orig_node, NodeBuilder* nb);
   static void CopyAttrsConcat(const Node* orig_node, NodeBuilder* nb);
@@ -3033,7 +3050,8 @@ class MklLayoutRewritePass : public GraphOptimizationPass {
 
   // Generate a graph node in graph 'g' representing a dummy Mkl tensor node,
   // using node for original node 'orig_node' and return it in '*out'.
-  // TODO(nhasabni) We should move this to mkl_util.h
+  // TODO (nhasabni) We should move this to mkl_util.h id:1653
+  // https://github.com/imdone/tensorflow/issues/1653
   void GetDummyMklTensorNode(std::unique_ptr<Graph>* g, Node** out,
                              Node* orig_node);
   void GetDummyWorkspaceTensorNode(std::unique_ptr<Graph>* g, Node** out,
@@ -3094,7 +3112,8 @@ void MklLayoutRewritePass::GetNodesProducingTFTensorList(
   }
 }
 
-// TODO(nhasabni) We should move this to mkl_util.h.
+// TODO (nhasabni) We should move this to mkl_util.h. id:2271
+// https://github.com/imdone/tensorflow/issues/2270
 void MklLayoutRewritePass::GetDummyMklTensorNode(std::unique_ptr<Graph>* g,
                                                  Node** out, Node* orig_node) {
   // We use a tensor of shape {8} and value 0,0,0,0,0,0,0,0 to represent
@@ -3205,7 +3224,8 @@ int MklLayoutRewritePass::SetUpContiguousInputs(
   CHECK_NOTNULL(workspace_tensors);
   CHECK_EQ(kTensorOrdering, MklTfTensorOrdering::TENSORS_CONTIGUOUS);
 
-  // TODO(nhasabni): Temporary solution to connect filter input of
+  // TODO (nhasabni): Temporary solution to connect filter input of id:3021
+  // https://github.com/imdone/tensorflow/issues/3020
   // BackpropInput with the converted filter from Conv2D.
   bool do_connect_conv2d_backprop_input_filter = false;
   Node* conv2d_node = nullptr;
@@ -3353,7 +3373,8 @@ Status MklLayoutRewritePass::SetUpInputs(
 
   int new_node_input_slots = 0;
   if (kTensorOrdering == MklTfTensorOrdering::TENSORS_INTERLEAVED) {
-    // TODO(nhasabni): implement this function just for same of completion.
+    // TODO (nhasabni): implement this function just for same of completion. id:2816
+    // https://github.com/imdone/tensorflow/issues/2815
     // We do not use interleaved ordering right now.
     return Status(
         error::Code::UNIMPLEMENTED,
@@ -3389,7 +3410,8 @@ Status MklLayoutRewritePass::SetUpInputs(
 //           Helper functions related to workspace pass
 //////////////////////////////////////////////////////////////////////////
 
-// TODO(nhasabni) We should move this to mkl_util.h.
+// TODO (nhasabni) We should move this to mkl_util.h. id:1996
+// https://github.com/imdone/tensorflow/issues/1996
 void MklLayoutRewritePass::GetDummyWorkspaceTensorNode(
     std::unique_ptr<Graph>* g, Node** out, Node* orig_node) {
   // We use a tensor of shape {1} and value 0 to represent
@@ -3743,7 +3765,8 @@ void MklLayoutRewritePass::CopyAttrsFusedBatchNorm(const Node* orig_node,
 //////////////////////////////////////////////////////////////////////////
 
 Node* MklLayoutRewritePass::CheckForNodeMerge(const Node* a) const {
-  // TODO(nhasabni) Add check for type of node similar to CheckForNodeRewrite
+  // TODO (nhasabni) Add check for type of node similar to CheckForNodeRewrite id:1655
+  // https://github.com/imdone/tensorflow/issues/1655
   // once we support BiasAddGrad as Mkl layer.
 
   // Search for all matching mergeinfo.
@@ -4197,8 +4220,9 @@ MklLayoutRewritePass::CheckForNodeRewrite(const Node* n) const {
   // Identity nodes can also skip replacement if they are not being served by
   // any MKL nodes.
   //
-  // TODO(vrane): Add implementation for element-wise ops that doesn't reuse
-  // eigen code to reduce cross-library dependency.
+  // TODO (vrane): Add implementation for element-wise ops that doesn't reuse id:2272
+// https://github.com/imdone/tensorflow/issues/2271
+// eigen code to reduce cross-library dependency.
   VLOG(1) << "ELEMENTWISE: checking op: " << n->type_string();
   if (mkl_op_registry::IsMklElementWiseOp(
           mkl_op_registry::GetMklOpName(n->type_string()), T) ||

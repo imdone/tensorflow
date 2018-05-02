@@ -268,7 +268,8 @@ void Split3Helper(TF_Operation* input, TF_Graph* graph, TF_Status* s,
   TF_SetAttrInt(desc, "num_split", 3);
   TF_SetAttrType(desc, "T", TF_INT32);
   // Set device to CPU since there is no version of split for int32 on GPU
-  // TODO(iga): Convert all these helpers and tests to use floats because
+  // TODO (iga): Convert all these helpers and tests to use floats because id:90
+  // https://github.com/imdone/tensorflow/issues/91
   // they are usually available on GPUs. After doing this, remove TF_SetDevice
   // call in c_api_function_test.cc
   TF_SetDevice(desc, "/cpu:0");

@@ -21,7 +21,8 @@ limitations under the License.
 namespace tensorflow {
 
 // Returns a list of ops excluded from ApiDef.
-// TODO(annarev): figure out if we should keep ApiDefs for these ops as well
+// TODO (annarev): figure out if we should keep ApiDefs for these ops as well id:1846
+// https://github.com/imdone/tensorflow/issues/1846
 const std::unordered_set<std::string>* GetExcludedOps();
 }  // namespace tensorflow
 

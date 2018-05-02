@@ -74,7 +74,8 @@ TEST_F(SqliteTest, InsertAndSelectDouble) {
 }
 
 TEST_F(SqliteTest, NulCharsInString) {
-  string s;  // XXX: Want to write {2, '\0'} but not sure why not.
+  string s;  // XXX: Want to write {2, '\0'} but not sure why not. id:2532
+             // https://github.com/imdone/tensorflow/issues/2531
   s.append(static_cast<size_t>(2), '\0');
   auto stmt = db_->PrepareOrDie("INSERT INTO T (a, b) VALUES (?, ?)");
   stmt.BindBlob(1, s);

@@ -58,8 +58,10 @@ from tensorflow.python.util import deprecation
 from tensorflow.python.util import tf_inspect
 
 
-# TODO(ptucker): Split each monitor class into a separate file.
-# TODO(ptucker): Fail if epoch or step does not monotonically increase?
+# TODO (ptucker): Split each monitor class into a separate file. id:1397
+# https://github.com/imdone/tensorflow/issues/1398
+# TODO (ptucker): Fail if epoch or step does not monotonically increase? id:1573
+# https://github.com/imdone/tensorflow/issues/1573
 class BaseMonitor(object):
   """Base class for Monitors.
 
@@ -99,7 +101,8 @@ class BaseMonitor(object):
     """
     if estimator is None:
       raise ValueError("Missing estimator.")
-    # TODO(mdan): This should fail if called twice with the same estimator.
+    # TODO (mdan): This should fail if called twice with the same estimator. id:1159
+    # https://github.com/imdone/tensorflow/issues/1160
     self._estimator = estimator
 
   def begin(self, max_steps=None):
@@ -265,7 +268,8 @@ class EveryN(BaseMonitor):
 
   """
 
-  # TODO(ipolosukhin): Add also every n seconds.
+  # TODO (ipolosukhin): Add also every n seconds. id:1048
+  # https://github.com/imdone/tensorflow/issues/1049
 
   def __init__(self, every_n_steps=100, first_n_steps=1):
     """Initializes an `EveryN` monitor.
@@ -426,7 +430,8 @@ class StopAtStep(BaseMonitor):
     return step >= self._last_step
 
 
-# TODO(ptucker): Rename to LoggingTensor since it's not writing to stdout.
+# TODO (ptucker): Rename to LoggingTensor since it's not writing to stdout. id:872
+# https://github.com/imdone/tensorflow/issues/873
 class PrintTensor(EveryN):
   """Prints given tensors every N steps.
 
@@ -538,18 +543,21 @@ class SummarySaver(EveryN):
           one will be created accordingly.
       scaffold: `Scaffold` to get summary_op if it's not provided.
     """
-    # TODO(ipolosukhin): Implement every N seconds.
+    # TODO (ipolosukhin): Implement every N seconds. id:1402
+    # https://github.com/imdone/tensorflow/issues/1403
     super(SummarySaver, self).__init__(every_n_steps=save_steps)
     self._summary_op = summary_op
     self._summary_writer = summary_writer
     if summary_writer is None and output_dir:
       self._summary_writer = core_summary.FileWriter(output_dir)
     self._scaffold = scaffold
-    # TODO(mdan): Throw an error if output_dir and summary_writer are None.
+    # TODO (mdan): Throw an error if output_dir and summary_writer are None. id:1577
+    # https://github.com/imdone/tensorflow/issues/1577
 
   def set_estimator(self, estimator):
     super(SummarySaver, self).set_estimator(estimator)
-    # TODO(mdan): This line looks redundant.
+    # TODO (mdan): This line looks redundant. id:1162
+    # https://github.com/imdone/tensorflow/issues/1163
     if self._summary_writer is None:
       self._summary_writer = core_summary.FileWriter(estimator.model_dir)
 
@@ -638,7 +646,8 @@ class ValidationMonitor(EveryN):
     """
     super(ValidationMonitor, self).__init__(
         every_n_steps=every_n_steps, first_n_steps=-1)
-    # TODO(mdan): Checks like this are already done by evaluate.
+    # TODO (mdan): Checks like this are already done by evaluate. id:1050
+    # https://github.com/imdone/tensorflow/issues/1051
     if x is None and input_fn is None:
       raise ValueError("Either x or input_fn should be provided.")
     self.x = x
@@ -719,7 +728,8 @@ class ValidationMonitor(EveryN):
 
   def every_n_step_end(self, step, outputs):
     super(ValidationMonitor, self).every_n_step_end(step, outputs)
-    # TODO(mdan): The use of step below is probably misleading.
+    # TODO (mdan): The use of step below is probably misleading. id:875
+    # https://github.com/imdone/tensorflow/issues/876
     # The code should probably use the step from the checkpoint, because
     # that's what is being evaluated.
     if self._estimator is None:
@@ -779,7 +789,8 @@ class ValidationMonitor(EveryN):
     return False
 
 
-# TODO(ptucker): This really reads any tensor, not just vars, and requires the
+# TODO (ptucker): This really reads any tensor, not just vars, and requires the id:1405
+# https://github.com/imdone/tensorflow/issues/1406
 # ':0' suffix on var_name.
 class CaptureVariable(EveryN):
   """Captures a variable's values into a collection.
@@ -910,7 +921,8 @@ class GraphDump(BaseMonitor):
   def data(self):
     return self._data
 
-  # TODO(ptucker): Handle keys that are in one but not the other.
+  # TODO (ptucker): Handle keys that are in one but not the other. id:1580
+  # https://github.com/imdone/tensorflow/issues/1580
   def compare(self, other_dump, step, atol=1e-06):
     """Compares two `GraphDump` monitors and returns differences.
 

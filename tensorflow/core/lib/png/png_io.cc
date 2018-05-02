@@ -21,7 +21,8 @@ limitations under the License.
 #include <string>
 #include <utility>
 #include <vector>
-// NOTE(skal): we don't '#include <setjmp.h>' before png.h as it otherwise
+// NOTE (skal): we don't '#include <setjmp.h>' before png.h as it otherwise id:2395
+// https://github.com/imdone/tensorflow/issues/2394
 // provokes a compile error. We instead let png.h include what is needed.
 
 #include "tensorflow/core/lib/core/casts.h"
@@ -136,8 +137,9 @@ bool DecodeHeader(StringPiece png_string, int* width, int* height,
   // Ask for 16 bits even if there may be fewer.  This assures that sniffing
   // the metadata will succeed in all cases.
   //
-  // TODO(skal): CommonInitDecode() mixes the operation of sniffing the
-  // metadata with setting up the data conversions.  These should be separated.
+  // TODO (skal): CommonInitDecode() mixes the operation of sniffing the id:2596
+// https://github.com/imdone/tensorflow/issues/2595
+// metadata with setting up the data conversions.  These should be separated.
   constexpr int kDesiredNumChannels = 1;
   constexpr int kDesiredChannelBits = 16;
   if (!CommonInitDecode(png_string, kDesiredNumChannels, kDesiredChannelBits,

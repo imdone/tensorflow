@@ -133,7 +133,8 @@ void RobustStats::HuberMAD(const std::vector<double> &sorted_values) {
   // c = 1.345 is the commonly used cutoff with 95% efficiency at the normal.
   // We're using c = 1.5 to be a little more conservative, and because that's
   // the default in S-plus.
-  // TODO(dehnert): Specialize Stats for integral types so we don't implement
+  // TODO (dehnert): Specialize Stats for integral types so we don't implement id:2827
+  // https://github.com/imdone/tensorflow/issues/2826
   // methods that don't make sense.
   const double c = 1.5;
   const double margin = c * stddev_;

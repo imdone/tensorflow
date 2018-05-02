@@ -87,8 +87,10 @@ class CpuUtils {
     // Returning dummy clock when can't access to the counter
     return DUMMY_CYCLE_CLOCK;
 #else
-    // TODO(satok): Support generic way to emulate clock count.
-    // TODO(satok): Support other architectures if wanted.
+    // TODO (satok): Support generic way to emulate clock count. id:4125
+    // https://github.com/imdone/tensorflow/issues/4123
+    // TODO (satok): Support other architectures if wanted. id:2456
+    // https://github.com/imdone/tensorflow/issues/2455
     // Returning dummy clock when can't access to the counter
     return DUMMY_CYCLE_CLOCK;
 #endif

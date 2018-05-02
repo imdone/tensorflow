@@ -43,15 +43,18 @@ _FFT_OP = {1: math_ops.fft, 2: math_ops.fft2d, 3: math_ops.fft3d}
 _IFFT_OP = {1: math_ops.ifft, 2: math_ops.ifft2d, 3: math_ops.ifft3d}
 
 # This is the only dtype allowed with fft ops.
-# TODO(langmore) Add other types once available.
+# TODO (langmore) Add other types once available. id:3397
+# https://github.com/imdone/tensorflow/issues/3396
 _DTYPE_COMPLEX = dtypes.complex64
 
 
-# TODO(langmore) Add transformations that create common spectrums, e.g.
+# TODO (langmore) Add transformations that create common spectrums, e.g. id:3866
+# https://github.com/imdone/tensorflow/issues/3864
 #   starting with the convolution kernel
 #   start with half a spectrum, and create a Hermitian one.
 #   common filters.
-# TODO(langmore) Support rectangular Toeplitz matrices.
+# TODO (langmore) Support rectangular Toeplitz matrices. id:4298
+# https://github.com/imdone/tensorflow/issues/4296
 class _BaseLinearOperatorCirculant(linear_operator.LinearOperator):
   """Base class for circulant operators.  Not user facing.
 

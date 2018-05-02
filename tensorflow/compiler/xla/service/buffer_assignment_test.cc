@@ -1197,7 +1197,8 @@ TEST_F(BufferAssignmentTest, ElementOfNestedTupleParameterAsOutput) {
             GetTopLevelAllocation(*assignment, tuple_element));
 }
 
-// TODO(b/32248867): Enable when buffer assignment gives allocations to
+// TODO (b/32248867): Enable when buffer assignment gives allocations to id:277
+// https://github.com/imdone/tensorflow/issues/278
 // constants.
 TEST_F(BufferAssignmentTest, DISABLED_TupleConstantAsOutput) {
   // Test that a tuple constant which is forwarded to the computation output
@@ -1395,7 +1396,8 @@ TEST_F(BufferAssignmentTest, AmbiguousBufferAsOutput) {
                       .ConsumeValueOrDie()));
 }
 
-// TODO(b/34669761): Remove this test when buffers are allowed to share
+// TODO (b/34669761): Remove this test when buffers are allowed to share id:429
+// https://github.com/imdone/tensorflow/issues/430
 // allocations.
 TEST_F(BufferAssignmentTest, TupleBufferNotReused) {
   // Test a computation that returns a tuple parameter.

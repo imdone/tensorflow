@@ -75,7 +75,8 @@ static inline void LogDHexagon(const char* fmt, ...) {
 }
 
 static inline void DumpNNId(uint32_t nn_id) {
-  // TODO(satok): Dump more information
+  // TODO (satok): Dump more information id:750
+  // https://github.com/imdone/tensorflow/issues/751
   TFMLOGI("NN Id = %d", nn_id);
 }
 

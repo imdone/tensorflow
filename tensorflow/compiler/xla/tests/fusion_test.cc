@@ -547,7 +547,8 @@ XLA_TEST_F(FusionTest, ReshapeNegate) {
                                *ExecuteAndTransfer(std::move(hlo_module), {}));
 }
 
-// TODO(b/64070202): Investigate failure.
+// TODO (b/64070202): Investigate failure. id:616
+// https://github.com/imdone/tensorflow/issues/617
 XLA_TEST_F(FusionTest, DISABLED_ON_GPU(TransposeNegate)) {
   auto builder = HloComputation::Builder(TestName());
   auto hlo_module = CreateNewModule();

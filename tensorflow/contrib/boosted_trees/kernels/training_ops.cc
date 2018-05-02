@@ -409,7 +409,8 @@ class GrowTreeEnsembleOp : public OpKernel {
       const OpInputList& splits_list,
       std::map<int32, SplitCandidate>* best_splits) {
     // Find best split per partition going through every feature candidate.
-    // TODO(salehay): Is this worth parallelizing?
+    // TODO (salehay): Is this worth parallelizing? id:712
+    // https://github.com/imdone/tensorflow/issues/713
     for (int64 handler_id = 0; handler_id < num_handlers_; ++handler_id) {
       const auto& partition_ids = partition_ids_list[handler_id].vec<int32>();
       const auto& gains = gains_list[handler_id].vec<float>();

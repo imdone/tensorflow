@@ -33,7 +33,8 @@ Computation::Computation(Computation&& computation)
 }
 
 void Computation::Reset() {
-  // TODO(b/34469253) deallocate any owned computation.
+  // TODO (b/34469253) deallocate any owned computation. id:349
+  // https://github.com/imdone/tensorflow/issues/350
   ResetWithoutFreeing();
 }
 

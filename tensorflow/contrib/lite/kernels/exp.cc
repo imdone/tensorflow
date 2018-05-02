@@ -59,7 +59,8 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
                               NumElements(op_context.input),              \
                               GetTensorData<data_type>(op_context.output))
 
-  // TODO(kanlig): supports half, bfloat16, float64, complex64, and complex128.
+  // TODO (kanlig): supports half, bfloat16, float64, complex64, and complex128. id:1764
+  // https://github.com/imdone/tensorflow/issues/1764
   if (kernel_type == kReference) {
     switch (op_context.input->type) {
       case kTfLiteFloat32:
@@ -84,7 +85,8 @@ TfLiteRegistration* Register_EXP_REF() {
   return &r;
 }
 
-// TODO(kanlig): add optimized implementation of Exp.
+// TODO (kanlig): add optimized implementation of Exp. id:1407
+// https://github.com/imdone/tensorflow/issues/1408
 TfLiteRegistration* Register_EXP() { return Register_EXP_REF(); }
 
 }  // namespace builtin

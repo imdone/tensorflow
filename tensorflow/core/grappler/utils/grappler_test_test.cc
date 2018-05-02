@@ -23,7 +23,8 @@ namespace tensorflow {
 namespace grappler {
 namespace {
 
-// TODO(ezhulenev): add tests for all methods in GrapplerTest
+// TODO (ezhulenev): add tests for all methods in GrapplerTest id:2297
+// https://github.com/imdone/tensorflow/issues/2296
 class GrapplerTestTest : public GrapplerTest {};
 
 TEST_F(GrapplerTestTest, CompareIdenticalGraphs) {

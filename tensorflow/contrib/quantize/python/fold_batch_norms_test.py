@@ -42,7 +42,8 @@ fully_connected = layers.fully_connected
 separable_conv2d = layers.separable_conv2d
 
 
-# TODO(suharshs): Use parameterized test once OSS TF supports it.
+# TODO (suharshs): Use parameterized test once OSS TF supports it. id:1707
+# https://github.com/imdone/tensorflow/issues/1707
 class FoldBatchNormsTest(test_util.TensorFlowTestCase):
 
   def _RunTestOverParameters(self, test_fn):

@@ -301,7 +301,8 @@ bool HeapSimulator::IgnoreBuffer(const LogicalBuffer* buffer) const {
   // Buffers for constants are ignored unless the alloc_constants option is
   // set. Also ignore buffers that we're not meant to assign.
   //
-  // TODO(b/32248867): For consistency, constants should get allocations.
+  // TODO (b/32248867): For consistency, constants should get allocations. id:451
+// https://github.com/imdone/tensorflow/issues/452
   if (!options_.alloc_constants &&
       buffer->instruction()->opcode() == HloOpcode::kConstant) {
     return true;

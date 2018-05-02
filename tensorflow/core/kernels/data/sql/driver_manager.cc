@@ -23,7 +23,8 @@ std::unique_ptr<QueryConnection> DriverManager::CreateQueryConnection(
     const string& driver_name) {
   if (driver_name == "sqlite") {
     return std::unique_ptr<SqliteQueryConnection>(new SqliteQueryConnection());
-  } else {  // TODO(b/64276826, b/64276995) Add support for other db types.
+  } else {  // TODO (b/64276826, b/64276995) Add support for other db types. id:2145
+            // https://github.com/imdone/tensorflow/issues/2144
             // Change to registry pattern.
     return nullptr;
   }

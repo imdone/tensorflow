@@ -76,7 +76,8 @@ ENTRY reduce.1 {
   return tools::Parse(hlo_string);
 }
 
-// TODO(b/72454718): XLA:GPU does not support executing code compiled without
+// TODO (b/72454718): does not support executing code compiled without XLA:GPU id:938
+// https://github.com/imdone/tensorflow/issues/939
 // optimizations.
 XLA_TEST_P(ReduceWithLayoutTest, DISABLED_ON_GPU(Reduce)) {
   TF_ASSERT_OK_AND_ASSIGN(std::unique_ptr<HloModule> module, GetParsedModule());

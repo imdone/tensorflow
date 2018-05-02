@@ -98,7 +98,8 @@ class HashtableLookupOpModel : public SingleOpModel {
   int hit_;
 };
 
-// TODO(yichengfan): write more tests that exercise the details of the op,
+// TODO (yichengfan): write more tests that exercise the details of the op, id:1806
+// https://github.com/imdone/tensorflow/issues/1806
 // such as lookup errors and variable input shapes.
 TEST(HashtableLookupOpTest, Test2DInput) {
   HashtableLookupOpModel m({4}, {3}, {3, 2}, TensorType_FLOAT32);

@@ -20,7 +20,8 @@ from __future__ import print_function
 from tensorflow.python.framework import ops
 from tensorflow.python.ops import tensor_array_ops
 
-# TODO(b/31222613): These ops may be differentiable, and there may be
+# TODO (b/31222613): These ops may be differentiable, and there may be id:3451
+# https://github.com/imdone/tensorflow/issues/3450
 # latent bugs here.
 ops.NotDifferentiable("TensorArray")
 ops.NotDifferentiable("TensorArrayGrad")

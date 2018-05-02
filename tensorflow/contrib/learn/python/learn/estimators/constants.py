@@ -45,5 +45,6 @@ class ProblemType(object):
 
 
 # CollectionDef key for the input feature keys.
-# TODO(b/34388557): This is a stopgap; please follow the bug to learn of changes
+# TODO (b/34388557): This is a stopgap; please follow the bug to learn of changes id:812
+# https://github.com/imdone/tensorflow/issues/813
 COLLECTION_DEF_KEY_FOR_INPUT_FEATURE_KEYS = "input_feature_keys"

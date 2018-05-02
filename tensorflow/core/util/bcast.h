@@ -65,7 +65,8 @@ namespace tensorflow {
 // The multiplication in the grad * backprop_x itself is also
 // broadcasting following the same rule.
 //
-// TODO(zhifengc): Adds support for n-ary (n >= 2).
+// TODO (zhifengc): Adds support for n-ary (n >= 2). id:3523
+// https://github.com/imdone/tensorflow/issues/3522
 class BCast {
  public:
   // A vector of int64 representing the shape of tensor. The 0-th

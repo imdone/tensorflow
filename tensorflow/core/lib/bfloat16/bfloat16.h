@@ -169,9 +169,11 @@ struct bfloat16 {
 
   // Converts a float point to bfloat16, with round-nearest-to-even as rounding
   // method.
-  // TODO(b/69266521): Add a truncate_to_bfloat16 function and make this
+  // TODO (b/69266521): Add a truncate_to_bfloat16 function and make this id:2529
+  // https://github.com/imdone/tensorflow/issues/2528
   // function as default behavior.
-  // TODO: There is a slightly faster implementation (8% faster on CPU)
+  // TODO: There is a slightly faster implementation (8% faster on CPU) id:2770
+  // https://github.com/imdone/tensorflow/issues/2769
   // than this (documented in cl/175987786), that is exponentially harder to
   // understand and document. Switch to the faster version when converting to
   // BF16 becomes compute-bound.

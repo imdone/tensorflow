@@ -39,7 +39,8 @@ class FunctionInfo(namedtuple('FunctionInfo', ('dtype',))):
   pass
 
 
-# TODO(mdan): Move this to config.py.
+# TODO (mdan): Move this to config.py. id:589
+# https://github.com/imdone/tensorflow/issues/590
 KNOWN_NUMPY_FUNCTIONS = {
     ('numpy', 'random', 'binomial'): FunctionInfo(dtype='tf.int64'),
 }
@@ -112,12 +113,14 @@ class CallTreeTransformer(transformer.Base):
 
   def _function_is_compilable(self, target_entity):
     """Determines whether an entity can be compiled at all."""
-    # TODO(mdan): This is just a placeholder. Implement.
+    # TODO (mdan): This is just a placeholder. Implement. id:642
+    # https://github.com/imdone/tensorflow/issues/643
     return not inspect_utils.isbuiltin(target_entity)
 
   def _should_compile(self, node, fqn):
     """Determines whether an entity should be compiled in the context."""
-    # TODO(mdan): Needs cleanup. We should remove the use of fqn altogether.
+    # TODO (mdan): Needs cleanup. We should remove the use of fqn altogether. id:489
+    # https://github.com/imdone/tensorflow/issues/490
     module_name = fqn[0]
     for mod in self.uncompiled_modules:
       if module_name.startswith(mod[0] + '.'):
@@ -136,7 +139,8 @@ class CallTreeTransformer(transformer.Base):
     target_entity = self._try_resolve_target(node.func)
     if target_entity is not None:
       # This attribute is set by the decorator itself.
-      # TODO(mdan): This may not play nicely with other wrapping decorators.
+      # TODO (mdan): This may not play nicely with other wrapping decorators. id:480
+      # https://github.com/imdone/tensorflow/issues/481
       if hasattr(target_entity, '__pyct_is_compile_decorator'):
         return False
 
@@ -145,7 +149,8 @@ class CallTreeTransformer(transformer.Base):
 
       # Inspect the target function decorators. If any include a @convert
       # or @graph_ready annotation, then they must be called as they are.
-      # TODO(mdan): This may be quite heavy.
+      # TODO (mdan): This may be quite heavy. id:952
+      # https://github.com/imdone/tensorflow/issues/953
       # To parse and re-analyze each function for every call site could be quite
       # wasteful. Maybe we could cache the parsed AST?
       try:
@@ -190,13 +195,15 @@ class CallTreeTransformer(transformer.Base):
       if target_entity is not None:
         if tf_inspect.ismethod(target_entity):
           # The renaming process will transform it into a regular function.
-          # TODO(mdan): Is this complete? How does it work with nested members?
+          # TODO (mdan): Is this complete? How does it work with nested members? id:593
+          # https://github.com/imdone/tensorflow/issues/594
           node.args = [node.func.value] + node.args
       node.func = templates.replace('func_name', func_name=new_name)[0]
     return node
 
   def _wrap_to_py_func_no_return(self, node):
-    # TODO(mdan): Properly handle varargs, etc.
+    # TODO (mdan): Properly handle varargs, etc. id:644
+    # https://github.com/imdone/tensorflow/issues/645
     template = """
       ag__.utils.wrap_py_func(func, None, (args,), kwargs, True)
     """
@@ -207,7 +214,8 @@ class CallTreeTransformer(transformer.Base):
         kwargs=ast_util.keywords_to_dict(node.keywords))
 
   def _wrap_to_py_func_single_return(self, node, dtype):
-    # TODO(mdan): Properly handle varargs, etc.
+    # TODO (mdan): Properly handle varargs, etc. id:492
+    # https://github.com/imdone/tensorflow/issues/493
     template = """
       ag__.utils.wrap_py_func(func, dtype, (args,), kwargs, False)
     """
@@ -220,20 +228,22 @@ class CallTreeTransformer(transformer.Base):
 
   def _insert_dynamic_conversion(self, node):
     """Inlines a dynamic conversion for a dynamic function."""
-    # TODO(mdan): Pass information on the statically compiled functions.
+    # TODO (mdan): Pass information on the statically compiled functions. id:483
+    # https://github.com/imdone/tensorflow/issues/484
     # Having access to the statically compiled functions can help avoid
     # unnecessary compilation.
     # For example, this would lead to function `a` being compiled twice:
-    #
+    # 
     #   def a():
     #     v = b
     #     b()
     #   def b():
     #     a()
-    #
+    # 
     # This is really a problem with recursive calls, which currently can
     # only be gated by a static condition, and should be rare.
-    # TODO(mdan): It probably makes sense to use dynamic conversion every time.
+    # TODO (mdan): It probably makes sense to use dynamic conversion every time. id:954
+    # https://github.com/imdone/tensorflow/issues/955
     # Before we could convert all the time though, we'd need a reasonable
     # caching mechanism.
     template = """
@@ -241,7 +251,8 @@ class CallTreeTransformer(transformer.Base):
     """
     call_expr = templates.replace(template, func=node.func, args=node.args)
     new_call = call_expr[0].value
-    # TODO(mdan): Improve the template mechanism to better support this.
+    # TODO (mdan): Improve the template mechanism to better support this. id:595
+    # https://github.com/imdone/tensorflow/issues/596
     new_call.keywords = node.keywords
     return new_call
 
@@ -285,7 +296,8 @@ class CallTreeTransformer(transformer.Base):
       if self._function_is_compilable(target_entity):
         node = self._rename_compilable_function(node)
       elif target_fqn and target_fqn in KNOWN_NUMPY_FUNCTIONS:
-        # TODO(mdan): Should we replace these with equivalent TF ops instead?
+        # TODO (mdan): Should we replace these with equivalent TF ops instead? id:647
+        # https://github.com/imdone/tensorflow/issues/648
         node = self._wrap_to_py_func_single_return(
             node, KNOWN_NUMPY_FUNCTIONS[target_fqn].dtype)
       else:

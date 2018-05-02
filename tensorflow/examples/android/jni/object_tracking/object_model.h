@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// NOTE: no native object detectors are currently provided or used by the code
+// NOTE: no native object detectors are currently provided or used by the code id:3053
+// https://github.com/imdone/tensorflow/issues/3052
 // in this directory. This class remains mainly for historical reasons.
 // Detection in the TF demo is done through TensorFlowMultiBoxDetector.java.
 

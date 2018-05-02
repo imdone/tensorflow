@@ -882,7 +882,8 @@ StatusOr<HloInstruction*> AlgebraicSimplifierVisitor::OptimizeDotOfConcatHelper(
             rhs_slice_shape, rhs, /*start_indices=*/start_indices,
             /*limit_indices=*/limit_indices, /*strides=*/{1, 1}));
 
-    // TODO(b/69062148): We can get rid of `swapped` once all backends support
+    // TODO (b/69062148): We can get rid of `swapped` once all backends support id:306
+    // https://github.com/imdone/tensorflow/issues/307
     // "non-canonical" contraction dimensions (that contracts dimension 1 of the
     // LHS with dimension 0 of the RHS).  But for now we keep the same
     // contraction dimensions as the incoming dot operation to ensure the new
@@ -1276,7 +1277,8 @@ Status AlgebraicSimplifierVisitor::HandlePad(HloInstruction* pad) {
     // Pad has negative padding. Replace with a pad with the non-negative
     // padding followed by a slice which effectively performs the negative
     // padding.
-    // TODO(b/34628603): Add support for negative padding in the backends, or
+    // TODO (b/34628603): Add support for negative padding in the backends, or id:233
+    // https://github.com/imdone/tensorflow/issues/234
     // change kPad semantics to disallow negative padding and use slice
     // instead.
 
@@ -1921,7 +1923,8 @@ Status AlgebraicSimplifierVisitor::HandleConvolution(
   // - if bitcasts are supported, the simplifier will be called again with
   //   bitcasts_ == true.
 
-  // TODO(cwhipkey): b/31337498, make this layout insensitive.
+  // TODO (cwhipkey): b/31337498, make this layout insensitive. id:252
+  // https://github.com/imdone/tensorflow/issues/253
   if (!is_layout_sensitive_) {
     return Status::OK();
   }
@@ -2012,7 +2015,8 @@ Status AlgebraicSimplifierVisitor::HandleConvolution(
       convolution_shape.element_type(), {conv_width, output_channels});
 
   // We cannot insert bitcasts if the layouts will not be compatible.
-  // TODO(b/33178038): Consider inserting a transpose if a bitcast would be
+  // TODO (b/33178038): Consider inserting a transpose if a bitcast would be id:421
+  // https://github.com/imdone/tensorflow/issues/422
   // invalid.
   if (!valid_bitcast_callback_(input_shape, new_input_shape) ||
       !valid_bitcast_callback_(filter_shape, new_filter_shape) ||

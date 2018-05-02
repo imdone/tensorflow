@@ -33,7 +33,8 @@ namespace op = xla::testing::opcode_matchers;
 
 using ::testing::HasSubstr;
 
-// TODO(b/74197823): Move the tests to service/.
+// TODO (b/74197823): Move the tests to service/. id:236
+// https://github.com/imdone/tensorflow/issues/237
 class XlaBuilderTest : public ::testing::Test {
  protected:
   StatusOr<std::unique_ptr<HloModule>> BuildHloModule(XlaBuilder* b) {
@@ -219,7 +220,8 @@ TEST_F(XlaBuilderTest, Transpose) {
   EXPECT_THAT(root, op::Transpose(op::Parameter()));
 }
 
-// TODO(b/65209188): Create a dedicated lowering for Xor.
+// TODO (b/65209188): Create a dedicated lowering for Xor. id:401
+// https://github.com/imdone/tensorflow/issues/402
 TEST_F(XlaBuilderTest, Xor) {
   XlaBuilder b(TestName());
   auto x = b.Parameter(0, ShapeUtil::MakeShape(PRED, {}), "x");

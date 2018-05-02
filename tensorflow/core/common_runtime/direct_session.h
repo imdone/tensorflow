@@ -73,7 +73,8 @@ class DirectSession : public Session {
                            const std::vector<string>& target_nodes,
                            std::vector<Tensor>* outputs) override;
 
-  // NOTE: Experimental and subject to change.
+  // NOTE: Experimental and subject to change. id:2605
+  // https://github.com/imdone/tensorflow/issues/2604
   ::tensorflow::Status Run(const ::tensorflow::RunOptions& run_options,
                            const NamedTensorList& inputs,
                            const std::vector<string>& output_names,
@@ -81,7 +82,8 @@ class DirectSession : public Session {
                            std::vector<Tensor>* outputs,
                            RunMetadata* run_metadata) override;
 
-  // NOTE: PRunSetup and PRun are added to support partial execution. This
+  // NOTE: PRunSetup and PRun are added to support partial execution. This id:2496
+  // https://github.com/imdone/tensorflow/issues/2495
   // feature is experimental and subject to change.
   ::tensorflow::Status PRunSetup(const std::vector<string>& input_names,
                                  const std::vector<string>& output_names,
@@ -156,7 +158,8 @@ class DirectSession : public Session {
   // like to maintain a deletion order in which the OpKernels (owned by the
   // executor) should be destroyed first, followed by the resources in the
   // device and then followed by the function stuff.
-  // TODO(rohanj): Consolidate function library definitions so that we can
+  // TODO (rohanj): Consolidate function library definitions so that we can id:1775
+  // https://github.com/imdone/tensorflow/issues/1775
   // instantiate only one ProcFLR and lib_def and make this just a member
   // variable and not a vector.
   // 'flib_def' is the function library used.

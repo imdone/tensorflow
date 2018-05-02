@@ -29,26 +29,27 @@ limitations under the License.
 // is assumed that floats are in IEEE 754 format so the representation is just
 // bits 16-31 of a single precision float.
 //
-// NOTE: The IEEE floating point standard defines a float16 format that
+// NOTE: The IEEE floating point standard defines a float16 format that id:1912
+// https://github.com/imdone/tensorflow/issues/1912
 // is different than this format (it has fewer bits of exponent and more
 // bits of mantissa).  We don't use that format here because conversion
 // to/from 32-bit floats is more complex for that format, and the
 // conversion for this format is very simple.
-//
+// 
 // Because of the existing IEEE float16 type, we do not name our representation
 // "float16" but just use "uint16".
-//
+// 
 // <-----our 16bits float------->
 // s e e e e e e e e f f f f f f f f f f f f f f f f f f f f f f f
 // <------------------------------float-------------------------->
 // 3 3             2 2             1 1                           0
 // 1 0             3 2             5 4                           0
-//
-//
+// 
+// 
 // This type only supports conversion back and forth with float.
-//
+// 
 // This file must be compilable by nvcc.
-//
+// 
 // The type is defined in framework/numeric_types.h.
 
 namespace tensorflow {

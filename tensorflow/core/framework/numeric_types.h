@@ -57,7 +57,8 @@ static inline tensorflow::bfloat16 FloatToBFloat16(float float_val) {
 }
     
 namespace Eigen {
-// TODO(xpan): We probably need to overwrite more methods to have correct eigen
+// TODO (xpan): We probably need to overwrite more methods to have correct eigen id:1932
+// https://github.com/imdone/tensorflow/issues/1932
 // behavior. E.g. epsilon(), dummy_precision, etc. See NumTraits.h in eigen.
 template <>
 struct NumTraits<tensorflow::bfloat16>

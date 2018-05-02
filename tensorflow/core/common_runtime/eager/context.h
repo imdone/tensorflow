@@ -78,12 +78,14 @@ class EagerContext {
   // Sets whether this thread should run in synchronous or asynchronous mode.
   Status SetAsyncForThread(bool async);
 
-  // TODO(apassos) make this return a constant reference
+  // TODO (apassos) make this return a constant reference id:1780
+  // https://github.com/imdone/tensorflow/issues/1780
   gtl::FlatMap<string, Device*, StringPieceHasher>* device_map() {
     return &devices_map_;
   }
 
-  // TODO(apassos) make this return a constant reference
+  // TODO (apassos) make this return a constant reference id:1388
+  // https://github.com/imdone/tensorflow/issues/1389
   std::vector<Device*>* devices() { return &devices_; }
 
   // Clears the kernel caches.
@@ -130,10 +132,12 @@ class EagerContext {
 
   tensorflow::DeviceMgr* device_mgr() { return device_manager_.get(); }
 
-  // TODO(apassos) remove the need for this
+  // TODO (apassos) remove the need for this id:1884
+  // https://github.com/imdone/tensorflow/issues/1884
   void ReleaseDeviceMgr() { device_manager_.release(); }
 
-  // TODO(apassos) clean up RunMetadata storage.
+  // TODO (apassos) clean up RunMetadata storage. id:2609
+  // https://github.com/imdone/tensorflow/issues/2608
   mutex* MetadataMu() { return &metadata_mu_; }
   bool ShouldStoreMetadata() { return should_store_metadata_.load(); }
   void SetShouldStoreMetadata(bool value);

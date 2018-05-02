@@ -41,7 +41,8 @@ from tensorflow.python.training import session_run_hook
 from tensorflow.python.training import training_util
 from tensorflow.python.util.tf_export import tf_export
 
-# TODO(nponomareva): Reveal pruning params here.
+# TODO (nponomareva): Reveal pruning params here. id:3150
+# https://github.com/imdone/tensorflow/issues/3149
 _TreeHParams = collections.namedtuple('TreeHParams', [
     'n_trees', 'max_depth', 'learning_rate', 'l1', 'l2', 'tree_complexity',
     'min_node_weight'
@@ -149,7 +150,8 @@ def _cache_transformed_features(features, feature_columns, batch_size):
         state_ops.assign(cached_features[i], transformed_features[i])
         for i in range(num_features)
     ]
-    # TODO(youngheek): Try other combination of dependencies so that the
+    # TODO (youngheek): Try other combination of dependencies so that the id:3629
+    # https://github.com/imdone/tensorflow/issues/3628
     # function returns a single result, not a tuple.
     with ops.control_dependencies(cached):
       cache_flip_op = are_features_cached.assign(True)
@@ -315,7 +317,8 @@ def _bt_model_fn(
     config,
     closed_form_grad_and_hess_fn=None,
     example_id_column_name=None,
-    # TODO(youngheek): replace this later using other options.
+    # TODO (youngheek): replace this later using other options. id:4198
+    # https://github.com/imdone/tensorflow/issues/4196
     train_in_memory=False,
     name='boosted_trees'):
   """Gradient Boosted Trees model_fn.
@@ -360,7 +363,8 @@ def _bt_model_fn(
                        'non-distributed training.')
   worker_device = control_flow_ops.no_op().device
   # maximum number of splits possible in the whole tree =2^(D-1)-1
-  # TODO(youngheek): perhaps storage could be optimized by storing stats with
+  # TODO (youngheek): perhaps storage could be optimized by storing stats with id:3694
+  # https://github.com/imdone/tensorflow/issues/3693
   # the dimension max_splits_per_layer, instead of max_splits (for the entire
   # tree).
   max_splits = (1 << tree_hparams.max_depth) - 1
@@ -406,7 +410,8 @@ def _bt_model_fn(
         with ops.device(worker_device):
           local_tree_ensemble = boosted_trees_ops.TreeEnsemble(
               name=name + '_local', is_local=True)
-        # TODO(soroush): Do partial updates if this becomes a bottleneck.
+        # TODO (soroush): Do partial updates if this becomes a bottleneck. id:2941
+        # https://github.com/imdone/tensorflow/issues/2940
         ensemble_reload = local_tree_ensemble.deserialize(
             *tree_ensemble.serialize())
       if training_state_cache:
@@ -537,7 +542,8 @@ def _create_classification_head(n_classes,
                                 weight_column=None,
                                 label_vocabulary=None):
   """Creates a classification head. Refer to canned.head for details on args."""
-  # TODO(nponomareva): Support multi-class cases.
+  # TODO (nponomareva): Support multi-class cases. id:3152
+  # https://github.com/imdone/tensorflow/issues/3151
   if n_classes == 2:
     # pylint: disable=protected-access
     return head_lib._binary_logistic_head_with_sigmoid_cross_entropy_loss(
@@ -557,7 +563,8 @@ def _create_classification_head_and_closed_form(n_classes, weight_column,
   if n_classes == 2 and weight_column is None and label_vocabulary is None:
     # Use the closed-form gradients/hessians for 2 class.
     def _grad_and_hess_for_logloss(logits, labels):
-      # TODO(youngheek): add weights handling.
+      # TODO (youngheek): add weights handling. id:3630
+      # https://github.com/imdone/tensorflow/issues/3629
       predictions = math_ops.reciprocal(math_ops.exp(-logits) + 1.0)
       normalizer = math_ops.reciprocal(
           math_ops.cast(array_ops.size(predictions), dtypes.float32))
@@ -674,7 +681,8 @@ class BoostedTreesClassifier(estimator.Estimator):
       ValueError: when wrong arguments are given or unsupported functionalities
          are requested.
     """
-    # TODO(nponomareva): Support multi-class cases.
+    # TODO (nponomareva): Support multi-class cases. id:4199
+    # https://github.com/imdone/tensorflow/issues/4198
     if n_classes == _HOLD_FOR_MULTI_CLASS_SUPPORT:
       n_classes = 2
     head, closed_form = _create_classification_head_and_closed_form(
@@ -784,7 +792,8 @@ class BoostedTreesRegressor(estimator.Estimator):
       ValueError: when wrong arguments are given or unsupported functionalities
          are requested.
     """
-    # TODO(nponomareva): Extend it to multi-dimension cases.
+    # TODO (nponomareva): Extend it to multi-dimension cases. id:3697
+    # https://github.com/imdone/tensorflow/issues/3696
     if label_dimension == _HOLD_FOR_MULTI_DIM_SUPPORT:
       label_dimension = 1
     head = _create_regression_head(label_dimension, weight_column)

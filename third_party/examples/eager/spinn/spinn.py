@@ -587,7 +587,8 @@ def train_or_infer_spinn(embed,
     ValueError: if only one of config.inference_premise and
       config.inference_hypothesis is specified.
   """
-  # TODO(cais): Refactor this function into separate one for training and
+  # TODO (cais): Refactor this function into separate one for training and id:3558
+  # https://github.com/imdone/tensorflow/issues/3557
   #   inference.
   use_gpu = tfe.num_gpus() > 0 and not config.force_cpu
   device = "gpu:0" if use_gpu else "cpu:0"

@@ -26,13 +26,15 @@ limitations under the License.
 #include "tensorflow/core/framework/device_base.h"
 #include "tensorflow/core/framework/kernel_def_builder.h"
 #include "tensorflow/core/framework/node_def_util.h"
-#include "tensorflow/core/framework/op.h"  // TODO(b/62899350): Remove
+#include "tensorflow/core/framework/op.h"  // TODO (b/62899350): Remove id:1938
+                                           // https://github.com/imdone/tensorflow/issues/1938
 #include "tensorflow/core/framework/rendezvous.h"
 #include "tensorflow/core/framework/selective_registration.h"
 #include "tensorflow/core/framework/session_state.h"
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/framework/tensor_shape.pb.h"  // TODO(b/62899350): Remove
+#include "tensorflow/core/framework/tensor_shape.pb.h"  // TODO (b/62899350): Remove id:1570
+                                                        // https://github.com/imdone/tensorflow/issues/1570
 #include "tensorflow/core/framework/tracking_allocator.h"
 #include "tensorflow/core/framework/types.h"
 #include "tensorflow/core/framework/types.pb.h"
@@ -144,7 +146,8 @@ class OpKernel {
   Status OutputRange(StringPiece output_name, int* start, int* stop) const;
 
   // We allow legacy scalars within Google up until GraphDef version 6.
-  // TODO(irving): Remove when we can drop support for GraphDef version 5.
+  // TODO (irving): Remove when we can drop support for GraphDef version 5. id:2228
+  // https://github.com/imdone/tensorflow/issues/2227
   bool allow_legacy_scalars() const {
 #if defined(PLATFORM_GOOGLE) || defined(PLATFORM_GOOGLE_ANDROID)
     return graph_def_version_ < 6;
@@ -165,7 +168,8 @@ class OpKernel {
   }
 
   // Turn a shape Tensor into a TensorShape
-  // TODO(irving): Move to TensorShapeUtils once !allow_legacy_scalars
+  // TODO (irving): Move to TensorShapeUtils once !allow_legacy_scalars id:2865
+  // https://github.com/imdone/tensorflow/issues/2864
   Status MakeShape(const Tensor& shape, TensorShape* out) const;
 
  private:
@@ -357,13 +361,15 @@ class OpKernelConstruction {
   Status* status_;
 
   // Allow op_def_ across from OpKernel, but not from subclasses.
-  // TODO(irving): Remove protos from this header entirely.
+  // TODO (irving): Remove protos from this header entirely. id:2751
+  // https://github.com/imdone/tensorflow/issues/2750
   friend class OpKernel;
 
   TF_DISALLOW_COPY_AND_ASSIGN(OpKernelConstruction);
 };
 
-// TODO(mrry): Consider converting to a random_access_iterator, and upgrading
+// TODO (mrry): Consider converting to a random_access_iterator, and upgrading id:1940
+// https://github.com/imdone/tensorflow/issues/1940
 // tensorflow::gtl::iterator_range to make the below container classes
 // unnecessary.
 template <typename ListType, typename ElementType>
@@ -474,7 +480,8 @@ class OpKernelContext {
   // TrackingAllocator
   typedef std::pair<Allocator*, TrackingAllocator*> WrappedAllocator;
 
-  // TODO(zhifengc): Do some cleanup of Params.
+  // TODO (zhifengc): Do some cleanup of Params. id:1574
+  // https://github.com/imdone/tensorflow/issues/1574
   // The Params struct is passed in to initialize an OpKernelContext,
   // and must outlive the OpKernelContext.
   struct Params {
@@ -605,7 +612,8 @@ class OpKernelContext {
   // Returns an immutable input tensor. May only be used for non-Ref
   // inputs. For Ref inputs use mutable_input below.
   // REQUIRES: !IsRefType(input_dtype(index))
-  // TODO(mrry): Convert this to return Status.
+  // TODO (mrry): Convert this to return Status. id:2229
+  // https://github.com/imdone/tensorflow/issues/2228
   const Tensor& input(int index);
 
   // Returns the named immutable input tensor in "tensor", as defined
@@ -638,7 +646,8 @@ class OpKernelContext {
   // will be visible to other Ops reading the same ref tensor. If
   // !lock_held the input mutex will be acquired before returning the
   // Tensor.
-  // TODO(mrry): Convert this to return Status.
+  // TODO (mrry): Convert this to return Status. id:2868
+  // https://github.com/imdone/tensorflow/issues/2867
   Tensor mutable_input(int index, bool lock_held);
 
   // Returns the named mutable input tensor in "tensor", as defined in
@@ -681,7 +690,8 @@ class OpKernelContext {
   // Return true if there is input at the given index. An operator has no
   // input at index if its tensor is null. This is primarily used by the
   // merge operator.
-  // TODO(mrry): Convert this to return Status.
+  // TODO (mrry): Convert this to return Status. id:2756
+  // https://github.com/imdone/tensorflow/issues/2755
   bool has_input(int index) const;
 
   // Returns true if all inputs are the same shape, otherwise sets the
@@ -736,7 +746,8 @@ class OpKernelContext {
   //        forward_from_array[output_index] == kNeverForward
   //
   // Otherwise returns nullptr.
-  // NOTE: For Cuda kernels that read inputs using the __ldg() intrinsic,
+  // NOTE: For Cuda kernels that read inputs using the __ldg() intrinsic, id:1942
+  // https://github.com/imdone/tensorflow/issues/1942
   // forwarding is only safe if there are no reads via __ldg() after writes
   // to the same address.
   std::unique_ptr<Tensor> forward_input(
@@ -780,10 +791,12 @@ class OpKernelContext {
   // should call allocate_output(index, ...), set_output(index, ...),
   // set_output_ref(index, ...), or set the status to a non-ok value.
   // If it returns false, it may output, but is not required to do so.
-  // TODO(mrry): Convert this to return Status, and implement a string
+  // TODO (mrry): Convert this to return Status, and implement a string id:1576
+  // https://github.com/imdone/tensorflow/issues/1576
   // name version.
   bool output_required(int index) const {
-    return true;  // TODO(josh11b): implement
+    return true;  // TODO (josh11b): implement id:2230
+                  // https://github.com/imdone/tensorflow/issues/2229
   }
 
   // Allocation of tensors during kernel execution inside the Compute
@@ -902,7 +915,8 @@ class OpKernelContext {
   Status mutable_output(StringPiece name, Tensor** tensor);
 
   // Transfers ownership of an output tensor to the caller.
-  // NOTE: For non-reference outputs, the caller takes responsibility
+  // NOTE: For non-reference outputs, the caller takes responsibility id:2871
+  // https://github.com/imdone/tensorflow/issues/2870
   // for deletion. For reference outputs, the caller does NOT take
   // responsibility for deletion.
   Status release_output(StringPiece name, TensorValue* value);
@@ -1046,7 +1060,8 @@ class OpKernelContext {
   bool* is_output_dead() { return &is_output_dead_; }
 
   // May be used, e.g., to get GPU handles, etc.
-  // TODO(tucker): Add example usage.
+  // TODO (tucker): Add example usage. id:2759
+  // https://github.com/imdone/tensorflow/issues/2758
   DeviceBase* device() const { return params_->device; }
 
   // Retrieve list of referenced tensors in out_vector. Once this is

@@ -29,7 +29,8 @@ from tensorflow.python.ops import nn_ops
 from tensorflow.python.ops import variable_scope
 
 
-# TODO(agarwal): Remove and replace with functionality from tf.slim
+# TODO (agarwal): Remove and replace with functionality from tf.slim id:2437
+# https://github.com/imdone/tensorflow/issues/2436
 def fully_connected(inp,
                     inp_size,
                     layer_size,

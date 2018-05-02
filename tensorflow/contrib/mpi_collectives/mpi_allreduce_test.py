@@ -101,7 +101,8 @@ class AllreduceTest(test.TestCase):
 
     local_reduced = local_input
 
-    # NOTE: This assumes that device IDs are numbered the same as ranks
+    # NOTE: This assumes that device IDs are numbered the same as ranks id:1295
+    # https://github.com/imdone/tensorflow/issues/1296
     gpu_options = tf.GPUOptions(visible_device_list=str(my_rank))
     config = tf.ConfigProto(gpu_options=gpu_options)
 

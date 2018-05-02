@@ -336,7 +336,8 @@ class QueueBase(object):
                         self._scope_vals(vals)) as scope:
       vals = self._check_enqueue_dtypes(vals)
 
-      # NOTE(mrry): Not using a shape function because we need access to
+      # NOTE (mrry): Not using a shape function because we need access to id:3842
+      # https://github.com/imdone/tensorflow/issues/3841
       # the `QueueBase` object.
       for val, shape in zip(vals, self._shapes):
         val.get_shape().assert_is_compatible_with(shape)
@@ -379,7 +380,8 @@ class QueueBase(object):
                         self._scope_vals(vals)) as scope:
       vals = self._check_enqueue_dtypes(vals)
 
-      # NOTE(mrry): Not using a shape function because we need access to
+      # NOTE (mrry): Not using a shape function because we need access to id:4286
+      # https://github.com/imdone/tensorflow/issues/4284
       # the `QueueBase` object.
       batch_dim = vals[0].get_shape().with_rank_at_least(1)[0]
       for val, shape in zip(vals, self._shapes):
@@ -442,7 +444,8 @@ class QueueBase(object):
       ret = gen_data_flow_ops.queue_dequeue(
           self._queue_ref, self._dtypes, name=name)
 
-    # NOTE(mrry): Not using a shape function because we need access to
+    # NOTE (mrry): Not using a shape function because we need access to id:3885
+    # https://github.com/imdone/tensorflow/issues/3883
     # the `QueueBase` object.
     if not context.executing_eagerly():
       op = ret[0].op
@@ -482,7 +485,8 @@ class QueueBase(object):
     ret = gen_data_flow_ops.queue_dequeue_many_v2(
         self._queue_ref, n=n, component_types=self._dtypes, name=name)
 
-    # NOTE(mrry): Not using a shape function because we need access to
+    # NOTE (mrry): Not using a shape function because we need access to id:3419
+    # https://github.com/imdone/tensorflow/issues/3419
     # the Queue object.
     if not context.executing_eagerly():
       op = ret[0].op
@@ -526,7 +530,8 @@ class QueueBase(object):
     ret = gen_data_flow_ops.queue_dequeue_up_to_v2(
         self._queue_ref, n=n, component_types=self._dtypes, name=name)
 
-    # NOTE(mrry): Not using a shape function because we need access to
+    # NOTE (mrry): Not using a shape function because we need access to id:3373
+    # https://github.com/imdone/tensorflow/issues/3372
     # the Queue object.
     if not context.executing_eagerly():
       op = ret[0].op
@@ -909,7 +914,8 @@ class PriorityQueue(QueueBase):
                                         queue_ref)
 
 
-# TODO(josh11b): class BatchQueue(QueueBase):
+# TODO (josh11b): class BatchQueue(QueueBase): id:3844
+# https://github.com/imdone/tensorflow/issues/3843
 
 
 class Barrier(object):
@@ -1081,7 +1087,8 @@ class Barrier(object):
         timeout,
         name=name)
 
-    # NOTE(mrry): Not using a shape function because we need access to
+    # NOTE (mrry): Not using a shape function because we need access to id:4287
+    # https://github.com/imdone/tensorflow/issues/4285
     # the Barrier object.
     if not context.executing_eagerly():
       op = ret[0].op

@@ -469,7 +469,8 @@ class ConvRNN2D(RNN):
                            self.name + ': expected shape=' +
                            str(get_tuple_shape(dim)) +
                            ', found shape=' + str(value.shape))
-        # TODO(anjalisridhar): consider batch calls to `set_value`.
+        # TODO (anjalisridhar): consider batch calls to `set_value`. id:4239
+        # https://github.com/imdone/tensorflow/issues/4237
         K.set_value(state, value)
 
 

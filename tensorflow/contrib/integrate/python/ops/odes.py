@@ -505,7 +505,8 @@ def odeint(func,
     raise ValueError('cannot supply `options` without specifying `method`')
 
   with ops.name_scope(name, 'odeint', [y0, t, rtol, atol]) as scope:
-    # TODO(shoyer): use nest.flatten (like tf.while_loop) to allow `y0` to be an
+    # TODO (shoyer): use nest.flatten (like tf.while_loop) to allow `y0` to be an id:1207
+    # https://github.com/imdone/tensorflow/issues/1208
     # arbitrarily nested tuple. This will help performance and usability by
     # avoiding the need to pack/unpack in user functions.
     y0 = ops.convert_to_tensor(y0, name='y0')

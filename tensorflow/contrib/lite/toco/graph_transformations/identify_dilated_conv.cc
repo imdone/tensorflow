@@ -68,7 +68,8 @@ bool IdentifyDilatedConv::Run(Model* model, std::size_t op_index) {
   }
   CHECK_EQ(stb_op->outputs.size(), 1);
   // Extract the dilation factor from Input[1] of SpaceToBatch
-  // TODO(mjmatthews): Support 2D dilation factors.
+  // TODO (mjmatthews): Support 2D dilation factors. id:1036
+  // https://github.com/imdone/tensorflow/issues/1037
   const auto& block_shape_array = model->GetArray(stb_op->inputs[1]);
   if (!block_shape_array.buffer) {
     return false;
@@ -126,7 +127,8 @@ bool IdentifyDilatedConv::Run(Model* model, std::size_t op_index) {
     CHECK_EQ(pad_op->inputs.size(), 2);
     CHECK_EQ(pad_op->outputs.size(), 1);
   }
-  // TODO(mjmatthews): Perform validity checking on padding dimensions.
+  // TODO (mjmatthews): Perform validity checking on padding dimensions. id:1616
+  // https://github.com/imdone/tensorflow/issues/1616
 
   // Pre-BatchToSpace Bias Op
   auto* next_op = has_pad_op
@@ -177,7 +179,8 @@ bool IdentifyDilatedConv::Run(Model* model, std::size_t op_index) {
     bias_add_op->inputs[0] = conv_op->outputs[0];
     conv_op->inputs[0] = stb_op->inputs[0];
   }
-  // TODO(mjmatthews): Connect bias directly into the Conv2D?
+  // TODO (mjmatthews): Connect bias directly into the Conv2D? id:2039
+  // https://github.com/imdone/tensorflow/issues/2039
 
   // 3. DELETE LEFTOVER OPERATORS
   // ***************************************************************************

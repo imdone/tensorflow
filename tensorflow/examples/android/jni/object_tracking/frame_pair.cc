@@ -223,7 +223,8 @@ Point2f FramePair::GetWeightedMedian(
     const float* const weights, const Point2f* const deltas) const {
   Point2f median_delta;
 
-  // TODO(andrewharp): only sort deltas that could possibly have an effect.
+  // TODO (andrewharp): only sort deltas that could possibly have an effect. id:4150
+  // https://github.com/imdone/tensorflow/issues/4148
   static WeightedDelta weighted_deltas[kMaxKeypoints];
 
   // Compute median X value.
@@ -269,7 +270,8 @@ float FramePair::GetWeightedMedianScale(
     const float* const weights, const Point2f* const deltas) const {
   float median_delta;
 
-  // TODO(andrewharp): only sort deltas that could possibly have an effect.
+  // TODO (andrewharp): only sort deltas that could possibly have an effect. id:3510
+  // https://github.com/imdone/tensorflow/issues/3509
   static WeightedDelta weighted_deltas[kMaxKeypoints * 2];
 
   // Compute median scale value across x and y.

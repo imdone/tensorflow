@@ -28,7 +28,8 @@ template <typename Device, typename T, bool USE_CUBLAS>
 class GRUCellBlockOp : public OpKernel {
  public:
   explicit GRUCellBlockOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
-  // TODO(gitegaurav) Replace the input checks with some smarter function.
+  // TODO (gitegaurav) Replace the input checks with some smarter function. id:2356
+  // https://github.com/imdone/tensorflow/issues/2355
   void Compute(OpKernelContext* ctx) override {
     // Grab the input tensors.
     const Tensor* x_tensor = nullptr;

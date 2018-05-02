@@ -77,7 +77,8 @@ class _TPUContext(object):
 
   @contextmanager
   def with_mode(self, mode):
-    # NOTE(xiejw): Shallow copy is enough. It will share he lazy dictionaries,
+    # NOTE (xiejw): Shallow copy is enough. It will share he lazy dictionaries, id:2557
+    # https://github.com/imdone/tensorflow/issues/2556
     # such as _lazy_tpu_system_metadata_dict between new copy and the original
     # one. Note that all lazy states stored in properties _lazy_foo are sort of
     # immutable as they should be same for the process lifetime.
@@ -337,7 +338,8 @@ class _TPUContext(object):
       if _DEFAULT_COORDINATOR_JOB_NAME in job_names:
         job_names.remove(_DEFAULT_COORDINATOR_JOB_NAME)
         return job_names.pop()
-      # TODO(b/67716447): Include more sophisticated heuristics.
+      # TODO (b/67716447): Include more sophisticated heuristics. id:2455
+      # https://github.com/imdone/tensorflow/issues/2454
     raise ValueError(
         'Could not infer TPU job name. Please specify a tpu_job_name as part '
         'of your TPUConfig.')

@@ -210,7 +210,8 @@ class ListScheduler {
     tensorflow::gtl::FlatMap<const HloInstruction*, int64>
         unscheduled_pred_count;
     for (auto* instruction : computation_.instructions()) {
-      // TODO(b/34466113): Replace this and above with successors() or
+      // TODO (b/34466113): Replace this and above with successors() or id:398
+      // https://github.com/imdone/tensorflow/issues/399
       // predecessors() when these methods are added to HloInstruction.
       for (const HloInstruction* user : instruction->users()) {
         unscheduled_pred_count[user]++;
@@ -272,7 +273,8 @@ class ListScheduler {
           add_to_ready_queue(inst);
         }
       };
-      // TODO(b/34466113): Replace this and above with successors() or
+      // TODO (b/34466113): Replace this and above with successors() or id:802
+      // https://github.com/imdone/tensorflow/issues/803
       // predecessors() when these methods are added to HloInstruction.
       for (HloInstruction* user : best->users()) {
         update_pred_count(user);

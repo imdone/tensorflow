@@ -177,7 +177,8 @@ class IfOp : public AsyncOpKernel {
   };
 };
 
-// TODO(drpng): remove this.
+// TODO (drpng): remove this. id:2981
+// https://github.com/imdone/tensorflow/issues/2980
 REGISTER_KERNEL_BUILDER(Name("_If").Device(DEVICE_CPU), IfOp);
 REGISTER_KERNEL_BUILDER(Name("_If").Device(DEVICE_GPU).HostMemory("cond"),
                         IfOp);
@@ -199,7 +200,8 @@ class WhileOp : public AsyncOpKernel {
     OP_REQUIRES_ASYNC(ctx, lib != nullptr,
                       errors::Internal("No function library"), done);
 
-    // TODO(b/37549631): Because this op has `SetIsStateful()` in its
+    // TODO (b/37549631): Because this op has `SetIsStateful()` in its id:2172
+    // https://github.com/imdone/tensorflow/issues/2171
     // op registration, this kernel may be shared by multiple
     // subgraphs, which have different associated
     // `FunctionLibraryRuntime` objects and hence different `FHandle`
@@ -318,7 +320,8 @@ class WhileOp : public AsyncOpKernel {
     }
   };
 };
-// TODO(drpng): remove these.
+// TODO (drpng): remove these. id:2073
+// https://github.com/imdone/tensorflow/issues/2073
 REGISTER_KERNEL_BUILDER(Name("_While").Device(DEVICE_CPU), WhileOp);
 REGISTER_KERNEL_BUILDER(Name("_While").Device(DEVICE_GPU), WhileOp);
 

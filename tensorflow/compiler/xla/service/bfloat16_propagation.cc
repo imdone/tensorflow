@@ -597,7 +597,8 @@ Status BFloat16Propagation::ResolveInconsistencyOfAliasingBuffers(
   // beginning but later on adjusted back to F32, so converting literals here
   // can avoid repeated conversions.
   //
-  // TODO(b/73833576): Consider resetting literal in HloInstruction.
+  // TODO (b/73833576): Consider resetting literal in HloInstruction. id:313
+// https://github.com/imdone/tensorflow/issues/314
   bool needs_dce = needs_tuple_simplifier;
   for (auto computation : computations_topological_order) {
     for (auto hlo : computation->MakeInstructionPostOrder()) {

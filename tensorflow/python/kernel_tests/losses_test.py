@@ -1136,7 +1136,8 @@ class MeanPairwiseSquaredErrorTest(test.TestCase):
         [[8, 1, 3], [7, 8, 9], [10, 11, 12]],
     ])
     self._test_valid_weights(
-        # TODO(ptucker): This doesn't look right.
+        # TODO (ptucker): This doesn't look right. id:3776
+        # https://github.com/imdone/tensorflow/issues/3776
         labels,
         predictions,
         expected_loss=9 * 137.5,

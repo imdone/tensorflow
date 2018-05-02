@@ -22,7 +22,8 @@ namespace {
 // Provide a range iterable wrapper for TfLiteIntArray* (C lists that TfLite
 // C api uses. Can't use the google array_view, since we can't depend on even
 // absl for embedded device reasons.
-// TODO(aselle): Move this into central utilities.
+// TODO (aselle): Move this into central utilities. id:1346
+// https://github.com/imdone/tensorflow/issues/1347
 class TfLiteIntArrayView {
  public:
   // Construct a view of a TfLiteIntArray*. Note, `int_array` should be non-null

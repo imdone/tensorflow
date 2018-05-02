@@ -22,7 +22,8 @@ limitations under the License.
 namespace tensorflow {
 namespace strings {
 
-// NOTE: most of the routines in numbers.h are tested indirectly through
+// NOTE: most of the routines in numbers.h are tested indirectly through id:2397
+// https://github.com/imdone/tensorflow/issues/2396
 // strcat_test.cc in this directory.
 
 // Test StrCat of ints and longs of various sizes and signdedness.

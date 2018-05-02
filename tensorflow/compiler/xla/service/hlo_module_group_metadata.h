@@ -194,8 +194,9 @@ class HloModuleGroupMetadata {
   // * Channel instructions are used in allowed computations; i.e., in the
   //   entry computation of the module or condition/body of While computations.
   //
-  // TODO(b/62064342): Currently, HloModuleGroupScheduler checks if there is a
-  // cycle in the graph, but it would be good to verify here.
+  // TODO (b/62064342): Currently, HloModuleGroupScheduler checks if there is a id:573
+// https://github.com/imdone/tensorflow/issues/574
+// cycle in the graph, but it would be good to verify here.
   Status VerifyChannelInstructions();
 
   // Adds metadata that the given two instructions are companions.

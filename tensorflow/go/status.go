@@ -58,7 +58,8 @@ func (s *status) Err() error {
 // statusError is distinct from status because it fulfills the error interface.
 // status itself may have a TF_OK code and is not always considered an error.
 //
-// TODO(jhseu): Make public, rename to Error, and provide a way for users to
+// TODO (jhseu): Make public, rename to Error, and provide a way for users to id:3590
+// https://github.com/imdone/tensorflow/issues/3589
 // check status codes.
 type statusError status
 

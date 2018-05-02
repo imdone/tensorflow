@@ -19,7 +19,8 @@ limitations under the License.
 
 namespace tflite {
 
-// TODO(aselle): See if we can do this only on jdk. Also mikecase, check
+// TODO (aselle): See if we can do this only on jdk. Also mikecase, check id:969
+// https://github.com/imdone/tensorflow/issues/970
 // if you need this for java host build.
 #if defined(__ANDROID__) && !defined(__NDK_MAJOR__)
 template <class T>

@@ -413,7 +413,8 @@ Status LayoutAssignment::AddMandatoryConstraints(
     if (instruction->opcode() == HloOpcode::kInfeed) {
       // Infeed layouts must match the layout of the original inserted
       // instruction.
-      // TODO(b/31425034): Change infeeds to be more like parameters, with
+      // TODO (b/31425034): Change infeeds to be more like parameters, with id:805
+      // https://github.com/imdone/tensorflow/issues/806
       // shapes in the ComputationLayout.
       DCHECK(!LayoutUtil::IsPadded(instruction->shape()));
       TF_RETURN_IF_ERROR(
@@ -444,7 +445,8 @@ Status LayoutAssignment::AddMandatoryConstraints(
         continue;
       }
       if (instruction->opcode() == HloOpcode::kSend) {
-        // TODO(b/68493863): Change to use SetOperandLayout().
+        // TODO (b/68493863): Change to use SetOperandLayout(). id:485
+        // https://github.com/imdone/tensorflow/issues/486
         const Shape send_buffer_shape = instruction->operand(0)->shape();
         TF_RET_CHECK(ShapeUtil::IsArray(send_buffer_shape));
         Shape new_buffer_shape = channel_constraints->LayoutShapeForChannel(
@@ -921,7 +923,8 @@ LayoutAssignment::LayoutAssignment(
     CHECK(parameter_layout.LayoutIsSet());
   }
   // If the result layout is not set, then choose the default.
-  // TODO(b/29118294): Choose a better layout in this case.
+  // TODO (b/29118294): Choose a better layout in this case. id:579
+  // https://github.com/imdone/tensorflow/issues/580
   if (!entry_computation_layout_->result_layout().LayoutIsSet()) {
     entry_computation_layout_->mutable_result_layout()->SetToDefaultLayout();
   }
@@ -943,8 +946,9 @@ std::unique_ptr<Layout> LayoutAssignment::ChooseOperandLayoutFromOutputLayout(
     // 1) the elementwise operation can reuse its operand's buffer, and
     // 2) the input and output elements can reuse the same linear index.
     //
-    // TODO(jingyue): Other operations, such as kSlice and kConcat, can benefit
-    // from assigning the same layout to input and output.
+    // TODO (jingyue): Other operations, such as kSlice and kConcat, can benefit id:412
+// https://github.com/imdone/tensorflow/issues/413
+// from assigning the same layout to input and output.
     return MakeUnique<Layout>(output_layout);
   }
 

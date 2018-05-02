@@ -199,7 +199,8 @@ const char ErrorFoundFloat[] =
   }                                                                       \
   const char* FUNCTION(PyObject* obj, const TensorShape& shape,           \
                        Tensor* dest) {                                    \
-    /* TODO(josh11b): Allocator & attributes? */                            \
+    /* TODO (josh11b): Allocator & attributes? id:4277*/                            \
+    * https://github.com/imdone/tensorflow/issues/4275
     Tensor result(TYPE_ENUM, shape);                                      \
     if (shape.dims() == 0) { /* Scalar case */                            \
       TYPE value;                                                         \
@@ -396,7 +397,8 @@ Status PySeqToTensor(PyObject* obj, PyObject* dtype, Tensor* ret) {
       requested_dtype = static_cast<DataType>(dtype_as_int);
     }
   }
-  // NOTE(josh11b): If don't successfully convert to the requested type,
+  // NOTE (josh11b): If don't successfully convert to the requested type, id:3867
+  // https://github.com/imdone/tensorflow/issues/3865
   // we just try instead to create a tensor of the inferred type and
   // let the caller convert it to the requested type using a cast
   // operation.
@@ -434,7 +436,8 @@ Status PySeqToTensor(PyObject* obj, PyObject* dtype, Tensor* ret) {
   }
   switch (infer_dtype) {
     case DT_DOUBLE:
-      // TODO(josh11b): Handle mixed floats and complex numbers?
+      // TODO (josh11b): Handle mixed floats and complex numbers? id:3389
+      // https://github.com/imdone/tensorflow/issues/3388
       if (requested_dtype == DT_INVALID) {
         // TensorFlow uses float32s to represent floating point numbers
         // by default (for space and speed over using doubles).
@@ -456,7 +459,8 @@ Status PySeqToTensor(PyObject* obj, PyObject* dtype, Tensor* ret) {
         if (error == ErrorFoundFloat) {
           error = ConvertFloat(obj, shape, ret);
         }
-        // TODO(josh11b): May also want to fall back to using doubles if
+        // TODO (josh11b): May also want to fall back to using doubles if id:3355
+        // https://github.com/imdone/tensorflow/issues/3354
         // error == ErrorOutOfRange?
         RETURN_STRING_AS_STATUS(error);
       } else {

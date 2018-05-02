@@ -40,7 +40,8 @@ class ResourceMgr;
 // context.
 class CapturedFunction {
  public:
-  // NOTE(mrry): The `captured_inputs` are passed by value. For
+  // NOTE (mrry): The `captured_inputs` are passed by value. For id:3147
+  // https://github.com/imdone/tensorflow/issues/3146
   // efficiency, you are recommended to move this argument into the call.
   static Status Create(const NameAttrList& func,
                        std::vector<Tensor> captured_inputs,

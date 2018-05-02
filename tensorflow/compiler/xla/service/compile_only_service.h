@@ -55,7 +55,8 @@ class CompileOnlyService : public Service {
 
   // A description of a xla computation to compile using CompileAheadOfTime.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:247
+// https://github.com/imdone/tensorflow/issues/248
   struct AotXlaComputationInstance {
     HloModuleProto computation;
     std::vector<const Shape*> argument_layouts;
@@ -66,7 +67,8 @@ class CompileOnlyService : public Service {
   // intended for use in static compilation.  See
   // |CompileOnlyClient::CompileAheadOfTime| for additional details.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:280
+// https://github.com/imdone/tensorflow/issues/281
   StatusOr<std::vector<std::unique_ptr<AotCompilationResult>>>
   CompileAheadOfTime(
       const tensorflow::gtl::ArraySlice<AotXlaComputationInstance> computations,

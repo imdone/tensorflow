@@ -85,7 +85,8 @@ class ConditionalAccumulator
 
   void AllocateAndAssignToAccumGradFunction(OpKernelContext* ctx,
                                             const Tensor* grad) override {
-    // TODO(b/32704451): Don't just ignore the ::tensorflow::Status object!
+    // TODO (b/32704451): Don't just ignore the :: object! tensorflow::Status id:3105
+    // https://github.com/imdone/tensorflow/issues/3104
     ctx->allocate_persistent(dtype_, grad->shape(), &accum_grad_persistent_,
                              &accum_grad_)
         .IgnoreError();

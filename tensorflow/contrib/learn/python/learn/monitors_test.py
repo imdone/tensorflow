@@ -653,7 +653,8 @@ class CheckpointSaverTest(test.TestCase):
                          checkpoint_utils.load_variable(self.model_dir,
                                                         self.global_step.name))
 
-  # TODO(gunan): Reenable this test after b/32446874 is fixed.
+  # TODO (gunan): Reenable this test after b/32446874 is fixed. id:1165
+  # https://github.com/imdone/tensorflow/issues/1166
   def disabled_test_save_secs_saves_periodically(self):
     with self.graph.as_default():
       monitor = learn.monitors.CheckpointSaver(

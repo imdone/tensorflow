@@ -60,7 +60,8 @@ from tensorflow.python.util import nest
 
 def _AssertIsCompatible(a, b):
   """Checks that `a` and `b` are nested structures of the same type."""
-  # TODO(drpng): implement.
+  # TODO (drpng): implement. id:1188
+  # https://github.com/imdone/tensorflow/issues/1189
   del a
   del b
 
@@ -306,7 +307,8 @@ class _Recurrent(object):
 
     # pylint: disable=unbalanced-tuple-unpacking
 
-    # NOTE: TF Function (Fwd, Bak, ForwardLoopBody, BackwardLoopBody,
+    # NOTE: TF Function (Fwd, Bak, ForwardLoopBody, BackwardLoopBody, id:1713
+    # https://github.com/imdone/tensorflow/issues/1713
     # Forward and Backward defined below) simply takes a list of
     # Tensors and returns a list of Tensors. When we pass in a
     # structure (a list of structures of Tensors), we use _Flatten to
@@ -367,14 +369,16 @@ class _Recurrent(object):
     def Grad(op, *args):
       """The python grad function for the Forward function."""
 
-      # NOTE: tf.gradient backprops None for int32/int64 while zeros
+      # NOTE: tf.gradient backprops None for int32/int64 while zeros id:2352
+      # https://github.com/imdone/tensorflow/issues/2351
       # for float32/float64. For consistency, we always backprop
       # zeros.
       args = list(args)
       for i, dy in enumerate(args):
         if dy is None:
           args[i] = array_ops.zeros_like(op.outputs[i])
-      # TODO(drpng): getting the extra state here?
+      # TODO (drpng): getting the extra state here? id:2287
+      # https://github.com/imdone/tensorflow/issues/2286
       op_inputs = [x for x in op.inputs]
       op_struct = [
           self._theta, self._state, self._inputs, self._max_input_length,
@@ -609,7 +613,8 @@ def _GetCellGrad(cell_fn, cell_grad):
 
   def CellGrad(theta, state0, inputs, extras, dstate1):
     """Default gradient function for cell_fn."""
-    # NOTE: The default grad function recomputes the forward
+    # NOTE: The default grad function recomputes the forward id:1620
+    # https://github.com/imdone/tensorflow/issues/1620
     # function and does not take advantage of 'extras' returned by
     # the forward function.
     del extras

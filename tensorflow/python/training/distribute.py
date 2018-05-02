@@ -546,14 +546,21 @@ class DistributionStrategy(object):
   in the distributed vs. single tower cases.
   """
 
-  # TODO(josh11b): Raise an exception if variable partitioning requested before
+  # TODO (josh11b): Raise an exception if variable partitioning requested before id:3930
+  # https://github.com/imdone/tensorflow/issues/3928
   #   we add support.
-  # TODO(josh11b): Also `parameter_device_index` property?
-  # TODO(josh11b): `map()`
-  # TODO(josh11b): ClusterSpec/ClusterResolver
-  # TODO(josh11b): Partitioned computations, state; sharding
-  # TODO(josh11b): Model parallelism: "towers" with multiple devices; shuffling
-  # TODO(josh11b): List of towers with their worker and parameter devices
+  # TODO (josh11b): Also `parameter_device_index` property? id:4324
+  # https://github.com/imdone/tensorflow/issues/4322
+  # TODO (josh11b): `map()` id:3995
+  # https://github.com/imdone/tensorflow/issues/3993
+  # TODO (josh11b): ClusterSpec/ClusterResolver id:3684
+  # https://github.com/imdone/tensorflow/issues/3683
+  # TODO (josh11b): Partitioned computations, state; sharding id:3468
+  # https://github.com/imdone/tensorflow/issues/3467
+  # TODO (josh11b): Model parallelism: "towers" with multiple devices; shuffling id:3933
+  # https://github.com/imdone/tensorflow/issues/3931
+  # TODO (josh11b): List of towers with their worker and parameter devices id:4325
+  # https://github.com/imdone/tensorflow/issues/4323
   #   (where the parameter devices may overlap in the ps case).
 
   def scope(self):
@@ -681,7 +688,8 @@ class DistributionStrategy(object):
           "DistributionStrategy.")
     return result
 
-  # TODO(josh11b): `PerDeviceDataset` currently only implements a few methods of
+  # TODO (josh11b): `PerDeviceDataset` currently only implements a few methods of id:3999
+  # https://github.com/imdone/tensorflow/issues/3997
   # Dataset API such as make_one_shot_iterator and make_initializable_iterator.
   # Extend to implement more functionality of datasets.
   def distribute_dataset(self, dataset_fn):
@@ -720,7 +728,8 @@ class DistributionStrategy(object):
     Returns:
       A value mirrored to `destinations` devices.
     """
-    # TODO(josh11b): More docstring
+    # TODO (josh11b): More docstring id:3687
+    # https://github.com/imdone/tensorflow/issues/3686
     _require_cross_tower_context(self)
     return self._broadcast(tensor, destinations)
 
@@ -795,8 +804,10 @@ class DistributionStrategy(object):
     Returns:
       A value mirrored to `destinations`.
     """
-    # TODO(josh11b): More docstring
-    # TODO(josh11b): Return an unwrapped value if colocate_with is a
+    # TODO (josh11b): More docstring id:3470
+    # https://github.com/imdone/tensorflow/issues/3469
+    # TODO (josh11b): Return an unwrapped value if colocate_with is a id:3936
+    # https://github.com/imdone/tensorflow/issues/3934
     # single device.
     _require_cross_tower_context(self)
     return self._reduce(method_string, value, destinations)
@@ -816,7 +827,8 @@ class DistributionStrategy(object):
     Returns:
       A list of mirrored values, one per pair in `value_destination_pairs`.
     """
-    # TODO(josh11b): More docstring
+    # TODO (josh11b): More docstring id:4326
+    # https://github.com/imdone/tensorflow/issues/4324
     _require_cross_tower_context(self)
     assert method_string in ("sum", "mean")
     return self._batch_reduce(method_string, value_destination_pairs)
@@ -948,13 +960,15 @@ class DistributionStrategy(object):
   @property
   def worker_devices(self):
     """Returns the list of devices used to run `call_for_each_tower()` calls."""
-    # TODO(josh11b): More docstring
+    # TODO (josh11b): More docstring id:4002
+    # https://github.com/imdone/tensorflow/issues/4000
     raise NotImplementedError("must be implemented in descendants")
 
   @property
   def parameter_devices(self):
     """Returns the list of devices used for variable and `update` placement."""
-    # TODO(josh11b): More docstring
+    # TODO (josh11b): More docstring id:3689
+    # https://github.com/imdone/tensorflow/issues/3689
     raise NotImplementedError("must be implemented in descendants")
 
   def non_slot_devices(self, var_list):
@@ -1106,7 +1120,8 @@ class TowerContext(object):
     require_tower_context(self)
     return device_util.current()
 
-  # TODO(josh11b): Implement `start_all_reduce(method, t)` that returns
+  # TODO (josh11b): Implement `start_all_reduce(method, t)` that returns id:3471
+  # https://github.com/imdone/tensorflow/issues/3470
   # a function returning the result of reducing `t` across all
   # towers. Most likely can be implemented in terms of `merge_call()`
   # and `batch_reduce()`.
@@ -1162,18 +1177,21 @@ class _DefaultDistributionStrategy(DistributionStrategy):
       return fn(*args, **kwargs)
 
   def _reduce(self, method_string, value, destinations):
-    # TODO(josh11b): Use destinations?
+    # TODO (josh11b): Use destinations? id:3939
+    # https://github.com/imdone/tensorflow/issues/3937
     del method_string, destinations
     return value
 
   def _update(self, var, fn, *args, **kwargs):
-    # TODO(josh11b): Figure out what we should be passing to UpdateContext()
+    # TODO (josh11b): Figure out what we should be passing to UpdateContext() id:4327
+    # https://github.com/imdone/tensorflow/issues/4325
     # once that value is used for something.
     with ops.colocate_with(var), UpdateContext(var):
       return fn(var, *args, **kwargs)
 
   def _update_non_slot(self, colocate_with, fn, *args, **kwargs):
-    # TODO(josh11b): Figure out what we should be passing to UpdateContext()
+    # TODO (josh11b): Figure out what we should be passing to UpdateContext() id:4005
+    # https://github.com/imdone/tensorflow/issues/4003
     # once that value is used for something.
     with ops.colocate_with(colocate_with), UpdateContext(colocate_with):
       return fn(*args, **kwargs)

@@ -199,7 +199,8 @@ class Profiler(object):
     op_log = tfprof_logger.merge_default_with_oplog(
         self._graph, run_meta=run_meta)
     # pylint: enable=protected-access
-    # TODO(xpan): P1: Better to find the current graph.
+    # TODO (xpan): P1: Better to find the current graph. id:3661
+    # https://github.com/imdone/tensorflow/issues/3660
     self._coverage = print_mdl.AddStep(step, _graph_string(self._graph),
                                        run_meta.SerializeToString(),
                                        op_log.SerializeToString())

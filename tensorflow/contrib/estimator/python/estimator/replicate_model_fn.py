@@ -157,7 +157,8 @@ def replicate_model_fn(model_fn,
       model_fn,
       loss_reduction,
       devices,
-      # TODO(isaprykin): Query the system configuration to choose modes other
+      # TODO (isaprykin): Query the system configuration to choose modes other id:1131
+      # https://github.com/imdone/tensorflow/issues/1132
       # than `SHARED_LOCAL_PARAMETER_SERVER`, even though it is often
       # appropriate.
       mode=_VariableDistributionMode.SHARED_LOCAL_PARAMETER_SERVER)

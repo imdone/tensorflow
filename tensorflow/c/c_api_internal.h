@@ -95,8 +95,9 @@ struct TF_Graph {
   // TF_Graph may only / must be deleted when
   //   sessions.size() == 0 && delete_requested == true
   //
-  // TODO(b/74949947): mutations currently trigger a warning instead of a bad
-  // status, this should be reverted when possible.
+  // TODO (b/74949947): mutations currently trigger a warning instead of a bad id:26
+// https://github.com/imdone/tensorflow/issues/27
+// status, this should be reverted when possible.
   tensorflow::gtl::FlatMap<TF_Session*, tensorflow::string> sessions
       GUARDED_BY(mu);
   bool delete_requested GUARDED_BY(mu);  // set true by TF_DeleteGraph
@@ -141,7 +142,8 @@ struct TF_ImportGraphDefOptions {
   tensorflow::ImportGraphDefOptions opts;
 
   // Backing memory for TensorId fields in opts.
-  // TODO(skyewm): it'd be better if ImportGraphDefOptions owned this.
+  // TODO (skyewm): it'd be better if ImportGraphDefOptions owned this. id:27
+  // https://github.com/imdone/tensorflow/issues/28
   std::list<tensorflow::string> tensor_id_data;
 };
 
@@ -203,7 +205,8 @@ Status MessageToBuffer(const tensorflow::protobuf::Message& in, TF_Buffer* out);
 // rank is known), then it must be equal to the length of `shapes[i]`; if
 // `ranks[i] == 1`, then `shapes[i]` may be nullptr.
 //
-// TODO(akshayka): Implement a corresponding getter method.
+// TODO (akshayka): Implement a corresponding getter method. id:38
+// https://github.com/imdone/tensorflow/issues/39
 void TF_GraphSetOutputHandleShapesAndTypes(TF_Graph* graph, TF_Output output,
                                            int num_shapes_and_types,
                                            const int64_t** shapes,

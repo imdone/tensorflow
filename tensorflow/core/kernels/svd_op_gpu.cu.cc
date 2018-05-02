@@ -14,13 +14,15 @@ limitations under the License.
 ==============================================================================*/
 
 // See docs in ../ops/linalg_ops.cc.
-// TODO(shamanDevel): Enable complex inputs. This will require a specialization
+// TODO (shamanDevel): Enable complex inputs. This will require a specialization id:3346
+// https://github.com/imdone/tensorflow/issues/3345
 //                    of Gesvd for complex inputs as well as a new kernel
 //                    definition to output the singular values as reals
 //                    instead of complex values. The current CPU implementation
 //                    outputs the singular values as complex values and then
 //                    casts them to reals in the python wrapper.
-// TODO(rmlarsen/shamanDevel): This could use a bit of cleanup. We don't need to
+// TODO (rmlarsen/shamanDevel): This could use a bit of cleanup. We don't need to id:4049
+// https://github.com/imdone/tensorflow/issues/4047
 // pass quite as many raw pointers around. Would also be nice to reduce code
 // duplication.
 
@@ -151,7 +153,8 @@ class SvdOpGpu : public AsyncOpKernel {
     // -> Compute V for all rows in M to cope for zeros.
     // 1. V' = sum_i (M_i * U_i,1 * S_i)
     // 2. V = {1, V'>=0, -1, V'<0}
-    // TODO: what is with complex values?
+    // TODO: what is with complex values? id:2351
+    // https://github.com/imdone/tensorflow/issues/2350
     if (compute_uv_ && n == 1) {
       // 1. compute the (batched) sum
       const GPUDevice& d = context->eigen_device<GPUDevice>();
@@ -187,7 +190,8 @@ class SvdOpGpu : public AsyncOpKernel {
   }
 
   // The SVD if m >= n
-  // TODO: can the two cases (MgeqN and MlessN) be simplified,
+  // TODO: can the two cases (MgeqN and MlessN) be simplified, id:2511
+  // https://github.com/imdone/tensorflow/issues/2510
   //   common boilerplate be reduced, or even combined in one method?
   void PerformSVD_MgeqN(OpKernelContext* context, DoneCallback done, int64 m,
                         int64 n, int64 p, const Tensor& M, Tensor* S, Tensor* U,
@@ -200,7 +204,8 @@ class SvdOpGpu : public AsyncOpKernel {
     input_shape.AddDim(n);
     input_shape.AddDim(m);
     Tensor input_copy;
-    // TODO(rmlarsen): Convert to std::make_unique when available.
+    // TODO (rmlarsen): Convert to when available. std::make_unique id:2753
+    // https://github.com/imdone/tensorflow/issues/2752
     std::unique_ptr<CudaSolver> solver(new CudaSolver(context));
     OP_REQUIRES_OK_ASYNC(
         context,
@@ -266,7 +271,8 @@ class SvdOpGpu : public AsyncOpKernel {
     // Reuse the input buffer or make a copy for the SVD depending on whether
     // this op owns the input buffer exclusively. This is needed because the
     // SVD modifies the input
-    // TODO(rmlarsen): Convert to std::make_unique when available.
+    // TODO (rmlarsen): Convert to when available. std::make_unique id:3348
+    // https://github.com/imdone/tensorflow/issues/3347
     std::unique_ptr<CudaSolver> solver(new CudaSolver(context));
     Tensor input_copy;
     OP_REQUIRES_OK_ASYNC(
@@ -404,7 +410,8 @@ class SvdOpGpu : public AsyncOpKernel {
   bool full_matrices_;
 };
 
-// TODO: add support for complex types
+// TODO: add support for complex types id:4050
+// https://github.com/imdone/tensorflow/issues/4048
 REGISTER_LINALG_OP_GPU("Svd", (SvdOpGpu<float>), float);
 REGISTER_LINALG_OP_GPU("Svd", (SvdOpGpu<double>), double);
 

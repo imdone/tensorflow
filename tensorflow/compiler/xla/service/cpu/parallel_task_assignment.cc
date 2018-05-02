@@ -71,7 +71,8 @@ class DefaultCostModel : public ParallelCostModel {
     if (flops_to_bytes_ratio <= 1.0) {
       // Limit max parallelism for I/O bound instructions by assuming a
       // sub-linear scaling function (fit based on empirical benchmark results).
-      // TODO(b/29630486) Develop system bandwidth model.
+      // TODO (b/29630486) Develop system bandwidth model. id:465
+      // https://github.com/imdone/tensorflow/issues/466
       max_parallelism =
           std::ceil(std::sqrt(tensorflow::port::NumSchedulableCPUs()));
       // Use shape size instruction cost and L2 cache size min per-thread cost.
@@ -81,7 +82,8 @@ class DefaultCostModel : public ParallelCostModel {
       // Use max parallelism for compute bound instructions.
       max_parallelism = max_parallelism_;
       // Calculate the instruction cost in cycles.
-      // TODO(b/29630486) Improve on this linear cost model.
+      // TODO (b/29630486) Improve on this linear cost model. id:359
+      // https://github.com/imdone/tensorflow/issues/360
       // Consider making 'min_cost_per_thread' be a function of the target
       // bandwidth limit for instructions with low arithmetic complexity.
       instruction_cost =
@@ -130,7 +132,8 @@ int64 ParallelTaskAssignment::GetTargetParallelTaskCount(
   // *) Emit custom loops (kSelectAndScatter, FusionKind::kTransposeDot).
   // *) Operations that are not thread safe (like infeed and rng).
   // *) Tuple-shaped.
-  // TODO(b/27458679) Parallelize instructions which are skipped here.
+  // TODO (b/27458679) Parallelize instructions which are skipped here. id:356
+  // https://github.com/imdone/tensorflow/issues/357
   auto opcode = instruction->opcode();
   if (opcode == HloOpcode::kParameter || opcode == HloOpcode::kConstant ||
       opcode == HloOpcode::kCall || opcode == HloOpcode::kCustomCall ||
@@ -159,7 +162,8 @@ StatusOr<bool> ParallelTaskAssigner::Run(HloModule* module) {
   ComputeTargetParallelTasks(module, &hlo_to_parallel_tasks);
 
   // Assign parallel tasks to target specific instructions in 'module'.
-  // TODO(b/27458679) Support inter-op parallelism.
+  // TODO (b/27458679) Support inter-op parallelism. id:432
+  // https://github.com/imdone/tensorflow/issues/433
   bool changed = AssignParallelTasks(module, hlo_to_parallel_tasks);
 
   XLA_VLOG_LINES(2, "ParallelTaskAssigner EXIT");
@@ -182,7 +186,8 @@ bool ParallelTaskAssigner::AssignParallelTasksHelper(
                                             computation->instructions().end());
   for (auto* instruction : instructions) {
     // Assign parallel tasks to sub-computations for While and Call HLOs.
-    // TODO(b/27458679) Evaluate alternative intra-op parallelsim placement,
+    // TODO (b/27458679) Evaluate alternative intra-op parallelsim placement, id:357
+    // https://github.com/imdone/tensorflow/issues/358
     // and support other callable computations like reduce.
     if (instruction->opcode() == HloOpcode::kWhile) {
       changed |= AssignParallelTasksHelper(module, instruction->while_body(),

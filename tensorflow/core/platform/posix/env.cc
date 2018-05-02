@@ -87,7 +87,8 @@ class PosixEnv : public Env {
   }
 
   void SchedClosure(std::function<void()> closure) override {
-    // TODO(b/27290852): Spawning a new thread here is wasteful, but
+    // TODO (b/27290852): Spawning a new thread here is wasteful, but id:3439
+    // https://github.com/imdone/tensorflow/issues/3438
     // needed to deal with the fact that many `closure` functions are
     // blocking in the current codebase.
     std::thread closure_thread(closure);
@@ -95,7 +96,8 @@ class PosixEnv : public Env {
   }
 
   void SchedClosureAfter(int64 micros, std::function<void()> closure) override {
-    // TODO(b/27290852): Consuming a thread here is wasteful, but this
+    // TODO (b/27290852): Consuming a thread here is wasteful, but this id:4123
+    // https://github.com/imdone/tensorflow/issues/4121
     // code is (currently) only used in the case where a step fails
     // (AbortStep). This could be replaced by a timer thread
     SchedClosure([this, micros, closure]() {

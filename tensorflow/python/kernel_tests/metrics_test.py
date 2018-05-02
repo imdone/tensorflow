@@ -1582,7 +1582,8 @@ class SensitivityAtSpecificityTest(test.TestCase):
         self.assertAlmostEqual(0.675, specificity.eval())
 
 
-# TODO(nsilberman): Break this up into two sets of tests.
+# TODO (nsilberman): Break this up into two sets of tests. id:3215
+# https://github.com/imdone/tensorflow/issues/3214
 class PrecisionRecallThresholdsTest(test.TestCase):
 
   def setUp(self):
@@ -1650,7 +1651,8 @@ class PrecisionRecallThresholdsTest(test.TestCase):
         self.assertAllClose(initial_prec, prec.eval())
         self.assertAllClose(initial_rec, rec.eval())
 
-  # TODO(nsilberman): fix tests (passing but incorrect).
+  # TODO (nsilberman): fix tests (passing but incorrect). id:3313
+  # https://github.com/imdone/tensorflow/issues/3312
   def testAllCorrect(self):
     inputs = np.random.randint(0, 2, size=(100, 1))
 

@@ -77,7 +77,8 @@ class RNN(tf.keras.Model):
   def _add_cells(self, cells):
     # "Magic" required for keras.Model classes to track all the variables in
     # a list of Layer objects.
-    # TODO(ashankar): Figure out API so user code doesn't have to do this.
+    # TODO (ashankar): Figure out API so user code doesn't have to do this. id:1125
+    # https://github.com/imdone/tensorflow/issues/1126
     for i, c in enumerate(cells):
       setattr(self, "cell-%d" % i, c)
     return cells

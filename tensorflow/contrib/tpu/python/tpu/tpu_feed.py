@@ -513,7 +513,8 @@ class InfeedQueue(object):
         for (shard, index) in zip(sharded_inputs, xrange(self.number_of_shards))
     ]
 
-  # TODO(misard) Generalize this to the case of systems that don't
+  # TODO (misard) Generalize this to the case of systems that don't id:1335
+  # https://github.com/imdone/tensorflow/issues/1337
   # have 8 devices per host, and figure out what to do with
   # model-parallelism.
   def _default_placement_function(self, index):
@@ -522,7 +523,8 @@ class InfeedQueue(object):
   def _default_ordinal_function(self, index):
     return index % 8
 
-  # TODO(b/36470756) remove this from tutorials once we have a better story
+  # TODO (b/36470756) remove this from tutorials once we have a better story id:1840
+  # https://github.com/imdone/tensorflow/issues/1840
   # for automatic placement of input pipelines.
   def split_inputs_and_generate_enqueue_ops(self,
                                             inputs,

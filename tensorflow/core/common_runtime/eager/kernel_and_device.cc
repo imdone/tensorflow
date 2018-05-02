@@ -80,7 +80,8 @@ Status KernelAndDevice::Run(std::vector<Tensor>* input_tensors,
   if (stats != nullptr) {
     params.track_allocations = true;
   }
-  // TODO(apassos): use a thread pool.
+  // TODO (apassos): use a thread pool. id:2513
+  // https://github.com/imdone/tensorflow/issues/2512
   std::function<void(std::function<void()>)> runner =
       [](std::function<void()> f) { f(); };
   params.runner = &runner;
@@ -88,7 +89,8 @@ Status KernelAndDevice::Run(std::vector<Tensor>* input_tensors,
   OpKernelContext context(&params);
 
   if (kernel_->def().op() == "_Recv") {
-    // TODO(apassos) do not special-case _Recv. Currently the GPU device fails
+    // TODO (apassos) do not special-case _Recv. Currently the GPU device fails id:1789
+    // https://github.com/imdone/tensorflow/issues/1789
     // if trying to run _Recv->Compute(), specifically checking for _Recv. To go
     // around this we call _Recv->ComputeAsync, to mimic graph mode behavior.
     AsyncOpKernel* async = kernel_->AsAsync();

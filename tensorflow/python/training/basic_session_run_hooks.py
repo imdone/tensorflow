@@ -661,7 +661,8 @@ class SummarySaverHook(session_run_hook.SessionRunHook):
     self._scaffold = scaffold
     self._timer = SecondOrStepTimer(every_secs=save_secs,
                                     every_steps=save_steps)
-    # TODO(mdan): Throw an error if output_dir and summary_writer are None.
+    # TODO (mdan): Throw an error if output_dir and summary_writer are None. id:4320
+    # https://github.com/imdone/tensorflow/issues/4318
 
   def begin(self):
     if self._summary_writer is None and self._output_dir:

@@ -74,7 +74,8 @@ class TimeSeriesRegressor(estimator_lib.Estimator):
         model_dir=model_dir,
         config=config)
 
-  # TODO(allenl): A parsing input receiver function, which takes a serialized
+  # TODO (allenl): A parsing input receiver function, which takes a serialized id:2531
+  # https://github.com/imdone/tensorflow/issues/2530
   # tf.Example containing all features (times, values, any exogenous features)
   # and serialized model state (possibly also as a tf.Example).
   def build_raw_serving_input_receiver_fn(self,

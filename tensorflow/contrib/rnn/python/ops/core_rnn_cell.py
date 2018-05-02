@@ -122,7 +122,8 @@ class _Linear(object):
     return res
 
 
-# TODO(xpan): Remove this function in a follow up.
+# TODO (xpan): Remove this function in a follow up. id:2363
+# https://github.com/imdone/tensorflow/issues/2362
 def _linear(args,
             output_size,
             bias,

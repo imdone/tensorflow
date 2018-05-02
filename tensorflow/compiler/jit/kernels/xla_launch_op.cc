@@ -153,7 +153,8 @@ void XlaLocalLaunchOp::Compute(OpKernelContext* ctx) {
   options.graph_def_version = ctx->function_library()->graph_def_version();
   options.allow_cpu_custom_calls = (platform_id_ == se::host::kHostPlatformId);
   options.device_allocator = xla_allocator;
-  // TODO(b/77671268): We don't set variable_representation_shape_fn here. This
+  // TODO (b/77671268): We don't set variable_representation_shape_fn here. This id:241
+  // https://github.com/imdone/tensorflow/issues/242
   // is restricted to Variables, but we need something like this to apply to
   // normal Tensors too.
 

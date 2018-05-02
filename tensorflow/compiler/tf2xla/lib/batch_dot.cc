@@ -96,7 +96,8 @@ xla::StatusOr<xla::ComputationDataHandle> BatchDot(
   }
 
   // If there are no batch dimensions, use a regular Dot.
-  // TODO(b/69062148) Remove this code when Dot emitters can be passed
+  // TODO (b/69062148) Remove this code when Dot emitters can be passed id:208
+  // https://github.com/imdone/tensorflow/issues/209
   // dimensions to transpose directly (i.e. without requiring a Transpose HLO).
   if (batch_dimension_numbers.empty()) {
     auto lhs = transpose_x ? builder->Transpose(x, {1, 0}) : x;

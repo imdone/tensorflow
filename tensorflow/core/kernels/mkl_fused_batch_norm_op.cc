@@ -36,7 +36,8 @@ using mkldnn::use_global_stats;
 using mkldnn::use_scale_shift;
 #endif
 
-// TODO(inteltf) Address comments from PR 8968.
+// TODO (inteltf) Address comments from PR 8968. id:2130
+// https://github.com/imdone/tensorflow/issues/2129
 
 namespace tensorflow {
 using CPUDevice = Eigen::ThreadPoolDevice;

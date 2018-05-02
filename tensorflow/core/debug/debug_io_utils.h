@@ -46,7 +46,8 @@ struct DebugWatchAndURLSpec {
   const bool gated_grpc;
 };
 
-// TODO(cais): Put static functions and members in a namespace, not a class.
+// TODO (cais): Put static functions and members in a namespace, not a class. id:2677
+// https://github.com/imdone/tensorflow/issues/2676
 class DebugIO {
  public:
   static const char* const kDebuggerPluginName;
@@ -201,7 +202,8 @@ class DebugFileIO {
                                       const string& file_path);
 
   // Implemented ad hoc here for now.
-  // TODO(cais): Replace with shared implementation once http://b/30497715 is
+  // TODO (cais): Replace with shared implementation once http://b/30497715 is id:2640
+  // https://github.com/imdone/tensorflow/issues/2639
   // fixed.
   static Status RecursiveCreateDir(Env* env, const string& dir);
 };
@@ -221,7 +223,8 @@ struct hash<::tensorflow::DebugNodeKey> {
 
 }  // namespace std
 
-// TODO(cais): Support grpc:// debug URLs in open source once Python grpc
+// TODO (cais): Support grpc:// debug URLs in open source once Python grpc id:1851
+// https://github.com/imdone/tensorflow/issues/1851
 //   genrule becomes available. See b/23796275.
 #ifndef PLATFORM_WINDOWS
 #include "tensorflow/core/debug/debug_service.grpc.pb.h"
@@ -350,7 +353,8 @@ class DebugGrpcIO {
   static Status CloseGrpcStream(const string& grpc_stream_url);
 
   // Set the gRPC state of a debug node key.
-  // TODO(cais): Include device information in watch_key.
+  // TODO (cais): Include device information in watch_key. id:1455
+  // https://github.com/imdone/tensorflow/issues/1456
   static void SetDebugNodeKeyGrpcState(
       const string& grpc_debug_url, const string& watch_key,
       const EventReply::DebugOpStateChange::State new_state);

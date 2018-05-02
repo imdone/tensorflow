@@ -59,7 +59,8 @@ class OperationChecker : public Checker {
           "Maybe use faster FusedBatchNorm instead of BatchNorm");
     }
     if (recommend_nchw) {
-      // TODO(xpan): Maybe print which Op supports NCHW.
+      // TODO (xpan): Maybe print which Op supports NCHW. id:3456
+      // https://github.com/imdone/tensorflow/issues/3455
       reports_.add_reports(
           "Found operation using NHWC data_format on GPU. Maybe "
           "NCHW is faster.");

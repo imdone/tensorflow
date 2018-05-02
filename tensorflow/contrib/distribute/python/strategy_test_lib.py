@@ -82,12 +82,14 @@ class DistributionTestBase(test.TestCase):
       l = core.Dense(1, use_bias=False)
 
       def loss(x):
-        # TODO(josh11b): What if this constant was instead a captured
+        # TODO (josh11b): What if this constant was instead a captured id:778
+        # https://github.com/imdone/tensorflow/issues/779
         # value?  Would it need to be a value that has been passed
         # through d.broadcast()?
         y = array_ops.reshape(l(x), []) - constant_op.constant(1.)
         return y * y
-      # TODO(isaprykin): Extract implicit_grad+get_filtered_grad_fn into a
+      # TODO (isaprykin): Extract implicit_grad+get_filtered_grad_fn into a id:652
+      # https://github.com/imdone/tensorflow/issues/653
       # common `implicit_grad` function and put it in DistributionStrategy.
       grad_fn = backprop.implicit_grad(loss)
       grad_fn = optimizer.get_filtered_grad_fn(grad_fn)
@@ -137,7 +139,8 @@ class DistributionTestBase(test.TestCase):
       l = core.Dense(1, use_bias=False)
 
       def loss(x):
-        # TODO(josh11b): What if this constant was instead a captured
+        # TODO (josh11b): What if this constant was instead a captured id:648
+        # https://github.com/imdone/tensorflow/issues/649
         # value?  Would it need to be a value that has been passed
         # through d.broadcast()?
         y = array_ops.reshape(l(x), []) - constant_op.constant(1.)

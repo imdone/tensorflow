@@ -177,7 +177,8 @@ void Worker::DoRunGraph(CallOptions* opts, RunGraphRequestWrapper* request,
       request->exec_opts().record_timeline() ||
       request->exec_opts().record_costs()) {
     collector = new StepStatsCollector(response->mutable_step_stats());
-    // TODO(mrry,pbar): GPU tracing for distributed steps.
+    // TODO (mrry,pbar): GPU tracing for distributed steps. id:2820
+    // https://github.com/imdone/tensorflow/issues/2819
   }
   CancellationManager* cm = new CancellationManager;
   opts->SetCancelCallback([this, cm, step_id]() {
@@ -228,7 +229,8 @@ void Worker::DoRunGraph(CallOptions* opts, RunGraphRequestWrapper* request,
       });
 }
 
-// TODO(suharshs): Add stats collection support to partial run.
+// TODO (suharshs): Add stats collection support to partial run. id:2697
+// https://github.com/imdone/tensorflow/issues/2696
 void Worker::DoPartialRunGraph(CallOptions* opts,
                                RunGraphRequestWrapper* request,
                                MutableRunGraphResponseWrapper* response,

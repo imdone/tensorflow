@@ -106,7 +106,8 @@ class NetworkTest(test.TestCase):
     net(constant_op.constant([[2.0]]))  # Force variables to be created.
     self.assertEqual(1, len(net.trainable_variables))
     self.evaluate(net.trainable_variables[0].assign([[17.0]]))
-    # TODO(josh11b): Support passing Python values to networks.
+    # TODO (josh11b): Support passing Python values to networks. id:677
+    # https://github.com/imdone/tensorflow/issues/678
     result = net(constant_op.constant([[2.0]]))
     self.assertEqual(34.0, self.evaluate(result))
 
@@ -125,7 +126,8 @@ class NetworkTest(test.TestCase):
     result = net(y)
     self.assertAllEqual([[17.0], [34.0]], self.evaluate(result))
 
-  # TODO(allenl): This test creates garbage in some Python versions
+  # TODO (allenl): This test creates garbage in some Python versions id:681
+  # https://github.com/imdone/tensorflow/issues/682
   @test_util.run_in_graph_and_eager_modes()
   def testNetworkSaveRestoreAlreadyBuilt(self):
     net = MyNetwork(name="abcd")
@@ -137,7 +139,8 @@ class NetworkTest(test.TestCase):
     self._save_modify_load_network_built(net, global_step=None)
     self._save_modify_load_network_built(net, global_step=10)
 
-  # TODO(allenl): This test creates garbage in some Python versions
+  # TODO (allenl): This test creates garbage in some Python versions id:1129
+  # https://github.com/imdone/tensorflow/issues/1130
   @test_util.run_in_graph_and_eager_modes()
   def testSaveRestoreDefaultGlobalStep(self):
     net = MyNetwork(name="abcd")
@@ -148,7 +151,8 @@ class NetworkTest(test.TestCase):
     save_path = network.save_network_checkpoint(net, self.get_temp_dir())
     self.assertIn("abcd-4242", save_path)
 
-  # TODO(allenl): This test creates garbage in some Python versions
+  # TODO (allenl): This test creates garbage in some Python versions id:1233
+  # https://github.com/imdone/tensorflow/issues/1234
   @test_util.run_in_graph_and_eager_modes()
   def testNetworkSaveAndRestoreIntoUnbuilt(self):
     save_dir = self.get_temp_dir()

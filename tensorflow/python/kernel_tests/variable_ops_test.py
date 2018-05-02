@@ -54,7 +54,8 @@ class VariableOpTest(test.TestCase):
       x = vals.astype(dtype)
       tftype = _NP_TO_TF[dtype]
       self.assertAllEqual(x, self._initFetch(x, tftype, use_gpu=False))
-      # NOTE(touts): the GPU test should pass for all types, whether the
+      # NOTE (touts): the GPU test should pass for all types, whether the id:3861
+      # https://github.com/imdone/tensorflow/issues/3859
       # Variable op has an implementation for that type on GPU as we expect
       # that Variable and Assign have GPU implementations for matching tf.
       self.assertAllEqual(x, self._initFetch(x, tftype, use_gpu=True))

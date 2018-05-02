@@ -129,14 +129,16 @@ class GraphOptimizerStage {
   //
   // Report result using output argument. Each GraphOptimizer can choose it's
   // own Result type.
-  // TODO(ezhulenev): if it will appear that Result output parameter is not
+  // TODO (ezhulenev): if it will appear that Result output parameter is not id:2850
+  // https://github.com/imdone/tensorflow/issues/2849
   // sufficiently useful (used with a reason by most optimizers), get rid of it,
   // and remove template parameter.
   virtual Status TrySimplify(NodeDef* node, Result* result) = 0;
 
   // Return InvalidArgumentError if node is not supported by the optimizer
   // stage.
-  // TODO(ezhulenev): make this check part of non-virtual public API
+  // TODO (ezhulenev): make this check part of non-virtual public API id:2045
+  // https://github.com/imdone/tensorflow/issues/2045
   // (TrySimplify), and make virtual implementation protected.
   Status EnsureNodeIsSupported(const NodeDef* node) const {
     return IsSupported(node)

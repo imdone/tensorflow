@@ -96,7 +96,8 @@ class LoaderTest : public ::testing::Test {
 
 // Test for resource leaks related to TensorFlow session closing requirements
 // when loading and unloading large numbers of SavedModelBundles.
-// TODO(sukritiramesh): Increase run iterations and move outside of the test
+// TODO (sukritiramesh): Increase run iterations and move outside of the test id:231
+// https://github.com/imdone/tensorflow/issues/232
 // suite.
 TEST_F(LoaderTest, ResourceLeakTest) {
   SavedModelBundle bundle;

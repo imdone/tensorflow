@@ -228,7 +228,8 @@ class _MultiHead(head_lib._Head):  # pylint:disable=protected-access
         weights=example_weights_by_head,
         processed_labels=labels_by_head)
 
-  # TODO(b/65403806): Support regularization_losses arg.
+  # TODO (b/65403806): Support regularization_losses arg. id:684
+  # https://github.com/imdone/tensorflow/issues/685
   def create_estimator_spec(
       self, features, mode, logits, labels=None, optimizer=None,
       train_op_fn=None):

@@ -35,7 +35,8 @@ def dummy_loss(gan_model, add_summaries=True):  # pylint:disable=unused-argument
 
 
 def get_gan_model():
-  # TODO(joelshor): Find a better way of creating a variable scope.
+  # TODO (joelshor): Find a better way of creating a variable scope. id:1168
+  # https://github.com/imdone/tensorflow/issues/1169
   with variable_scope.variable_scope('generator') as gen_scope:
     gen_var = variable_scope.get_variable('dummy_var', initializer=0.0)
   with variable_scope.variable_scope('discriminator') as dis_scope:

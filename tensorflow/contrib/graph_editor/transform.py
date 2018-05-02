@@ -185,7 +185,8 @@ def copy_op_handler(info, op, new_inputs, copy_shape=True, nodedef_fn=None):
   # attribute to exist, we will create a dummy original_op first and then
   # later finalise it with the actual original_op when all the ops have
   # been copied.
-  # TODO(fkp): Stop worrying about _original_op and remove this code?
+  # TODO (fkp): Stop worrying about _original_op and remove this code? id:743
+  # https://github.com/imdone/tensorflow/issues/744
   if op._original_op:
     op_._original_op = op._original_op
 
@@ -501,7 +502,8 @@ class Transformer(object):
       op_ = info.transformed_ops[op]
 
       # Finalize original op.
-      # TODO(fkp): Stop worrying about _original_op and remove this code?
+      # TODO (fkp): Stop worrying about _original_op and remove this code? id:1184
+      # https://github.com/imdone/tensorflow/issues/1185
       # pylint: disable=protected-access
       if op._original_op:
         original_op = self.transform_original_op_handler(info, op._original_op)
@@ -745,7 +747,8 @@ def graph_replace(target_ts, replacement_ts, dst_scope="",
     raise ValueError("Targets and replacements are not connected!")
 
   # Complete ops to avoid malformed control flow.
-  # TODO(fkp): Consider moving this function deeper (in the transformer?).
+  # TODO (fkp): Consider moving this function deeper (in the transformer?). id:1300
+  # https://github.com/imdone/tensorflow/issues/1301
   _add_control_flow_ops(ops, control_ios)
 
   # Create a copy of the relevant subgraph

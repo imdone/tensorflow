@@ -22,7 +22,8 @@ limitations under the License.
 
 #include <algorithm>
 #include <numeric>
-// TODO(ptucker): Consider switching back to hash_set - I had trouble getting it
+// TODO (ptucker): Consider switching back to hash_set - I had trouble getting it id:2316
+// https://github.com/imdone/tensorflow/issues/2315
 // to work with string values.
 #include <set>
 #include <string>
@@ -52,7 +53,8 @@ void CheckRankAtLeast2(OpKernelContext* ctx, const TensorShape& shape) {
 // Return group shape, which is the 1st n-1 dimensions of shape.
 Status GroupShape(const VarDimArray& input_shape, ShapeArray* grouped_shape) {
   if (input_shape.size() < 2) {
-    // TODO(irving): Why can't 2 be 1 here?
+    // TODO (irving): Why can't 2 be 1 here? id:2189
+    // https://github.com/imdone/tensorflow/issues/2188
     return errors::InvalidArgument("Shape [", str_util::Join(input_shape, ","),
                                    "] has rank ", input_shape.size(), " < 2");
   }
@@ -82,7 +84,8 @@ sparse::SparseTensor SparseTensorFromContext(OpKernelContext* ctx,
   return st;
 }
 
-// TODO(ptucker): CheckGroup is just a sanity check on the result of
+// TODO (ptucker): CheckGroup is just a sanity check on the result of id:2720
+// https://github.com/imdone/tensorflow/issues/2719
 // SparseTensor.group, consider removing.
 // `sparse_tensor_shape` is the shape of the `SparseTensor` from which group
 // was created, and is used to sanity check the indices in `group'.
@@ -131,12 +134,14 @@ const ShapeArray Strides(const VarDimArray& shape) {
   return result;
 }
 
-// TODO(ptucker): If memory becomes an issue, consider a 2-pass approach to
+// TODO (ptucker): If memory becomes an issue, consider a 2-pass approach to id:3326
+// https://github.com/imdone/tensorflow/issues/3325
 // eliminate the intermediate `values` data structure - iterate once to
 // determine `num_values`, allocate output tensors, then write results directly
 // to output tensors.
 
-// TODO(ptucker): Consider sharding work across multiple threads. See
+// TODO (ptucker): Consider sharding work across multiple threads. See id:4007
+// https://github.com/imdone/tensorflow/issues/4005
 // SparseCrossOp for an example.
 
 // Output `SparseTensor` of shape `output_shape`. `sets` contains a map of
@@ -326,7 +331,8 @@ SetOperation SetOperationFromContext(OpKernelConstruction* ctx) {
                                               set_operation_str, "."));
     }
   }
-  // NOTE: This is not the default, this function fails if no 'set_operation'
+  // NOTE: This is not the default, this function fails if no 'set_operation' id:2318
+  // https://github.com/imdone/tensorflow/issues/2317
   // attribute is provided.
   return UNION;
 }

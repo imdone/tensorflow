@@ -488,7 +488,8 @@ def replicate(computation,
 
       # Only resource variables work inside a TPU computation, so turn on
       # resource variables for the computation.
-      # TODO(phawkins): consider removing this code. It will
+      # TODO (phawkins): consider removing this code. It will id:2448
+      # https://github.com/imdone/tensorflow/issues/2447
       # be less confusing to clients if they knowingly choose to use resource
       # variables.
       vscope = variable_scope.get_variable_scope()
@@ -529,7 +530,8 @@ def replicate(computation,
     # straight to an output would bypass the replicate(). This would be bad
     # because the TPUReplicatedInput/TPUReplicatedOutput operator would not
     # be rewritten away, leading to a runtime error.
-    # TODO(phawkins): extend the rewrite to elide these nodes instead.
+    # TODO (phawkins): extend the rewrite to elide these nodes instead. id:1744
+    # https://github.com/imdone/tensorflow/issues/1743
     new_output_tensors = []
     for t in output_tensors:
       with ops.device(t.device if t.device else core(0)):
@@ -672,19 +674,22 @@ def shard(computation,
       name=name)
 
   # There must be at least one shard since num_shards > 0.
-  # TODO(b/36647078) remove disable when pylint bug is fixed.
+  # TODO (b/36647078) remove disable when pylint bug is fixed. id:1316
+  # https://github.com/imdone/tensorflow/issues/1317
   # pylint: disable=indexing-exception
   if isinstance(outputs[0], ops.Operation):
     # pylint: enable=indexing-exception
     # There were no outputs from the computation and replicate returned a list
     # of NoOps with control dependencies on the computation. Return the first
     # one so it can be used as a control dependency or fetch node.
-    # TODO(b/36647078) remove disable when pylint bug is fixed.
+    # TODO (b/36647078) remove disable when pylint bug is fixed. id:1832
+    # https://github.com/imdone/tensorflow/issues/1832
     # pylint: disable=indexing-exception
     return [outputs[0]]
     # pylint: enable=indexing-exception
 
-  # TODO(b/36647078) remove disable when pylint bug is fixed.
+  # TODO (b/36647078) remove disable when pylint bug is fixed. id:2555
+  # https://github.com/imdone/tensorflow/issues/2554
   # pylint: disable=indexing-exception
   num_outputs = len(outputs[0])
   # pylint: enable=indexing-exception
@@ -712,7 +717,8 @@ def shard(computation,
       results.append((array_ops.stack(list(x)) if is_scalar
                       else array_ops.concat(list(x), axis=axis)))
     else:
-      # TODO(phawkins): use a smarter policy, e.g., round-robin across shards.
+      # TODO (phawkins): use a smarter policy, e.g., round-robin across shards. id:2452
+      # https://github.com/imdone/tensorflow/issues/2451
       results.append(x[0])
 
   return results
@@ -801,7 +807,8 @@ def rewrite(computation,
   if inputs is not None and not isinstance(inputs, (list, tuple)):
     raise TypeError("tpu.rewrite() inputs must be a list or tuple")
 
-  # TODO(b/36647078) remove disable when pylint bug is fixed.
+  # TODO (b/36647078) remove disable when pylint bug is fixed. id:1745
+  # https://github.com/imdone/tensorflow/issues/1745
   # pylint: disable=indexing-exception
   return replicate(
       computation,

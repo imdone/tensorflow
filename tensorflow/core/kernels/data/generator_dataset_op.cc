@@ -162,7 +162,8 @@ class GeneratorDatasetOp : public DatasetOpKernel {
           s = Status::OK();
           *end_of_sequence = true;
 
-          // NOTE(mrry): We ignore any tensors returned by the
+          // NOTE (mrry): We ignore any tensors returned by the id:2932
+          // https://github.com/imdone/tensorflow/issues/2931
           // finalize function.
           std::vector<Tensor> ignored;
           TF_RETURN_IF_ERROR(

@@ -481,7 +481,8 @@ class FunctionalOpsTest(test.TestCase):
       self.assertAllEqual([0], map_return.get_shape().dims)
       self.assertAllEqual([0], self.evaluate(map_return).shape)
 
-  # TODO(akshayka): this test fails in eager: the iterable is of length 0 so
+  # TODO (akshayka): this test fails in eager: the iterable is of length 0 so id:3822
+  # https://github.com/imdone/tensorflow/issues/3821
   # so the body of the while loop never executes
   def testMapEmptyTensor(self):
     with self.test_session():
@@ -502,7 +503,8 @@ class FunctionalOpsTest(test.TestCase):
       y = functional_ops.scan(fn, x, initializer=initializer)
       self.assertAllEqual(y.get_shape(), self.evaluate(y).shape)
 
-  # TODO(akshayka): this test fails in eager: the iterable is of length 0 so
+  # TODO (akshayka): this test fails in eager: the iterable is of length 0 so id:3203
+  # https://github.com/imdone/tensorflow/issues/3202
   # so the body of the while loop never executes
   def testScanEmptyTensor(self):
     with self.test_session():
@@ -688,7 +690,8 @@ class FunctionalOpsTest(test.TestCase):
     def Body(n, x):
       return n - 1, x + n
 
-    # TODO(b/65752372): Set `use_gpu=False` because
+    # TODO (b/65752372): Set `use_gpu=False` because id:3305
+    # https://github.com/imdone/tensorflow/issues/3304
     # `functional_ops.While()` does not reliably work on GPU (apparently
     # because the result of evaluating the condition may be in device
     # memory, but it is read on the host).
@@ -718,7 +721,8 @@ class FunctionalOpsTest(test.TestCase):
     def BodyReturnsTooManyArgs(n, x):
       return n - 1, x + n, x
 
-    # TODO(b/65752372): Set `use_gpu=False` because
+    # TODO (b/65752372): Set `use_gpu=False` because id:3770
+    # https://github.com/imdone/tensorflow/issues/3769
     # `functional_ops.While()` does not reliably work on GPU (apparently
     # because the result of evaluating the condition may be in device
     # memory, but it is read on the host).
@@ -741,7 +745,8 @@ class FunctionalOpsTest(test.TestCase):
     def Body(n, x):
       return n - 1, x + n
 
-    # TODO(b/65752372): Set `use_gpu=False` because
+    # TODO (b/65752372): Set `use_gpu=False` because id:4255
+    # https://github.com/imdone/tensorflow/issues/4253
     # `functional_ops.While()` does not reliably work on GPU (apparently
     # because the result of evaluating the condition may be in device
     # memory, but it is read on the host).
@@ -816,7 +821,8 @@ class FunctionalOpsTest(test.TestCase):
       return x + math_ops.to_float(n) + v, x2 + v
 
     for rewrite_with_while in (True, False):
-      # TODO(b/65752372): Set `use_gpu=False` because
+      # TODO (b/65752372): Set `use_gpu=False` because id:3824
+      # https://github.com/imdone/tensorflow/issues/3823
       # `functional_ops.While()` does not reliably work on GPU (apparently
       # because the result of evaluating the condition may be in device
       # memory, but it is read on the host).
@@ -1010,9 +1016,10 @@ class PartitionedCallTest(test.TestCase):
       # which the resource was created, so that we can verify that ops were
       # actually run on the requested devices.
       #
-      # TODO(akshayka): Provide a cleaner, more idiomatic API for obtaining the
-      # name of the device on which a resource lives / for determining the
-      # device on which an op ran.
+      # TODO (akshayka): Provide a cleaner, more idiomatic API for obtaining the id:3207
+# https://github.com/imdone/tensorflow/issues/3206
+# name of the device on which a resource lives / for determining the
+# device on which an op ran.
       with ops.device("/cpu:0"):
         s1 = iterator_ops.Iterator.from_structure(
             (dtypes.float32,)).string_handle()

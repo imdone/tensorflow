@@ -33,7 +33,8 @@ from tensorflow.python.ops import sparse_ops
 from tensorflow.python.ops import variable_scope
 
 # pylint: disable=protected-access
-# TODO(b/73827486): Support SequenceExample.
+# TODO (b/73827486): Support SequenceExample. id:1147
+# https://github.com/imdone/tensorflow/issues/1148
 
 
 def sequence_input_layer(

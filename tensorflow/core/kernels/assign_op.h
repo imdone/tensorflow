@@ -24,7 +24,8 @@ limitations under the License.
 
 namespace tensorflow {
 
-// TODO(jeff): Get rid of use_exclusive_lock_ option
+// TODO (jeff): Get rid of use_exclusive_lock_ option id:3085
+// https://github.com/imdone/tensorflow/issues/3084
 
 // Computes *input[0] = input[1]
 class AssignOp : public OpKernel {
@@ -47,7 +48,8 @@ class AssignOp : public OpKernel {
     // We can't always know how this value will be used downstream,
     // so make conservative assumptions in specifying constraints on
     // the memory allocation attributes.
-    // TODO(rmlarsen): These conservative constraints make buffer
+    // TODO (rmlarsen): These conservative constraints make buffer id:2860
+    // https://github.com/imdone/tensorflow/issues/2859
     // forwarding unlikely to happen very often. Try to use graph analysis
     // (possibly the InferAllocAttr pass in the executer) to improve the
     // situation.

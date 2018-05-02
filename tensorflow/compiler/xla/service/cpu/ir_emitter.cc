@@ -478,7 +478,8 @@ Status IrEmitter::HandleOutfeed(HloInstruction* outfeed) {
 }
 
 Status IrEmitter::HandleSort(HloInstruction* sort) {
-  // TODO(b/26783907): Implement sort on CPU.
+  // TODO (b/26783907): Implement sort on CPU. id:257
+  // https://github.com/imdone/tensorflow/issues/258
   return Unimplemented("Sort is not implemented on CPU.");
 }
 
@@ -519,7 +520,8 @@ Status IrEmitter::HandleReduceWindow(HloInstruction* reduce_window) {
       /*instruction=*/*reduce_window, /*operands=*/{operand},
       /*supported_types=*/{F32, BF16}));
 
-  // TODO(b/31410564): Implement dilation for reduce-window.
+  // TODO (b/31410564): Implement dilation for reduce-window. id:289
+  // https://github.com/imdone/tensorflow/issues/290
   if (window_util::HasDilation(window)) {
     return Unimplemented(
         "Dilation for ReduceWindow is not implemented on CPU.");
@@ -622,7 +624,8 @@ Status IrEmitter::HandleSelectAndScatter(HloInstruction* select_and_scatter) {
   CHECK_EQ(rank, ShapeUtil::Rank(source->shape()));
   CHECK_EQ(rank, window.dimensions_size());
 
-  // TODO(b/31410564): Implement dilation for select-and-scatter.
+  // TODO (b/31410564): Implement dilation for select-and-scatter. id:449
+  // https://github.com/imdone/tensorflow/issues/450
   if (window_util::HasDilation(window)) {
     return Unimplemented(
         "Dilation for SelectAndScatter is not implemented on CPU. ");
@@ -854,7 +857,8 @@ Status IrEmitter::HandleConvolution(HloInstruction* convolution) {
   const ConvolutionDimensionNumbers& dnums =
       convolution->convolution_dimension_numbers();
 
-  // TODO(tonywy): Add PotentiallyImplementedAsMKLCovolution to support
+  // TODO (tonywy): Add PotentiallyImplementedAsMKLCovolution to support id:329
+  // https://github.com/imdone/tensorflow/issues/330
   // different data layouts.
   if (PotentiallyImplementedAsEigenConvolution(*convolution)) {
     const Shape& lhs_shape = lhs->shape();
@@ -949,7 +953,8 @@ Status IrEmitter::HandleConvolution(HloInstruction* convolution) {
       bool use_mkl_dnn =
           hlo_module_config_.debug_options().xla_cpu_use_mkl_dnn();
 
-      // TODO(b/78639006) Singlethread MKL conv2d is not implemented due to the
+      // TODO (b/78639006) Singlethread MKL conv2d is not implemented due to the id:324
+      // https://github.com/imdone/tensorflow/issues/324
       // potential race condition by setting the omp_num_threads.
       const char* fn_name =
           primitive_type == F16
@@ -1211,7 +1216,8 @@ Status IrEmitter::HandleCrossReplicaSum(HloInstruction* crs) {
     return EmitMemcpy(*crs->operand(0), *crs);
   }
 
-  // TODO(b/33011107): Support cross replica sum on CPU.
+  // TODO (b/33011107): Support cross replica sum on CPU. id:259
+  // https://github.com/imdone/tensorflow/issues/260
   return Unimplemented("CrossReplicaSum is not implemented on CPU.");
 }
 
@@ -1347,7 +1353,8 @@ IrEmitter::ReductionGenerator IrEmitter::MatchReductionGenerator(
 
   const Shape& root_shape = root_instruction->shape();
   if (ShapeUtil::ElementIsComplex(root_shape)) {
-    // TODO(b/65408531): Complex add could by done via bitcast to <float x [2N]>
+    // TODO (b/65408531): Complex add could by done via bitcast to <float x [2N]> id:348
+    // https://github.com/imdone/tensorflow/issues/349
     // Complex multiply would be more challenging. We could perhaps use a
     // strided load to get all reals in a vector, all images in a vector, or use
     // CreateShuffleVector on a bitcast to float x [2N].
@@ -1630,7 +1637,8 @@ StatusOr<bool> IrEmitter::EmitVectorizedReduce(
       MinimumAlignmentForPrimitiveType(reduce->shape().element_type()));
 
   if (is_reduction_over_minor_dimension) {
-    // TODO(sanjoy): Implement vectorized reduction over the minor dimension.
+    // TODO (sanjoy): Implement vectorized reduction over the minor dimension. id:455
+    // https://github.com/imdone/tensorflow/issues/456
     *failure_reason = "reduction over minor dimension not implemented";
     return false;
   }
@@ -1719,7 +1727,8 @@ StatusOr<bool> IrEmitter::EmitVectorizedReduce(
   // may need to peel out an "epilogue" iteration to get the remaining elements
   // in the following case:
   if (innermost_dimension_size % vectorization_factor) {
-    // TODO(b/63775531): Consider using a scalar loop here to save on code size.
+    // TODO (b/63775531): Consider using a scalar loop here to save on code size. id:351
+    // https://github.com/imdone/tensorflow/issues/352
     array_index[innermost_dimension] =
         ir_builder_.getInt64(innermost_dimension_size -
                              (innermost_dimension_size % vectorization_factor));
@@ -1825,12 +1834,14 @@ Status IrEmitter::HandleReduce(HloInstruction* reduce) {
 }
 
 Status IrEmitter::HandleSend(HloInstruction* send) {
-  // TODO(b/33942983): Support Send/Recv on CPU.
+  // TODO (b/33942983): Support Send/Recv on CPU. id:350
+  // https://github.com/imdone/tensorflow/issues/351
   return Unimplemented("Send is not implemented on CPU.");
 }
 
 Status IrEmitter::HandleSendDone(HloInstruction* send_done) {
-  // TODO(b/33942983): Support Send/Recv on CPU.
+  // TODO (b/33942983): Support Send/Recv on CPU. id:423
+  // https://github.com/imdone/tensorflow/issues/424
   return Unimplemented("Send-done is not implemented on CPU.");
 }
 
@@ -1995,12 +2006,14 @@ Status IrEmitter::HandleDynamicUpdateSlice(
 }
 
 Status IrEmitter::HandleRecv(HloInstruction* recv) {
-  // TODO(b/33942983): Support Send/Recv on CPU.
+  // TODO (b/33942983): Support Send/Recv on CPU. id:352
+  // https://github.com/imdone/tensorflow/issues/353
   return Unimplemented("Recv is not implemented on CPU.");
 }
 
 Status IrEmitter::HandleRecvDone(HloInstruction* recv_done) {
-  // TODO(b/33942983): Support Send/Recv on CPU.
+  // TODO (b/33942983): Support Send/Recv on CPU. id:460
+  // https://github.com/imdone/tensorflow/issues/461
   return Unimplemented("Recv-done is not implemented on CPU.");
 }
 
@@ -2900,7 +2913,8 @@ Status IrEmitter::EmitMemcpy(const HloInstruction& source,
   llvm::Value* source_value = GetEmittedValueFor(&source);
   llvm::Value* destination_value = GetEmittedValueFor(&destination);
   int64 source_size = ByteSizeOf(source.shape());
-  // TODO(b/63762267): Be more aggressive about specifying alignment.
+  // TODO (b/63762267): Be more aggressive about specifying alignment. id:354
+  // https://github.com/imdone/tensorflow/issues/355
   ir_builder_.CreateMemCpy(destination_value, /*DstAlign=*/1, source_value,
                            /*SrcAlign=*/1, source_size);
   return Status::OK();

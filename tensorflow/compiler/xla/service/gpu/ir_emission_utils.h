@@ -22,7 +22,8 @@ limitations under the License.
 #include "llvm/IR/Value.h"
 #include "tensorflow/compiler/xla/service/hlo_instruction.h"
 
-// TODO(jlebar): Move functions related to cublas/cudnn to a separate file; they
+// TODO (jlebar): Move functions related to cublas/cudnn to a separate file; they id:768
+// https://github.com/imdone/tensorflow/issues/769
 // don't belong in "ir_emission_utils".
 
 namespace xla {

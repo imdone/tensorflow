@@ -241,7 +241,8 @@ class Call : public UntypedCall<Service> {
 
  private:
   // Creates a completion queue tag for handling cancellation by the client.
-  // NOTE: This method must be called before this call is enqueued on a
+  // NOTE: This method must be called before this call is enqueued on a id:2781
+  // https://github.com/imdone/tensorflow/issues/2780
   // completion queue.
   void RegisterCancellationHandler() {
     this->Ref();  // Ref for grpc; released in Tag callback.

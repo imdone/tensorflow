@@ -615,7 +615,8 @@ void ResizeImage<quint8>(typename TTypes<quint8, 4>::ConstTensor images,
       const int32 ys_ilerp = ys.ilerp[y];
       // Optimized for channels == 1 or channels == 3 as this
       // is typical channels.
-      // TODO(satok): Support more generic NEON optimized implementation
+      // TODO (satok): Support more generic NEON optimized implementation id:2239
+      // https://github.com/imdone/tensorflow/issues/2238
       // for different channels.
       int64 x = 0;
       if (channels == 1) {

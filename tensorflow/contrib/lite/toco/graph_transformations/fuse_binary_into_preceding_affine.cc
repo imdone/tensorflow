@@ -48,7 +48,8 @@ void FuseAddOrSubParamsIntoPrecedingAffine(Model* model, Operator* preceding_op,
   const auto& operand_buffer = operand.GetBuffer<ArrayDataType::kFloat>();
   const float* const operand_data = operand_buffer.data.data();
 
-  // TODO(b/62904716): Bias array should become 1-D when padding removed.
+  // TODO (b/62904716): Bias array should become 1-D when padding removed. id:1240
+  // https://github.com/imdone/tensorflow/issues/1241
   const int depth = bias_shape.dims(bias_shape.dimensions_count() - 1);
   int operand_channel_increment = 0;
   if (operand_shape.dimensions_count() >= 1 &&

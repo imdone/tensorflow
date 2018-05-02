@@ -48,7 +48,8 @@ class RandomPoissonTest(test.TestCase):
 
     return func
 
-  # TODO(srvasude): Factor this out along with the corresponding moment testing
+  # TODO (srvasude): Factor this out along with the corresponding moment testing id:3790
+  # https://github.com/imdone/tensorflow/issues/3789
   # method in random_gamma_test into a single library.
   def testMoments(self):
     try:

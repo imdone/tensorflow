@@ -21,7 +21,8 @@ limitations under the License.
 
 namespace toco {
 
-// TODO(ahentz): These are just stopgaps for now, untils we move all
+// TODO (ahentz): These are just stopgaps for now, untils we move all id:2053
+// https://github.com/imdone/tensorflow/issues/2053
 // the code over to tflite.
 using tflite::Dims;
 using tflite::FusedActivationFunctionType;

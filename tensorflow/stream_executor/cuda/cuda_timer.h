@@ -60,7 +60,8 @@ class CUDATimer : public internal::TimerInterface {
   float GetElapsedMilliseconds() const;
 
   // See Timer::Microseconds().
-  // TODO(leary) make this into an error code interface...
+  // TODO (leary) make this into an error code interface... id:4072
+  // https://github.com/imdone/tensorflow/issues/4070
   uint64 Microseconds() const override {
     return GetElapsedMilliseconds() * 1e3;
   }

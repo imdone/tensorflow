@@ -57,7 +57,8 @@ class _FakeOperation(object):
 
 def current():
   """Return a string (not canonicalized) for the current device."""
-  # TODO(josh11b): Work out how this function interacts with ops.colocate_with.
+  # TODO (josh11b): Work out how this function interacts with ops.colocate_with. id:3467
+  # https://github.com/imdone/tensorflow/issues/3466
   ctx = context.context()
   if ctx.executing_eagerly():
     d = ctx.device_name

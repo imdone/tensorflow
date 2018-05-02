@@ -231,7 +231,8 @@ class SliceAssignTest(XLATestCase):
       checker[1:2, 1] = [66]
       checker[1, 1:2] = [66]
       if dtype != dtypes.bfloat16.as_numpy_dtype:
-        # TODO(b/68813416): valnp call above results in an ndarray and not a
+        # TODO (b/68813416): valnp call above results in an ndarray and not a id:167
+        # https://github.com/imdone/tensorflow/issues/168
         # number for bfloat16s.
         checker[1, 1] = 66
       # newaxis shape changes
@@ -247,11 +248,12 @@ class SliceAssignTest(XLATestCase):
       # Assign vector to scalar (rank-0) using newaxis
       checker2 = StridedSliceAssignChecker(self, 222, dtype=dtype)
       if dtype != dtypes.bfloat16.as_numpy_dtype:
-        # TODO(b/68813416): valnp call above results in an ndarray and not a
+        # TODO (b/68813416): valnp call above results in an ndarray and not a id:180
+        # https://github.com/imdone/tensorflow/issues/181
         # number for bfloat16s.
-        checker2[()] = 6  # no indices
-        checker2[...] = 6  # ellipsis
-      checker2[None] = [6]  # new axis
+        #         checker2[()] = 6  # no indices
+        #         checker2[...] = 6  # ellipsis
+        #       checker2[None] = [6]  # new axis
 
   def testUninitialized(self):
     with self.assertRaisesRegexp(errors.InvalidArgumentError,

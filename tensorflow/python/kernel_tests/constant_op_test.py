@@ -132,7 +132,8 @@ class ConstantTest(test.TestCase):
     self._testCpu(np.empty((2, 0, 5)).astype(np.str_))
 
   def testVariant(self):
-    # TODO(ebrevdo): Re-enable use_gpu=True once non-DMA Variant
+    # TODO (ebrevdo): Re-enable use_gpu=True once non-DMA Variant id:3273
+    # https://github.com/imdone/tensorflow/issues/3272
     # copying between CPU and GPU is supported.
     with self.test_session(use_gpu=False):
       variant_tensor = tensor_pb2.TensorProto(
@@ -154,7 +155,8 @@ class ConstantTest(test.TestCase):
       # Right now, non-numpy-compatible objects cannot be returned from a
       # session.run call; similarly, objects that can't be converted to
       # native numpy types cannot be passed to ops.convert_to_tensor.
-      # TODO(ebrevdo): Add registration mechanism for
+      # TODO (ebrevdo): Add registration mechanism for id:3749
+      # https://github.com/imdone/tensorflow/issues/3748
       # ops.convert_to_tensor and for session.run output.
       logging_const_op = logging_ops.Print(
           const, [const],
@@ -175,7 +177,8 @@ class ConstantTest(test.TestCase):
 
     with self.test_session():
       val = ops.convert_to_tensor(nested).eval()
-    # NOTE(mrry): Do not use assertAllEqual, because it converts nested to a
+    # NOTE (mrry): Do not use assertAllEqual, because it converts nested to a id:4245
+    # https://github.com/imdone/tensorflow/issues/4243
     #   numpy array, which loses the null terminators.
     self.assertEqual(val.tolist(), nested)
 
@@ -232,7 +235,8 @@ class ConstantTest(test.TestCase):
         constant_op.constant([1, 2, 3, 4, 5, 6, 7], shape=[5])
 
   # pylint: enable=g-long-lambda
-  # TODO(b/35396543): Temporarily disable: suspicion that
+  # TODO (b/35396543): Temporarily disable: suspicion that id:3804
+  # https://github.com/imdone/tensorflow/issues/3803
   # this is causing test timeouts.
   def _testTooLargeConstant(self):
     with ops.Graph().as_default():
@@ -242,7 +246,8 @@ class ConstantTest(test.TestCase):
           "Cannot create a tensor proto whose content is larger than 2GB."):
         c = constant_op.constant(large_array)
 
-  # TODO(b/35396543): Temporarily disable: suspicion that
+  # TODO (b/35396543): Temporarily disable: suspicion that id:3091
+  # https://github.com/imdone/tensorflow/issues/3090
   # this is causing test timeouts.
   def _testTooLargeGraph(self):
     with ops.Graph().as_default() as g:
@@ -434,7 +439,8 @@ class ZerosLikeTest(test.TestCase):
   def _compareZeros(self, dtype, fully_defined_shape, use_gpu):
     with self.test_session(use_gpu=use_gpu):
       # Creates a tensor of non-zero values with shape 2 x 3.
-      # NOTE(kearnes): The default numpy dtype associated with tf.string is
+      # NOTE (kearnes): The default numpy dtype associated with tf.string is id:3276
+      # https://github.com/imdone/tensorflow/issues/3275
       # np.object (and can't be changed without breaking a lot things), which
       # causes a TypeError in constant_op.constant below. Here we catch the
       # special case of tf.string and set the numpy dtype appropriately.
@@ -501,7 +507,8 @@ class ZerosLikeTest(test.TestCase):
           self.assertAllEqual(y, np.zeros(shape, dtype=out_type))
 
   def testZerosLikeVariant(self):
-    # TODO(ebrevdo): Re-enable use_gpu=True once non-DMA Variant
+    # TODO (ebrevdo): Re-enable use_gpu=True once non-DMA Variant id:3751
+    # https://github.com/imdone/tensorflow/issues/3750
     # copying between CPU and GPU is supported AND we register a
     # ZerosLike callback for GPU for Variant storing primitive types
     # in variant_op_registry.cc.
@@ -525,7 +532,8 @@ class ZerosLikeTest(test.TestCase):
       # Right now, non-numpy-compatible objects cannot be returned from a
       # session.run call; similarly, objects that can't be converted to
       # native numpy types cannot be passed to ops.convert_to_tensor.
-      # TODO(ebrevdo): Add registration mechanism for
+      # TODO (ebrevdo): Add registration mechanism for id:4246
+      # https://github.com/imdone/tensorflow/issues/4244
       # ops.convert_to_tensor and for session.run output.
       zeros_like_op.run()
 

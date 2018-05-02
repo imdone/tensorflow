@@ -79,7 +79,8 @@ Status MatchSignatureHelper(const DataTypeSlice expected_inputs,
 
 // OpKernel ------------------------------------------------------------------
 
-// TODO(mrry): Convert to std::make_unique when available.
+// TODO (mrry): Convert to when available. std::make_unique id:2224
+// https://github.com/imdone/tensorflow/issues/2223
 OpKernel::OpKernel(OpKernelConstruction* context)
     : OpKernel(context,
                std::unique_ptr<const NodeDef>(new NodeDef(context->def()))) {}
@@ -237,7 +238,8 @@ Status OpKernelConstruction::allocate_persistent(
     DataType type, const TensorShape& shape, PersistentTensor* out_persistent,
     Tensor** out_tensor) {
   // for now just do the same thing as allocate_temp
-  // TODO(misard) add specific memory tracking for persistent tensors
+  // TODO (misard) add specific memory tracking for persistent tensors id:2859
+  // https://github.com/imdone/tensorflow/issues/2858
   Tensor persistent;
   Status s = allocate_temp(type, shape, &persistent);
   if (!s.ok()) {
@@ -471,7 +473,8 @@ std::unique_ptr<Tensor> OpKernelContext::forward_input(
   // either for no forwarding or with a reservation for this input.
   // If it's reserved for this input we'll skip the refcount and
   // AllocatorAttribute checks.
-  // TODO(tucker): Maybe we should skip all of the checks?
+  // TODO (tucker): Maybe we should skip all of the checks? id:2746
+  // https://github.com/imdone/tensorflow/issues/2745
   bool never_forward =
       (params_->forward_from_array != nullptr && output_index >= 0 &&
        params_->forward_from_array[output_index] == Params::kNeverForward);
@@ -522,7 +525,8 @@ std::unique_ptr<Tensor> OpKernelContext::forward_input(
       return nullptr;
     }
   }
-  // TODO(rmlarsen): Use MakeUnique here. There is already a copy in
+  // TODO (rmlarsen): Use MakeUnique here. There is already a copy in id:1936
+  // https://github.com/imdone/tensorflow/issues/1936
   // tensorflow/compiler/xla/ptr_util.h. Perhaps this should be part of
   // general cleanup of ownership in this code.
   std::unique_ptr<Tensor> output_tensor(new Tensor());
@@ -1027,7 +1031,8 @@ Status AttrsMatch(AttrSlice attrs, const KernelDef& kernel_def, bool* match) {
 
 static const StringPiece kKernelAttr("_kernel");
 
-// TODO(irving): Replace with const Node& version below.
+// TODO (irving): Replace with const Node& version below. id:1567
+// https://github.com/imdone/tensorflow/issues/1567
 Status FindKernelRegistration(const DeviceType& device_type,
                               const NodeDef& node_def,
                               const KernelRegistration** reg,
@@ -1062,7 +1067,8 @@ Status FindKernelRegistration(const DeviceType& device_type,
 
 }  // namespace
 
-// TODO(irving): Change const NodeDef& to const Node&
+// TODO (irving): Change const NodeDef& to const Node& id:2226
+// https://github.com/imdone/tensorflow/issues/2225
 Status FindKernelDef(const DeviceType& device_type, const NodeDef& node_def,
                      const KernelDef** def, string* kernel_class_name) {
   const KernelRegistration* reg = nullptr;
@@ -1090,7 +1096,8 @@ Status FindKernelDef(const DeviceType& device_type, const NodeDef& node_def,
 Status SupportedDeviceTypesForNode(
     const std::vector<DeviceType>& prioritized_types, const NodeDef& def,
     DeviceTypeVector* device_types) {
-  // TODO(zhifengc): Changes the callers (SimplePlacer and
+  // TODO (zhifengc): Changes the callers (SimplePlacer and id:2861
+  // https://github.com/imdone/tensorflow/issues/2860
   // DynamicPlacer) to consider the possibility that 'def' is call to
   // a user-defined function and only calls this
   // SupportedDeviceTypesForNode for primitive ops.
@@ -1238,7 +1245,8 @@ Status ValidateKernelRegistrations(const OpRegistryInterface& op_registry) {
     const OpRegistrationData* op_reg_data;
     const Status status = op_registry.LookUp(kernel_def.op(), &op_reg_data);
     if (!status.ok()) {
-      // TODO(josh11b): Make this a hard error.
+      // TODO (josh11b): Make this a hard error. id:2749
+      // https://github.com/imdone/tensorflow/issues/2748
       LOG(ERROR) << "OpKernel ('" << ProtoShortDebugString(kernel_def)
                  << "') for unknown op: " << kernel_def.op();
       continue;

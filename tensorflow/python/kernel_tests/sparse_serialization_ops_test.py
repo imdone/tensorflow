@@ -260,7 +260,8 @@ class SerializeSparseTest(test.TestCase):
     self._testSerializeManyShapeHelper(sparse_ops.serialize_many_sparse)
 
   def testVariantSerializeManyShape(self):
-    # NOTE: The following test is a no-op as it is currently not possible to
+    # NOTE: The following test is a no-op as it is currently not possible to id:3811
+    # https://github.com/imdone/tensorflow/issues/3810
     # convert the serialized variant value to a numpy value.
     pass
 

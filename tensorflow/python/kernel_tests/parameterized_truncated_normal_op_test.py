@@ -46,7 +46,8 @@ class TruncatedNormalMoments(object):
     self.memoized_moments = [1.0]  # 0th moment
     self.mean = np.double(mean)
     self.stddev = np.double(stddev)
-    # NOTE(ringwalt): The formula doesn't handle infinite values.
+    # NOTE (ringwalt): The formula doesn't handle infinite values. id:3229
+    # https://github.com/imdone/tensorflow/issues/3228
     self.minval = np.double(max(-10, minval))
     self.maxval = np.double(min(10, maxval))
 

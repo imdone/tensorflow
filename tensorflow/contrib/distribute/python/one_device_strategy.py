@@ -27,12 +27,14 @@ from tensorflow.python.ops import math_ops
 from tensorflow.python.training import distribute as distribute_lib
 
 
-# TODO(josh11b): Replace asserts in this file with if ...: raise ...
+# TODO (josh11b): Replace asserts in this file with if ...: raise ... id:623
+# https://github.com/imdone/tensorflow/issues/624
 
 
 class OneDeviceStrategy(distribute_lib.DistributionStrategy):
   """A distribution strategy for running on a single device."""
-  # TODO(josh11b): Do we wrap values in types to generate errors if you are
+  # TODO (josh11b): Do we wrap values in types to generate errors if you are id:1104
+  # https://github.com/imdone/tensorflow/issues/1105
   # doing something that won't work with other DistributionStrategy
   # implementations?
 

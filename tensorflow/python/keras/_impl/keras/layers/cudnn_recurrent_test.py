@@ -256,7 +256,8 @@ class CuDNNTest(test.TestCase, parameterized.TestCase):
         out5 = model.predict(np.ones((num_samples, timesteps)))
         self.assertNotEqual(out4.max(), out5.max())
 
-  # TODO(psv): Add generic cross product helper function for parametrized tests.
+  # TODO (psv): Add generic cross product helper function for parametrized tests. id:3068
+  # https://github.com/imdone/tensorflow/issues/3067
   @parameterized.named_parameters(
       ('cudnnlstm_to_lstm_unidirectional_impl_1', 'LSTM', False, False, 1),
       ('cudnnlstm_to_lstm_bidirectional_impl_1', 'LSTM', False, True, 1),

@@ -268,7 +268,8 @@ class Session(tf.Session):
     super(Session, self).__init__(target, graph, config=config)
 
     # Initialize MPI on the relevant device.
-    # TODO: Move this to library load and eliminate mpi.Session()
+    # TODO: Move this to library load and eliminate mpi.Session() id:1280
+    # https://github.com/imdone/tensorflow/issues/1281
     if graph is None:
       graph = tf.get_default_graph()
     with graph.as_default():

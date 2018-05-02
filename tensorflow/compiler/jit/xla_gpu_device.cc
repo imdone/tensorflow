@@ -55,7 +55,8 @@ Status XlaGpuDeviceFactory::CreateDevices(const SessionOptions& options,
     return Status::OK();
   }
 
-  // TODO(b/78468222): Uncomment after fixing this bug
+  // TODO (b/78468222): Uncomment after fixing this bug id:246
+  // https://github.com/imdone/tensorflow/issues/247
   // status = device->CreateAndSetGpuDeviceInfo();
   // if (!status.ok()) {
   //  errors::AppendToMessage(&status, "while setting up ", DEVICE_GPU_XLA_JIT,

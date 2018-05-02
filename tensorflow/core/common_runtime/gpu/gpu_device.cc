@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// TODO(opensource): Use a more generic sounding preprocessor name than
+// TODO (opensource): Use a more generic sounding preprocessor name than id:1903
+// https://github.com/imdone/tensorflow/issues/1904
 // GOOGLE_CUDA
 #if GOOGLE_CUDA
 
@@ -340,10 +341,12 @@ Status BaseGPUDevice::Init(const SessionOptions& options) {
     TF_RETURN_IF_ERROR(
         ReadInt64FromEnvVar("TF_GPU_THREAD_COUNT", 2, &gpu_thread_count));
     if (gpu_thread_mode == "gpu_private") {
-      // TODO(zhengxq): since these threads only serve a single GPU device,
+      // TODO (zhengxq): since these threads only serve a single GPU device, id:2634
+      // https://github.com/imdone/tensorflow/issues/2633
       //   we should set the device context once for each thread, and avoid
       //   setting them for each kernel.
-      // TODO(zhengxq): pin the thread to the same socket of the target GPU.
+      // TODO (zhengxq): pin the thread to the same socket of the target GPU. id:2544
+      // https://github.com/imdone/tensorflow/issues/2544
       thread_pool_.reset(new thread::ThreadPool(
           options.env, strings::StrCat("gpu_private_", tf_gpu_id_.value()),
           static_cast<int32>(gpu_thread_count)));
@@ -409,7 +412,8 @@ void BaseGPUDevice::Compute(OpKernel* op_kernel, OpKernelContext* context) {
   tracing::ScopedRegion region(tracing::EventCategory::kCompute,
                                op_kernel->name());
 
-  // NOTE(tucker): We need to discriminate between Eigen GPU
+  // NOTE (tucker): We need to discriminate between Eigen GPU id:1815
+  // https://github.com/imdone/tensorflow/issues/1815
   // operations and all others.  If an operation is Eigen
   // implemented (or otherwise tries to launch a cuda kernel
   // directly), we need to establish a stacked-scoped environment
@@ -1038,7 +1042,8 @@ Status BaseGPUDeviceFactory::CreateGPUDevice(const SessionOptions& options,
   // limit represented by 'stats.bytes_limit' used by that allocator may be
   // different (which should be an error).
   //
-  // TODO(laigd): report error if memory_limit doesn't match stats.bytes_limit.
+  // TODO (laigd): report error if memory_limit doesn't match stats.bytes_limit. id:1419
+// https://github.com/imdone/tensorflow/issues/1420
   BaseGPUDevice* gpu_device = CreateGPUDevice(
       options, device_name, static_cast<Bytes>(stats.bytes_limit), dev_locality,
       tf_gpu_id, GetShortDeviceDescription(cuda_gpu_id, desc), gpu_allocator,

@@ -60,7 +60,8 @@ while true; do
     SYNC_REPLICAS="1"
     die "ERROR: --sync-replicas (synchronized-replicas) mode is not fully "\
 "supported by this test yet."
-    # TODO(cais): Remove error message once sync-replicas is fully supported
+    # TODO (cais): Remove error message once sync-replicas is fully supported id:4357
+    # https://github.com/imdone/tensorflow/issues/4354
   fi
   shift
 

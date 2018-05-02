@@ -59,7 +59,8 @@ Status OpGenerator::Run(const OpList& ops, const string& lib_name,
   }
 
   LOG(INFO) << "Generating Java wrappers for '" << lib_name << "' operations";
-  // TODO(karllessard) generate wrappers from list of ops
+  // TODO (karllessard) generate wrappers from list of ops id:2750
+  // https://github.com/imdone/tensorflow/issues/2749
 
   return Status::OK();
 }

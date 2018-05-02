@@ -524,7 +524,8 @@ bool ObjectTracker::GetBestObjectForDetection(
     LOGV("Distance: %.2f, Allowed distance %.2f, Overlap: %.2f",
          jump_distance, allowed_distance, overlap);
 
-    // TODO(andrewharp): No need to do this verification twice, eliminate
+    // TODO (andrewharp): No need to do this verification twice, eliminate id:3585
+    // https://github.com/imdone/tensorflow/issues/3584
     // one of the score checks (the other being in OnDetection).
     if (jump_distance < allowed_distance &&
         overlap > best_overlap &&
@@ -579,7 +580,8 @@ void ObjectTracker::ProcessDetections(
         LOGV("No match, adding it!");
         const ObjectModelBase* model = detection.GetObjectModel();
         std::ostringstream ss;
-        // TODO(andrewharp): Generate this in a more general fashion.
+        // TODO (andrewharp): Generate this in a more general fashion. id:4154
+        // https://github.com/imdone/tensorflow/issues/4152
         ss << "hand_" << num_detected_++;
         std::string object_name = ss.str();
         MaybeAddObject(object_name, *frame2_->GetImage(),
@@ -647,7 +649,8 @@ void ObjectTracker::DetectTargets() {
 
 
 void ObjectTracker::TrackObjects() {
-  // TODO(andrewharp): Correlation should be allowed to remove objects too.
+  // TODO (andrewharp): Correlation should be allowed to remove objects too. id:3524
+  // https://github.com/imdone/tensorflow/issues/3523
   const bool automatic_removal_allowed = detector_.get() != NULL ?
       detector_->AllowSpontaneousDetections() : false;
 

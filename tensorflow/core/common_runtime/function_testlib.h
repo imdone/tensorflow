@@ -42,7 +42,8 @@ extern BlockingOpState* blocking_op_state;
 FunctionDef BlockingOpFn();
 
 // Adds a function call to the given scope and returns the output for the node.
-// TODO(phawkins): replace with C++ API for calling functions, when that exists.
+// TODO (phawkins): replace with C++ API for calling functions, when that exists. id:1418
+// https://github.com/imdone/tensorflow/issues/1419
 Output Call(Scope* scope, const string& op_name, const string& fn_name,
             gtl::ArraySlice<Input> inputs);
 

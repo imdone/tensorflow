@@ -360,7 +360,8 @@ class AddNTest(test_util.TensorFlowTestCase):
 
 @test_util.with_c_api
 class DivAndModTest(test_util.TensorFlowTestCase):
-  # TODO(aselle): Test more types before exposing new division operators.
+  # TODO (aselle): Test more types before exposing new division operators. id:3940
+  # https://github.com/imdone/tensorflow/issues/3938
 
   def intTestData(self):
     nums = np.arange(-10, 10, 1).reshape(20, 1)
@@ -375,7 +376,8 @@ class DivAndModTest(test_util.TensorFlowTestCase):
   def testFloorModInt(self):
     nums, divs = self.intTestData()
     with self.test_session():
-      # TODO(aselle): Change test to use % after switch
+      # TODO (aselle): Change test to use % after switch id:3632
+      # https://github.com/imdone/tensorflow/issues/3631
       # tf_result = math_ops.floor_mod(nums, divs).eval()
       tf_result = math_ops.floormod(nums, divs).eval()
       np_result = nums % divs
@@ -387,7 +389,8 @@ class DivAndModTest(test_util.TensorFlowTestCase):
       tf_result = math_ops.floormod(nums, divs).eval()
       np_result = nums % divs
       self.assertAllEqual(tf_result, np_result)
-      # TODO(aselle): put this test in once % switched to floormod
+      # TODO (aselle): put this test in once % switched to floormod id:3428
+      # https://github.com/imdone/tensorflow/issues/3427
       # tf2_result = (array_ops.constant(nums)
       #               % array_ops.constant(divs)).eval()
       # self.assertAllEqual(tf2_result, tf_result)
@@ -412,7 +415,8 @@ class DivAndModTest(test_util.TensorFlowTestCase):
       tf_result = math_ops.floor_div(nums, divs).eval()
       np_result = nums // divs
       self.assertAllEqual(tf_result, np_result)
-      # TODO(aselle): Put this test in once // is switched to floordiv
+      # TODO (aselle): Put this test in once // is switched to floordiv id:3884
+      # https://github.com/imdone/tensorflow/issues/3882
       # tf2_result = (array_ops.constant(nums)
       #               // array_ops.constant(divs)).eval()
       # self.assertAllEqual(tf2_result, tf_result)

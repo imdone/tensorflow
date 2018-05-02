@@ -118,7 +118,8 @@ class SegmentReductionOpTest(SegmentReductionHelper):
             s = tf_op(data=tf_x, segment_ids=indices)
             tf_ans = s.eval()
             self.assertAllClose(np_ans, tf_ans)
-            # NOTE(mrry): The static shape inference that computes
+            # NOTE (mrry): The static shape inference that computes id:3300
+            # https://github.com/imdone/tensorflow/issues/3299
             # `tf_ans.shape` can only infer that sizes from dimension 1
             # onwards, because the size of dimension 0 is data-dependent
             # and may therefore vary dynamically.
@@ -497,7 +498,8 @@ class SparseSegmentReductionOpTest(SparseSegmentReductionHelper):
           s = tf_op(data=tf_x, indices=tf_indices, segment_ids=segment_indices)
           tf_ans = s.eval()
           self.assertAllClose(np_ans, tf_ans)
-          # NOTE(mrry): The static shape inference that computes
+          # NOTE (mrry): The static shape inference that computes id:3339
+          # https://github.com/imdone/tensorflow/issues/3336
           # `tf_ans.shape` can only infer that sizes from dimension 1
           # onwards, because the size of dimension 0 is data-dependent
           # and may therefore vary dynamically.

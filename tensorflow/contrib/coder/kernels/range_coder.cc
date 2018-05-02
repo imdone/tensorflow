@@ -56,10 +56,12 @@ void RangeEncoder::Encode(int32 lower, int32 upper, string* sink) {
   // This narrows the current interval roughly to
   // [base + (size * u) / 2^precision, base + (size * v) / 2^precision).
   //
-  // TODO(sjhwang): Try rounding if it helps improve compression ratio, at the
-  // expense of more operations. In the test using Zipf distribution, the
-  // overhead over the theoretical compression ratio was ~0.01%.
-  // NOTE: The max value of `size` is 2^32 and size > 0. Therefore `size * u`
+  // TODO (sjhwang): Try rounding if it helps improve compression ratio, at the id:580
+// https://github.com/imdone/tensorflow/issues/581
+// expense of more operations. In the test using Zipf distribution, the
+// overhead over the theoretical compression ratio was ~0.01%.
+  // NOTE: The max value of `size` is 2^32 and size > 0. Therefore `size * u` id:571
+  // https://github.com/imdone/tensorflow/issues/572
   // can be rewritten as `(size - 1) * u + u` and all the computation can be
   // done in 32-bit mode. If 32-bit multiply is faster, then rewrite.
   const uint32 a = (size * static_cast<uint64>(lower)) >> precision_;
@@ -85,81 +87,82 @@ void RangeEncoder::Encode(int32 lower, int32 upper, string* sink) {
   //
   // The encoder initially starts in state 0, with base = 0, size = 2^32.
   //
-  // TODO(sjhwang): Requires some profiling, but the encoder stays in state 0
-  // most of the time. Should optimize code for state 0.
-  //
-  // Each Encode() has up to two places where the interval changes:
-  //   #1. Refine the interval. [base, base + size) -> [base + a, base + b + 1).
-  //   #2. Expand interval if the new size is too small,
-  // and each change may cause a state transition.
-  //
-  // First, consider when the current state is 0.
-  //
-  // In this case, the next state after #1 is always state 0, since refining
-  // interval only shrinks the interval, therefore new_base + new_size <= 2^32.
-  //
-  // Let us explain #2.
-  //
-  // Recall that at the beginning of each Encode(), the encoder requires
-  // 2^16 < size <= 2^32. As precision <= 16, the new interval size can be as
-  // small as 1, but never zero.
-  //
-  // To keep size above 2^16, if new size is smaller than or equal to 2^16, the
-  // encoder would left-shift base and size by 16 bits: size' <- size * 2^16.
-  // Note that new size' is now in the range [2^16, 2^32].
-  //
-  // Since size is left-shifted, the same should be applied to base as well.
-  // However, after the left-shift, base will then contain 48 bits instead of 32
-  // bits. Therefore prior to the shift, The upper 16 bits in base should be
-  // stored somewhere else.
-  //
-  // If the upper 16 bits of all values in the interval were the same, i.e., if
-  // base[32:16] == (base + size - 1)[32:16], then base[32:16] can be written
-  // out to `output` string, since any further Encode() only narrows down the
-  // interval and that 16 bits would never change.
-  //
-  // If the upper 16 bits were not all the same, since this happens only when
-  // size <= 2^16, the upper 16 bits may differ only by one, i.e.,
-  // base[32:16] + 1 == (base + size - 1)[32:16]. At this stage, it is not
-  // determined yet whether base[32:16] should be written to the output  or
-  // (base[32:16] + 1) should be written to the output. In this case,
-  // (base[32:16] + 1) is temporarily stored in `delay`, and base is
-  // left-shifted by 16 bits.
-  //
-  // In the latter case, the condition implies that (base // 2^16) and
-  // ((base + size - 1) // 2^16) were different. Therefore after left-shift by
-  // 16 bits, the new (base + size) is greater than 2^32, i.e., the encoder
-  // transition to state 1.
-  //
-  // ==== Summary ====
-  // To detect the current encoder state,
-  //   state 0: delay == 0 iff (base mod 2^32) < (base + size) mod 2^32,
-  //   state 1: delay != 0 iff (base + size) mod 2^32 <= base mod 2^32,
-  // because size <= 2^32.
-  //
-  // ==== Summary for state 0 ====
-  // 1. Interval refinement does not cause state transition.
-  // 2. Interval expansion may cause state transition, depending on the upper 16
-  // bits of base and base + size - 1.
-  //
-  // Now suppose the previous state was 1. This means that
-  // base <= 2^32 < base + size.
-  //
-  // When in state 1, an interval refinement may trigger state transition.
-  // After Encode() refines the interval, there are three possibilities:
-  //   #1. base <= 2^32 < base + size (unchanged),
-  //   #2. 2^32 <= base < base + size (base overflowed),
-  //   #3. base < base + size <= 2^32 (base + size - 1 underflowed).
-  //
-  // In case #1, the encoder remains in state 1.
-  // In case #2 or #3, the encoder state changes to state 0.
-  //
-  // ==== State transition for interval refinement ====
-  // 1. state 0 -> state 0,
-  // 2. state 1 -> state 0 or state 1.
-  //
-  // Therefore if the new state is 1, then the previous state must have been
-  // state 1.
+  // TODO (sjhwang): Requires some profiling, but the encoder stays in state 0 id:1055
+// https://github.com/imdone/tensorflow/issues/1056
+// most of the time. Should optimize code for state 0.
+// 
+// Each Encode() has up to two places where the interval changes:
+//   #1. Refine the interval. [base, base + size) -> [base + a, base + b + 1).
+//   #2. Expand interval if the new size is too small,
+// and each change may cause a state transition.
+// 
+// First, consider when the current state is 0.
+// 
+// In this case, the next state after #1 is always state 0, since refining
+// interval only shrinks the interval, therefore new_base + new_size <= 2^32.
+// 
+// Let us explain #2.
+// 
+// Recall that at the beginning of each Encode(), the encoder requires
+// 2^16 < size <= 2^32. As precision <= 16, the new interval size can be as
+// small as 1, but never zero.
+// 
+// To keep size above 2^16, if new size is smaller than or equal to 2^16, the
+// encoder would left-shift base and size by 16 bits: size' <- size * 2^16.
+// Note that new size' is now in the range [2^16, 2^32].
+// 
+// Since size is left-shifted, the same should be applied to base as well.
+// However, after the left-shift, base will then contain 48 bits instead of 32
+// bits. Therefore prior to the shift, The upper 16 bits in base should be
+// stored somewhere else.
+// 
+// If the upper 16 bits of all values in the interval were the same, i.e., if
+// base[32:16] == (base + size - 1)[32:16], then base[32:16] can be written
+// out to `output` string, since any further Encode() only narrows down the
+// interval and that 16 bits would never change.
+// 
+// If the upper 16 bits were not all the same, since this happens only when
+// size <= 2^16, the upper 16 bits may differ only by one, i.e.,
+// base[32:16] + 1 == (base + size - 1)[32:16]. At this stage, it is not
+// determined yet whether base[32:16] should be written to the output  or
+// (base[32:16] + 1) should be written to the output. In this case,
+// (base[32:16] + 1) is temporarily stored in `delay`, and base is
+// left-shifted by 16 bits.
+// 
+// In the latter case, the condition implies that (base // 2^16) and
+// ((base + size - 1) // 2^16) were different. Therefore after left-shift by
+// 16 bits, the new (base + size) is greater than 2^32, i.e., the encoder
+// transition to state 1.
+// 
+// ==== Summary ====
+// To detect the current encoder state,
+//   state 0: delay == 0 iff (base mod 2^32) < (base + size) mod 2^32,
+//   state 1: delay != 0 iff (base + size) mod 2^32 <= base mod 2^32,
+// because size <= 2^32.
+// 
+// ==== Summary for state 0 ====
+// 1. Interval refinement does not cause state transition.
+// 2. Interval expansion may cause state transition, depending on the upper 16
+// bits of base and base + size - 1.
+// 
+// Now suppose the previous state was 1. This means that
+// base <= 2^32 < base + size.
+// 
+// When in state 1, an interval refinement may trigger state transition.
+// After Encode() refines the interval, there are three possibilities:
+//   #1. base <= 2^32 < base + size (unchanged),
+//   #2. 2^32 <= base < base + size (base overflowed),
+//   #3. base < base + size <= 2^32 (base + size - 1 underflowed).
+// 
+// In case #1, the encoder remains in state 1.
+// In case #2 or #3, the encoder state changes to state 0.
+// 
+// ==== State transition for interval refinement ====
+// 1. state 0 -> state 0,
+// 2. state 1 -> state 0 or state 1.
+// 
+// Therefore if the new state is 1, then the previous state must have been
+// state 1.
   if (base_ + size_minus1_ < base_) {
     // If statement checked if 2^32 < base + size. The new state is 1, hence the
     // previous state was also state 1.
@@ -192,7 +195,8 @@ void RangeEncoder::Encode(int32 lower, int32 upper, string* sink) {
       base_ <<= 16;
       size_minus1_ <<= 16;
       size_minus1_ |= 0xFFFF;
-      // TODO(sjhwang): It is possible that for very long input, delay
+      // TODO (sjhwang): It is possible that for very long input, delay id:755
+      // https://github.com/imdone/tensorflow/issues/756
       // overflow during below. If overflow is detected, this delay is too
       // long the encoder should forcefully move to state 0. In such case,
       // base can be raised to 2^32 (force case #2), or (base + size) can be
@@ -268,8 +272,10 @@ void RangeEncoder::Finalize(string* sink) {
   if (delay_ != 0) {
     // The last state was state 1. Since base < 2^32 < base + size, pick 2^32
     // (state 1, case #3).
-    // NOTE: It is a bit difficult to trigger this code path on purpose.
-    // TODO(sjhwang): Find a way to trigger this code path for test coverage.
+    // NOTE: It is a bit difficult to trigger this code path on purpose. id:736
+    // https://github.com/imdone/tensorflow/issues/737
+    // TODO (sjhwang): Find a way to trigger this code path for test coverage. id:584
+    // https://github.com/imdone/tensorflow/issues/585
     sink->push_back(static_cast<char>(delay_ >> 8));
     if ((delay_ & 0xFF) != 0) {
       sink->push_back(static_cast<char>(delay_));
@@ -338,8 +344,9 @@ int32 RangeDecoder::Decode(tensorflow::gtl::ArraySlice<int32> cdf) {
   // If (size * v) / 2^precision <= offset for all v in cdf, then pv points to
   // one after the last element of cdf. That is a decoding error.
   //
-  // TODO(sjhwang): Consider returning -1 to indicate error. Or start len =
-  // cdf.size() - 2 instead and give up detecting this error.
+  // TODO (sjhwang): Consider returning -1 to indicate error. Or start len = id:574
+// https://github.com/imdone/tensorflow/issues/575
+// cdf.size() - 2 instead and give up detecting this error.
   CHECK_LT(pv, cdf.data() + cdf.size());
 
   const uint32 a = (size * static_cast<uint64>(*(pv - 1))) >> precision_;

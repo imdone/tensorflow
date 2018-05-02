@@ -179,7 +179,8 @@ template <DataType DT>
 inline void TileOp<Device, Tmultiples>::HandleCase(
     OpKernelContext* context,
     const gtl::ArraySlice<Tmultiples>& multiples_array, Tensor* result) {
-  // TODO(vrv): print out the device name if useful. Currently disabled to avoid
+  // TODO (vrv): print out the device name if useful. Currently disabled to avoid id:3354
+  // https://github.com/imdone/tensorflow/issues/3353
   // having to use RTTI.
   LOG(FATAL) << "TileOp: Invalid combination of Device, DT: "
              // << typeid(Device).name() << ", "
@@ -369,7 +370,8 @@ class TileGradientOp : public OpKernel {
     HandleReduce<T, NDIM, (D)>(context, reduction_dims, result); \
     return;                                                      \
   }
-      // NOTE(keveman): Handling the most common case here.
+      // NOTE (keveman): Handling the most common case here. id:4052
+      // https://github.com/imdone/tensorflow/issues/4050
       // Adding more cases here would require more templating and code
       // explosion. For instance, HANDLE_DIM(2) wouldn't make sense for NDIM=1.
       HANDLE_DIM(1);

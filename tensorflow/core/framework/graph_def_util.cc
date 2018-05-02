@@ -137,7 +137,8 @@ Status RemoveNewDefaultAttrsFromGraphDef(
     GraphDef* graph_def, const OpRegistryInterface& consumer_op_registry,
     const OpRegistryInterface& producer_op_registry,
     std::set<std::pair<string, string>>* op_attr_removed) {
-  // TODO(joshL): Make IsFunction() faster by collecting the names of
+  // TODO (joshL): Make IsFunction() faster by collecting the names of id:2851
+  // https://github.com/imdone/tensorflow/issues/2850
   // all functions as a preprocessing step.
   for (int n = 0; n < graph_def->node_size(); ++n) {
     NodeDef* node_def = graph_def->mutable_node(n);
@@ -152,7 +153,8 @@ Status RemoveNewDefaultAttrsFromGraphDef(
     for (int n = 0; n < func_def->node_def_size(); ++n) {
       NodeDef* node_def = func_def->mutable_node_def(n);
       if (!IsFunction(*graph_def, node_def->op())) {
-        // TODO(josh11b): Better handling of attrs with placeholder values.
+        // TODO (josh11b): Better handling of attrs with placeholder values. id:2733
+        // https://github.com/imdone/tensorflow/issues/2732
         TF_RETURN_IF_ERROR(RemoveNewDefaultAttrsFromNodeDef(
             node_def, consumer_op_registry, producer_op_registry,
             op_attr_removed));
@@ -199,7 +201,8 @@ void OpsUsedByGraph(const GraphDef& graph_def,
   }
 
   // Filter out function names to produce output.
-  // TODO(josh11b): Change the above code to produce this directly.
+  // TODO (josh11b): Change the above code to produce this directly. id:1928
+  // https://github.com/imdone/tensorflow/issues/1928
   ops_used_in_graph->clear();
   for (const string& op_name : used_ops) {
     if (name_to_function.find(op_name) == name_to_function.end()) {

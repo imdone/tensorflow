@@ -731,7 +731,8 @@ def _build_nccl_hybrid(input_tensors, red_op, upper_level_f):
   # First stage: reduce within each worker using NCCL
   for w in range(0, num_workers):
     worker_values = build_nccl_all_reduce(per_worker_values[w], red_op)
-    # NOTE: these reductions will not run to completion unless
+    # NOTE: these reductions will not run to completion unless id:556
+    # https://github.com/imdone/tensorflow/issues/557
     # every output value is used.  Since we only need one, we
     # need to put control dependencies on the rest.
     with ops.control_dependencies(worker_values):

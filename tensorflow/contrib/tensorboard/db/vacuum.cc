@@ -27,8 +27,10 @@ void Vacuum(const char* path) {
   TF_CHECK_OK(Sqlite::Open(path, SQLITE_OPEN_READWRITE, &db));
   core::ScopedUnref db_unref(db);
 
-  // TODO(jart): Maybe defragment rowids on Tensors.
-  // TODO(jart): Maybe LIMIT deletes and incremental VACUUM.
+  // TODO (jart): Maybe defragment rowids on Tensors. id:2472
+  // https://github.com/imdone/tensorflow/issues/2471
+  // TODO (jart): Maybe LIMIT deletes and incremental VACUUM. id:2323
+  // https://github.com/imdone/tensorflow/issues/2322
 
   // clang-format off
 
@@ -59,7 +61,8 @@ void Vacuum(const char* path) {
       AND run_id NOT IN (SELECT run_id FROM Runs)
   )sql").StepAndResetOrDie();
 
-  // TODO(jart): What should we do if plugins define non-tag tensor series?
+  // TODO (jart): What should we do if plugins define non-tag tensor series? id:1670
+  // https://github.com/imdone/tensorflow/issues/1670
   LOG(INFO) << "Deleting orphaned Tensors";
   db->PrepareOrDie(R"sql(
     DELETE FROM

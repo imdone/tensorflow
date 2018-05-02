@@ -72,7 +72,8 @@ struct SubGraphParams {
   const int precision_mode;
 };
 
-// TODO(sami): Replace references with const reference or pointers
+// TODO (sami): Replace references with const reference or pointers id:1810
+// https://github.com/imdone/tensorflow/issues/1810
 tensorflow::Status ConvertSubGraphToTensorRTNodeDef(SubGraphParams& params);
 tensorflow::Status InjectCalibrationNode(SubGraphParams& params);
 tensorflow::Status ConvertCalibrationNodeToEngineNode(tensorflow::Graph& graph,

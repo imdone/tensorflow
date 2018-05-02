@@ -83,7 +83,8 @@ Status ChannelTracker::RegisterRecvInternal(const ChannelHandle& handle) {
     return NotFound("channel handle not found: %lld", handle.handle());
   }
   Channel& channel = opaque_to_channel_[handle.handle()];
-  // TODO(b/33942691): Allow more than 1 receivers for broadcast.
+  // TODO (b/33942691): Allow more than 1 receivers for broadcast. id:319
+  // https://github.com/imdone/tensorflow/issues/320
   if (channel.receiver_count >= 1) {
     return FailedPrecondition(
         "when registering recv, passed a channel handle that is already used "

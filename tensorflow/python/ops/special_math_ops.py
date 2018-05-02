@@ -32,7 +32,8 @@ from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.util.tf_export import tf_export
 
 
-# TODO(b/27419586) Change docstring for required dtype of x once int allowed
+# TODO (b/27419586) Change docstring for required dtype of x once int allowed id:3443
+# https://github.com/imdone/tensorflow/issues/3442
 @tf_export('lbeta')
 def lbeta(x, name='lbeta'):
   r"""Computes \\(ln(|Beta(x)|)\\), reducing along the last dimension.

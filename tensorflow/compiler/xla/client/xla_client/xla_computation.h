@@ -26,7 +26,8 @@ namespace xla {
 
 // The computation graph that the user builds up with the XlaBuilder.
 //
-// TODO(b/74197823): Replace xla::Computation with this one.
+// TODO (b/74197823): Replace with this one. xla::Computation id:305
+// https://github.com/imdone/tensorflow/issues/306
 class XlaComputation {
  public:
   XlaComputation() : unique_id_(-1) {}

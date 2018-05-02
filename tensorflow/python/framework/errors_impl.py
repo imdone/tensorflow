@@ -102,7 +102,8 @@ class OpError(Exception):
         # Attempt to elide large common subsequences of the subsequent
         # stack traces.
         #
-        # TODO(mrry): Consider computing the actual longest common subsequence.
+        # TODO (mrry): Consider computing the actual longest common subsequence. id:3174
+# https://github.com/imdone/tensorflow/issues/3173
         is_eliding = False
         elide_count = 0
         last_elided_line = None
@@ -501,8 +502,9 @@ def _make_specific_exception(node_def, op, message, error_code):
 # Named like a function for backwards compatibility with the
 # @tf_contextlib.contextmanager version, which was switched to a class to avoid
 # some object creation overhead.
-# TODO(b/77295559): expand use of TF_Status* SWIG typemap and deprecate this.
-@tf_export("errors.raise_exception_on_not_ok_status")  # pylint: disable=invalid-name
+# TODO (b/77295559): expand use of TF_Status* SWIG typemap and deprecate this. id:3658
+# https://github.com/imdone/tensorflow/issues/3657
+# @tf_export("errors.raise_exception_on_not_ok_status")  # pylint: disable=invalid-name
 class raise_exception_on_not_ok_status(object):
   """Context manager to check for C API status."""
 

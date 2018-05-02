@@ -296,7 +296,8 @@ se::DeviceMemory<T> AsDeviceMemory(const T* cuda_memory, uint64 size) {
 // A class to provide scratch-space allocator for Stream-Executor Cufft
 // callback. Tensorflow is responsible for releasing the temporary buffers after
 // the kernel finishes.
-// TODO(yangzihao): Refactor redundant code in subclasses of ScratchAllocator
+// TODO (yangzihao): Refactor redundant code in subclasses of ScratchAllocator id:2978
+// https://github.com/imdone/tensorflow/issues/2977
 // into base class.
 class CufftScratchAllocator : public se::ScratchAllocator {
  public:

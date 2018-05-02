@@ -579,7 +579,8 @@ class ConvolutionDescriptor {
   std::vector<int64> dilation_rates_;
   PadAlignment pad_alignment_;
   int ndims_;
-  // TODO(leary) cudnn provides these fields, but need to characterize what
+  // TODO (leary) cudnn provides these fields, but need to characterize what id:4074
+  // https://github.com/imdone/tensorflow/issues/4072
   // their effect is -- they may be boolean rather than integral.
   // int64 upscale_input_x;
   // int64 upscale_input_y;
@@ -606,10 +607,11 @@ string ShortPoolingModeString(PoolingMode mode);
 // Describes a pooling operation to be enqueued onto a stream via a platform's
 // DnnSupport.
 //
-// TODO(broune): describe how padding works and what happens if the
+// TODO (broune): describe how padding works and what happens if the id:3817
+// https://github.com/imdone/tensorflow/issues/3816
 // window height/width is not divisible by the vertical/horizontal
 // stride.
-//
+// 
 // Arguments:
 //  pooling_mode: pooling operator to use on the input patch
 //  window_height: height of input window
@@ -1509,20 +1511,21 @@ class DnnSupport {
   // contain K vectors of N elements each. This function adds biases
   // to each of those N vectors.
   //
-  // TODO(broune): This works differently when width() * height() > 1
-  // and the call to ThenBiasAdd() follows a call to ThenMatMul(). In
-  // that case there should be width() * height() *
-  // feature_map_count() biases, but this is not implemented on all
-  // StreamExecutors.
-  //
-  // Arguments (all borrowed):
-  //  stream: borrowed pointer to the stream that the 'bias add' operation
-  //    should be enqueued onto.
-  //  input_data: un-owned device memory region containing the input.
-  //  biases: un-owned device memory region containing biases to add to the
-  //    input.
-  //  dimensions: dimensions of input_data and output_data.
-  //  output_data: un-owned device memory region in which to place the result.
+  // TODO (broune): This works differently when width() * height() > 1 id:3496
+// https://github.com/imdone/tensorflow/issues/3495
+// and the call to ThenBiasAdd() follows a call to ThenMatMul(). In
+// that case there should be width() * height() *
+// feature_map_count() biases, but this is not implemented on all
+// StreamExecutors.
+// 
+// Arguments (all borrowed):
+//  stream: borrowed pointer to the stream that the 'bias add' operation
+//    should be enqueued onto.
+//  input_data: un-owned device memory region containing the input.
+//  biases: un-owned device memory region containing biases to add to the
+//    input.
+//  dimensions: dimensions of input_data and output_data.
+//  output_data: un-owned device memory region in which to place the result.
   virtual bool DoBiasAdd(Stream* stream, const DeviceMemory<float>& input_data,
                          const DeviceMemory<float>& biases,
                          const dnn::BatchDescriptor& dimensions,

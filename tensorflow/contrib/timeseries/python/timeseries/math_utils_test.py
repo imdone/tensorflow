@@ -79,7 +79,8 @@ class MathUtilsTest(test.TestCase):
     for i in range(batch.shape[0]):
       result.append(numpy.linalg.matrix_power(batch[i], powers[i]))
     with self.test_session():
-      # TODO(allenl): Numerical errors seem to be creeping in. Maybe it can be
+      # TODO (allenl): Numerical errors seem to be creeping in. Maybe it can be id:2435
+      # https://github.com/imdone/tensorflow/issues/2434
       # made slightly more stable?
       self.assertAllClose(result,
                           math_utils.batch_matrix_pow(batch, powers).eval(),

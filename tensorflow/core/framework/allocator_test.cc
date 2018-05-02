@@ -30,7 +30,8 @@ static void CheckStats(Allocator* a, int64 num_allocs, int64 bytes_in_use,
   a->GetStats(&stats);
   LOG(INFO) << "Alloc stats: \n" << stats.DebugString();
 #if defined(PLATFORM_GOOGLE) && defined(NDEBUG)
-  // NOTE: allocator stats expectation depends on the system malloc,
+  // NOTE: allocator stats expectation depends on the system malloc, id:2710
+  // https://github.com/imdone/tensorflow/issues/2709
   // and can vary as that changes.
   static const int64 kSlop = 5 * 1024;
   EXPECT_GT(stats.bytes_in_use, bytes_in_use - kSlop);

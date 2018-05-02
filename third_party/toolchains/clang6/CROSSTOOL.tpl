@@ -315,11 +315,11 @@ toolchain {
       action: "c++-link-executable"
       # "link" is a misnomer for these actions. They are really just
       # invocations of ar.
-      #action: "c++-link-pic-static-library"
-      #action: "c++-link-static-library"
-      #action: "c++-link-alwayslink-static-library"
-      #action: "c++-link-pic-static-library"
-      #action: "c++-link-alwayslink-pic-static-library"
+      #action: "c++-link-pic-static-library" id:4122
+      #action: "c++-link-static-library" id:4366
+      #action: "c++-link-alwayslink-static-library" id:4127
+      #action: "c++-link-pic-static-library" id:4037
+      #action: "c++-link-alwayslink-pic-static-library" id:3560
       flag_group {
         flag: "-rtlib=compiler-rt"
         flag: "-lunwind"

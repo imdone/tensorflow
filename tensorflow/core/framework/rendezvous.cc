@@ -52,11 +52,12 @@ Rendezvous::ParsedKey& Rendezvous::ParsedKey::operator=(const ParsedKey& b) {
 string Rendezvous::CreateKey(const string& src_device, uint64 src_incarnation,
                              const string& dst_device, const string& name,
                              const FrameAndIter& frame_iter) {
-  // NOTE: ';' is not used in the device name's job name.
-  //
+  // NOTE: ';' is not used in the device name's job name. id:2762
+  // https://github.com/imdone/tensorflow/issues/2761
+  // 
   // We include both sender and receiver in the key to facilitate
   // debugging. For correctness, we only need to encode the receiver.
-  //
+  // 
   // "src_incarnation" is used to distinguish a worker when it
   // restarts.
   char buf[strings::kFastToBufferSize];
@@ -286,11 +287,13 @@ class LocalRendezvousImpl : public Rendezvous {
   // or
   //   [!item.IsSendValue()]* meaning each item is a waiter.
   //
-  // TODO(zhifengc): consider a better queue impl than std::deque.
+  // TODO (zhifengc): consider a better queue impl than std::deque. id:1946
+// https://github.com/imdone/tensorflow/issues/1946
   typedef std::deque<Item*> ItemQueue;
   typedef gtl::FlatMap<uint64, ItemQueue> Table;
 
-  // TODO(zhifengc): shard table_.
+  // TODO (zhifengc): shard table_. id:1583
+  // https://github.com/imdone/tensorflow/issues/1583
   mutex mu_;
   Table table_ GUARDED_BY(mu_);
   Status status_ GUARDED_BY(mu_);

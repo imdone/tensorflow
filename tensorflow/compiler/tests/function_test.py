@@ -127,7 +127,8 @@ class FunctionTest(XLATestCase):
 
     self.assertAllEqual(np.ones([1, 2, 2, 1]), result)
 
-  # TODO(b/36139787): Re-enable this test when noinline works again.
+  # TODO (b/36139787): Re-enable this test when noinline works again. id:157
+  # https://github.com/imdone/tensorflow/issues/158
   def DISABLED_testFunctionsNoInline(self):
 
     @function.Defun(dtypes.float32, noinline=True)

@@ -19,8 +19,9 @@ limitations under the License.
 
 #include <limits>
 #include <vector>
-// TODO(b/31496047): Fix non-standard include order.
-#include <numeric>  // clang-format off
+// TODO (b/31496047): Fix non-standard include order. id:2514
+// https://github.com/imdone/tensorflow/issues/2513
+// #include <numeric>  // clang-format off
 
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/framework/op_kernel.h"
@@ -749,7 +750,8 @@ REGISTER_GPU(bfloat16);
 #undef REGISTER_GPU
 
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:2755
+// https://github.com/imdone/tensorflow/issues/2754
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(
     Name("TensorArrayGather")
@@ -970,7 +972,8 @@ REGISTER_GPU(bfloat16);
 #undef REGISTER_GPU
 
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:3351
+// https://github.com/imdone/tensorflow/issues/3350
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(Name("TensorArrayConcat")
                             .Device(DEVICE_GPU)
@@ -1404,7 +1407,8 @@ REGISTER_KERNEL_BUILDER(Name("TensorArraySizeV3")
 
 // Delete the TensorArray from its resource container.  This enables
 // the user to close and release the resource in the middle of a step/run.
-// TODO(ebrevdo): decide whether closing the grad op should happen
+// TODO (ebrevdo): decide whether closing the grad op should happen id:4051
+// https://github.com/imdone/tensorflow/issues/4049
 // here or on the python side.
 class TensorArrayCloseOp : public OpKernel {
  public:

@@ -253,7 +253,8 @@ class StateInterpolatingAnomalyDetector(FilteringStepPostprocessor):
         first_state=filtered_state,
         second_state=predicted_state,
         first_responsibility=model_responsibility)
-    # TODO(allenl): Try different responsibility scalings and interpolation
+    # TODO (allenl): Try different responsibility scalings and interpolation id:1303
+    # https://github.com/imdone/tensorflow/issues/1304
     # methods (e.g. average in probability space rather than log space).
     interpolated_log_likelihood = (
         model_responsibility * data_and_no_anomaly_log_probability

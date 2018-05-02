@@ -160,13 +160,15 @@ TfLiteStatus PreluPrepare(TfLiteContext* context, TfLiteNode* node) {
   output->type = input->type;
 
   // Currently only Float32 is supported
-  // TODO(ycling): Support other data types.
+  // TODO (ycling): Support other data types. id:1387
+  // https://github.com/imdone/tensorflow/issues/1388
   TF_LITE_ENSURE_EQ(context, input->type, kTfLiteFloat32);
   TF_LITE_ENSURE_EQ(context, alpha->type, kTfLiteFloat32);
 
   // Currently, only support 4D `input` and 3D `alpha` with shape
   // (1, 1, channels).
-  // TODO(impjdi): Support other cases where `alpha` is broadcastable
+  // TODO (impjdi): Support other cases where `alpha` is broadcastable id:1103
+  // https://github.com/imdone/tensorflow/issues/1104
   // to `input`.
   TF_LITE_ENSURE_EQ(context, input->dims->size, 4);
   TF_LITE_ENSURE_EQ(context, alpha->dims->size, 3);
@@ -329,7 +331,8 @@ void Softmax2DFloat(TfLiteTensor* input, TfLiteTensor* output,
 
 void Softmax2DQuantized(TfLiteTensor* input, TfLiteTensor* output,
                         TfLiteSoftmaxParams* params, OpData* data) {
-  // TODO(ahentz): this is arguably a dirty trick. Since the implementation
+  // TODO (ahentz): this is arguably a dirty trick. Since the implementation id:933
+  // https://github.com/imdone/tensorflow/issues/934
   // always traverses the last dimension of a 4D tensor, we will pretend our 2D
   // tensor is 4D in a special way. We will convert a (X, Y) shape into a (X,
   // 1, 1, Y) shape.
@@ -365,7 +368,8 @@ TfLiteStatus SoftmaxEval(TfLiteContext* context, TfLiteNode* node) {
   TfLiteTensor* input = GetInput(context, node, 0);
   TfLiteTensor* output = GetOutput(context, node, 0);
 
-  // TODO(ahentz): consider an implementation that works for many (all?)
+  // TODO (ahentz): consider an implementation that works for many (all?) id:1497
+  // https://github.com/imdone/tensorflow/issues/1498
   // dimensions.
   switch (input->type) {
     case kTfLiteFloat32: {

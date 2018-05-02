@@ -28,7 +28,8 @@ from tensorflow.python.ops import control_flow_ops
 from tensorflow.python.ops import resource_variable_ops
 from tensorflow.python.platform import test
 from tensorflow.python.platform import tf_logging as logging
-# TODO(ebrevdo): Re-enable once CriticalSection is in core.
+# TODO (ebrevdo): Re-enable once CriticalSection is in core. id:862
+# https://github.com/imdone/tensorflow/issues/863
 # from tensorflow.python.training import saver as saver_lib
 
 
@@ -351,8 +352,9 @@ class CriticalSectionTest(test.TestCase):
 
     self.assertEqual(1, get_first())
 
-  # TODO(ebrevdo): Re-enable once CriticalSection is in core.
-  #
+  # TODO (ebrevdo): Re-enable once CriticalSection is in core. id:710
+  # https://github.com/imdone/tensorflow/issues/711
+  # 
   # def testCriticalSectionAndExecuteOpSaverRoundTrip(self):
   #   cs = critical_section_ops.CriticalSection()
   #   r = cs.execute(lambda x: x + 1, 1.0)

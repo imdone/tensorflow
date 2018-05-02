@@ -177,7 +177,8 @@ class HloModule {
   // instructions_to_outline contains the instructions that form the expression.
   //
   // Precondition: instructions in instructions_to_outline are in topological
-  // order (root of outlined instructions last). TODO(jingyue): takes a set of
+  // order (root of outlined instructions last). TODO (jingyue): takes a set of id:392
+  // https://github.com/imdone/tensorflow/issues/393
   // instructions and topologically sorts them.
   HloInstruction* OutlineExpressionFromComputation(
       tensorflow::gtl::ArraySlice<HloInstruction*> instructions_to_outline,
@@ -216,7 +217,8 @@ class HloModule {
 
   // Random number generator engine to use when generating random numbers per
   // HloModule compilation.
-  // TODO(b/25995601): Replace with better seed setting or dev/random for
+  // TODO (b/25995601): Replace with better seed setting or dev/random for id:797
+  // https://github.com/imdone/tensorflow/issues/798
   // where we don't need deterministic execution.
   mutable std::mt19937_64 rng_{42};
   mutable tensorflow::mutex rng_mutex_;

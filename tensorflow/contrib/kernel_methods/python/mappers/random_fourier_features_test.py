@@ -131,7 +131,8 @@ class RandomFourierFeatureMapperTest(TensorFlowTestCase):
     mapped_dim = 5000
     stddev = 5.0
 
-    # TODO(sibyl-vie3Poto): Reduce test's running time before moving to third_party. One
+    # TODO (sibyl-vie3Poto): Reduce test's running time before moving to third_party. One id:762
+    # https://github.com/imdone/tensorflow/issues/763
     # possible way to speed the test up is to compute both the approximate and
     # the exact kernel matrix directly using matrix operations instead of
     # computing the values for each pair of points separately.

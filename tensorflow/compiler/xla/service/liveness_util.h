@@ -31,7 +31,8 @@ namespace xla {
 //
 // REQUIRES: 'operand' is an operand of 'user'.
 //
-// TODO(b/65835246): Remove TuplePointsToAnalysis overload when all users have
+// TODO (b/65835246): Remove TuplePointsToAnalysis overload when all users have id:809
+// https://github.com/imdone/tensorflow/issues/810
 // moved over to the dataflow overload.
 bool DoesNotUseOperandBuffer(const HloInstruction* operand,
                              const ShapeIndex& index,
@@ -47,7 +48,8 @@ bool DoesNotUseOperandBuffer(const HloInstruction* operand,
 //
 // REQUIRES: 'operand' is an operand of 'user'.
 //
-// TODO(b/65835246): Remove TuplePointsToAnalysis overload when all users have
+// TODO (b/65835246): Remove TuplePointsToAnalysis overload when all users have id:488
+// https://github.com/imdone/tensorflow/issues/489
 // moved over to the dataflow overload.
 bool CanShareOperandBufferWithUser(
     HloInstruction* operand, const ShapeIndex& operand_index,

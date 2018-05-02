@@ -59,7 +59,8 @@ int StepStatsDeviceIndex(StepStats* step_stats, EagerContext* ctx,
       return i;
     }
   }
-  // TODO(apassos) do not fall back to host CPU if device is unknown.
+  // TODO (apassos) do not fall back to host CPU if device is unknown. id:1785
+  // https://github.com/imdone/tensorflow/issues/1785
   return 0;
 }
 
@@ -83,7 +84,8 @@ Status ValidateInputTypeAndPlacement(EagerContext* ctx, Device* op_device,
     if (expected_device != actual_device) {
       switch (ctx->GetDevicePlacementPolicy()) {
         case DEVICE_PLACEMENT_SILENT_FOR_INT32:
-          // TODO(xpan): See if we could bubble python related error up
+          // TODO (xpan): See if we could bubble python related error up id:1396
+          // https://github.com/imdone/tensorflow/issues/1397
           // to python level.
           if (handle->dtype == DT_INT32) {
             // Note: enabling silent copies of int32 tensors to match behavior
@@ -333,7 +335,8 @@ std::unique_ptr<TFE_Op> BuildXlaLaunch(TFE_Op* op, TF_Status* status) {
                         &op_input_to_func_input, status);
     if (!status.ok()) return nullptr;
   } else {
-    // TODO(hongm): XlaOpRegistry::CompileTimeConstantInputs() does not work for
+    // TODO (hongm): does not work for XlaOpRegistry::CompileTimeConstantInputs() id:1886
+    // https://github.com/imdone/tensorflow/issues/1886
     // functions, so we need to find another way to handle constant inputs.
     for (int i = const_input_types.size();
          i < fdef->signature().input_arg_size(); ++i) {
@@ -481,7 +484,8 @@ Status EagerExecute(EagerOperation* op,
   }
   *num_retvals = output_dtypes_size;
   if (device == nullptr) {
-    // TODO(apassos) debug how the assignment below might return a different
+    // TODO (apassos) debug how the assignment below might return a different id:2613
+    // https://github.com/imdone/tensorflow/issues/2612
     // device from the one requested above.
     device = kernel->device();
   }
@@ -496,13 +500,15 @@ Status EagerExecute(EagerOperation* op,
     maybe_stats->set_all_start_micros(Env::Default()->NowMicros());
     maybe_stats->set_op_start_rel_micros(0);
     maybe_stats->set_scheduled_micros(Env::Default()->NowMicros());
-    // TODO(apassos) track referenced tensors
+    // TODO (apassos) track referenced tensors id:2510
+    // https://github.com/imdone/tensorflow/issues/2509
   }
   retvals->resize(*num_retvals);
   if (ctx->Async()) {
     // Note that for async mode, execution order will make sure that all
     // input handles are ready before executing them.
-    // TODO(agarwal): Consider executing "cheap" kernels inline for performance.
+    // TODO (agarwal): Consider executing "cheap" kernels inline for performance. id:1787
+    // https://github.com/imdone/tensorflow/issues/1787
     tensorflow::uint64 id = ctx->NextId();
     for (int i = 0; i < *num_retvals; ++i) {
       (*retvals)[i] = new TensorHandle(id, output_dtypes[i], ctx);
@@ -526,7 +532,8 @@ Status EagerExecute(EagerContext* ctx, Device* device,
                     KernelAndDevice* kernel, NodeExecStats* maybe_stats,
                     TensorHandle** retvals, int num_retvals) {
   if (device == nullptr) {
-    // TODO(apassos) debug how the assignment below might return a different
+    // TODO (apassos) debug how the assignment below might return a different id:1399
+    // https://github.com/imdone/tensorflow/issues/1400
     // device from the one requested above.
     device = kernel->device();
   }
@@ -547,9 +554,11 @@ Status EagerExecute(EagerContext* ctx, Device* device,
   // FunctionLibraryRuntime::Run(), so there is no thread-safety concern here.
   // This is quite subtle. Re-work things to make this better?  (Would it make
   // sense for FunctionLibraryRuntime to ensure thread-safe access to
-  // FunctionLibraryDefinition?).  TODO(apassos) figure out how to record stats
+  // FunctionLibraryDefinition?).  TODO (apassos) figure out how to record stats id:1887
+  // https://github.com/imdone/tensorflow/issues/1887
   // for ops which are a part of functions.
-  // TODO(agarwal): change Run to take vector of handles ?
+  // TODO (agarwal): change Run to take vector of handles ? id:2615
+  // https://github.com/imdone/tensorflow/issues/2614
   TF_RETURN_IF_ERROR(kernel->Run(&inputs, &outputs, maybe_stats));
   if (maybe_stats != nullptr) {
     maybe_stats->set_op_end_rel_micros(Env::Default()->NowMicros() -

@@ -65,7 +65,8 @@ class ProjectiveGenerator {
         (transform[3] * output_x + transform[4] * output_y + transform[5]) /
         projection;
 
-    // TODO(ringwalt): Add a fill value input.
+    // TODO (ringwalt): Add a fill value input. id:1309
+    // https://github.com/imdone/tensorflow/issues/1310
 #if (defined __CUDA_ARCH__) && (CUDART_VERSION < 8000)
     // On CUDA versions previous to 8.0, only __shared__ variables
     // could be declared as static in the device code.
@@ -139,7 +140,8 @@ class ProjectiveGenerator {
 
 }  // end namespace generator
 
-// NOTE(ringwalt): We MUST wrap the generate() call in a functor and explicitly
+// NOTE (ringwalt): We MUST wrap the generate() call in a functor and explicitly id:901
+// https://github.com/imdone/tensorflow/issues/902
 // instantiate the functor in image_ops_gpu.cu.cc. Otherwise, we will be missing
 // some Eigen device code.
 namespace functor {

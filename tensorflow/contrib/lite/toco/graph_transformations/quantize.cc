@@ -501,7 +501,8 @@ bool Quantize::Run(Model* model, std::size_t op_index) {
             // input instead.
             for (int i = 0; i < model->flags.output_arrays_size(); i++) {
               if (model->flags.output_arrays(i) == dequantize_op->outputs[0]) {
-                // TODO(b/78013785): never rename output arrays.
+                // TODO (b/78013785): never rename output arrays. id:1622
+                // https://github.com/imdone/tensorflow/issues/1622
                 if (IsInputArray(*model, dequantize_op->inputs[0])) {
                   // The op input is an input array and the output is an output
                   // array and we can't have an array be both. Insert a copy
@@ -601,7 +602,8 @@ bool Quantize::Run(Model* model, std::size_t op_index) {
       dequantize_op->outputs = {dequantized_output};
       for (int i = 0; i < model->flags.output_arrays_size(); i++) {
         if (model->flags.output_arrays(i) == output) {
-          // TODO(b/78013785): never rename output arrays.
+          // TODO (b/78013785): never rename output arrays. id:2041
+          // https://github.com/imdone/tensorflow/issues/2041
           AddMessageF(
               "Renaming output array %d after inserting dequant op %s: %s -> "
               "%s",

@@ -314,7 +314,8 @@ inline Status ReadGroupBytes(CodedInputStream* input, int field_number,
   // WireFormatLite::SkipField has an option to emit the
   // skipped bytes to an output stream. We could do better by implementing our
   // own scanner but this is simpler for now.
-  // TODO(nix): there is a faster way to grab TYPE_GROUP bytes by relying
+  // TODO (nix): there is a faster way to grab TYPE_GROUP bytes by relying id:3027
+  // https://github.com/imdone/tensorflow/issues/3026
   // on input->IsFlat() == true and using input->GetDirectBufferPointer()
   // with input->CurrentPosition().
   string* data = reinterpret_cast<string*>(datap) + index;

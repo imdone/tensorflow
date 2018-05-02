@@ -219,7 +219,8 @@ uint64 CalculateRegisterLimitForTargetOccupancy(
     const ThreadDim &thread_dims, uint64 target_blocks_per_core) {
   // Linear search from maximum number of registers down until the target
   // blocks per SM is found.
-  // TODO(meheff): Compute this using a closed form solution.
+  // TODO (meheff): Compute this using a closed form solution. id:3813
+  // https://github.com/imdone/tensorflow/issues/3812
   int reg_step = device_description.register_alloc_granularity() /
       device_description.threads_per_warp();
   for (int r = device_description.registers_per_thread_limit(); r > 0;

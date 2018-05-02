@@ -43,15 +43,16 @@ struct SessionOptions {
   ///   host:port
   ///   ... other system-specific formats to identify tasks and jobs ...
   ///
-  /// NOTE: at the moment 'local' maps to an in-process service-based
-  /// runtime.
-  ///
-  /// Upon creation, a single session affines itself to one of the
-  /// remote processes, with possible load balancing choices when the
-  /// "target" resolves to a list of possible processes.
-  ///
-  /// If the session disconnects from the remote process during its
-  /// lifetime, session calls may fail immediately.
+  /// NOTE: at the moment 'local' maps to an in-process service-based id:2681
+  // https://github.com/imdone/tensorflow/issues/2680
+  // / runtime.
+  // /
+  // / Upon creation, a single session affines itself to one of the
+  // / remote processes, with possible load balancing choices when the
+  // / "target" resolves to a list of possible processes.
+  // /
+  // / If the session disconnects from the remote process during its
+  // / lifetime, session calls may fail immediately.
   string target;
 
   /// Configuration options.

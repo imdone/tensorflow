@@ -289,7 +289,8 @@ class SnliData(object):
         if (sentence_len_limit > 0 and
             (len(premise_words) > sentence_len_limit or
              len(hypothesis_words) > sentence_len_limit)):
-          # TODO(cais): Maybe truncate; do not discard.
+          # TODO (cais): Maybe truncate; do not discard. id:1227
+          # https://github.com/imdone/tensorflow/issues/1228
           continue
 
         premise_ids = [

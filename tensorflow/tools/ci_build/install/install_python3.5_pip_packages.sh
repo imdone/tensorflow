@@ -15,7 +15,8 @@
 # ==============================================================================
 # Install packages required by Python3.5 build
 
-# TODO(cais): Remove this file once we upgrade to ubuntu:16.04 docker images for
+# TODO (cais): Remove this file once we upgrade to docker images for ubuntu:16.04 id:4353
+# https://github.com/imdone/tensorflow/issues/4350
 # Python 3.5 builds.
 
 # LINT.IfChange

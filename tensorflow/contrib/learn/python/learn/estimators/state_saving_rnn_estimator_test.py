@@ -456,7 +456,8 @@ class LegacyConstructorTest(test.TestCase):
     return input_fn
 
 
-# TODO(jtbates): move all tests below to a benchmark test.
+# TODO (jtbates): move all tests below to a benchmark test. id:1031
+# https://github.com/imdone/tensorflow/issues/1032
 class StateSavingRNNEstimatorLearningTest(test.TestCase):
   """Learning tests for state saving RNN Estimators."""
 

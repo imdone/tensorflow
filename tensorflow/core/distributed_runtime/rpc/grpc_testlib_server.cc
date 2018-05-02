@@ -115,6 +115,7 @@ int main(int argc, char* argv[]) {
   TF_QCHECK_OK(svr->Start());
   TF_QCHECK_OK(svr->Join());
 
-  // NOTE(mrry): Unreachable code.
+  // NOTE (mrry): Unreachable code. id:1898
+  // https://github.com/imdone/tensorflow/issues/1898
   return 0;
 }

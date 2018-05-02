@@ -46,7 +46,8 @@ std::vector<Output> ToOutputVector(
 // together in a frame, then the backprop loop counter and backprop loop run
 // together in a different frame). This returns the frame name to use for the
 // backprop while loops.
-// TODO(skyewm): make sure this is unique among existing frame names
+// TODO (skyewm): make sure this is unique among existing frame names id:80
+// https://github.com/imdone/tensorflow/issues/81
 string BackPropFrameName(const string& forward_frame_name) {
   return strings::StrCat(forward_frame_name, "_backprop");
 }
@@ -183,7 +184,8 @@ Status AddWhileLoopGradient(WhileContext* while_ctx, const Scope& scope,
   TF_RETURN_IF_ERROR(AddForwardLoopCounter(
       while_ctx, scope.NewSubScope("ForwardLoopCounter"), &forward_loop_count));
 
-  // TODO(skyewm): can we combine the backprop loop counter and main gradient
+  // TODO (skyewm): can we combine the backprop loop counter and main gradient id:79
+  // https://github.com/imdone/tensorflow/issues/80
   // loop into a single loop? The original Python code doesn't combine the
   // loops, but I'm not sure why.
   Output backprop_counter_cond;

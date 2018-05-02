@@ -69,7 +69,8 @@ void Col2im(const T* col_data, const int depth, const int height,
       for (int ih = h_pad; ih < h_pad + filter_h; ++ih) {
         for (int iw = w_pad; iw < w_pad + filter_w; ++iw) {
           if (ih >= 0 && ih < height && iw >= 0 && iw < width) {
-            // TODO(andydavis) Vectorize this loop (if compiler does not).
+            // TODO (andydavis) Vectorize this loop (if compiler does not). id:2893
+            // https://github.com/imdone/tensorflow/issues/2892
             for (int i = 0; i < depth; ++i) {
               im_patch_data[i] += col_data[i];
             }
@@ -95,7 +96,8 @@ typedef Eigen::GpuDevice GPUDevice;
 
 // The fast versions using eigen computations directly. They are only enabled
 // for CPU for now since nvcc times out when trying to compile them.
-// TODO(yangke): enable them for GPUs when we have a faster compiler.
+// TODO (yangke): enable them for GPUs when we have a faster compiler. id:2095
+// https://github.com/imdone/tensorflow/issues/2094
 
 template <typename T>
 struct LaunchConv2DBackpropInputOp<CPUDevice, T> {
@@ -210,7 +212,8 @@ class Conv2DFastBackpropInputOp : public OpKernel {
                 errors::InvalidArgument(
                     "Current implementation does not yet support "
                     "dilations in the batch and depth dimensions."));
-    // TODO(yangzihao): Add a CPU implementation for dilated convolution.
+    // TODO (yangzihao): Add a CPU implementation for dilated convolution. id:1853
+    // https://github.com/imdone/tensorflow/issues/1853
     OP_REQUIRES(context, (dilations_[1] == 1 && dilations_[2] == 1),
                 errors::InvalidArgument(
                     "Current Eigen and libxsmm implementations do not "
@@ -326,7 +329,8 @@ class Conv2DCustomBackpropInputOp : public OpKernel {
                 errors::InvalidArgument(
                     "Current implementation does not yet support "
                     "dilations in the batch and depth dimensions."));
-    // TODO(yangzihao): Add a CPU implementation for dilated convolution.
+    // TODO (yangzihao): Add a CPU implementation for dilated convolution. id:2347
+    // https://github.com/imdone/tensorflow/issues/2346
     OP_REQUIRES(context, (dilations_[1] == 1 && dilations_[2] == 1),
                 errors::InvalidArgument(
                     "Current libxsmm and customized CPU implementations do "
@@ -362,7 +366,8 @@ class Conv2DCustomBackpropInputOp : public OpKernel {
       return;
     }
 
-// TODO(andydavis) Consider moving code shared with
+// TODO (andydavis) Consider moving code shared with id:3115
+// https://github.com/imdone/tensorflow/issues/3114
 // Conv2DCustomBackpropFilterOp into a shared helper function.
 #if defined TENSORFLOW_USE_LIBXSMM_CONVOLUTIONS && \
     defined TENSORFLOW_USE_LIBXSMM_BACKWARD_CONVOLUTIONS
@@ -419,7 +424,8 @@ class Conv2DCustomBackpropInputOp : public OpKernel {
     const int output_image_size =
         dims.spatial_dims[0].output_size * dims.spatial_dims[1].output_size;
 
-    // TODO(andydavis) Get L2/L3 cache sizes from device.
+    // TODO (andydavis) Get L2/L3 cache sizes from device. id:2896
+    // https://github.com/imdone/tensorflow/issues/2895
     const size_t l2_cache_size = 256LL << 10;
     const size_t l3_cache_size = 30LL << 20;
 
@@ -448,7 +454,8 @@ class Conv2DCustomBackpropInputOp : public OpKernel {
     // minimum per-thread work unit size threshold has been exceeded.
     // Otherwise, revert to multiple single-threaded matmul ops running in
     // parallel to keep all threads busy.
-    // TODO(andydavis) Explore alternatives to branching the code in this way
+    // TODO (andydavis) Explore alternatives to branching the code in this way id:2098
+    // https://github.com/imdone/tensorflow/issues/2097
     // (i.e. run multiple, parallel tensor contractions in another thread pool).
     const bool use_parallel_contraction =
         dims.batch_size == 1 ||
@@ -726,7 +733,8 @@ void LaunchConv2DBackpropInputOp<GPUDevice, T>::operator()(
                           input_shape, filter_shape, out_backprop.shape(),
                           dilations, strides, padding, data_format, &dims));
 
-  // TODO(yangzihao): The padding computations should be done in
+  // TODO (yangzihao): The padding computations should be done in id:1856
+  // https://github.com/imdone/tensorflow/issues/1856
   // GetWindowedOutputSize() functions.
   const int padding_rows =
       (padding == VALID)
@@ -745,7 +753,8 @@ void LaunchConv2DBackpropInputOp<GPUDevice, T>::operator()(
                                      dims.spatial_dims[1].dilation +
                                  1 - dims.spatial_dims[1].input_size);
 
-  // TODO(keveman): cuDNN only supports equal padding on both sides, so only
+  // TODO (keveman): cuDNN only supports equal padding on both sides, so only id:2350
+  // https://github.com/imdone/tensorflow/issues/2349
   // calling it when that is true. Remove this check when (if?) cuDNN starts
   // supporting different padding.
   bool rows_odd = (padding_rows % 2 != 0);
@@ -866,7 +875,8 @@ void LaunchConv2DBackpropInputOp<GPUDevice, T>::operator()(
       .set_zero_padding_height(padding_rows / 2)
       .set_zero_padding_width(padding_cols / 2);
 
-  // NOTE(keveman):
+  // NOTE (keveman): id:3117
+  // https://github.com/imdone/tensorflow/issues/3115
   // cuDNN only supports the following layouts :
   // Input  : B x D x R x C
   // Filter : OD x ID x R x C
@@ -966,7 +976,8 @@ void LaunchConv2DBackpropInputOp<GPUDevice, T>::operator()(
     ProfileResult best_result;
     ProfileResult best_result_no_scratch;
     for (auto profile_algorithm : algorithms) {
-      // TODO(zhengxq): profile each algorithm multiple times to better
+      // TODO (zhengxq): profile each algorithm multiple times to better id:2899
+      // https://github.com/imdone/tensorflow/issues/2898
       // accuracy.
       CudnnScratchAllocator scratch_allocator(ConvolveBackwardDataScratchSize,
                                               ctx);

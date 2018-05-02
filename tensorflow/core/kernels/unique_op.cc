@@ -36,7 +36,8 @@ class UniqueOp : public OpKernel {
 
   void Compute(OpKernelContext* context) override {
     const Tensor& input = context->input(0);
-    // TODO(dga):  Make unique polymorphic for returning int32 and int64
+    // TODO (dga): Make unique polymorphic for returning int32 and int64 id:3358
+    // https://github.com/imdone/tensorflow/issues/3357
     // vectors to support large tensors.
     OP_REQUIRES(context,
                 input.NumElements() <= std::numeric_limits<int32>::max(),

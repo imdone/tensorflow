@@ -992,7 +992,8 @@ TEST(ArrayOpsTest, Bitcast_ShapeFn) {
   // Bitcasting from smaller to larger reduces the size of the last dimension.
   rebuild_node_def(DT_INT32, DT_INT64);
   INFER_OK(op, "[1,2]", "[d0_0]");  // last dimension matches divisor.
-  // TODO(vrv): Seems like a bug, or at least, too lenient.
+  // TODO (vrv): Seems like a bug, or at least, too lenient. id:3391
+  // https://github.com/imdone/tensorflow/issues/3390
   INFER_OK(op, "[1,?]", "[d0_0]");
   // 4 is divisible by 2, but the shape function signature requires
   // that the last dimension matches the last value exactly.

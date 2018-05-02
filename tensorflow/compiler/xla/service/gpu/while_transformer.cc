@@ -30,7 +30,8 @@ namespace gpu {
 
 namespace {
 
-// TODO(b/33483676) Use an expression tree to specify computations to pattern
+// TODO (b/33483676) Use an expression tree to specify computations to pattern id:448
+// https://github.com/imdone/tensorflow/issues/449
 // match for while transformations.
 
 // ExprTree is a simple recursive data structure used to express computation

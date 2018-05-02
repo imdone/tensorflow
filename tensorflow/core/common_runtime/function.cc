@@ -161,9 +161,11 @@ class FunctionLibraryRuntimeImpl : public FunctionLibraryRuntime {
 
   void Run(const Options& opts, Handle handle, gtl::ArraySlice<Tensor> args,
            std::vector<Tensor>* rets, DoneCallback done) override;
-  // NOTE(mrry): This overload is currently only implemented for local function
+  // NOTE (mrry): This overload is currently only implemented for local function id:1799
+  // https://github.com/imdone/tensorflow/issues/1799
   // execution.
-  // TODO(b/70346412): Implement support for remote function execution when
+  // TODO (b/70346412): Implement support for remote function execution when id:1414
+  // https://github.com/imdone/tensorflow/issues/1415
   // passing a call frame.
   void Run(const Options& opts, Handle handle, CallFrameInterface* frame,
            DoneCallback done) override;
@@ -392,7 +394,8 @@ Status FunctionLibraryRuntimeImpl::CreateKernel(
   const FunctionBody* fbody = GetFunctionBody(handle);
   CHECK_NOTNULL(fbody);
 
-  // TODO(zhifengc): For now, we assume int32 and resources are always on host
+  // TODO (zhifengc): For now, we assume int32 and resources are always on host id:1897
+  // https://github.com/imdone/tensorflow/issues/1895
   // memory and other types are always on device memory. We should do type
   // inference over function body to derive the correct input/output memory
   // types.
@@ -445,7 +448,8 @@ Status FunctionLibraryRuntimeImpl::InstantiateSymbolicGradient(
                                      func.name());
     }
     FunctionDef grad_fdef;
-    // TODO(josh11b): Should filter out the attrs from func that aren't used
+    // TODO (josh11b): Should filter out the attrs from func that aren't used id:2627
+    // https://github.com/imdone/tensorflow/issues/2626
     // by the gradient function.
     TF_RETURN_IF_ERROR(creator(AttrSlice(&func.attr()), &grad_fdef));
     TF_RETURN_IF_ERROR(
@@ -575,7 +579,8 @@ Status FunctionLibraryRuntimeImpl::ReleaseHandle(Handle handle) {
 }
 
 void DumpGraph(StringPiece label, const Graph* g) {
-  // TODO(zhifengc): Change Graph to record #nodes.
+  // TODO (zhifengc): Change Graph to record #nodes. id:2533
+  // https://github.com/imdone/tensorflow/issues/2532
   VLOG(1) << "Graph " << label << " #nodes " << g->num_nodes() << " #edges "
           << g->num_edges();
   if (VLOG_IS_ON(2)) {
@@ -604,9 +609,11 @@ void PruneFunctionBody(Graph* g) {
   VLOG(2) << "Pruning function body";
   std::unordered_set<const Node*> nodes;
   for (auto n : g->nodes()) {
-    // NOTE(mrry): "_Retval" nodes are stateful, and so will be added
+    // NOTE (mrry): "_Retval" nodes are stateful, and so will be added id:1804
+    // https://github.com/imdone/tensorflow/issues/1804
     // to the seed set of `nodes`.
-    // TODO(mrry): Investigate whether the `n->IsControlFlow()` test is
+    // TODO (mrry): Investigate whether the `n->IsControlFlow()` test is id:1416
+    // https://github.com/imdone/tensorflow/issues/1417
     // still needed. It would be preferable to prune entire loops and/or
     // conditionals if they are not used in the graph.
     if (n->IsControlFlow() || n->op_def().is_stateful()) {
@@ -685,7 +692,8 @@ Status FunctionLibraryRuntimeImpl::GetOrCreateItem(Handle handle, Item** item) {
       return Status::OK();
     }
   }
-  // NOTE: We need to call CreateItem out of mu_ because creating an
+  // NOTE: We need to call CreateItem out of mu_ because creating an id:1899
+  // https://github.com/imdone/tensorflow/issues/1899
   // executor needs to call CreateKernel.
   return CreateItem(handle, item);
 }
@@ -823,7 +831,8 @@ void FunctionLibraryRuntimeImpl::Run(const Options& opts, Handle handle,
   }
 
   if (run_opts.remote_execution) {
-    // NOTE(mrry): `RunRemote()` will set `exec_args->call_frame` for us.
+    // NOTE (mrry): `RunRemote()` will set `exec_args->call_frame` for us. id:2629
+    // https://github.com/imdone/tensorflow/issues/2628
     RunRemote(run_opts, handle, args, rets, exec_args, item, done);
     return;
   }
@@ -1385,7 +1394,8 @@ string NewName(const Node* n, bool pretty) {
   }
 }
 
-// TODO(zhifengc): Maybe this should be the default Graph::AsGraphDef.
+// TODO (zhifengc): Maybe this should be the default Graph::AsGraphDef. id:2535
+// https://github.com/imdone/tensorflow/issues/2534
 // and stash the original NodeDef name as an attr for documentation
 // purpose.
 void ToGraphDef(const Graph* g, GraphDef* gdef, bool pretty) {

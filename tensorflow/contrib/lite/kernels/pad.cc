@@ -82,7 +82,8 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
   PadContext op_context(context, node);
   TF_LITE_ENSURE_EQ(context, op_context.input->type, op_context.output->type);
 
-  // TODO(nupurgarg): Our current implementations rely on the inputs being 4D.
+  // TODO (nupurgarg): Our current implementations rely on the inputs being 4D. id:1991
+  // https://github.com/imdone/tensorflow/issues/1991
   TF_LITE_ENSURE_EQ(context, op_context.dims, 4);
 
   // Exit early if paddings is a non-const tensor. Set output tensor to
@@ -103,14 +104,16 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
     TF_LITE_ENSURE_OK(context, ResizeOutputTensor(context, &op_context));
   }
 
-  // TODO(nupurgarg): Change kernel implementation to take in int* instead of
+  // TODO (nupurgarg): Change kernel implementation to take in int* instead of id:1450
+  // https://github.com/imdone/tensorflow/issues/1451
   // vector<int> to remove malloc from Eval().
   // Create before and after padding arrays that are accepted by the kernel.
   std::vector<int> before_padding;
   std::vector<int> after_padding;
   const int32* paddings_data = GetTensorData<int32>(op_context.paddings);
 
-  // TODO(nupurgarg): Change kernel implementation to use padding arrays in
+  // TODO (nupurgarg): Change kernel implementation to use padding arrays in id:1189
+  // https://github.com/imdone/tensorflow/issues/1190
   // forward order (depth, width, height, batch).
   // Build paddings in order of int[] = {batch, height, width, depth} to match
   // kernel implementation of Pad in referenced_ops.h and optimized_ops.h.

@@ -92,20 +92,24 @@ static bool ReadBoolFromEnvVar(const char* env_var_name, bool default_val) {
 
 // Returns true if convolution can be computed efficiently by DeepConv2D,
 // returns false otherwise.
-// TODO(andydavis) Add support for other filter sizes and strides.
-// TODO(andydavis) Add support for autotuning.
+// TODO (andydavis) Add support for other filter sizes and strides. id:3171
+// https://github.com/imdone/tensorflow/issues/3170
+// TODO (andydavis) Add support for autotuning. id:2954
+// https://github.com/imdone/tensorflow/issues/2953
 bool CanUseDeepConv2D(int stride_rows, int stride_cols, int filter_rows,
                       int filter_cols, int in_depth, int out_depth,
                       int out_rows, int out_cols) {
   // Check if convolution parameters are supported.
-  // TODO(andydavis) Add support for multiple filter sizes and strides.
+  // TODO (andydavis) Add support for multiple filter sizes and strides. id:2153
+  // https://github.com/imdone/tensorflow/issues/2152
   if (stride_rows > 1 || stride_cols > 1 || filter_rows != 3 ||
       filter_cols != 3) {
     return false;
   }
 
   // Check if deep convolution is enabled by environment variable.
-  // NOTE: IF this environment variable name changes, update conv_ops_test.py.
+  // NOTE: IF this environment variable name changes, update conv_ops_test.py. id:2038
+  // https://github.com/imdone/tensorflow/issues/2038
   if (!ReadBoolFromEnvVar("TF_USE_DEEP_CONV2D", false)) {
     return false;
   }
@@ -229,7 +233,8 @@ struct ComputeFilterRangeTransform {
       const int64 out_depth_buf_base = od * out_depth_stride;
       const int64 out_depth_base = (od_start + od) * out_depth_stride;
 
-      // TODO(andydavis) Shard filters that are multiples of base filter sizes.
+      // TODO (andydavis) Shard filters that are multiples of base filter sizes. id:2416
+      // https://github.com/imdone/tensorflow/issues/2415
       for (int64 s_r = 0; s_r < shard_rows; ++s_r) {
         for (int64 s_c = 0; s_c < shard_cols; ++s_c) {
           const int64 shard_base = shard_stride * (s_r * shard_cols + s_c);
@@ -318,7 +323,8 @@ struct TransformFilterRange {
     for (int64 od = 0; od < num_filters; ++od) {
       const int64 out_depth_base = od * out_depth_stride;
 
-      // TODO(andydavis) Shard filters that are multiples of base filter sizes.
+      // TODO (andydavis) Shard filters that are multiples of base filter sizes. id:3173
+      // https://github.com/imdone/tensorflow/issues/3172
       for (int64 s_r = 0; s_r < shard_rows; ++s_r) {
         const int64 row_offset = s_r == 0 ? 0 : 1;
 
@@ -394,7 +400,8 @@ struct TransformFilters {
     // Calculate filter transform batch based on cache/filter sizes.
 
     // Cache budget (based on L2 cache size = 256KB).
-    // TODO(andydavis) Read cache size from system.
+    // TODO (andydavis) Read cache size from system. id:2956
+    // https://github.com/imdone/tensorflow/issues/2955
     const int64 cache_size = (256LL << 10) / sizeof(T);
 
     // Fixed cost.
@@ -482,7 +489,8 @@ struct TransformFilters {
 
     const int64 shard_cost = args.filter_rows * args.filter_cols * in_depth *
                              filter_shards_total * tile_spatial_size;
-    // TODO(andydavis) Resolve performance of multi-threaded filter transforms.
+    // TODO (andydavis) Resolve performance of multi-threaded filter transforms. id:2155
+    // https://github.com/imdone/tensorflow/issues/2154
     Shard(1, worker_threads.workers, out_depth, shard_cost, shard);
   }
 };
@@ -780,7 +788,8 @@ struct TransformOutputTile {
       for (int64 od = 0; od < args.out_depth; ++od) {
         const int64 out_depth_base = od * out_depth_stride;
 
-        // TODO(andydavis) Update filter sharding scheme in the next CL.
+        // TODO (andydavis) Update filter sharding scheme in the next CL. id:2043
+        // https://github.com/imdone/tensorflow/issues/2043
         for (int64 sr = 0; sr < filter_shards_row; ++sr) {
           for (int64 sc = 0; sc < filter_shards_col; ++sc) {
             const int64 shard_base = sr * filter_shards_col + sc;
@@ -789,7 +798,8 @@ struct TransformOutputTile {
             // Calcuate output indices and outputs to drop (if needed).
             const int64 out_r_start =
                 in_r + args.pad_rows - sr * tile_stride_rows;
-            // NOTE: The index 't' for 'num_tiles is used in index calculation
+            // NOTE: The index 't' for 'num_tiles is used in index calculation id:2418
+            // https://github.com/imdone/tensorflow/issues/2417
             // for 'out_c_start' because we 'num_tiles' progresses along the
             // column dimension.
             const int64 out_c_start = (in_c + t * tile_stride_cols) +
@@ -872,7 +882,8 @@ struct Conv2DState {
 // *) Computes point-wise MatMuls of 'num_tiles' input tiles with all filters.
 // *) Transforms output tiles, and stores result to 'output'.
 
-// TODO(andydavis) Maybe pass Conv2DState into TransformInput/Output functions.
+// TODO (andydavis) Maybe pass Conv2DState into TransformInput/Output functions. id:3175
+// https://github.com/imdone/tensorflow/issues/3174
 template <typename T>
 struct ComputeConv2D {
   void operator()(const Conv2DArgs& args,
@@ -927,16 +938,19 @@ namespace functor {
 //      input tiles into a local buffer, and computing the Conv2D output of
 //      these tiles by all filters.
 
-// TODO(andydavis) Improve the performance of boundary cases where the input
+// TODO (andydavis) Improve the performance of boundary cases where the input id:2958
+// https://github.com/imdone/tensorflow/issues/2957
 // tile extends past the limit, and wasted outputs are computed. This overhead
 // is at most 2/n, where 'n' is the max(out_rows, out_cols), and so is worse
 // for smaller spatial sizes.
-// TODO(andydavis) Improve the performance of sharded filters.
+// TODO (andydavis) Improve the performance of sharded filters. id:2157
+// https://github.com/imdone/tensorflow/issues/2156
 template <typename T>
 struct DeepConv2D<CPUDevice, T> {
   void operator()(OpKernelContext* ctx, const Conv2DArgs& args, const T* input,
                   const T* filter, T* output) {
-    // TODO(andydavis) Add function to select transform based on conv params.
+    // TODO (andydavis) Add function to select transform based on conv params. id:2048
+    // https://github.com/imdone/tensorflow/issues/2048
     std::unique_ptr<DeepConv2DTransform<T>> transform(new WinogradTransform<T>);
 
     const int64 in_depth = args.in_depth;
@@ -1018,7 +1032,8 @@ struct DeepConv2D<CPUDevice, T> {
       const int64 out_tile_spatial_size = out_tile_rows * out_tile_cols;
 
       // Cache budget (based on L2 cache size = 256KB).
-      // TODO(andydavis) Read cache size from the system.
+      // TODO (andydavis) Read cache size from the system. id:2421
+      // https://github.com/imdone/tensorflow/issues/2420
       const int64 cache_size = (256LL << 10) / sizeof(T);
 
       // Fixed costs.

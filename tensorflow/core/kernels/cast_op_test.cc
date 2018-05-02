@@ -91,7 +91,8 @@ TEST_ALL_CASTS_FROM(bfloat16)
 #undef TEST_ALL_CASTS_FROM
 #undef TEST_CAST
 
-// TODO(wicke): check conversions from/to bool, and bfloat16
+// TODO (wicke): check conversions from/to bool, and bfloat16 id:2074
+// https://github.com/imdone/tensorflow/issues/2074
 
 static void BM_cpu_float_int64(int iters, int num) {
   testing::ItemsProcessed(static_cast<int64>(iters) * num);

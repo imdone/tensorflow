@@ -35,7 +35,8 @@ from tensorflow.python.util.tf_export import tf_export
 GLOBAL_STEP_READ_KEY = 'global_step_read_op_cache'
 
 
-# TODO(drpng): remove this after legacy uses are resolved.
+# TODO (drpng): remove this after legacy uses are resolved. id:4043
+# https://github.com/imdone/tensorflow/issues/4041
 write_graph = graph_io.write_graph
 
 

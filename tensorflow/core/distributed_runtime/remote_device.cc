@@ -29,9 +29,10 @@ limitations under the License.
 
 namespace tensorflow {
 
-// TODO(zhifengc): We need to consolidate (full/partial) device name
+// TODO (zhifengc): We need to consolidate (full/partial) device name id:2670
+// https://github.com/imdone/tensorflow/issues/2669
 // parsing into one place.
-//
+// 
 // Parses and returns the local device part (e.g., cpu:0, gpu:4).
 string GetLocalDeviceName(StringPiece fullname) {
   auto pos = fullname.rfind('/');
@@ -94,7 +95,8 @@ void NewRemoteDevices(Env* env, WorkerCacheInterface* worker_cache,
             << "Device attribute name '" << da.name() << "' could not be "
             << "parsed. Device Attribute: " << da.DebugString();
         // Preserve the exact name, if possible.
-        // TODO(b/37868888): Simplify when legacy device name formats removed.
+        // TODO (b/37868888): Simplify when legacy device name formats removed. id:1880
+        // https://github.com/imdone/tensorflow/issues/1880
         if (device_name_parsed.job == worker_name_parsed.job &&
             device_name_parsed.replica == worker_name_parsed.replica &&
             device_name_parsed.task == worker_name_parsed.task) {

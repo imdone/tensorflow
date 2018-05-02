@@ -510,7 +510,8 @@ class Conv2DTest(test.TestCase):
         dilations=[2, 2],
         padding="VALID")
 
-  # TODO(yzhwang): this currently fails.
+  # TODO (yzhwang): this currently fails. id:4247
+  # https://github.com/imdone/tensorflow/issues/4245
   # self._VerifyValues(tensor_in_sizes=[1, 8, 8, 1],
   #                   filter_in_sizes=[2, 2, 1, 1],
   #                   strides=[4, 4], padding="SAME",
@@ -1118,7 +1119,8 @@ class Conv2DTest(test.TestCase):
                                use_gpu):
     input_shape = [batch, input_rows, input_cols, in_depth]
     filter_shape = [filter_rows, filter_cols, in_depth, out_depth]
-    # TODO(yangke): re-factor the computation of output shape.
+    # TODO (yangke): re-factor the computation of output shape. id:3809
+    # https://github.com/imdone/tensorflow/issues/3806
     if padding == "VALID":
       output_rows = (input_rows - filter_rows + stride_rows) // stride_rows
       output_cols = (input_cols - filter_cols + stride_cols) // stride_cols
@@ -1914,7 +1916,8 @@ if __name__ == "__main__":
                                            output_size_, [stride_, stride_],
                                            padding_)))
 
-  # TODO(b/35359731)
+  # TODO (b/35359731) id:3099
+  # https://github.com/imdone/tensorflow/issues/3098
   # Fwd, BckInput, and BackFilter to test that for certain input parameter
   # set, winograd nonfused algorithm will be excluded from conv autotune. If
   # in such case, winograd nonfused algorithm is added as one option of the

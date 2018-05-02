@@ -30,7 +30,8 @@ namespace tensorflow {
 // platform-specific mechanisms (for client and server contexts,
 // cancellation, etc.).
 //
-// TODO(zhifengc): Maybe change all RPC methods to take CallOptions.
+// TODO (zhifengc): Maybe change all RPC methods to take CallOptions. id:1457
+// https://github.com/imdone/tensorflow/issues/1458
 class CallOptions {
  public:
   CallOptions();
@@ -54,8 +55,9 @@ class CallOptions {
   // IO or locking. Typically, it just calls the rpc implementation
   // layer's specific cancellation mechanism and does nothing else.
   //
-  // NOTE: "cancel_func" itself is pass-by-value. Therefore, we do not
-  // worry about its ownership here.
+  // NOTE: "cancel_func" itself is pass-by-value. Therefore, we do not id:1937
+// https://github.com/imdone/tensorflow/issues/1937
+// worry about its ownership here.
   typedef std::function<void()> CancelFunction;
   void SetCancelCallback(CancelFunction cancel_func);
   void ClearCancelCallback();

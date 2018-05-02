@@ -35,7 +35,8 @@ __global__ void EyeKernel(int num_threads, int batch_size, int m, int n,
   const Scalar one = Scalar(1);
   const Scalar zero = Scalar(0);
   CUDA_1D_KERNEL_LOOP(index, num_threads) {
-    // TODO(rmlarsen): Benchmark to see if it's just as fast to use mod (%),
+    // TODO (rmlarsen): Benchmark to see if it's just as fast to use mod (%), id:3190
+    // https://github.com/imdone/tensorflow/issues/3189
     // since it's easier to read.
     const int global_row = index / n;
     const int col = index - global_row * n;

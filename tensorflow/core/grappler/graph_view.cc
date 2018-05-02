@@ -59,7 +59,8 @@ GraphView::InputPort GraphView::GetInputPort(const string& node_name,
                                              int port_id) const {
   InputPort result;
   result.node = GetNode(node_name);
-  // TODO(bsteiner): verify that the node has at least port_id input ports
+  // TODO (bsteiner): verify that the node has at least port_id input ports id:2832
+  // https://github.com/imdone/tensorflow/issues/2831
   result.port_id = port_id;
   return result;
 }
@@ -68,7 +69,8 @@ GraphView::OutputPort GraphView::GetOutputPort(const string& node_name,
                                                int port_id) const {
   OutputPort result;
   result.node = GetNode(node_name);
-  // TODO(bsteiner): verify that the node has at least port_id output ports
+  // TODO (bsteiner): verify that the node has at least port_id output ports id:2018
+  // https://github.com/imdone/tensorflow/issues/2018
   result.port_id = port_id;
   return result;
 }

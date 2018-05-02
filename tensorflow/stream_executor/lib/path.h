@@ -26,7 +26,8 @@ namespace port {
 using tensorflow::io::Dirname;
 
 namespace internal {
-// TODO(rspringer): Move to cc/implementation file.
+// TODO (rspringer): Move to cc/implementation file. id:4017
+// https://github.com/imdone/tensorflow/issues/4015
 // Not part of the public API.
 string JoinPathImpl(std::initializer_list<port::StringPiece> paths);
 }  // namespace internal

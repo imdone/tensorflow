@@ -27,7 +27,8 @@ namespace tensorflow {
 
 // --------------------------------------------------------------------------
 
-// TODO(pauldonnelly): Add support for double inputs and scales to this Op,
+// TODO (pauldonnelly): Add support for double inputs and scales to this Op, id:1163
+// https://github.com/imdone/tensorflow/issues/1164
 // (currently Attr does not support double).
 
 REGISTER_OP("FusedConv2DBiasActivation")

@@ -115,14 +115,16 @@ class SkipDatasetOp : public UnaryDatasetOpKernel {
       Status GetNextInternal(IteratorContext* ctx,
                              std::vector<Tensor>* out_tensors,
                              bool* end_of_sequence) override {
-        mutex_lock l(mu_);  // TODO(mrry): Make locking less conservative.
+        mutex_lock l(mu_);  // TODO (mrry): Make locking less conservative. id:2402
+                            // https://github.com/imdone/tensorflow/issues/2401
 
         if (!input_impl_) {
           *end_of_sequence = true;
           return Status::OK();
         }
 
-        // Keep calling GetNext().  TODO(vrv): Figure out a way to
+        // Keep calling GetNext().  TODO (vrv): Figure out a way to id:3163
+        // https://github.com/imdone/tensorflow/issues/3162
         // skip records without reading, perhaps by adding an
         // interface to iterator.
         while (i_ < dataset()->count_) {

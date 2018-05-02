@@ -31,7 +31,8 @@ from tensorflow.python.ops import random_ops
 from tensorflow.python.ops import variables
 from tensorflow.python.platform import test as test_lib
 
-# TODO(yangzihao): Currently matmul autotuning is disabled by default. Use
+# TODO (yangzihao): Currently matmul autotuning is disabled by default. Use id:4258
+# https://github.com/imdone/tensorflow/issues/4256
 # os.environ["TF_MATMUL_AUTOTUNE_ENABLE"] = "1" to enable it.
 
 
@@ -217,7 +218,8 @@ if __name__ == "__main__":
     for dtype in (np.int32, np.float16, np.float32, np.float64, np.complex64,
                   np.complex128):
       if not use_static_shape and dtype == np.int32:
-        # TODO(rmlarsen): Re-enable this test when we have fixed the underlying
+        # TODO (rmlarsen): Re-enable this test when we have fixed the underlying id:3830
+        # https://github.com/imdone/tensorflow/issues/3829
         # bug in Windows (b/35935459).
         continue
       for m in sizes:

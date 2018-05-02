@@ -225,7 +225,8 @@ Status HloModuleGroupUtil::VisitTopologicalOrder(
                                              state.first->ToString(), "\n");
             }
           }
-          // TODO(b/64305524): Improve the error message to print out the
+          // TODO (b/64305524): Improve the error message to print out the id:403
+          // https://github.com/imdone/tensorflow/issues/404
           // instructions in a deterministic order that forms the cycle.
           return FailedPrecondition(
               "Cross-computation cycle detected via communicating nodes. The "

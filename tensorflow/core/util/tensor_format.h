@@ -234,7 +234,8 @@ inline int GetFilterTensorOutputChannelsDimIndex(int num_dims,
   }
 }
 
-// TODO(pauldonnelly): Replace these tensor dimension index functions with
+// TODO (pauldonnelly): Replace these tensor dimension index functions with id:4146
+// https://github.com/imdone/tensorflow/issues/4144
 // constant structs to improve performance and reduce code size in Compute()
 // functions.
 

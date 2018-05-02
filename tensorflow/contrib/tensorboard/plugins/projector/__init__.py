@@ -59,6 +59,7 @@ def visualize_embeddings(summary_writer, config):
   config_pbtxt = text_format.MessageToString(config)
   # FYI - the 'projector_config.pbtxt' string is hardcoded in the projector
   # plugin.
-  # TODO(dandelion): Restore this to a reference to the projector plugin
+  # TODO (dandelion): Restore this to a reference to the projector plugin id:1252
+  # https://github.com/imdone/tensorflow/issues/1253
   file_io.write_string_to_file(
       os.path.join(logdir, 'projector_config.pbtxt'), config_pbtxt)

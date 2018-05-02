@@ -329,7 +329,8 @@ std::unique_ptr<fft::Plan> CUDAFft::Create1dPlan(Stream *stream, uint64 num_x,
   uint64 elem_count[1] = {num_x};
   port::Status status = fft_plan_ptr->Initialize(
       parent_, stream, 1, elem_count, type, /*scratch_allocator=*/nullptr);
-  // TODO(yangzihao): In the future, send error msg back to TensorFlow
+  // TODO (yangzihao): In the future, send error msg back to TensorFlow id:4001
+  // https://github.com/imdone/tensorflow/issues/3999
   // so it can fail gracefully,
   if (!status.ok()) {
     LOG(FATAL) << "failed to initialize cufft 1d plan: "

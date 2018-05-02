@@ -59,7 +59,8 @@ class SampleCopier<float, 4> {
   // vector size (because the vectors are 128 bits long).
   inline __device__ void operator()(
       float* buf, const tensorflow::random::Array<float, 4>& array) const {
-    // NOTE(ringwalt): It's not safe to cast &array[0] to a float4, because they
+    // NOTE (ringwalt): It's not safe to cast &array[0] to a float4, because they id:3951
+    // https://github.com/imdone/tensorflow/issues/3949
     // have 32-bit alignment vs 128-bit alignment. There seems to be no
     // performance loss when assigning each element to a vector.
     float4 vec;

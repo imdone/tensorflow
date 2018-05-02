@@ -448,7 +448,8 @@ class Network(base_layer.Layer):
     Raises:
         ValueError: In case of invalid layer name or index.
     """
-    # TODO(fchollet): We could build a dictionary based on layer names
+    # TODO (fchollet): We could build a dictionary based on layer names id:3058
+    # https://github.com/imdone/tensorflow/issues/3057
     # since they are constant, but we have not done that yet.
     if index is not None:
       if len(self.layers) <= index:
@@ -794,7 +795,8 @@ class Network(base_layer.Layer):
     # Dictionary mapping reference tensors to tuples
     # (computed tensor, compute mask)
     # we assume a 1:1 mapping from tensor to mask
-    # TODO(fchollet): raise exception when a `.compute_mask()` call
+    # TODO (fchollet): raise exception when a `.compute_mask()` call id:3247
+    # https://github.com/imdone/tensorflow/issues/3246
     # does not return a list the same size as `call`
     tensor_map = {}
     for x, y, mask in zip(self.inputs, inputs, masks):

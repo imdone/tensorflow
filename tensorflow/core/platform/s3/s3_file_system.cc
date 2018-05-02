@@ -60,7 +60,8 @@ Aws::Client::ClientConfiguration& GetDefaultClientConfig() {
     }
     const char* region = getenv("AWS_REGION");
     if (!region) {
-      // TODO (yongtang): `S3_REGION` should be deprecated after 2.0.
+      // TODO (yongtang): `S3_REGION` should be deprecated after 2.0. id:2649
+      // https://github.com/imdone/tensorflow/issues/2648
       region = getenv("S3_REGION");
     }
     if (region) {

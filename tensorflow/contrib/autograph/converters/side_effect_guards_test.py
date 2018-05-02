@@ -47,7 +47,8 @@ class SideEffectGuardsTest(converter_test_base.TestCase):
       with self.test_session() as sess:
         v = variables.Variable(2)
         sess.run(v.initializer)
-        # NOTE: We don't expect the assignment to execute in this case, because
+        # NOTE: We don't expect the assignment to execute in this case, because id:509
+        # https://github.com/imdone/tensorflow/issues/510
         # variables cannot be reliably guarded.
         self.assertEqual(2, sess.run(result.test_fn(v)))
 
@@ -67,7 +68,8 @@ class SideEffectGuardsTest(converter_test_base.TestCase):
       with self.test_session() as sess:
         v = variables.Variable(2)
         sess.run(v.initializer)
-        # NOTE: Unlike test_side_effect_on_return_only_variable, the variable
+        # NOTE: Unlike test_side_effect_on_return_only_variable, the variable id:501
+        # https://github.com/imdone/tensorflow/issues/502
         # was used in the local scope and so we could catch the assign's side
         # effect.
         self.assertEqual(4, sess.run(result.test_fn(v)))
@@ -86,7 +88,8 @@ class SideEffectGuardsTest(converter_test_base.TestCase):
     with self.compiled(node, control_flow_ops.Assert) as result:
       self.assertEqual(len(node.body[0].body), 1)
       with self.test_session() as sess:
-        # NOTE: In this case we can also capture the side effect because the
+        # NOTE: In this case we can also capture the side effect because the id:964
+        # https://github.com/imdone/tensorflow/issues/965
         # argument is a tensor ans we can wrap it inside an identity.
         with self.assertRaisesRegexp(errors_impl.InvalidArgumentError,
                                      'expected in throw'):
@@ -156,7 +159,8 @@ class SideEffectGuardsTest(converter_test_base.TestCase):
       with self.test_session() as sess:
         v = variables.Variable(2)
         sess.run(v.initializer)
-        # NOTE: This intentionally highlights the flakiness. The test should be
+        # NOTE: This intentionally highlights the flakiness. The test should be id:607
+        # https://github.com/imdone/tensorflow/issues/608
         # tightened down once that is solved.
         self.assertTrue(sess.run(result.test_fn(v)) in (6, 7))
 

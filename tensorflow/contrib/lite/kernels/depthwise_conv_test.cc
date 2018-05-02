@@ -26,7 +26,8 @@ using ::testing::ElementsAreArray;
 
 class BaseDepthwiseConvolutionOpModel : public SingleOpModel {
  public:
-  // TODO(ahentz): Also test different activation types, bias, padding types,
+  // TODO (ahentz): Also test different activation types, bias, padding types, id:943
+  // https://github.com/imdone/tensorflow/issues/944
   // stride values.
   BaseDepthwiseConvolutionOpModel(const TensorData& input,
                                   const TensorData& filter,

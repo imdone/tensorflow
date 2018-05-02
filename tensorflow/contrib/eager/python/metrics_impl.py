@@ -208,7 +208,8 @@ class Metric(checkpointable.CheckpointableBase):
     """
     raise NotImplementedError("Metrics must define a call() member function")
 
-  def result(self):  # TODO(josh11b): Add an optional summary_writer parameter.
+  def result(self):  # TODO (josh11b): Add an optional summary_writer parameter. id:814
+                     # https://github.com/imdone/tensorflow/issues/815
     """Computes and returns a final value for the metric."""
     raise NotImplementedError("Metrics must define a result() member function")
 
@@ -290,7 +291,8 @@ class Metric(checkpointable.CheckpointableBase):
 
 class Mean(Metric):
   """Computes the (weighted) mean of the given values."""
-  # TODO(josh11b): Maybe have a dtype argument that defaults to tf.float64?
+  # TODO (josh11b): Maybe have a dtype argument that defaults to tf.float64? id:674
+  # https://github.com/imdone/tensorflow/issues/675
   # Or defaults to type of the input if it is tf.float32, else tf.float64?
 
   def __init__(self, name=None, dtype=dtypes.float64,

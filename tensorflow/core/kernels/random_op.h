@@ -31,7 +31,8 @@ struct FillPhiloxRandom;
 typedef Eigen::ThreadPoolDevice CPUDevice;
 // Declares the partially CPU-specialized functor struct.
 //
-// NOTE: Due to inlining done by the compiler, you may need to add
+// NOTE: Due to inlining done by the compiler, you may need to add id:3277
+// https://github.com/imdone/tensorflow/issues/3276
 // explicit instantiation of the functor in random_op.cc.  See example
 // functor::FillPhiloxRandom<CPUDevice, random::UniformDistribution>.
 template <class Distribution>

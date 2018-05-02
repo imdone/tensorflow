@@ -281,7 +281,8 @@ class OperationTest(test_util.TensorFlowTestCase):
     self.assertProtoEquals("op:'RefOutputFloatOutput' name:'op1'", op1.node_def)
     self.assertEquals([], list(op1.inputs))
     ref_t, nonref_t = op1.values()
-    # NOTE(mrry): Must specify input_types to preserve ref-typed input.
+    # NOTE (mrry): Must specify input_types to preserve ref-typed input. id:3221
+    # https://github.com/imdone/tensorflow/issues/3220
     op2 = ops.Operation(
         ops._NodeDef("RefInputFloatInput", "op2"),
         g, [ref_t, nonref_t], [],
@@ -451,15 +452,18 @@ class OperationTest(test_util.TensorFlowTestCase):
     with self.assertRaisesRegexp(ValueError, error_msg):
       op.get_attr("FakeAttr")
 
-  # TODO(b/65162920): remove this test when users who are directly mutating the
+  # TODO (b/65162920): remove this test when users who are directly mutating the id:3702
+  # https://github.com/imdone/tensorflow/issues/3701
   # node_def have been updated to proper usage.
   def testSetAttr(self):
     op = test_ops.int_attr().op
     op._set_attr("foo", attr_value_pb2.AttrValue(i=2))
-    # TODO(skyewm): add node_def check
+    # TODO (skyewm): add node_def check id:4226
+    # https://github.com/imdone/tensorflow/issues/4224
     self.assertEqual(op.get_attr("foo"), 2)
 
-  # TODO(nolivia): test all error cases
+  # TODO (nolivia): test all error cases id:3767
+  # https://github.com/imdone/tensorflow/issues/3766
   def testAddControlInput(self):
     # The C API dedups redundant control edges, pure Python does not
     if ops._USE_C_API: return
@@ -707,7 +711,8 @@ class CreateOpTest(test_util.TensorFlowTestCase):
         name="op1")
     self.assertProtoEquals("op:'RefOutputFloatOutput' name:'op1'", op1.node_def)
     ref_t, nonref_t = op1.values()
-    # NOTE(mrry): Must specify input_types to preserve ref-typed input.
+    # NOTE (mrry): Must specify input_types to preserve ref-typed input. id:3023
+    # https://github.com/imdone/tensorflow/issues/3022
     op2 = g.create_op(
         "RefInputFloatInput", [ref_t, nonref_t], [],
         input_types=[dtypes.float32_ref, dtypes.float32],
@@ -731,7 +736,8 @@ class CreateOpTest(test_util.TensorFlowTestCase):
     g.create_op("FloatOutput", [], [dtypes.float32], None, name="myop1")
 
 
-# NOTE(skyewm): these cases test the private Graph._create_op_from_tf_operation
+# NOTE (skyewm): these cases test the private Graph._create_op_from_tf_operation id:3224
+# https://github.com/imdone/tensorflow/issues/3223
 # method. Arguably we should only test the public APIs that depend on this
 # method. However, this logic is complex and tricky, and it can be difficult to
 # ascertain if we have adequate coverage (e.g. a graph may run successfully if
@@ -962,7 +968,8 @@ class ApplyOpTest(test_util.TensorFlowTestCase):
         name="op1")
     self.assertProtoEquals("op:'RefOutputFloatOutput' name:'op1'",
                            ref_t.op.node_def)
-    # NOTE(mrry): Must specify input_types to preserve ref-typed input.
+    # NOTE (mrry): Must specify input_types to preserve ref-typed input. id:3704
+    # https://github.com/imdone/tensorflow/issues/3703
     out_2 = _apply_op(
         g,
         "RefInputFloatInputIntOutput", [ref_t, nonref_t], [dtypes.int32],
@@ -1350,10 +1357,11 @@ class DeviceTest(test_util.TensorFlowTestCase):
   def _overwritingDeviceFunction(self, unused_op):
     # This device function unconditionally overwrites the device of ops.
     #
-    # NOTE(mrry): Writing device functions like this is not
-    # recommended. Instead, in most cases you should use
-    # `pydev.merge_device("/job:ps")` or simply `"/job:ps"` as the
-    # argument to `tf.device()` and the device component will be merged in.
+    # NOTE (mrry): Writing device functions like this is not id:4227
+# https://github.com/imdone/tensorflow/issues/4225
+# recommended. Instead, in most cases you should use
+# `pydev.merge_device("/job:ps")` or simply `"/job:ps"` as the
+# argument to `tf.device()` and the device component will be merged in.
     return "/job:overwrite"
 
   def testOverwritingBehavior(self):
@@ -1772,7 +1780,8 @@ class ControlDependenciesTest(test_util.TensorFlowTestCase):
     g = ops.Graph()
     with g.as_default():
       # Creating unregistered ops with _apply_op() doesn't work with the C API
-      # TODO(skyewm): address this more consistently. Possible solutions are
+      # TODO (skyewm): address this more consistently. Possible solutions are id:3769
+      # https://github.com/imdone/tensorflow/issues/3768
       # to use registered ops in all tests, create a way to register ops in
       # Python tests, or conditionally disable the op registration check in
       # the C API.
@@ -2743,7 +2752,8 @@ class ColocationGroupTest(test_util.TensorFlowTestCase):
 class DeprecatedTest(test_util.TensorFlowTestCase):
 
   def testSuccess(self):
-    # TODO(skyewm): make g.graph_def_versions work with the C API enabled
+    # TODO (skyewm): make g.graph_def_versions work with the C API enabled id:3026
+    # https://github.com/imdone/tensorflow/issues/3025
     if ops._USE_C_API: return
 
     with ops.Graph().as_default() as g:
@@ -2763,7 +2773,8 @@ class DeprecatedTest(test_util.TensorFlowTestCase):
         test_ops.old()
 
   def testGraphExecutionFail(self):
-    # TODO(skyewm): make g.graph_def_versions work with the C API enabled
+    # TODO (skyewm): make g.graph_def_versions work with the C API enabled id:3226
+    # https://github.com/imdone/tensorflow/issues/3225
     if ops._USE_C_API: return
 
     with ops.Graph().as_default() as g:
@@ -2908,7 +2919,8 @@ class OutputTypesTest(test_util.TensorFlowTestCase):
   API mode because their use _set_device method. This test will be deleted
   once we port _set_device and run the copy tests with C API on.
   """
-  # TODO(iga): Remove this test
+  # TODO (iga): Remove this test id:3707
+  # https://github.com/imdone/tensorflow/issues/3706
 
   def setUp(self):
     self.prev_use_c_api = ops._USE_C_API  # pylint: disable=protected-access

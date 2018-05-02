@@ -505,7 +505,8 @@ class SessionManagerTest(test.TestCase):
           trainable=False,
           collections=[ops.GraphKeys.LOCAL_VARIABLES],
           name="x")
-      # TODO(b/70206927): Use ResourceVariables once they are handled properly.
+      # TODO (b/70206927): Use ResourceVariables once they are handled properly. id:3716
+      # https://github.com/imdone/tensorflow/issues/3715
       v_res = variables.Variable(1, name="v_res")
       w_res = variables.Variable(
           v_res,

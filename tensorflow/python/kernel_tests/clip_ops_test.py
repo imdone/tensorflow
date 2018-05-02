@@ -133,7 +133,8 @@ class ClipTest(test.TestCase):
         _ = clip_ops.clip_by_value(x, 1.0, clip)
 
   def testClipByValueNonFinite(self):
-    # TODO(b/78016351): Enable test on GPU once the bug is fixed.
+    # TODO (b/78016351): Enable test on GPU once the bug is fixed. id:3745
+    # https://github.com/imdone/tensorflow/issues/3744
     with self.test_session():
       x = constant_op.constant([float('NaN'), float('Inf'), -float('Inf')])
       np_ans = [float('NaN'), 4.0, -4.0]

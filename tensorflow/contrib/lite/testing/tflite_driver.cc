@@ -94,7 +94,8 @@ class TfLiteDriver::Expectation {
  private:
   template <typename T>
   bool TypedCheck(bool verbose, const TfLiteTensor& tensor) {
-    // TODO(ahentz): must find a way to configure the tolerance.
+    // TODO (ahentz): must find a way to configure the tolerance. id:1604
+    // https://github.com/imdone/tensorflow/issues/1604
     constexpr double kRelativeThreshold = 1e-2f;
     constexpr double kAbsoluteThreshold = 1e-4f;
 

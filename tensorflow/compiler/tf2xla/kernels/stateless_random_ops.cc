@@ -38,7 +38,8 @@ xla::ComputationDataHandle RotateLeftS32(xla::ComputationBuilder* builder,
       builder->ShiftRightLogical(v, builder->ConstantR0<int>(32 - distance)));
 }
 
-// TODO(b/65209188): add a primitive XOR to XLA and call it here, rather than
+// TODO (b/65209188): add a primitive XOR to XLA and call it here, rather than id:340
+// https://github.com/imdone/tensorflow/issues/341
 // building XOR out of other bitwise operators.
 xla::ComputationDataHandle BitwiseXor(xla::ComputationBuilder* builder,
                                       const xla::ComputationDataHandle& x,
@@ -237,7 +238,8 @@ class StatelessRandomUniformOp : public XlaOpKernel {
   TF_DISALLOW_COPY_AND_ASSIGN(StatelessRandomUniformOp);
 };
 
-// TODO(phawkins): generalize to non-float, non-int32 seed types.
+// TODO (phawkins): generalize to non-float, non-int32 seed types. id:273
+// https://github.com/imdone/tensorflow/issues/274
 REGISTER_XLA_OP(Name("StatelessRandomUniform")
                     .CompileTimeConstInput("shape")
                     .TypeConstraint("dtype", DT_FLOAT)
@@ -271,7 +273,8 @@ class StatelessRandomNormalOp : public XlaOpKernel {
   TF_DISALLOW_COPY_AND_ASSIGN(StatelessRandomNormalOp);
 };
 
-// TODO(phawkins): generalize to non-float, non-int32 seed types.
+// TODO (phawkins): generalize to non-float, non-int32 seed types. id:268
+// https://github.com/imdone/tensorflow/issues/269
 REGISTER_XLA_OP(Name("StatelessRandomNormal")
                     .CompileTimeConstInput("shape")
                     .TypeConstraint("dtype", DT_FLOAT)

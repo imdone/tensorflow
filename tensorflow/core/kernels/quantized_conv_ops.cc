@@ -259,7 +259,8 @@ class Im2ColConvFunctor {
         kMaxChunkSize / (filter_value_count * sizeof(T1));
     const int64 chunk_value_count =
         (kMaxChunkSize + (sizeof(T1) - 1)) / sizeof(T1);
-    // TODO(petewarden) - Memory allocation can be very slow on Android. Can we
+    // TODO (petewarden) - Memory allocation can be very slow on Android. Can we id:3272
+    // https://github.com/imdone/tensorflow/issues/3271
     // optimize this by keeping the scratch buffer around?
     // Because memory allocation is very expensive on mobile platforms, try to
     // allocate a persistent buffer that will be kept around between calls. We

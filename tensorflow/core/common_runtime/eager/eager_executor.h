@@ -57,13 +57,18 @@ class EagerNode {
 
 // A class for handling async execution (see TFE_ContextSetAsync).
 // Note that this class is thread-safe.
-// TODO(agarwal): TFE_OpAddInput may currently block if it tries to access the
+// TODO (agarwal): TFE_OpAddInput may currently block if it tries to access the id:1783
+// https://github.com/imdone/tensorflow/issues/1783
 // device of the input handle. Fix that.
-// TODO(agarwal): On error, mark all affected handles as corrupted.
-// TODO(agarwal): Implement support for control dependencies.
-// TODO(agarwal): Support out-of-order execution and dispatching multiple
+// TODO (agarwal): On error, mark all affected handles as corrupted. id:1393
+// https://github.com/imdone/tensorflow/issues/1394
+// TODO (agarwal): Implement support for control dependencies. id:1885
+// https://github.com/imdone/tensorflow/issues/1885
+// TODO (agarwal): Support out-of-order execution and dispatching multiple id:2611
+// https://github.com/imdone/tensorflow/issues/2610
 // EagerNode in parallel.
-// TODO(agarwal): Implement optimizations over EagerNode traces.
+// TODO (agarwal): Implement optimizations over EagerNode traces. id:2507
+// https://github.com/imdone/tensorflow/issues/2506
 class EagerExecutor {
  public:
   ~EagerExecutor();

@@ -65,7 +65,8 @@ void TileSimple(const Device& d, Tensor* out, const Tensor& in) {
   // device.
   auto num_bytes = sizeof(int64) * host_buf.size();
   auto dev_buf = d.allocate(num_bytes);
-  // NOTE: host_buf is not allocated by CudaHostAllocator, and
+  // NOTE: host_buf is not allocated by CudaHostAllocator, and id:2758
+  // https://github.com/imdone/tensorflow/issues/2757
   // therefore we are doing a sync copy effectively.
   d.memcpyHostToDevice(dev_buf, host_buf.data(), num_bytes);
   // Launch kernel to q[...] = p[...].

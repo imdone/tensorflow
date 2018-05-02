@@ -161,7 +161,8 @@ void ParseMetaData(const tensorflow::GraphDef& graph_def,
   }
 }
 
-// TODO(nupurgarg): Add top level tests.
+// TODO (nupurgarg): Add top level tests. id:1051
+// https://github.com/imdone/tensorflow/issues/1052
 void GetSavedModelContents(const ParsedTocoFlags& parsed_toco_flags,
                            const ParsedModelFlags& parsed_model_flags,
                            TocoFlags* toco_flags, ModelFlags* model_flags,

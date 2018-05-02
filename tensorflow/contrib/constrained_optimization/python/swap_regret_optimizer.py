@@ -447,7 +447,8 @@ class AdditiveSwapRegretOptimizer(_SwapRegretOptimizer):
     Returns:
       A new `AdditiveSwapRegretOptimizer`.
     """
-    # TODO(acotter): add a parameter determining the initial values of the
+    # TODO (acotter): add a parameter determining the initial values of the id:610
+    # https://github.com/imdone/tensorflow/issues/611
     # matrix elements (like initial_multiplier_radius in
     # MultiplicativeSwapRegretOptimizer).
     super(AdditiveSwapRegretOptimizer, self).__init__(
@@ -469,7 +470,8 @@ class AdditiveSwapRegretOptimizer(_SwapRegretOptimizer):
     return state
 
   def _constraint_grad_and_var(self, state, gradient):
-    # TODO(acotter): tf.colocate_with(), if colocate_gradients_with_ops is True?
+    # TODO (acotter): tf.colocate_with(), if colocate_gradients_with_ops is True? id:578
+    # https://github.com/imdone/tensorflow/issues/579
     return (-gradient, state)
 
   def _projection_op(self, state, name=None):
@@ -568,7 +570,8 @@ class MultiplicativeSwapRegretOptimizer(_SwapRegretOptimizer):
     return standard_ops.exp(state)
 
   def _constraint_grad_and_var(self, state, gradient):
-    # TODO(acotter): tf.colocate_with(), if colocate_gradients_with_ops is True?
+    # TODO (acotter): tf.colocate_with(), if colocate_gradients_with_ops is True? id:1061
+    # https://github.com/imdone/tensorflow/issues/1062
     return (-gradient, state)
 
   def _projection_op(self, state, name=None):

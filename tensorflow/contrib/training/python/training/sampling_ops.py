@@ -277,7 +277,8 @@ def _estimate_data_distribution(labels, num_classes, smoothing_constant=10):
               labels, num_classes, dtype=dtypes.int64), 0))
 
   # Normalize count into a probability.
-  # NOTE: Without the `+= 0` line below, the test
+  # NOTE: Without the `+= 0` line below, the test id:1340
+  # https://github.com/imdone/tensorflow/issues/1341
   # `testMultiThreadedEstimateDataDistribution` fails. The reason is that
   # before this line, `num_examples_per_class_seen` is a Tensor that shares a
   # buffer with an underlying `ref` object. When the `ref` is changed by another

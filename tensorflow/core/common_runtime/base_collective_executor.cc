@@ -214,7 +214,8 @@ void BaseCollectiveExecutor::ExecuteAsync(OpKernelContext* ctx,
   string error;
   switch (col_params.instance.type) {
     case REDUCTION_COLLECTIVE: {
-      // TODO(tucker): support other reduction algorithms,
+      // TODO (tucker): support other reduction algorithms, id:1368
+      // https://github.com/imdone/tensorflow/issues/1369
       // e.g. tree-reduce, hybrid tree/ring, delegate-to-NCCL, etc.
       const Tensor* input = &ctx->input(0);
       RingReducer* reducer =
@@ -225,7 +226,8 @@ void BaseCollectiveExecutor::ExecuteAsync(OpKernelContext* ctx,
         return;
       }
       // Run in an I/O thread, so as not to starve the executor threads.
-      // TODO(tucker): Instead of forking every per-device Collective
+      // TODO (tucker): Instead of forking every per-device Collective id:1849
+      // https://github.com/imdone/tensorflow/issues/1849
       // Op off into its own thread, consider queuing them on a
       // fixed-size thread-pool dedicated to running CollectiveOps.
       SchedClosure([reducer, done_safe]() {

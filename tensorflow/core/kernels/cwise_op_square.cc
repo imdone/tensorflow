@@ -24,7 +24,8 @@ REGISTER4(UnaryOp, GPU, "Square", functor::square, float, Eigen::half, double,
           int64);
 
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:3139
+// https://github.com/imdone/tensorflow/issues/3138
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(Name("Square")
                             .Device(DEVICE_GPU)

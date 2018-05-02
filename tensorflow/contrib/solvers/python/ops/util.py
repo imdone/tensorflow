@@ -32,7 +32,8 @@ def create_operator(matrix):
   linear_operator = collections.namedtuple(
       "LinearOperator", ["shape", "dtype", "apply", "apply_adjoint"])
 
-  # TODO(rmlarsen): Handle SparseTensor.
+  # TODO (rmlarsen): Handle SparseTensor. id:2300
+  # https://github.com/imdone/tensorflow/issues/2299
   shape = matrix.get_shape()
   if shape.is_fully_defined():
     shape = shape.as_list()
@@ -62,12 +63,14 @@ def identity_operator(matrix):
       apply_adjoint=lambda v: v)
 
 
-# TODO(rmlarsen): Measure if we should just call matmul.
+# TODO (rmlarsen): Measure if we should just call matmul. id:1639
+# https://github.com/imdone/tensorflow/issues/1639
 def dot(x, y):
   return math_ops.reduce_sum(math_ops.conj(x) * y)
 
 
-# TODO(rmlarsen): Implement matrix/vector norm op in C++ in core.
+# TODO (rmlarsen): Implement matrix/vector norm op in C++ in core. id:1215
+# https://github.com/imdone/tensorflow/issues/1216
 # We need 1-norm, inf-norm, and Frobenius norm.
 def l2norm_squared(v):
   return constant_op.constant(2, dtype=v.dtype.base_dtype) * nn_ops.l2_loss(v)

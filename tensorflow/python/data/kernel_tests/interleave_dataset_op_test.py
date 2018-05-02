@@ -74,7 +74,8 @@ class InterleaveDatasetTest(test.TestCase):
 
     # Cycle length > 1.
     expected_elements = [4, 5, 4, 5, 4, 5, 4,
-                         5, 5, 6, 6,  # NOTE(mrry): When we cycle back
+                         5, 5, 6, 6,  # NOTE (mrry): When we cycle back id:3598
+                                      # https://github.com/imdone/tensorflow/issues/3597
                                       # to a list and are already at
                                       # the end of that list, we move
                                       # on to the next element.

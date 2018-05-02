@@ -51,7 +51,8 @@ struct RGBToHSV {
     S.device(d) = (V > T(0)).select(range / V, V.constant(T(0)));
 
     auto norm = range.inverse() * (T(1) / T(6));
-    // TODO(wicke): all these assignments are only necessary because a combined
+    // TODO (wicke): all these assignments are only necessary because a combined id:2873
+    // https://github.com/imdone/tensorflow/issues/2872
     // expression is larger than kernel parameter space. A custom kernel is
     // probably in order.
     H.device(d) = (R == V).select(
@@ -71,7 +72,8 @@ struct HSVToRGB {
     auto S = input_data.template chip<1>(1);
     auto V = input_data.template chip<1>(2);
 
-    // TODO(wicke): compute only the fractional part of H for robustness
+    // TODO (wicke): compute only the fractional part of H for robustness id:2077
+    // https://github.com/imdone/tensorflow/issues/2076
     auto dh = H * T(6);
     auto dr = ((dh - T(3)).abs() - T(1)).cwiseMax(T(0)).cwiseMin(T(1));
     auto dg = (-(dh - T(2)).abs() + T(2)).cwiseMax(T(0)).cwiseMin(T(1));

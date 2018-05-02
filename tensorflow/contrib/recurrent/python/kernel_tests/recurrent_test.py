@@ -40,7 +40,8 @@ _ElmanTheta = collections.namedtuple('ElmanTheta', ('w', 'b'))
 _ElmanInputs = collections.namedtuple('ElmanInputs', ('x'))
 
 
-# TODO(drpng): add test for max length computation.
+# TODO (drpng): add test for max length computation. id:1710
+# https://github.com/imdone/tensorflow/issues/1710
 class RecurrentTest(test_util.TensorFlowTestCase):
 
   def testBasic(self):

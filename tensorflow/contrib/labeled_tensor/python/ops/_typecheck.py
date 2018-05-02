@@ -17,7 +17,8 @@
 
 This module should not be considered public API.
 """
-# TODO(ericmc,shoyer): Delete this in favor of using pytype or mypy
+# TODO (ericmc,shoyer): Delete this in favor of using pytype or mypy id:791
+# https://github.com/imdone/tensorflow/issues/792
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function

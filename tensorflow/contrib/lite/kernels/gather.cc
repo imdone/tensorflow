@@ -42,9 +42,11 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
   TF_LITE_ENSURE_EQ(context, positions->type, kTfLiteInt32);
   // Check that input and output types match.
   TF_LITE_ENSURE_EQ(context, input->type, output->type);
-  // TODO(mgubin): only 0D or 1D positions are currently supported.
+  // TODO (mgubin): only 0D or 1D positions are currently supported. id:947
+  // https://github.com/imdone/tensorflow/issues/948
   TF_LITE_ENSURE(context, NumDimensions(positions) <= 1);
-  // TODO(mgubin): Only default axis == 0 is supported.
+  // TODO (mgubin): Only default axis == 0 is supported. id:1519
+  // https://github.com/imdone/tensorflow/issues/1520
   TF_LITE_ENSURE_EQ(context, params->axis, 0);
   // Check conditions for different types.
   switch (input->type) {

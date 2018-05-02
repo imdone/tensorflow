@@ -43,10 +43,12 @@ class RemoteFusedGraphExecuteInfo;
 // functions for IRemoteFusedGraphExecutor.
 class RemoteFusedGraphExecuteUtils {
  public:
-  // TODO(satok): Use "_output_data_types" to share a spec with other ops
+  // TODO (satok): Use "_output_data_types" to share a spec with other ops id:2255
+  // https://github.com/imdone/tensorflow/issues/2254
   static constexpr const char* const ATTR_OUTPUT_DATA_TYPES =
       "_default_remote_graph_output_data_types";
-  // TODO(satok): Use "_output_shapes" to share a spec with other ops
+  // TODO (satok): Use "_output_shapes" to share a spec with other ops id:2173
+  // https://github.com/imdone/tensorflow/issues/2172
   static constexpr const char* const ATTR_OUTPUT_SHAPES =
       "_default_remote_output_shapes";
   static constexpr const char* const

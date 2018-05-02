@@ -111,7 +111,8 @@ FunctionDef BlockingOpFn() {
       {{{"y"}, "BlockingOp", {"x"}, {}}});
 }
 
-// TODO(phawkins): replace with C++ API for calling functions, when that exists.
+// TODO (phawkins): replace with C++ API for calling functions, when that exists. id:1811
+// https://github.com/imdone/tensorflow/issues/1811
 Output Call(Scope* scope, const string& op_name, const string& fn_name,
             gtl::ArraySlice<Input> inputs) {
   NodeDef def;

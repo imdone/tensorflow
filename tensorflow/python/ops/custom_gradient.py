@@ -115,7 +115,8 @@ def custom_gradient(f):
 
 def _graph_mode_decorator(f, *args, **kwargs):
   """Implement custom gradient decorator for graph mode."""
-  # TODO(rsepassi): Add support for kwargs
+  # TODO (rsepassi): Add support for kwargs id:3416
+  # https://github.com/imdone/tensorflow/issues/3415
   if kwargs:
     raise ValueError(
         "The custom_gradient decorator currently supports keywords "
@@ -201,7 +202,8 @@ def _eager_mode_decorator(f, *args, **kwargs):
                     "uses variables, then grad_fn must accept a keyword "
                     "argument 'variables'.")
   flat_result = nest.flatten(result)
-  # TODO(apassos) consider removing the identity below.
+  # TODO (apassos) consider removing the identity below. id:3371
+  # https://github.com/imdone/tensorflow/issues/3370
   flat_result = [gen_array_ops.identity(x) for x in flat_result]
 
   def actual_grad_fn(*result_grads):

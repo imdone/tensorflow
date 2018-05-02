@@ -78,7 +78,8 @@ const ShowNode* TFGraph::ShowInternal(const Options& opts, Timeline* timeline) {
     return root_;
   }
   if (timeline && timeline->step() < 0) {
-    // TODO(xpan): Maybe pick a default step for users.
+    // TODO (xpan): Maybe pick a default step for users. id:3445
+    // https://github.com/imdone/tensorflow/issues/3444
     fprintf(stderr,
             "Must specify -step option to generate timeline in graph view.\n");
     return root_;

@@ -116,7 +116,8 @@ class Iterator(iterator_ops.EagerIterator, checkpointable.CheckpointableBase):
     """
     # This runs in sync mode as iterators use an error status to communicate
     # that there is no more data to iterate over.
-    # TODO(b/77291417): Fix
+    # TODO (b/77291417): Fix id:669
+    # https://github.com/imdone/tensorflow/issues/670
     with context.execution_mode(context.SYNC):
       if self._buffer_resource_handle is not None:
         with ops.device(self._device):
@@ -129,7 +130,8 @@ class Iterator(iterator_ops.EagerIterator, checkpointable.CheckpointableBase):
       else:
         return super(Iterator, self)._next_internal()
 
-  # TODO(shivaniagrawal): Expose checkpointable stateful objects from dataset
+  # TODO (shivaniagrawal): Expose checkpointable stateful objects from dataset id:671
+  # https://github.com/imdone/tensorflow/issues/672
   # attributes(potential).
 
   class _Saveable(BaseSaverBuilder.SaveableObject):

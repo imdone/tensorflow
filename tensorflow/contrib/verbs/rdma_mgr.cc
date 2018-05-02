@@ -35,7 +35,8 @@ RdmaMgr::RdmaMgr(const WorkerEnv* const worker_env,
     : worker_env_(worker_env), channel_cache_(channel_cache) {
   rdma_adapter_ = new RdmaAdapter(worker_env_);
   // hardcoded to default session (legacy_session_)
-  // TODO: use WorkerSessionForSession
+  // TODO: use WorkerSessionForSession id:2470
+  // https://github.com/imdone/tensorflow/issues/2469
   // need to pass in session handle
   local_worker_ = worker_env_->session_mgr->LegacySession()->worker_name;
   std::vector<string> workers;
@@ -254,7 +255,8 @@ void MRDeleter(ibv_mr* mr) {
   }
 }
 
-// TODO(byronyi): remove this class duplicated from the one in
+// TODO (byronyi): remove this class duplicated from the one in id:1756
+// https://github.com/imdone/tensorflow/issues/1756
 // common/runtime/gpu/pool_allocator.h when it is available in common_runtime
 class BasicCPUAllocator : public SubAllocator {
  public:
@@ -266,7 +268,8 @@ class BasicCPUAllocator : public SubAllocator {
   void Free(void* ptr, size_t) override { port::AlignedFree(ptr); }
 };
 
-// TODO(byronyi): remove this class and its registration when the default
+// TODO (byronyi): remove this class and its registration when the default id:1365
+// https://github.com/imdone/tensorflow/issues/1366
 // cpu_allocator() returns visitable allocator
 class BFCRdmaAllocator : public BFCAllocator {
  public:

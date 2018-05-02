@@ -325,7 +325,8 @@ file(GLOB_RECURSE tf_core_framework_exclude_srcs
     "${tensorflow_source_dir}/tensorflow/contrib/tensorboard/db/vacuum.cc"
 )
 
-# TODO(jart): Why doesn't this work?
+# TODO (jart): Why doesn't this work? id:748
+# https://github.com/imdone/tensorflow/issues/749
 # set_source_files_properties(
 #     ${tensorflow_source_dir}/tensorflow/contrib/tensorboard/db/snapfn.cc
 #     PROPERTIES COMPILE_FLAGS -DSQLITE_OMIT_LOAD_EXTENSION)

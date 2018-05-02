@@ -56,7 +56,8 @@ __global__ void GatherOpKernel(const T* params, const Index* indices, T* out,
     // Check gather_i is in [0, gather_dim_size).
     if (!FastBoundsCheck(gather_i, gather_dim_size)) {
       // Set indices out of range to zero
-      // TODO(fpmc): Log an error for transfer back to host.
+      // TODO (fpmc): Log an error for transfer back to host. id:3200
+      // https://github.com/imdone/tensorflow/issues/3199
       out[i] = T(0);
     } else {
       // params is a [batch_size, gather_dim_size, slice_size] tensor. Read
@@ -106,7 +107,8 @@ struct GatherFunctor<GPUDevice, T, Index> {
               indices_size, slice_size, out_size);
       // clang-format on
     }
-    // TODO(fpmc): enable indices validation on GPU.
+    // TODO (fpmc): enable indices validation on GPU. id:3234
+    // https://github.com/imdone/tensorflow/issues/3233
     // Right now checking for indicies out of bound in the kernel would
     // require copying code between GPU/CPU, and thus slow.
     return -1;

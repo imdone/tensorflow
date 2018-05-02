@@ -252,7 +252,8 @@ void NeonClipVector(const float* vector, int v_size, float abs_limit,
 void NeonSymmetricQuantizeFloats(const float* values, const int size,
                                  int8_t* quantized_values, float* min,
                                  float* max, float* scaling_factor) {
-  // TODO(raziel): vectorize min/max calculation.
+  // TODO (raziel): vectorize min/max calculation. id:1140
+  // https://github.com/imdone/tensorflow/issues/1141
   auto minmax = std::minmax_element(values, values + size);
   *min = *minmax.first;
   *max = *minmax.second;

@@ -92,7 +92,8 @@ class AddNTest(test.TestCase):
                       metadata=np.array(value, dtype=np.int32).tobytes())
               ]))
 
-    # TODO(ebrevdo): Re-enable use_gpu=True once non-DMA Variant
+    # TODO (ebrevdo): Re-enable use_gpu=True once non-DMA Variant id:3257
+    # https://github.com/imdone/tensorflow/issues/3256
     # copying between CPU and GPU is supported.
     with self.test_session(use_gpu=False):
       variant_const_3 = create_constant_variant(3)

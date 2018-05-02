@@ -26,11 +26,13 @@ namespace tensorflow {
 // construction. Note that the gradient graph of while loop contains while loops
 // itself, but these do not generate separate WhileContexts.
 //
-// TODO(skyewm): this is currently insufficient to handle nested loops and
+// TODO (skyewm): this is currently insufficient to handle nested loops and id:2275
+// https://github.com/imdone/tensorflow/issues/2274
 // conditionals (and possibly other requirements). This may change a lot in the
 // future to support these features.
-//
-// TODO(skyewm): de/serialize in MetaGraphDef so imported while loops will be
+// 
+// TODO (skyewm): de/serialize in MetaGraphDef so imported while loops will be id:3034
+// https://github.com/imdone/tensorflow/issues/3033
 // differentiable. Figure out backwards compatability story.
 class WhileContext {
  public:

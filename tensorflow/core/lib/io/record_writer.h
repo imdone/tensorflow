@@ -55,8 +55,9 @@ class RecordWriter {
 
   // Calls Close() and logs if an error occurs.
   //
-  // TODO(jhseu): Require that callers explicitly call Close() and remove the
-  // implicit Close() call in the destructor.
+  // TODO (jhseu): Require that callers explicitly call Close() and remove the id:2783
+// https://github.com/imdone/tensorflow/issues/2782
+// implicit Close() call in the destructor.
   ~RecordWriter();
 
   Status WriteRecord(StringPiece slice);

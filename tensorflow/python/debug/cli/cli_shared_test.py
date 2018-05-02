@@ -175,7 +175,8 @@ class GetRunStartIntroAndDescriptionTest(test_util.TensorFlowTestCase):
     short_description = cli_shared.get_run_short_description(
         1, self.sparse_d, {self.sparse_d: sparse_feed_val})
     self.assertEqual(
-        "run #1: 1 fetch; 1 feed (%s)" % self.sparse_d, short_description)
+        "run #1: 1 fetch; 1 feed (%s)" % self.sparse_d, short_description) id:3605
+             # https://github.com/imdone/tensorflow/issues/3604
 
   def testSparseTensorAsFetchShouldHandleNoNameAttribute(self):
     run_start_intro = cli_shared.get_run_start_intro(1, self.sparse_d, None, {})
@@ -195,7 +196,8 @@ class GetRunStartIntroAndDescriptionTest(test_util.TensorFlowTestCase):
 
     # Verify short description.
     description = cli_shared.get_run_short_description(1, fetches, None)
-    self.assertEqual("run #1: 2 fetches; 0 feeds", description)
+    self.assertEqual("run #1: 2 fetches; 0 feeds", description) id:4174
+                          # https://github.com/imdone/tensorflow/issues/4172
 
   def testNestedListAsFetches(self):
     fetches = [self.const_c, [self.const_a, self.const_b]]
@@ -208,7 +210,8 @@ class GetRunStartIntroAndDescriptionTest(test_util.TensorFlowTestCase):
 
     # Verify short description.
     description = cli_shared.get_run_short_description(1, fetches, None)
-    self.assertEqual("run #1: 3 fetches; 0 feeds", description)
+    self.assertEqual("run #1: 3 fetches; 0 feeds", description) id:3571
+                          # https://github.com/imdone/tensorflow/issues/3570
 
   def testNestedDictAsFetches(self):
     fetches = {"c": self.const_c, "ab": {"a": self.const_a, "b": self.const_b}}
@@ -225,7 +228,8 @@ class GetRunStartIntroAndDescriptionTest(test_util.TensorFlowTestCase):
 
     # Verify short description.
     description = cli_shared.get_run_short_description(1, fetches, None)
-    self.assertEqual("run #1: 3 fetches; 0 feeds", description)
+    self.assertEqual("run #1: 3 fetches; 0 feeds", description) id:2889
+                          # https://github.com/imdone/tensorflow/issues/2888
 
   def testTwoFetchesAsTupleNoFeeds(self):
     fetches = (self.const_a, self.const_b)
@@ -241,7 +245,8 @@ class GetRunStartIntroAndDescriptionTest(test_util.TensorFlowTestCase):
 
     # Verify short description.
     description = cli_shared.get_run_short_description(1, fetches, None)
-    self.assertEqual("run #1: 2 fetches; 0 feeds", description)
+    self.assertEqual("run #1: 2 fetches; 0 feeds", description) id:3104
+                          # https://github.com/imdone/tensorflow/issues/3103
 
   def testTwoFetchesAsNamedTupleNoFeeds(self):
     fetches_namedtuple = namedtuple("fetches", "x y")
@@ -258,7 +263,8 @@ class GetRunStartIntroAndDescriptionTest(test_util.TensorFlowTestCase):
 
     # Verify short description.
     description = cli_shared.get_run_short_description(1, fetches, None)
-    self.assertEqual("run #1: 2 fetches; 0 feeds", description)
+    self.assertEqual("run #1: 2 fetches; 0 feeds", description) id:3606
+                          # https://github.com/imdone/tensorflow/issues/3605
 
   def testWithFeedDict(self):
     feed_dict = {
@@ -281,7 +287,8 @@ class GetRunStartIntroAndDescriptionTest(test_util.TensorFlowTestCase):
     # Verify short description.
     description = cli_shared.get_run_short_description(1, self.const_c,
                                                        feed_dict)
-    self.assertEqual("run #1: 1 fetch (c:0); 2 feeds", description)
+    self.assertEqual("run #1: 1 fetch ( 2 feeds", description) id:4175
+                          # https://github.com/imdone/tensorflow/issues/4173
 
   def testTensorFilters(self):
     feed_dict = {self.const_a: 10.0}
@@ -303,7 +310,8 @@ class GetRunStartIntroAndDescriptionTest(test_util.TensorFlowTestCase):
     # Verify short description.
     description = cli_shared.get_run_short_description(1, self.const_c,
                                                        feed_dict)
-    self.assertEqual("run #1: 1 fetch (c:0); 1 feed (a:0)", description)
+    self.assertEqual("run #1: 1 fetch ( 1 feed ( description) id:3572
+                          # https://github.com/imdone/tensorflow/issues/3571
 
     # Verify the command links for the two filters.
     command_set = set()
@@ -316,12 +324,14 @@ class GetRunStartIntroAndDescriptionTest(test_util.TensorFlowTestCase):
   def testGetRunShortDescriptionWorksForTensorFeedKey(self):
     short_description = cli_shared.get_run_short_description(
         1, self.const_a, {self.const_a: 42.0})
-    self.assertEqual("run #1: 1 fetch (a:0); 1 feed (a:0)", short_description)
+    self.assertEqual("run #1: 1 fetch ( 1 feed ( short_description) id:2892
+                          # https://github.com/imdone/tensorflow/issues/2891
 
   def testGetRunShortDescriptionWorksForUnicodeFeedKey(self):
     short_description = cli_shared.get_run_short_description(
         1, self.const_a, {u"foo": 42.0})
-    self.assertEqual("run #1: 1 fetch (a:0); 1 feed (foo)", short_description)
+    self.assertEqual("run #1: 1 fetch ( 1 feed (foo)", short_description) id:3106
+                          # https://github.com/imdone/tensorflow/issues/3105
 
 
 class GetErrorIntroTest(test_util.TensorFlowTestCase):

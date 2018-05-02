@@ -175,7 +175,8 @@ class ControlFlowTransformer(transformer.Base):
 
     state = list(body_closure)
     if not state:
-      # TODO(mdan): Implement this properly.
+      # TODO (mdan): Implement this properly. id:486
+      # https://github.com/imdone/tensorflow/issues/487
       # To complete this statement, we need to check whether any variable
       # created inside the body scope is used before being modified outside the
       # scope. This should be done during activity analysis, and in general

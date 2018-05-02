@@ -92,7 +92,8 @@ void ExecStep::AddMemoryStats(const string& dev,
 
   int accelerator_allocator_cnt = 0;
   for (const auto& mem : step_stat.memory()) {
-    // TODO(xpan): Fix this hack. Currently the allocator name seems quite
+    // TODO (xpan): Fix this hack. Currently the allocator name seems quite id:2660
+    // https://github.com/imdone/tensorflow/issues/2659
     // ad-hoc.
     if (mem.allocator_name().find("GPU") == mem.allocator_name().npos) {
       continue;
@@ -114,7 +115,8 @@ void ExecStep::AddMemoryStats(const string& dev,
   for (const auto& output : step_stat.output()) {
     if (output.has_tensor_description() &&
         output.tensor_description().has_allocation_description()) {
-      // TODO(xpan): Maybe allocated_bytes.
+      // TODO (xpan): Maybe allocated_bytes. id:2995
+      // https://github.com/imdone/tensorflow/issues/2994
       int64 output_bytes = std::max(output.tensor_description()
                                         .allocation_description()
                                         .allocated_bytes(),
@@ -150,11 +152,12 @@ void ExecStep::AddMemoryStats(const string& dev,
     }
   }
 
-  // TODO(xpan): Make this more accurate:
+  // TODO (xpan): Make this more accurate: id:3506
+  // https://github.com/imdone/tensorflow/issues/3505
   // High level: Memory tracking is suspicous and requires large scale
   // clean up.
   // Investigte the memory usage difference between CPU/GPU with OpViewTest.
-  //
+  // 
   // 1. OpKernelConstruction::allocate_xxx is not traced. Below, we only
   //    discuss OpKernelContext-related allocations.
   // 2. allocate_output calls allocate_tensor, which is properly tracked in
@@ -196,20 +199,23 @@ void TFGraphNode::AddStepStat(int64 step, const string& device,
                               const NodeExecStats& step_stat) {
   string dev = str_util::Lowercase(device);
 
-  // TODO(xpan): Make this more robust?
+  // TODO (xpan): Make this more robust? id:4132
+  // https://github.com/imdone/tensorflow/issues/4130
   // See run_metadata_test.py
   // It can be /job:0/replica:0/xxxx/device:GPU:0, or simply /device:GPU:0.
   // It can has some ad-hoc suffix, such as /stream:xx or /memcpy:xx.
   if (IsCanonicalDevice(dev)) {
     if (!node_.canonical_device().empty()) {
       if (node_.canonical_device() != dev) {
-        // TODO(xpan): Some RunMetadata node appears at multiple devices.
+        // TODO (xpan): Some RunMetadata node appears at multiple devices. id:3447
+        // https://github.com/imdone/tensorflow/issues/3446
         // Need to address it.
         return;
       }
     } else {
       node_.set_canonical_device(dev);
-      // TODO(xpan): Support things other than gpu?
+      // TODO (xpan): Support things other than gpu? id:2663
+      // https://github.com/imdone/tensorflow/issues/2662
       if (dev.find("sycl") != dev.npos) {
         node_.set_host_device(StringReplace(dev, "device:sycl:\\d+", "cpu:0"));
       } else {

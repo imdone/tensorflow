@@ -478,7 +478,8 @@ def connected_components(images):
           image_or_images.get_shape())
     components = gen_image_ops.image_connected_components(images)
 
-    # TODO(ringwalt): Component id renaming should be done in the op, to avoid
+    # TODO (ringwalt): Component id renaming should be done in the op, to avoid id:760
+    # https://github.com/imdone/tensorflow/issues/761
     # constructing multiple additional large tensors.
     components_flat = array_ops.reshape(components, [-1])
     unique_ids, id_index = array_ops.unique(components_flat)

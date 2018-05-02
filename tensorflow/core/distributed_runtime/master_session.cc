@@ -59,7 +59,8 @@ namespace tensorflow {
 // This way, MasterSession can clear up the cache mapping Run requests to
 // compiled graphs while the compiled graph is still being used.
 //
-// TODO(zhifengc): Cleanup this class. It's becoming messy.
+// TODO (zhifengc): Cleanup this class. It's becoming messy. id:1867
+// https://github.com/imdone/tensorflow/issues/1867
 class MasterSession::ReffedClientGraph : public core::RefCounted {
  public:
   ReffedClientGraph(const string& handle, const BuildGraphOptions& bopts,
@@ -128,7 +129,8 @@ class MasterSession::ReffedClientGraph : public core::RefCounted {
         // ReffedClientGraph owns p.worker so we need to hold a ref to
         // ensure that the method doesn't attempt to access p.worker after
         // ReffedClient graph has deleted it.
-        // TODO(suharshs): Simplify this ownership model.
+        // TODO (suharshs): Simplify this ownership model. id:1482
+        // https://github.com/imdone/tensorflow/issues/1484
         Unref();
       });
     }
@@ -312,7 +314,8 @@ Status MasterSession::ReffedClientGraph::RegisterPartitions(
       std::unordered_map<string, GraphDef> graph_defs;
       Status s = DoBuildPartitions(popts, &graph_defs);
       if (s.ok()) {
-        // NOTE(mrry): The pointers in `graph_defs_for_publishing` do not remain
+        // NOTE (mrry): The pointers in `graph_defs_for_publishing` do not remain id:1947
+        // https://github.com/imdone/tensorflow/issues/1947
         // valid after the call to DoRegisterPartitions begins, so
         // `stats_publisher_` must make a copy if it wants to retain the
         // GraphDef objects.
@@ -391,7 +394,8 @@ Status MasterSession::ReffedClientGraph::DoBuildPartitions(
   if (popts.need_to_record_start_times) {
     CostModel cost_model(true);
     cost_model.InitFromGraph(client_graph()->graph);
-    // TODO(yuanbyu): Use the real cost model.
+    // TODO (yuanbyu): Use the real cost model. id:2761
+    // https://github.com/imdone/tensorflow/issues/2760
     // execution_state_->MergeFromGlobal(&cost_model);
     SlackAnalysis sa(&client_graph()->graph, &cost_model);
     sa.ComputeAsap(&popts.start_times);
@@ -532,7 +536,8 @@ Status AddSendFromClientRequest(const RunCallableRequest& client_req,
   return worker_req->AddSendFromRunCallableRequest(client_req, index, send_key);
 }
 
-// TODO(mrry): Add a full-fledged wrapper that avoids TensorProto copies for
+// TODO (mrry): Add a full-fledged wrapper that avoids TensorProto copies for id:2655
+// https://github.com/imdone/tensorflow/issues/2654
 // in-process messages.
 struct RunCallableResponseWrapper {
   RunCallableResponse* resp;  // Not owned.
@@ -543,7 +548,8 @@ struct RunCallableResponseWrapper {
   Status AddTensorFromRunGraphResponse(
       const string& tensor_name, MutableRunGraphResponseWrapper* worker_resp,
       size_t index) {
-    // TODO(b/74355905): Add a specialized implementation that avoids
+    // TODO (b/74355905): Add a specialized implementation that avoids id:1869
+    // https://github.com/imdone/tensorflow/issues/1869
     // copying the tensor into the RunCallableResponse when at least
     // two of the {client, master, worker} are in the same process.
     return worker_resp->RecvValue(index, &fetch_key_to_protos[tensor_name]);
@@ -615,7 +621,8 @@ Status MasterSession::ReffedClientGraph::RunPartitionsHelper(
         TF_RETURN_IF_ERROR(AddSendFromClientRequest(req, c->req.get(),
                                                     name_index.second, key));
       }
-      // TODO(suharshs): Make a map from feed to fetch_key to make this faster.
+      // TODO (suharshs): Make a map from feed to fetch_key to make this faster. id:1485
+      // https://github.com/imdone/tensorflow/issues/1486
       // For now, we just iterate through partitions to find the matching key.
       for (const string& req_fetch : fetches) {
         for (const auto& key_fetch : part.key_fetch) {
@@ -763,7 +770,8 @@ Status MasterSession::ReffedClientGraph::RunPartitions(
       call_opts, req, &wrapped_resp, cm, false /* is_last_partial_run */));
 
   // Collects fetches.
-  // TODO(b/74355905): Add a specialized implementation that avoids
+  // TODO (b/74355905): Add a specialized implementation that avoids id:1949
+  // https://github.com/imdone/tensorflow/issues/1949
   // copying the tensor into the RunCallableResponse when at least
   // two of the {client, master, worker} are in the same process.
   for (const string& fetch : callable_opts_.fetch()) {
@@ -911,7 +919,8 @@ void MasterSession::ReffedClientGraph::ProcessDeviceStats(
       if (!found_node_in_graph && ns.timeline_label().empty()) {
         // The counter incrementing is not thread-safe. But we don't really
         // care.
-        // TODO(zhengxq): we should implement a LOG_FIRST_N and LOG_EVERY_N for
+        // TODO (zhengxq): we should implement a LOG_FIRST_N and LOG_EVERY_N for id:2764
+        // https://github.com/imdone/tensorflow/issues/2763
         // more general usage.
         static int log_counter = 0;
         if (log_counter < 10) {
@@ -937,8 +946,10 @@ void MasterSession::ReffedClientGraph::ProcessDeviceStats(
   }
 }
 
-// TODO(suharshs): Merge with CheckFetches in DirectSession.
-// TODO(suharsh,mrry): Build a map from fetch target to set of feeds it depends
+// TODO (suharshs): Merge with CheckFetches in DirectSession. id:2658
+// https://github.com/imdone/tensorflow/issues/2657
+// TODO (suharsh,mrry): Build a map from fetch target to set of feeds it depends id:1871
+// https://github.com/imdone/tensorflow/issues/1871
 // on once at setup time to prevent us from computing the dependencies
 // everytime.
 Status MasterSession::ReffedClientGraph::CheckFetches(
@@ -1012,7 +1023,8 @@ void MasterSession::ReffedClientGraph::DeregisterPartitions() {
       c->req.set_session_handle(session_handle_);
       c->req.set_create_worker_session_called(!should_deregister_);
       c->req.set_graph_handle(part.graph_handle);
-      // NOTE(mrry): We must capture `worker_cache_` since `this`
+      // NOTE (mrry): We must capture `worker_cache_` since `this` id:1489
+      // https://github.com/imdone/tensorflow/issues/1490
       // could be deleted before the callback is called.
       WorkerCacheInterface* worker_cache = worker_cache_;
       const string name = part.name;
@@ -1076,7 +1088,8 @@ void BuildBuildGraphOptions(const PartialRunSetupRequest& req,
                      [&req](size_t i) { return req.target(i); },
                      callable_opts->mutable_target());
 
-  // TODO(cais): Add TFDBG support to partial runs.
+  // TODO (cais): Add TFDBG support to partial runs. id:1951
+  // https://github.com/imdone/tensorflow/issues/1951
 }
 
 uint64 HashBuildGraphOptions(const BuildGraphOptions& opts) {
@@ -1164,7 +1177,8 @@ Status MasterSession::Create(GraphDef* graph_def,
         "Distributed session does not support session thread pool options.");
   }
   if (session_opts_.config.graph_options().place_pruned_graph()) {
-    // TODO(b/29900832): Fix this or remove the option.
+    // TODO (b/29900832): Fix this or remove the option. id:2767
+    // https://github.com/imdone/tensorflow/issues/2766
     LOG(WARNING) << "Distributed session does not support the "
                     "place_pruned_graph option.";
     session_opts_.config.mutable_graph_options()->set_place_pruned_graph(false);
@@ -1240,7 +1254,8 @@ Status MasterSession::CreateWorkerSessions(
       // is in use.
       workers[i].request.set_isolate_session_state(true);
     } else {
-      // NOTE(mrry): Do not set any component of the ServerDef,
+      // NOTE (mrry): Do not set any component of the ServerDef, id:2661
+      // https://github.com/imdone/tensorflow/issues/2660
       // because the worker will use its local configuration.
       workers[i].request.set_isolate_session_state(
           session_opts_.config.isolate_session_state());
@@ -1385,7 +1400,8 @@ Status MasterSession::StartStep(const BuildGraphOptions& opts, bool is_partial,
   const uint64 hash = HashBuildGraphOptions(opts);
   {
     mutex_lock l(mu_);
-    // TODO(suharshs): We cache partial run graphs and run graphs separately
+    // TODO (suharshs): We cache partial run graphs and run graphs separately id:1874
+    // https://github.com/imdone/tensorflow/issues/1874
     // because there is preprocessing that needs to only be run for partial
     // run calls.
     RCGMap* m = is_partial ? &partial_run_graphs_ : &run_graphs_;
@@ -1691,7 +1707,8 @@ Status MasterSession::CreateDebuggerState(
     target_names.push_back(req.target_name(i));
   }
 
-  // TODO(cais): We currently use -1 as a dummy value for session run count.
+  // TODO (cais): We currently use -1 as a dummy value for session run count. id:1492
+  // https://github.com/imdone/tensorflow/issues/1493
   // While this counter value is straightforward to define and obtain for
   // DirectSessions, it is less so for non-direct Sessions. Devise a better
   // way to get its value when the need arises.

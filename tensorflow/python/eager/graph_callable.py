@@ -108,9 +108,10 @@ class _VariableCapturingScope(object):
     Yields:
       nothing
     """
-    # TODO(apassos) ignoring the regularizer and partitioner here; figure out
+    # TODO (apassos) ignoring the regularizer and partitioner here; figure out id:2927
+    # https://github.com/imdone/tensorflow/issues/2926
     # how to deal with these.
-    def _custom_getter(getter=None, name=None, shape=None, dtype=dtypes.float32,  # pylint: disable=missing-docstring
+    #     def _custom_getter(getter=None, name=None, shape=None, dtype=dtypes.float32,  # pylint: disable=missing-docstring
                        initializer=None, regularizer=None, reuse=None,
                        trainable=True, collections=None, caching_device=None,  # pylint: disable=redefined-outer-name
                        partitioner=None, validate_shape=True,
@@ -134,9 +135,10 @@ class _VariableCapturingScope(object):
     Yields:
       nothing
     """
-    # TODO(apassos) ignoring the regularizer and partitioner here; figure out
+    # TODO (apassos) ignoring the regularizer and partitioner here; figure out id:3138
+    # https://github.com/imdone/tensorflow/issues/3137
     # how to deal with these.
-    def _custom_getter(getter=None, name=None, shape=None, dtype=dtypes.float32,  # pylint: disable=missing-docstring
+    #     def _custom_getter(getter=None, name=None, shape=None, dtype=dtypes.float32,  # pylint: disable=missing-docstring
                        initializer=None, regularizer=None, reuse=None,
                        trainable=True, collections=None, caching_device=None,  # pylint: disable=redefined-outer-name
                        partitioner=None, validate_shape=True,
@@ -149,7 +151,8 @@ class _VariableCapturingScope(object):
         else:
           raise ValueError("Specified reuse=%s but tried to reuse variables."
                            % reuse)
-      # TODO(apassos): ensure this is on the same device as above
+      # TODO (apassos): ensure this is on the same device as above id:3623
+      # https://github.com/imdone/tensorflow/issues/3622
       v = _CapturedVariable(name, initializer, shape, dtype, trainable)
       self.variables[name] = v
 
@@ -321,11 +324,12 @@ def _graph_callable_internal(func, shape_and_dtypes):
 
   func_def_outputs = [x for x in outputs_list if isinstance(x, tf_ops.Tensor)]
   initialization_name = function._inference_name(func.__name__)  # pylint: disable=protected-access
-  # TODO(ashankar): Oh lord, forgive me for this lint travesty.
+  # TODO (ashankar): Oh lord, forgive me for this lint travesty. id:4192
+  # https://github.com/imdone/tensorflow/issues/4190
   # Also, what about the gradient registry of these functions? Those need to be
   # addressed as well.
-  for f in tmp_graph._functions.values():  # pylint: disable=protected-access
-    function._register(f._c_func.func)  # pylint: disable=protected-access
+  #   for f in tmp_graph._functions.values():  # pylint: disable=protected-access
+  #     function._register(f._c_func.func)  # pylint: disable=protected-access
   initializer_function = function.GraphModeFunction(
       initialization_name,
       placeholder_inputs,
@@ -405,7 +409,8 @@ def graph_callable(shape_and_dtypes):
   Returns:
     A callable graph object.
   """
-  # TODO(alive,apassos): support initialized_value and friends from tf.Variable.
+  # TODO (alive,apassos): support initialized_value and friends from tf.Variable. id:3675
+  # https://github.com/imdone/tensorflow/issues/3674
   assert context.executing_eagerly(), (
       "graph_callable can only be used when Eager execution is enabled.")
   def decorator(func):

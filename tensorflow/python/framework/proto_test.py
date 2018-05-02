@@ -27,7 +27,8 @@ from tensorflow.python.platform import test
 
 class ProtoTest(test.TestCase):
 
-  # TODO(vrv): re-enable this test once we figure out how this can
+  # TODO (vrv): re-enable this test once we figure out how this can id:4228
+  # https://github.com/imdone/tensorflow/issues/4226
   # pass the pip install test (where the user is expected to have
   # protobuf installed).
   def _testLargeProto(self):

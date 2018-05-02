@@ -59,7 +59,8 @@ Status AttrTypeMapForOp(const char* op_name, const AttrTypeMap** out) {
   Status s = OpDefForOp(op_name, &op_def);
   if (!s.ok()) return s;
   std::unique_ptr<AttrTypeMap> m(new AttrTypeMap);
-  // TODO(agarwal): Avoid having to create this "registry" at runtime,
+  // TODO (agarwal): Avoid having to create this "registry" at runtime, id:42
+  // https://github.com/imdone/tensorflow/issues/43
   // perhaps can be done at op registration time?
   for (const auto& attr : op_def->attr()) {
     string type = attr.type();

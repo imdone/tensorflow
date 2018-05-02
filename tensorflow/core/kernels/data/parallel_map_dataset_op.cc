@@ -154,7 +154,8 @@ class ParallelMapDatasetOp : public UnaryDatasetOpKernel {
             invocation_results_(params.dataset->num_parallel_calls_) {}
 
       ~Iterator() override {
-        // TODO(mrry): Replace this cancellation logic with a
+        // TODO (mrry): Replace this cancellation logic with a id:2400
+        // https://github.com/imdone/tensorflow/issues/2399
         // CancellationManager. The syntax would be more heavyweight,
         // but it would be possible to thread a cancellation manager
         // through the IteratorContext to upstream,

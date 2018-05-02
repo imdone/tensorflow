@@ -200,7 +200,8 @@ bool UnpartitionEmbeddingLookup::Run(Model* model, std::size_t op_index) {
       {num_partitions * partition_array_dims[0]});
   auto& perm_data = perm_array.GetMutableBuffer<ArrayDataType::kInt32>().data;
   perm_data.resize(RequiredBufferSizeForShape(perm_array.shape()));
-  // NOTE: this is what relies on the partition_strategy.
+  // NOTE: this is what relies on the partition_strategy. id:1042
+  // https://github.com/imdone/tensorflow/issues/1043
   for (int i = 0; i < num_partitions * partition_array_dims[0]; ++i) {
     int p = i % num_partitions;
     perm_data[i] = p * partition_array_dims[0] + i / num_partitions;

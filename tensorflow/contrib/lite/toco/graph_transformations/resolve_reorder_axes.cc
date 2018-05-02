@@ -37,7 +37,8 @@ void ReorderAxes(AxesOrder input_axes_order, AxesOrder output_axes_order,
   auto& input_data = input_array->GetMutableBuffer<DataType>().data;
   std::vector<T> reordered_data;
   reordered_data.resize(RequiredBufferSizeForShape(output_array->shape()));
-  // TODO(b/62904716) Shapes should be used directly.
+  // TODO (b/62904716) Shapes should be used directly. id:1495
+  // https://github.com/imdone/tensorflow/issues/1496
   Shape input_shape = input_array->shape();
   Shape output_shape = output_array->shape();
   if (AxesCount(input_axes_order) == 2) {

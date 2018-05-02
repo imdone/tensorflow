@@ -269,7 +269,8 @@ Status AutoParallel::Optimize(Cluster* cluster, const GrapplerItem& item,
 
 void AutoParallel::Feedback(Cluster* cluster, const GrapplerItem& item,
                             const GraphDef& optimize_output, double result) {
-  // TODO(yaozhang): Add feedback.
+  // TODO (yaozhang): Add feedback. id:2037
+  // https://github.com/imdone/tensorflow/issues/2037
 }
 
 }  // end namespace grappler

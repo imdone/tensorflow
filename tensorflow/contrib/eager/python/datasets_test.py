@@ -232,7 +232,8 @@ class IteratorTest(test.TestCase):
         thread_ids.append(next_element)
       self.assertEqual(len(thread_ids), len(set(thread_ids)))
       self.assertGreater(len(thread_ids), 0)
-      # NOTE(mrry): We don't control the thread pool scheduling, and
+      # NOTE (mrry): We don't control the thread pool scheduling, and id:1124
+      # https://github.com/imdone/tensorflow/issues/1125
       # so cannot guarantee that all of the threads in the pool will
       # perform work.
       self.assertLessEqual(len(thread_ids), num_threads)

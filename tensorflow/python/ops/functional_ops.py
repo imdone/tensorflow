@@ -44,7 +44,8 @@ from tensorflow.python.util import nest
 from tensorflow.python.util.tf_export import tf_export
 
 
-# TODO(yuanbyu, mrry): Handle stride to support sliding windows.
+# TODO (yuanbyu, mrry): Handle stride to support sliding windows. id:3377
+# https://github.com/imdone/tensorflow/issues/3377
 @tf_export("foldl")
 def foldl(fn, elems, initializer=None, parallel_iterations=10, back_prop=True,
           swap_memory=False, name=None):
@@ -105,7 +106,8 @@ def foldl(fn, elems, initializer=None, parallel_iterations=10, back_prop=True,
 
   in_graph_mode = not context.executing_eagerly()
   with ops.name_scope(name, "foldl", [elems]):
-    # TODO(akshayka): Remove the in_graph_mode check once caching devices are
+    # TODO (akshayka): Remove the in_graph_mode check once caching devices are id:3848
+    # https://github.com/imdone/tensorflow/issues/3847
     # supported in Eager
     if in_graph_mode:
       # Any get_variable calls in fn will cache the first call locally
@@ -113,7 +115,8 @@ def foldl(fn, elems, initializer=None, parallel_iterations=10, back_prop=True,
       varscope = vs.get_variable_scope()
       varscope_caching_device_was_none = False
       if varscope.caching_device is None:
-        # TODO(ebrevdo): Change to using colocate_with here and in other
+        # TODO (ebrevdo): Change to using colocate_with here and in other id:4289
+        # https://github.com/imdone/tensorflow/issues/4287
         # methods.
         varscope.set_caching_device(lambda op: op.device)
         varscope_caching_device_was_none = True
@@ -144,7 +147,8 @@ def foldl(fn, elems, initializer=None, parallel_iterations=10, back_prop=True,
         back_prop=back_prop,
         swap_memory=swap_memory)
 
-    # TODO(akshayka): Remove the in_graph_mode check once caching devices are
+    # TODO (akshayka): Remove the in_graph_mode check once caching devices are id:3892
+    # https://github.com/imdone/tensorflow/issues/3890
     # supported in Eager
     if in_graph_mode and varscope_caching_device_was_none:
       varscope.set_caching_device(None)
@@ -212,7 +216,8 @@ def foldr(fn, elems, initializer=None, parallel_iterations=10, back_prop=True,
 
   in_graph_mode = not context.executing_eagerly()
   with ops.name_scope(name, "foldr", [elems]):
-    # TODO(akshayka): Remove the in_graph_mode check once caching devices are
+    # TODO (akshayka): Remove the in_graph_mode check once caching devices are id:3424
+    # https://github.com/imdone/tensorflow/issues/3423
     # supported in Eager
     if in_graph_mode:
       # Any get_variable calls in fn will cache the first call locally and not
@@ -220,7 +225,8 @@ def foldr(fn, elems, initializer=None, parallel_iterations=10, back_prop=True,
       varscope = vs.get_variable_scope()
       varscope_caching_device_was_none = False
       if varscope.caching_device is None:
-        # TODO(ebrevdo): Change to using colocate_with here and in other
+        # TODO (ebrevdo): Change to using colocate_with here and in other id:3379
+        # https://github.com/imdone/tensorflow/issues/3378
         # methods.
         varscope.set_caching_device(lambda op: op.device)
         varscope_caching_device_was_none = True
@@ -253,7 +259,8 @@ def foldr(fn, elems, initializer=None, parallel_iterations=10, back_prop=True,
         back_prop=back_prop,
         swap_memory=swap_memory)
 
-    # TODO(akshayka): Remove the in_graph_mode check once caching devices are
+    # TODO (akshayka): Remove the in_graph_mode check once caching devices are id:3850
+    # https://github.com/imdone/tensorflow/issues/3849
     # supported in Eager
     if in_graph_mode and varscope_caching_device_was_none:
       varscope.set_caching_device(None)
@@ -382,7 +389,8 @@ def map_fn(fn, elems, dtype=None, parallel_iterations=10, back_prop=True,
 
   in_graph_mode = not context.executing_eagerly()
   with ops.name_scope(name, "map", elems_flat):
-    # TODO(akshayka): Remove the in_graph_mode check once caching devices are
+    # TODO (akshayka): Remove the in_graph_mode check once caching devices are id:4290
+    # https://github.com/imdone/tensorflow/issues/4288
     # supported in Eager
     if in_graph_mode:
       # Any get_variable calls in fn will cache the first call locally
@@ -390,7 +398,8 @@ def map_fn(fn, elems, dtype=None, parallel_iterations=10, back_prop=True,
       varscope = vs.get_variable_scope()
       varscope_caching_device_was_none = False
       if varscope.caching_device is None:
-        # TODO(ebrevdo): Change to using colocate_with here and in other
+        # TODO (ebrevdo): Change to using colocate_with here and in other id:3894
+        # https://github.com/imdone/tensorflow/issues/3892
         # methods.
         varscope.set_caching_device(lambda op: op.device)
         varscope_caching_device_was_none = True
@@ -465,7 +474,8 @@ def map_fn(fn, elems, dtype=None, parallel_iterations=10, back_prop=True,
       r.set_shape(tensor_shape.TensorShape(n_static).concatenate(
           r.get_shape()[1:]))
 
-    # TODO(akshayka): Remove the in_graph_mode check once caching devices are
+    # TODO (akshayka): Remove the in_graph_mode check once caching devices are id:3425
+    # https://github.com/imdone/tensorflow/issues/3424
     # supported in Eager
     if in_graph_mode and varscope_caching_device_was_none:
       varscope.set_caching_device(None)
@@ -583,7 +593,8 @@ def scan(fn, elems, initializer=None, parallel_iterations=10, back_prop=True,
 
   in_graph_mode = not context.executing_eagerly()
   with ops.name_scope(name, "scan", elems_flat):
-    # TODO(akshayka): Remove the in_graph_mode check once caching devices are
+    # TODO (akshayka): Remove the in_graph_mode check once caching devices are id:3381
+    # https://github.com/imdone/tensorflow/issues/3380
     # supported in Eager
     if in_graph_mode:
       # Any get_variable calls in fn will cache the first call locally
@@ -591,7 +602,8 @@ def scan(fn, elems, initializer=None, parallel_iterations=10, back_prop=True,
       varscope = vs.get_variable_scope()
       varscope_caching_device_was_none = False
       if varscope.caching_device is None:
-        # TODO(ebrevdo): Change to using colocate_with here and in other
+        # TODO (ebrevdo): Change to using colocate_with here and in other id:3852
+        # https://github.com/imdone/tensorflow/issues/3851
         # methods.
         varscope.set_caching_device(lambda op: op.device)
         varscope_caching_device_was_none = True
@@ -673,7 +685,8 @@ def scan(fn, elems, initializer=None, parallel_iterations=10, back_prop=True,
       r.set_shape(tensor_shape.TensorShape(n_static).concatenate(
           r.get_shape()[1:]))
 
-    # TODO(akshayka): Remove the in_graph_mode check once caching devices are
+    # TODO (akshayka): Remove the in_graph_mode check once caching devices are id:4291
+    # https://github.com/imdone/tensorflow/issues/4289
     # supported in Eager
     if in_graph_mode and varscope_caching_device_was_none:
       varscope.set_caching_device(None)
@@ -737,8 +750,10 @@ def Gradient(inputs, f, name=None):
   Returns:
     A list of tensors of size N.
   """
-  # TODO(zhifengc): Pretty-print the above spec in latex.
-  # TODO(zhfiengc): Needs some math expert to say the comment above better.
+  # TODO (zhifengc): Pretty-print the above spec in latex. id:3897
+  # https://github.com/imdone/tensorflow/issues/3895
+  # TODO (zhfiengc): Needs some math expert to say the comment above better. id:3426
+  # https://github.com/imdone/tensorflow/issues/3425
   tlist = [_.type for _ in f.definition.signature.input_arg]
   return symbolic_gradient(input=inputs, Tout=tlist, f=f, name=name)
 

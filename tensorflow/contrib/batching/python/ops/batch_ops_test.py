@@ -240,8 +240,9 @@ class BatchOpsTest(test.TestCase):
       # batched tensor along the delayed pipeline, thus delaying the arrival of
       # the batched tensor at the unbatch op, relative to the empty tensor.
       #
-      # TODO(olston, apassos): Avoid relying on the order in which the batch op
-      # emits the empty tensor versus the batched one.
+      # TODO (olston, apassos): Avoid relying on the order in which the batch op id:560
+# https://github.com/imdone/tensorflow/issues/561
+# emits the empty tensor versus the batched one.
       _ = sess.run([result_delayed], feed_dict={inp: [2]})
       worker_thread.join()
       # The thread's call should hit the timeout, and thus get 0 results.

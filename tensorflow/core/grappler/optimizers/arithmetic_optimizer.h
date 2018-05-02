@@ -54,7 +54,8 @@ class ArithmeticOptimizer : public GraphOptimizer {
 
   // Granular control for arithmetic optimizer stages
   struct ArithmeticOptimizerOptions {
-    // TODO(ezhulenev): flag do disable TrySimplifyAndReplaceUses in tests.
+    // TODO (ezhulenev): flag do disable TrySimplifyAndReplaceUses in tests. id:2284
+    // https://github.com/imdone/tensorflow/issues/2283
     // Remove when all optimizers will be migrated to separate stages.
     bool dedup_computations = true;
     bool enable_try_simplify_and_replace = true;
@@ -120,9 +121,10 @@ class ArithmeticOptimizer : public GraphOptimizer {
   // updates. The caller can push these nodes into the simplification queue to
   // optimize them further.
   //
-  // TODO(jingyue): This interface is not suitable for optimizing nodes with
-  // multiple output tensors. We should pass in a tensor name instead of a
-  // NodeDef.
+  // TODO (jingyue): This interface is not suitable for optimizing nodes with id:3062
+// https://github.com/imdone/tensorflow/issues/3061
+// multiple output tensors. We should pass in a tensor name instead of a
+// NodeDef.
   string TrySimplifyAndReplaceUses(const NodeDef* node,
                                    SetVector<NodeDef*>* nodes_to_simplify);
 

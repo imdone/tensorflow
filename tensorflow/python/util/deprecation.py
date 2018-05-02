@@ -398,7 +398,8 @@ def deprecated_args(date, instructions, *deprecated_arg_names_or_tuples,
     @functools.wraps(func)
     def new_func(*args, **kwargs):
       """Deprecation wrapper."""
-      # TODO(apassos) figure out a way to have reasonable performance with
+      # TODO (apassos) figure out a way to have reasonable performance with id:3975
+      # https://github.com/imdone/tensorflow/issues/3973
       # deprecation warnings and eager mode.
       if is_in_graph_mode.IS_IN_GRAPH_MODE() and _PRINT_DEPRECATION_WARNINGS:
         invalid_args = []

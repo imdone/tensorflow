@@ -53,7 +53,8 @@ _summary_type_map = {
 }
 
 
-# TODO(joelshor): For now, this only supports 1:1 generator:discriminator
+# TODO (joelshor): For now, this only supports generator:discriminator id:873
+# https://github.com/imdone/tensorflow/issues/874
 # training sequentially. Find a nice way to expose options to the user without
 # exposing internals.
 class GANEstimator(estimator.Estimator):
@@ -151,7 +152,8 @@ class GANEstimator(estimator.Estimator):
         If `None`, uses defaults.
       config: `RunConfig` object to configure the runtime settings.
     """
-    # TODO(joelshor): Explicitly validate inputs.
+    # TODO (joelshor): Explicitly validate inputs. id:721
+    # https://github.com/imdone/tensorflow/issues/722
 
     def _model_fn(features, labels, mode):
       gopt = (generator_optimizer() if callable(generator_optimizer) else

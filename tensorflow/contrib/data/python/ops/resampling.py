@@ -289,6 +289,7 @@ def _calculate_acceptance_probs_with_mixing(initial_probs, target_probs):
   # Target prob to sample from original distribution.
   m = min_ratio
 
-  # TODO(joelshor): Simplify fraction, if possible.
+  # TODO (joelshor): Simplify fraction, if possible. id:1088
+  # https://github.com/imdone/tensorflow/issues/1089
   a_i = (ratio_l - m) / (max_ratio - m)
   return a_i, m

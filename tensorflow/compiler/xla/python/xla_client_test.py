@@ -738,7 +738,8 @@ class SingleOpTest(LocalComputationTest):
         c.Constant(NumpyArrayF32(2)))
     self._ExecuteAndCompareExact(c, expected=[-1, -1, 0, 1, 2, 2])
 
-  # TODO(b/72689392): re-enable when bug S32 resolved
+  # TODO (b/72689392): re-enable when bug S32 resolved id:309
+  # https://github.com/imdone/tensorflow/issues/310
   def DISABLED_testClampS32(self):
     c = self._NewComputation()
     c.Clamp(
@@ -864,7 +865,8 @@ class SingleOpTest(LocalComputationTest):
     non_const_expr = c.Mul(const_expr, x)
     self.assertTrue(c.IsConstant(const_expr))
     self.assertFalse(c.IsConstant(non_const_expr))
-    # self.assertTrue(c.IsConstant(c.Sub(c.Add(x, a), x)))  # TODO(b/77245564)
+    # self.assertTrue(c.IsConstant(c.Sub(c.Add(x, a), x)))  # TODO (b/77245564) id:304
+    # https://github.com/imdone/tensorflow/issues/305
 
 
 class EmbeddedComputationsTest(LocalComputationTest):
@@ -873,7 +875,8 @@ class EmbeddedComputationsTest(LocalComputationTest):
   def _CreateConstantS32Computation(self):
     """Computation (f32) -> s32 that returns a constant 1 for any input."""
     c = self._NewComputation("constant_s32_one")
-    # TODO(eliben): consider adding a nicer way to create new parameters without
+    # TODO (eliben): consider adding a nicer way to create new parameters without id:228
+    # https://github.com/imdone/tensorflow/issues/229
     # having to create dummy Numpy arrays or populating Shape messages. Perhaps
     # we need our own (Python-client-own) way to represent Shapes conveniently.
     c.ParameterFromNumpy(NumpyArrayF32(0))
@@ -883,7 +886,8 @@ class EmbeddedComputationsTest(LocalComputationTest):
   def _CreateConstantS64Computation(self):
     """Computation (f64) -> s64 that returns a constant 1 for any input."""
     c = self._NewComputation("constant_s64_one")
-    # TODO(eliben): consider adding a nicer way to create new parameters without
+    # TODO (eliben): consider adding a nicer way to create new parameters without id:245
+    # https://github.com/imdone/tensorflow/issues/246
     # having to create dummy Numpy arrays or populating Shape messages. Perhaps
     # we need our own (Python-client-own) way to represent Shapes conveniently.
     c.ParameterFromNumpy(NumpyArrayF64(0))

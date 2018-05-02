@@ -45,11 +45,13 @@ limitations under the License.
 
 namespace tensorflow {
 
-// NOTE!!!
+// NOTE !!! id:137
+// https://github.com/imdone/tensorflow/issues/138
 // For now a copy of this is forked to net/plaque. If you
 // find a bug or add a feature, please inform the owners of the
 // net/plaque copy in case it should be integrated.
-// NOTE!!!
+// NOTE !!! id:147
+// https://github.com/imdone/tensorflow/issues/148
 class GraphCycles {
  public:
   GraphCycles();

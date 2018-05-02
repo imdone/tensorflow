@@ -22,11 +22,13 @@ limitations under the License.
 // Other operations may be added as needed to facilitate migrating
 // code that uses std::vector<> to InlinedVector<>.
 //
-// NOTE: If you want an inlined version to replace use of a
+// NOTE: If you want an inlined version to replace use of a id:2774
+// https://github.com/imdone/tensorflow/issues/2773
 // std::vector<bool>, consider using util::bitmap::InlinedBitVector<NBITS>
 // in util/bitmap/inlined_bitvector.h
-//
-// TODO(billydonahue): change size_t to size_type where appropriate.
+// 
+// TODO (billydonahue): change size_t to size_type where appropriate. id:3366
+// https://github.com/imdone/tensorflow/issues/3365
 
 #ifndef TENSORFLOW_LIB_GTL_INLINED_VECTOR_H_
 #define TENSORFLOW_LIB_GTL_INLINED_VECTOR_H_
@@ -429,7 +431,8 @@ class InlinedVector {
     size_t target = 1;
     size_t target_lg = 0;
     while (target < kFit || target < n) {
-      // TODO(psrc): Check and avoid overflow?
+      // TODO (psrc): Check and avoid overflow? id:4058
+      // https://github.com/imdone/tensorflow/issues/4056
       target_lg++;
       target <<= 1;
     }

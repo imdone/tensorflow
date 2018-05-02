@@ -256,7 +256,8 @@ TEST_F(ImportTest, MultipleSubGraphs) {
                "Number of subgraphs in tflite should be exactly 1.");
 }
 
-// TODO(ahentz): still need tests for Operators and IOTensors.
+// TODO (ahentz): still need tests for Operators and IOTensors. id:2056
+// https://github.com/imdone/tensorflow/issues/2056
 
 }  // namespace
 }  // namespace tflite

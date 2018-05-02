@@ -110,7 +110,8 @@ __global__ void MaxPoolForwardNoMaskKernel_NCHW_VECT_C(
     const int pooled_width, const int kernel_h, const int kernel_w,
     const int stride_h, const int stride_w, const int pad_t, const int pad_l,
     int32* top_data) {
-  // TODO(pauldonnelly): Implement a better optimized version of this kernel.
+  // TODO (pauldonnelly): Implement a better optimized version of this kernel. id:3248
+  // https://github.com/imdone/tensorflow/issues/3247
   const int32 kMinINT8X4 = 0x80808080;
   CUDA_1D_KERNEL_LOOP(index, nthreads) {
     int pw = index % pooled_width;

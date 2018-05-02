@@ -23,7 +23,8 @@ class FuzzStringToNumber : public FuzzStringInputOp {
   SINGLE_INPUT_OP_BUILDER(DT_STRING, StringToNumber);
 };
 
-// TODO(dga):  Generalize this to hit both the float and int
+// TODO (dga): Generalize this to hit both the float and int id:2079
+// https://github.com/imdone/tensorflow/issues/2078
 // variants of StringToNumber - requires an update to the
 // plumbing code to specify the output dtype.
 STANDARD_TF_FUZZ_FUNCTION(FuzzStringToNumber);

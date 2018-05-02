@@ -87,7 +87,8 @@ TF_CAPI_EXPORT extern void TFE_DeleteContextOptions(TFE_ContextOptions*);
 // "Context" under which operations/functions are executed. It encapsulates
 // things like the available devices, resource manager etc.
 //
-// TODO(ashankar): Merge with TF_Session?
+// TODO (ashankar): Merge with TF_Session? id:37
+// https://github.com/imdone/tensorflow/issues/38
 typedef struct TFE_Context TFE_Context;
 
 TF_CAPI_EXPORT extern TFE_Context* TFE_NewContext(
@@ -134,7 +135,8 @@ TF_CAPI_EXPORT extern void TFE_ContextAsyncWait(TFE_Context*,
 //
 // Note that outputs of discarded ops remain in a corrupt state and should not
 // be used for future calls.
-// TODO(agarwal): mark the affected handles and raise errors if they are used.
+// TODO (agarwal): mark the affected handles and raise errors if they are used. id:47
+// https://github.com/imdone/tensorflow/issues/48
 TF_CAPI_EXPORT extern void TFE_ContextAsyncClearError(TFE_Context*);
 
 // A handle to a tensor on a device.
@@ -248,7 +250,8 @@ TF_CAPI_EXPORT extern void TFE_OpSetAttrShape(TFE_Op* op, const char* attr_name,
 
 // Sets the attribute attr_name to be a function specified by 'function'.
 //
-// TODO(ashankar,iga): Add this functionality to the C API for graph
+// TODO (ashankar,iga): Add this functionality to the C API for graph id:94
+// https://github.com/imdone/tensorflow/issues/95
 // construction. Perhaps we want an AttrValueMap equivalent in the C API?
 TF_CAPI_EXPORT extern void TFE_OpSetAttrFunction(TFE_Op* op,
                                                  const char* attr_name,
@@ -297,7 +300,8 @@ TF_CAPI_EXPORT extern void TFE_OpSetAttrFunctionList(TFE_Op* op,
 // For sync execution, if any of the inputs to `op` are not ready, this call
 // will block till they become ready and then return when the kernel execution
 // is done.
-// TODO(agarwal): change num_retvals to int from int*.
+// TODO (agarwal): change num_retvals to int from int*. id:40
+// https://github.com/imdone/tensorflow/issues/41
 TF_CAPI_EXPORT extern void TFE_Execute(TFE_Op* op, TFE_TensorHandle** retvals,
                                        int* num_retvals, TF_Status* status);
 
@@ -337,7 +341,8 @@ TF_CAPI_EXPORT extern void TFE_ContextExportRunMetadata(TFE_Context* ctx,
 // A workaround to ease conversion to and from numpy objects and
 // TFE_TensorHandle's.
 //
-// TODO(ashankar): Figure out an alternative scheme that precludes the need for
+// TODO (ashankar): Figure out an alternative scheme that precludes the need for id:39
+// https://github.com/imdone/tensorflow/issues/40
 // these API-boundary breaking methods.
 namespace tensorflow {
 class Tensor;

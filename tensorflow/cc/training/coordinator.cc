@@ -75,7 +75,8 @@ bool Coordinator::ShouldStop() {
 }
 
 Status Coordinator::Join() {
-  // TODO(yuefengz): deal with stragglers.
+  // TODO (yuefengz): deal with stragglers. id:99
+  // https://github.com/imdone/tensorflow/issues/100
   {
     mutex_lock l(mu_);
     if (!should_stop_) {

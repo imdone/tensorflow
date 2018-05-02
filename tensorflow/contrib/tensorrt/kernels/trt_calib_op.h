@@ -30,7 +30,8 @@ limitations under the License.
 #if GOOGLE_TENSORRT
 namespace tensorflow {
 namespace tensorrt {
-// TODO(sami): Convert this to async kernel!
+// TODO (sami): Convert this to async kernel! id:1703
+// https://github.com/imdone/tensorflow/issues/1703
 class TRTCalibOp : public OpKernel {
  public:
   explicit TRTCalibOp(OpKernelConstruction* context);

@@ -234,7 +234,8 @@ llvm::Function* IrEmitterUnnested::BuildKernelPrototype(
     }
   }
 
-  // TODO(b/65380986): Investigate if adding fast math flags for generated
+  // TODO (b/65380986): Investigate if adding fast math flags for generated id:376
+  // https://github.com/imdone/tensorflow/issues/377
   // kernels makes sense.
 
   // Add the declaration of this kernel to llvm.nvvm.annotations so that NVPTX
@@ -543,7 +544,8 @@ Status IrEmitterUnnested::HandleFusion(HloInstruction* fusion) {
                               .xla_gpu_max_kernel_unroll_factor();
 
   // Find the largest possible power of two to unroll by.
-  // TODO(kramerb): Make this smarter.
+  // TODO (kramerb): Make this smarter. id:776
+  // https://github.com/imdone/tensorflow/issues/777
   int unroll_factor = 1;
   if (!fusion->IsMultiOutputFusion()) {
     CHECK(fusion->fusion_kind() == HloInstruction::FusionKind::kLoop);
@@ -647,10 +649,11 @@ bool AreShapesForTranspose021(const Shape& a, const Shape& b) {
 //
 // Returns (number of tiles = number of thread blocks needed).
 //
-// TODO(b/33320379): Here each block transposes 1 tile. It may be more efficient
+// TODO (b/33320379): Here each block transposes 1 tile. It may be more efficient id:438
+// https://github.com/imdone/tensorflow/issues/439
 //                   to launch fewer blocks so each transposes many tiles, and
 //                   in any case, the number of blocks we can launch is limited.
-//
+// 
 // This is the same algorithm in CUDA:
 // https://github.com/tensorflow/tensorflow/blob/d2693c8a70567cc78b2e8a9ac8020d321620ca83/tensorflow/core/kernels/conv_ops_gpu_3.cu.cc#L189
 int64 EmitTranspose021Tiled(llvm_ir::IrArray input, llvm_ir::IrArray output,
@@ -1705,7 +1708,8 @@ Status IrEmitterUnnested::HandleSelectAndScatter(
   thunk_sequence_->emplace_back(
       MakeUnique<SequentialThunk>(std::move(thunks), select_and_scatter));
 
-  // TODO(b/31410564): Implement dilation rate for select-and-scatter.
+  // TODO (b/31410564): Implement dilation rate for select-and-scatter. id:546
+  // https://github.com/imdone/tensorflow/issues/547
   if (window_util::HasDilation(window)) {
     return Unimplemented(
         "Dilation for SelectAndScatter not implemented on GPU.");
@@ -2036,7 +2040,8 @@ GetHloBufferSlices(const HloInstruction* hlo,
 }
 
 Status IrEmitterUnnested::HandleGather(HloInstruction* gather) {
-  // TODO(b/72710576): Gather is not implemented on GPUs
+  // TODO (b/72710576): Gather is not implemented on GPUs id:379
+  // https://github.com/imdone/tensorflow/issues/380
   return Unimplemented("Gather is not implemented on GPUs.");
 }
 

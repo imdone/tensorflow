@@ -48,9 +48,11 @@ namespace tensorflow {
 // Run() will finally assign the device to each node given the list of
 // possible devices.
 //
-// TODO(mrry): "Soft" constraints, such as "place node 'x' as close as
+// TODO (mrry): "Soft" constraints, such as "place node 'x' as close as id:1921
+// https://github.com/imdone/tensorflow/issues/1921
 // possible to node 'y' while respecting the other constraints"?
-// TODO(mrry): Create a common interface for this and the other
+// TODO (mrry): Create a common interface for this and the other id:2662
+// https://github.com/imdone/tensorflow/issues/2661
 // placement algorithms so that they may be injected into the graph
 // builder.
 class Placer {

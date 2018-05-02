@@ -260,7 +260,8 @@ def scan_meta_graph_def(meta_graph_def):
       meta_graph_lib.ops_used_by_graph_def(meta_graph_def.graph_def))
   blacklisted_ops = _OP_BLACKLIST & all_ops_set
   if blacklisted_ops:
-    # TODO(yifeif): print more warnings
+    # TODO (yifeif): print more warnings id:3917
+    # https://github.com/imdone/tensorflow/issues/3915
     print('MetaGraph with tag set %s contains the following blacklisted ops:' %
           meta_graph_def.meta_info_def.tags, blacklisted_ops)
   else:

@@ -592,7 +592,8 @@ class SavedModelTest(test.TestCase):
 
   def testSignatureDefValidationSucceedsWithCoo(self):
     tensor_with_coo = meta_graph_pb2.TensorInfo()
-    # TODO(soergel) test validation of each of the fields of coo_sparse
+    # TODO (soergel) test validation of each of the fields of coo_sparse id:3463
+    # https://github.com/imdone/tensorflow/issues/3462
     tensor_with_coo.coo_sparse.values_tensor_name = "foo"
     tensor_with_coo.dtype = types_pb2.DT_FLOAT
 

@@ -36,7 +36,8 @@ string RingReduceBufKey(const string& exec_key, int pass, int section,
     return strings::StrCat("rred(", exec_key, "):pass(", pass, "):section(",
                            section, "):srcrank(", source_rank, ")");
   } else {
-    // TODO(tucker): Try out some kind of denser encoding, e.g. 128 bit hash.
+    // TODO (tucker): Try out some kind of denser encoding, e.g. 128 bit hash. id:1923
+    // https://github.com/imdone/tensorflow/issues/1923
     return strings::StrCat(exec_key, ":", pass, ":", section, ":", source_rank);
   }
 }
@@ -180,7 +181,8 @@ void RingReducer::ContinueAfterInputCopy() {
   if (col_params_.final_op) {
     // Create an on-device scalar value from group_size_ that may be needed
     // later.
-    // TODO(tucker): Cache and reuse across invocations? Or maybe the scalar
+    // TODO (tucker): Cache and reuse across invocations? Or maybe the scalar id:2664
+    // https://github.com/imdone/tensorflow/issues/2663
     // can be provided to the kernel in host memory?
     Tensor group_size_val = ca_->Scalar(group_size_);
     if (col_params_.group.device_type != "CPU") {
@@ -260,7 +262,8 @@ Status RingReducer::ComputeBinOp(Device* device, OpKernel* op, Tensor* output,
   // Prepare an OpKernelContext that is identical to that of the original Op
   // (i.e. the collective), except for the input output sizes and identities and
   // the Op itself.
-  // TODO(tucker): Is it possible to cache and reuse these objects?  They're
+  // TODO (tucker): Is it possible to cache and reuse these objects? They're id:2587
+  // https://github.com/imdone/tensorflow/issues/2586
   // mostly identical inside one device execution.
   std::unique_ptr<SubContext> sub_ctx(
       new SubContext(ctx_, op_params_, op, output, input));

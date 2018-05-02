@@ -37,7 +37,8 @@ Status ClusterFunctionLibraryRuntime::ConstructFunctionGraph(
     bool is_type_list;
     DataTypeVector dtypes;
     TF_RETURN_IF_ERROR(ArgNumType(attrs, in, &is_type_list, &dtypes));
-    // TODO(rohanj): Handle list and variadic number of attrs. Here and below.
+    // TODO (rohanj): Handle list and variadic number of attrs. Here and below. id:2683
+    // https://github.com/imdone/tensorflow/issues/2682
     if (is_type_list || dtypes.size() > 1) {
       return errors::Unimplemented("Input arg: ", in.name(),
                                    " has a list type or variadic number of "
@@ -56,7 +57,8 @@ Status ClusterFunctionLibraryRuntime::ConstructFunctionGraph(
             .Device(target)
             .Finalize(input_node));
     // src_incarnation = 1 works because the transfer is across the same device.
-    // TODO(rohanj): Find the src_incarnation for the remote device and set it.
+    // TODO (rohanj): Find the src_incarnation for the remote device and set it. id:2645
+    // https://github.com/imdone/tensorflow/issues/2644
     const string& key = Rendezvous::CreateKey(
         target, 1 /* src_incarnation */, target, in.name(), FrameAndIter(0, 0));
     send_keys->push_back(key);
@@ -83,7 +85,8 @@ Status ClusterFunctionLibraryRuntime::ConstructFunctionGraph(
     bool is_type_list;
     DataTypeVector dtypes;
     TF_RETURN_IF_ERROR(ArgNumType(attrs, out, &is_type_list, &dtypes));
-    // TODO(rohanj): Handle list and variadic number of attrs. Here and below.
+    // TODO (rohanj): Handle list and variadic number of attrs. Here and below. id:1854
+    // https://github.com/imdone/tensorflow/issues/1854
     if (is_type_list || dtypes.size() > 1) {
       return errors::Unimplemented("Output arg: ", out.name(),
                                    " has a list type or variadic number of "

@@ -68,7 +68,8 @@ typedef std::function<Status(
 // If 'reuse_existing_functions' is set, use an existing function with the
 // same name, if any.
 //
-// TODO(phawkins): currently, some information in control edges
+// TODO (phawkins): currently, some information in control edges id:111
+// https://github.com/imdone/tensorflow/issues/112
 // is not preserved. Suppose you have A and B in the main
 // graph, C and D in a subgraph. B and C have control deps from A, D has control
 // dep from B. Originally D must run after C, post-transformation this

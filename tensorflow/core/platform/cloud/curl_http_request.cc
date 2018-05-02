@@ -128,7 +128,8 @@ CurlHttpRequest::CurlHttpRequest(LibCurl* libcurl, Env* env)
   curl_ = libcurl_->curl_easy_init();
   CHECK(curl_ != nullptr) << "Couldn't initialize a curl session.";
 
-  // NOTE: CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt is configured by
+  // NOTE: CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt is configured by id:2624
+  // https://github.com/imdone/tensorflow/issues/2623
   //       default in //third_party:curl.BUILD and can be customized via an
   //       environment variable.
 
@@ -140,7 +141,8 @@ CurlHttpRequest::CurlHttpRequest(LibCurl* libcurl, Env* env)
   // Do not use signals for timeouts - does not work in multi-threaded programs.
   CHECK_CURL_OK(libcurl_->curl_easy_setopt(curl_, CURLOPT_NOSIGNAL, 1L));
 
-  // TODO(b/74351157): Enable HTTP/2.
+  // TODO (b/74351157): Enable HTTP/2. id:2965
+  // https://github.com/imdone/tensorflow/issues/2964
 
   // Set up the progress meter.
   CHECK_CURL_OK(libcurl_->curl_easy_setopt(curl_, CURLOPT_NOPROGRESS, 0ULL));

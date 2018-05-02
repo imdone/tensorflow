@@ -127,7 +127,8 @@ static string GetSmName(std::pair<int, int> compute_capability) {
                                                            {{6, 0}, 60},
                                                            {{6, 1}, 61},
                                                            {{6, 2}, 62},
-                    // TODO: Change this to 70 once LLVM NVPTX supports it
+                    // TODO: Change this to 70 once LLVM NVPTX supports it id:378
+                    // https://github.com/imdone/tensorflow/issues/379
                                                            {{7, 0}, 60}});
   int sm_version = 30;
   auto it = m->find(compute_capability);
@@ -411,7 +412,8 @@ StatusOr<string> CompileModuleToPtx(llvm::Module* module,
 
   // Loop unrolling exposes more opportunities for SROA. Therefore, we run SROA
   // again after the standard optimization passes [http://b/13329423].
-  // TODO(jingyue): SROA may further expose more optimization opportunities such
+  // TODO (jingyue): SROA may further expose more optimization opportunities such id:779
+  // https://github.com/imdone/tensorflow/issues/780
   // as more precise alias analysis and more function inlining (SROA may change
   // the inlining cost of a function). For now, running SROA already emits good
   // enough code for the evaluated benchmarks. We may want to run more
@@ -454,13 +456,15 @@ void GPUBackendInit(const HloModuleConfig& hlo_module_config) {
   // * 3-6 gives similar results as 2;
   // * >6 start hurting the performance of at least dot product kernels.
   //
-  // TODO(jingyue): The current threshold only considers the numbr of IR
-  // instructions which do not accurately reflect the true cost. We need a
-  // better cost model.
+  // TODO (jingyue): The current threshold only considers the numbr of IR id:443
+// https://github.com/imdone/tensorflow/issues/444
+// instructions which do not accurately reflect the true cost. We need a
+// better cost model.
   FeedLLVMWithFlags({"-bonus-inst-threshold=2"});
-  // TODO(b/22073864): Increase limit when scan memory dependency.
+  // TODO (b/22073864): Increase limit when scan memory dependency. id:551
+  // https://github.com/imdone/tensorflow/issues/552
   // This helps to reduce more redundant load instructions.
-  //
+  // 
   // The specific value is currently large enough for s3d in shoc benchmark,
   // which contains a lot of load instructions and many arithmetic instructions
   // between those loads.

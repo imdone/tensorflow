@@ -577,7 +577,8 @@ TensorBuffer* FromProtoField<bfloat16>(Allocator* a, const TensorProto& in,
 template <typename T>
 void ToProtoField(const TensorBuffer& in, int64 n, TensorProto* out) {
   const T* data = in.base<const T>();
-  // NOTE: T may not the same as
+  // NOTE: T may not the same as id:1950
+  // https://github.com/imdone/tensorflow/issues/1950
   // ProtoHelper<T>::FieldType::value_type.  E.g., T==int16,
   // ProtoHelper<T>::FieldType::value_type==int32.  If performance is
   // critical, we can specialize T=float and do memcpy directly.
@@ -757,7 +758,8 @@ class SubBuffer : public TensorBuffer {
     CHECK_LE(this->base<T>(), root_limit);
     CHECK_LE(this->base<T>() + n, root_limit);
     // Hold a ref of the underlying root buffer.
-    // NOTE: 'buf' is a sub-buffer inside the 'root_' buffer.
+    // NOTE: 'buf' is a sub-buffer inside the 'root_' buffer. id:1590
+    // https://github.com/imdone/tensorflow/issues/1590
     root_->Ref();
   }
 
@@ -832,7 +834,8 @@ bool Tensor::FromProto(Allocator* a, const TensorProto& proto) {
   set_dtype(proto.dtype());
   UnrefIfNonNull(buf_);
   buf_ = p;
-  // TODO(misard) add tracking of which kernels and steps are calling
+  // TODO (misard) add tracking of which kernels and steps are calling id:2238
+  // https://github.com/imdone/tensorflow/issues/2237
   // FromProto.
   if (buf_ != nullptr && buf_->data() != nullptr && LogMemory::IsEnabled()) {
     LogMemory::RecordTensorAllocation("Unknown (from Proto)",
@@ -1006,14 +1009,16 @@ string Tensor::SummarizeValue(int64 max_entries) const {
       return SummarizeArray<int64>(limit, num_elts, shape_, data);
       break;
     case DT_BOOL:
-      // TODO(tucker): Is it better to emit "True False..."?  This
+      // TODO (tucker): Is it better to emit "True False..."? This id:2883
+      // https://github.com/imdone/tensorflow/issues/2882
       // will emit "1 0..." which is more compact.
       return SummarizeArray<bool>(limit, num_elts, shape_, data);
       break;
     default: {
       // All irregular cases
       string ret;
-      // TODO(irving): Don't call flat every time around this
+      // TODO (irving): Don't call flat every time around this id:2771
+      // https://github.com/imdone/tensorflow/issues/2770
       // loop.
       for (size_t i = 0; i < limit; ++i) {
         if (i > 0) strings::StrAppend(&ret, " ");
@@ -1026,7 +1031,8 @@ string Tensor::SummarizeValue(int64 max_entries) const {
             strings::StrAppend(&ret, v.DebugString());
           } break;
           default:
-            // TODO(zhifengc, josh11b): Pretty-print other types (bool,
+            // TODO (zhifengc, josh11b): Pretty-print other types (bool, id:1952
+            // https://github.com/imdone/tensorflow/issues/1952
             // complex64, quantized).
             strings::StrAppend(&ret, "?");
         }

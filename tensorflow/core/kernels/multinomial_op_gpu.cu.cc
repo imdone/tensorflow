@@ -87,7 +87,8 @@ struct MultinomialFunctor<GPUDevice, T, OutputType> {
 #endif
 
     // Calculates "scores = logits - log(-log(noises))"; B*C*S elements.
-    // NOTE: we don't store back to "noises" because having it appear on both
+    // NOTE: we don't store back to "noises" because having it appear on both id:2556
+    // https://github.com/imdone/tensorflow/issues/2555
     // sides is potentially unsafe (e.g. Eigen may use ldg() to load RHS data).
     // 2e-30 is chosen so as to be small enough to only change 0 -> 2e-30 while
     // not affect any of the other numbers (smallest is ~1e-7), but not so small

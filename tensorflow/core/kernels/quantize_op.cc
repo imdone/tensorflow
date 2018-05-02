@@ -53,7 +53,8 @@ typedef Eigen::ThreadPoolDevice CPUDevice;
 
 // Quantize a tensor from float to T, with user-specified min_range and
 // max_range.
-// TODO(xbing): Add a new QuantizeOp just taking scale,
+// TODO (xbing): Add a new QuantizeOp just taking scale, id:2237
+// https://github.com/imdone/tensorflow/issues/2236
 //              rather than min_range and max_range.
 template <typename Device, typename T>
 class QuantizeV2Op : public OpKernel {
@@ -151,7 +152,8 @@ class QuantizeV2Op : public OpKernel {
       bool is_signed = std::is_signed<T>::value;
       if (is_signed) {
         // The slow path.
-        // TODO(xbing,yonghui): Speedup this path as well.
+        // TODO (xbing,yonghui): Speedup this path as well. id:2152
+        // https://github.com/imdone/tensorflow/issues/2151
         o.device(ctx->template eigen_device<Device>()) =
             ((input.flat<float>().cwiseMin(max_range).cwiseMax(min_range) -
               min_range) *

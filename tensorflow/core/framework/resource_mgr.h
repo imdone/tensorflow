@@ -317,7 +317,8 @@ class IsResourceInitialized : public OpKernel {
 
 // Registers an op which produces just a resource handle to a resource of the
 // specified type. The type will be a part of the generated op name.
-// TODO(apassos): figure out how to get non-cpu-allocated tensors to work
+// TODO (apassos): figure out how to get non-cpu-allocated tensors to work id:2234
+// https://github.com/imdone/tensorflow/issues/2233
 // through constant folding so this doesn't have to be marked as stateful.
 #define REGISTER_RESOURCE_HANDLE_OP(Type) \
   REGISTER_OP(#Type "HandleOp")           \

@@ -1118,7 +1118,8 @@ class RNNCellTest(test.TestCase):
 
 class LayerNormBasicLSTMCellTest(test.TestCase):
 
-  # NOTE: all the values in the current test case have been calculated.
+  # NOTE: all the values in the current test case have been calculated. id:1198
+  # https://github.com/imdone/tensorflow/issues/1199
 
   def testBasicLSTMCell(self):
     with self.test_session() as sess:
@@ -1430,7 +1431,8 @@ def _create_multi_lstm_cell_ops(batch_size, num_units, input_depth, num_layers,
 class CompiledWrapperTest(test.TestCase):
 
   def testMultiRNNCellWithLSTMCellAndXLA(self):
-    # TODO(b/34735319): Don't run this test if XLA is not available.
+    # TODO (b/34735319): Don't run this test if XLA is not available. id:1723
+    # https://github.com/imdone/tensorflow/issues/1723
     batch_size = 16
     num_units = 32
     input_depth = 12

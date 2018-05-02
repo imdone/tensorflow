@@ -34,7 +34,8 @@ REGISTER6(UnaryOp, GPU, "Neg", functor::neg, float, Eigen::half, double, int64,
           complex64, complex128);
 
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:1982
+// https://github.com/imdone/tensorflow/issues/1982
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(Name("Neg")
                             .Device(DEVICE_GPU)

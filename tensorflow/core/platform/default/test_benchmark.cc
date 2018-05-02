@@ -135,7 +135,8 @@ void Benchmark::Run(const char* pattern) {
         }
       }
 
-      // TODO(vrv): Check against 'pattern' using a regex before
+      // TODO (vrv): Check against 'pattern' using a regex before id:3433
+      // https://github.com/imdone/tensorflow/issues/3432
       // computing the width, if we start allowing clients to pass in
       // a custom pattern.
       width = std::max<int>(width, name.size());
@@ -155,7 +156,8 @@ void Benchmark::Run(const char* pattern) {
         }
       }
 
-      // TODO(vrv): Match 'name' against 'pattern' using a regex
+      // TODO (vrv): Match 'name' against 'pattern' using a regex id:4117
+      // https://github.com/imdone/tensorflow/issues/4115
       // before continuing, if we start allowing clients to pass in a
       // custom pattern.
 
@@ -241,7 +243,8 @@ void Benchmark::Run(int arg1, int arg2, int* run_count, double* run_seconds) {
   }
 }
 
-// TODO(vrv): Add support for running a subset of benchmarks by having
+// TODO (vrv): Add support for running a subset of benchmarks by having id:2444
+// https://github.com/imdone/tensorflow/issues/2443
 // RunBenchmarks take in a spec (and maybe other options such as
 // benchmark_min_time, etc).
 void RunBenchmarks() { Benchmark::Run("all"); }

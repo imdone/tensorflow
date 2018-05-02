@@ -21,7 +21,8 @@ from __future__ import print_function
 import collections
 
 
-# TODO(mdan): This is where macro override controls fit.
+# TODO (mdan): This is where macro override controls fit. id:980
+# https://github.com/imdone/tensorflow/issues/981
 
 
 class DispatchContext(collections.namedtuple(

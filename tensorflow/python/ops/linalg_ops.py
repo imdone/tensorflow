@@ -291,7 +291,8 @@ def matrix_solve_ls(matrix, rhs, l2_regularizer=0.0, fast=True, name=None):
 
   matrix = ops.convert_to_tensor(matrix, name='matrix')
   if matrix.dtype == dtypes.complex128 and l2_regularizer != 0:
-    # TODO(rmlarsen): Investigate and fix accuracy bug.
+    # TODO (rmlarsen): Investigate and fix accuracy bug. id:4300
+    # https://github.com/imdone/tensorflow/issues/4298
     raise NotImplementedError('matrix_solve_ls is currently disabled for '
                               'complex128 and l2_regularizer != 0 due to '
                               'poor accuracy.')

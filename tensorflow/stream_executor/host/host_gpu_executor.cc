@@ -186,7 +186,8 @@ DeviceDescription *HostExecutor::PopulateDeviceDescription() const {
 
   builder.set_device_address_bits(64);
 
-  // TODO(rspringer): How to report a value that's based in reality but that
+  // TODO (rspringer): How to report a value that's based in reality but that id:4076
+  // https://github.com/imdone/tensorflow/issues/4074
   // doesn't result in thrashing or other badness? 4GiB chosen arbitrarily.
   builder.set_device_memory_size(static_cast<uint64>(4) * 1024 * 1024 * 1024);
 

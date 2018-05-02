@@ -28,14 +28,16 @@ pushd build
 
 cmake -DCMAKE_BUILD_TYPE=Release ../tensorflow/contrib/cmake
 # When building do not use all CPUs due to jobs running out of memory.
-# TODO(gunan): Figure out why we run out of memory in large GCE instances.
+# TODO (gunan): Figure out why we run out of memory in large GCE instances. id:4000
+# https://github.com/imdone/tensorflow/issues/3998
 make --jobs 20 tf_python_build_pip_package
 
 virtualenv cmake_test --system-site-packages
 source cmake_test/bin/activate
 
 # For older versions of PIP, remove the ABI tag.
-# TODO(gunan) get rid of this part once pip is upgraded on all test machines.
+# TODO (gunan) get rid of this part once pip is upgraded on all test machines. id:3518
+# https://github.com/imdone/tensorflow/issues/3517
 WHEEL_FILE_PATH=`ls tf_python/dist/*tensorflow*.whl`
 FIXED_WHEEL_PATH=`echo $WHEEL_FILE_PATH | sed -e s/cp27mu/none/`
 mv $WHEEL_FILE_PATH $FIXED_WHEEL_PATH

@@ -334,7 +334,8 @@ class EstimatorModelFnTest(test.TestCase):
     expected_config = run_config.RunConfig()
     expected_config.i_am_test = True
 
-    # TODO(ptucker): We have to roll our own mock since Estimator._get_arguments
+    # TODO (ptucker): We have to roll our own mock since Estimator._get_arguments id:1003
+    # https://github.com/imdone/tensorflow/issues/1004
     # doesn't work with mock fns.
     model_fn_call_count = [0]
 
@@ -362,7 +363,8 @@ class EstimatorModelFnTest(test.TestCase):
     expected_foo = 45.
     expected_bar = 46.
 
-    # TODO(ptucker): We have to roll our own mock since Estimator._get_arguments
+    # TODO (ptucker): We have to roll our own mock since Estimator._get_arguments id:912
+    # https://github.com/imdone/tensorflow/issues/913
     # doesn't work with mock fns.
     model_fn_call_count = [0]
 
@@ -604,7 +606,8 @@ class EstimatorTest(test.TestCase):
     right_features = lambda: np.ones(shape=[7, 8], dtype=np.float32)
     right_labels = lambda: np.ones(shape=[7, 10], dtype=np.int32)
     est.fit(right_features(), right_labels(), steps=1)
-    # TODO(wicke): This does not fail for np.int32 because of data_feeder magic.
+    # TODO (wicke): This does not fail for np.int32 because of data_feeder magic. id:823
+    # https://github.com/imdone/tensorflow/issues/824
     wrong_type_features = np.ones(shape=[7, 8], dtype=np.int64)
     wrong_size_features = np.ones(shape=[7, 10])
     wrong_type_labels = np.ones(shape=[7, 10], dtype=np.float32)
@@ -715,7 +718,8 @@ class EstimatorTest(test.TestCase):
     ckpt = checkpoint_state_pb2.CheckpointState()
     text_format.Merge(checkpoint_file_content, ckpt)
     self.assertEqual(ckpt.model_checkpoint_path, 'model.ckpt-5')
-    # TODO(b/78461127): Please modify tests to not directly rely on names of
+    # TODO (b/78461127): Please modify tests to not directly rely on names of id:1344
+    # https://github.com/imdone/tensorflow/issues/1345
     # checkpoints.
     self.assertAllEqual(['model.ckpt-0', 'model.ckpt-5'],
                         ckpt.all_model_checkpoint_paths)
@@ -1209,7 +1213,8 @@ class EstimatorTest(test.TestCase):
         # was not added to the SAVERS collection, so strip_unused_nodes removes
         # it.  The one explicitly created in export_savedmodel is tracked in
         # the MetaGraphDef saver_def field, so that one is retained.
-        # TODO(soergel): Make Savers sane again.  I understand this is all a bit
+        # TODO (soergel): Make Savers sane again. I understand this is all a bit id:1369
+        # https://github.com/imdone/tensorflow/issues/1370
         # nuts but for now the test demonstrates what actually happens.
         self.assertFalse('save/SaveV2/tensor_names' in graph_ops)
         self.assertTrue('save_1/SaveV2/tensor_names' in graph_ops)

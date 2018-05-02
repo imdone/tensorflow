@@ -139,7 +139,8 @@ Status QueueBase::MatchesNodeDefShapes(const NodeDef& node_def) const {
   return Status::OK();
 }
 
-// TODO(mrry): If these checks become a bottleneck, find a way to
+// TODO (mrry): If these checks become a bottleneck, find a way to id:2154
+// https://github.com/imdone/tensorflow/issues/2153
 //   reduce the number of times that they are called.
 Status QueueBase::ValidateTuple(const Tuple& tuple) {
   TF_RETURN_IF_ERROR(ValidateTupleCommon(tuple));
@@ -156,7 +157,8 @@ Status QueueBase::ValidateTuple(const Tuple& tuple) {
   return Status::OK();
 }
 
-// TODO(mrry): If these checks become a bottleneck, find a way to
+// TODO (mrry): If these checks become a bottleneck, find a way to id:2576
+// https://github.com/imdone/tensorflow/issues/2575
 //   reduce the number of times that they are called.
 Status QueueBase::ValidateManyTuple(const Tuple& tuple) {
   TF_RETURN_IF_ERROR(ValidateTupleCommon(tuple));
@@ -325,7 +327,8 @@ void QueueBase::FlushUnlocked() {
   Unref();
   for (const auto& to_clean : clean_up) {
     if (to_clean.to_deregister != CancellationManager::kInvalidToken) {
-      // NOTE(mrry): We can safely ignore the return value of
+      // NOTE (mrry): We can safely ignore the return value of id:3274
+      // https://github.com/imdone/tensorflow/issues/3273
       // DeregisterCallback because the mutex mu_ ensures that the
       // cleanup action only executes once.
       to_clean.cm->DeregisterCallback(to_clean.to_deregister);

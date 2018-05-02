@@ -160,7 +160,8 @@ Py_ssize_t TensorShapeNumDims(PyObject* value) {
   if (size == -1) {
     // TensorShape.__len__ raises an error in the scenario where the shape is an
     // unknown, which needs to be cleared.
-    // TODO(nareshmodi): ensure that this is actually a TensorShape.
+    // TODO (nareshmodi): ensure that this is actually a TensorShape. id:3626
+    // https://github.com/imdone/tensorflow/issues/3625
     PyErr_Clear();
   }
   return size;
@@ -956,7 +957,8 @@ class SafeTapeSet {
 };
 
 // xcode 7 doesn't define thread_local, so for compatibility we implement our
-// own. TODO(apassos) remove once we can deprecate xcode 7.
+// own. TODO (apassos) remove once we can deprecate xcode 7. id:4195
+// https://github.com/imdone/tensorflow/issues/4193
 #ifndef __APPLE__
 bool* ThreadTapeIsStopped() {
   thread_local bool thread_tape_is_stopped{false};
@@ -1050,7 +1052,8 @@ PyObject* TFE_Py_TapeSetShouldRecord(PyObject* tensors) {
     return nullptr;
   }
   int len = PySequence_Fast_GET_SIZE(seq);
-  // TODO(apassos) consider not building a list and changing the API to check
+  // TODO (apassos) consider not building a list and changing the API to check id:3685
+  // https://github.com/imdone/tensorflow/issues/3684
   // each tensor individually.
   std::vector<tensorflow::int64> tensor_ids;
   tensor_ids.reserve(len);
@@ -1505,7 +1508,8 @@ bool CheckOneInput(PyObject* item) {
   // Sequences are not properly handled. Sequences with purely python numeric
   // types work, but sequences with mixes of EagerTensors and python numeric
   // types don't work.
-  // TODO(nareshmodi): fix
+  // TODO (nareshmodi): fix id:2935
+  // https://github.com/imdone/tensorflow/issues/2934
   return false;
 }
 
@@ -1797,7 +1801,8 @@ bool ReadVariableOp(const FastPathOpExecInfo& parent_op_exec_info,
   // value, else the data will leak.
   output->reset(EagerTensorFromHandle(output_handle));
 
-  // TODO(nareshmodi): Should we run post exec callbacks here?
+  // TODO (nareshmodi): Should we run post exec callbacks here? id:3146
+  // https://github.com/imdone/tensorflow/issues/3145
   if (parent_op_exec_info.run_gradient_callback) {
     tensorflow::Safe_PyObjectPtr inputs(PyTuple_New(1));
     PyTuple_SET_ITEM(inputs.get(), 0, handle.release());
@@ -1820,7 +1825,8 @@ bool ReadVariableOp(const FastPathOpExecInfo& parent_op_exec_info,
 //  ii) input is a ResourceVariable - in this case, the is_variable param is set
 //  to true.
 //
-//  NOTE: dtype_hint_getter must *always* return a PyObject that can be
+//  NOTE: dtype_hint_getter must *always* return a PyObject that can be id:3627
+// https://github.com/imdone/tensorflow/issues/3626
 //  decref'd. So if no hint is found, Py_RETURN_NONE (which correctly
 //  increfs Py_None).
 bool ConvertToTensor(
@@ -2083,7 +2089,8 @@ PyObject* TFE_Py_FastPathExecute_C(PyObject*, PyObject* args) {
 
   const tensorflow::OpDef* op_def = op_exec_info.op_def;
 
-  // TODO(nareshmodi): Add a benchmark for the fast-path with gradient callbacks
+  // TODO (nareshmodi): Add a benchmark for the fast-path with gradient callbacks id:4196
+  // https://github.com/imdone/tensorflow/issues/4194
   // (similar to benchmark_tf_gradient_function_*). Also consider using an
   // InlinedVector for flattened_attrs and flattened_inputs if the benchmarks
   // point out problems with heap allocs.
@@ -2139,7 +2146,8 @@ PyObject* TFE_Py_FastPathExecute_C(PyObject*, PyObject* args) {
 
     // Not creating an index since most of the time there are not more than a
     // few attrs.
-    // TODO(nareshmodi): Maybe include the index as part of the
+    // TODO (nareshmodi): Maybe include the index as part of the id:3688
+    // https://github.com/imdone/tensorflow/issues/3687
     // OpRegistrationData.
     for (const auto& attr : op_def->attr()) {
       if (attr_name == attr.name()) {
@@ -2170,14 +2178,16 @@ PyObject* TFE_Py_FastPathExecute_C(PyObject*, PyObject* args) {
   // All items in flattened_attrs and flattened_inputs contain
   // Safe_PyObjectPtr - any time something steals a reference to this, it must
   // INCREF.
-  // TODO(nareshmodi): figure out why PyList_New/PyList_Append don't work
+  // TODO (nareshmodi): figure out why PyList_New/PyList_Append don't work id:2937
+  // https://github.com/imdone/tensorflow/issues/2936
   // directly.
   std::unique_ptr<std::vector<tensorflow::Safe_PyObjectPtr>> flattened_attrs =
       nullptr;
   std::unique_ptr<std::vector<tensorflow::Safe_PyObjectPtr>> flattened_inputs =
       nullptr;
 
-  // TODO(nareshmodi): Encapsulate callbacks information into a struct.
+  // TODO (nareshmodi): Encapsulate callbacks information into a struct. id:3148
+  // https://github.com/imdone/tensorflow/issues/3147
   if (op_exec_info.run_callbacks) {
     flattened_attrs.reset(new std::vector<tensorflow::Safe_PyObjectPtr>);
     flattened_inputs.reset(new std::vector<tensorflow::Safe_PyObjectPtr>);
@@ -2188,7 +2198,8 @@ PyObject* TFE_Py_FastPathExecute_C(PyObject*, PyObject* args) {
   // the CacheKey for the generated AttrBuilder possibly differing from
   // those where the type attrs are correctly set. Inconsistent CacheKeys
   // for ops means that there might be unnecessarily duplicated kernels.
-  // TODO(nareshmodi): Fix this.
+  // TODO (nareshmodi): Fix this. id:3628
+  // https://github.com/imdone/tensorflow/issues/3627
   for (int i = 0; i < op_def->input_arg_size(); i++) {
     const auto& input_arg = op_def->input_arg(i);
 

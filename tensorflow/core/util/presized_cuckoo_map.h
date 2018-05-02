@@ -143,7 +143,8 @@ class PresizedCuckooMap {
   // to avoid the need for a table rebuild on insertion failure.
   // 0.94 is achievable, but 0.85 is faster and keeps the code simple
   // at the cost of a small amount of memory.
-  // NOTE:  0 < kLoadFactor <= 1.0
+  // NOTE: 0 < kLoadFactor <= 1.0 id:2699
+  // https://github.com/imdone/tensorflow/issues/2698
   static constexpr double kLoadFactor = 0.85;
 
   // Cuckoo insert:  The maximum number of entries to scan should be ~400

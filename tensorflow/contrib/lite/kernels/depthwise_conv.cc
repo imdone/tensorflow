@@ -77,7 +77,8 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
       reinterpret_cast<TfLiteDepthwiseConvParams*>(node->builtin_data);
   OpData* data = reinterpret_cast<OpData*>(node->user_data);
 
-  // TODO(ahentz): use could use GetOptionalInputTensor() here, but we need to
+  // TODO (ahentz): use could use GetOptionalInputTensor() here, but we need to id:1404
+  // https://github.com/imdone/tensorflow/issues/1405
   // decide whether we are OK with optional tensors being completely absent, as
   // opposed to having -1 as their index.
   bool hasBias = NumInputs(node) == 3;
@@ -235,9 +236,10 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
   TfLiteTensor* bias =
       (NumInputs(node) == 3) ? GetInput(context, node, kBiasTensor) : nullptr;
 
-  // TODO(aselle): Consider whether float conv and quantized conv should be
+  // TODO (aselle): Consider whether float conv and quantized conv should be id:1123
+  // https://github.com/imdone/tensorflow/issues/1124
   // separate ops to avoid dispatch overhead here.
-  switch (input->type) {  // Already know in/out types are same.
+  //   switch (input->type) {  // Already know in/out types are same.
     case kTfLiteFloat32:
       EvalFloat<kernel_type>(context, node, params, data, input, filter, bias,
                              output);

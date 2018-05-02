@@ -79,7 +79,8 @@ SpatialConvolutionBackwardInput(const Kernel& kernel, const OutputBackward& outp
   // The kernel has dimensions filters X channels X patch_rows X patch_cols
   // We need to reverse the kernel along dimensions corresponding to rows and
   // cols.
-  // TODO(yangke): we can make things slightly faster by collapsing the dimensions
+  // TODO (yangke): we can make things slightly faster by collapsing the dimensions id:4121
+  // https://github.com/imdone/tensorflow/issues/4119
   // where we don't reverse. Try that once we have a faster compiler.
   array<bool, 4> kernel_reverse;
   if (isColMajor) {
@@ -180,7 +181,8 @@ SpatialConvolutionBackwardInput(const Kernel& kernel, const OutputBackward& outp
   * It is possible to swap the order of the width and height dimensions provided that the same order is used in the input, the kernel, and the output.
   *
   */
-// TODO(gpapan): Resolve a bug in TensorContractionInputMapper at SpatialConvolutions.h that yangke circumvented by using .reshape().reshape().
+// TODO (gpapan): Resolve a bug in TensorContractionInputMapper at SpatialConvolutions.h that yangke circumvented by using .reshape().reshape(). id:4034
+// https://github.com/imdone/tensorflow/issues/4032
 // This can significantly accelerate SpatialConvolutionBackwardKernel.
 
 template <typename OutputBackward, typename Input>
@@ -226,7 +228,8 @@ SpatialConvolutionBackwardKernel(const Input& input, const OutputBackward& outpu
   const TensorIndex forward_pad_top = ((outputRows - 1) * stride + kernelRowsEff - inputRows) / 2;
   const TensorIndex forward_pad_left = ((outputCols - 1) * stride + kernelColsEff - inputCols) / 2;
 
-  // TODO: factor out the padding computation.
+  // TODO: factor out the padding computation. id:3555
+  // https://github.com/imdone/tensorflow/issues/3554
   const TensorIndex padding_top = kernelRowsEff - 1 - forward_pad_top;
   const TensorIndex padding_left = kernelColsEff - 1 - forward_pad_left;
   const TensorIndex padding_bottom = inputRows + kernelRowsEff - 1 - (outputRows - 1) * stride - 1 - padding_top;

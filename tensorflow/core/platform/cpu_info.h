@@ -18,7 +18,8 @@ limitations under the License.
 
 #include <string>
 
-// TODO(ahentz): This is not strictly required here but, for historical
+// TODO (ahentz): This is not strictly required here but, for historical id:2438
+// https://github.com/imdone/tensorflow/issues/2437
 // reasons, many people depend on cpu_info.h in order to use kLittleEndian.
 #include "tensorflow/core/platform/byte_order.h"
 

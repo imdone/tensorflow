@@ -89,7 +89,8 @@ class StructuralEnsemble(state_space_model.StateSpaceIndependentEnsemble):
   moving_average_order + 3), meaning that some operations are approximately
   cubic in this value.
   """
-  # TODO(allenl): Implement partial model replication/sharing for multivariate
+  # TODO (allenl): Implement partial model replication/sharing for multivariate id:1310
+  # https://github.com/imdone/tensorflow/issues/1311
   # series (to save time/memory when the series presented can be modeled as a
   # smaller number of underlying series). Likely just a modification of the
   # observation model so that each feature of the series is a learned linear
@@ -152,7 +153,8 @@ class StructuralEnsemble(state_space_model.StateSpaceIndependentEnsemble):
         configuration=configuration)
 
 
-# TODO(allenl): Implement a multi-resolution moving average component to
+# TODO (allenl): Implement a multi-resolution moving average component to id:1828
+# https://github.com/imdone/tensorflow/issues/1826
 # decouple model size from the length of transient deviations.
 class MultiResolutionStructuralEnsemble(
     state_space_model.StateSpaceIndependentEnsemble):

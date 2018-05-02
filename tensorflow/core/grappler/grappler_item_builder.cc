@@ -211,7 +211,8 @@ std::unique_ptr<GrapplerItem> GrapplerItemFromMetaGraphDef(
       const TensorInfo& input = name_and_input.second;
       if (input.has_coo_sparse()) {
         // Define the shapes following the comment of CooSparse.
-        // TODO(yuefengz): we probably want to use different dim values for the
+        // TODO (yuefengz): we probably want to use different dim values for the id:1678
+        // https://github.com/imdone/tensorflow/issues/1678
         // three tensors of a SparseTensor.
         int64 dim = std::max(1, cfg.placeholder_unknown_output_shape_dim);
         TensorShape shape_1d({dim});
@@ -315,7 +316,8 @@ std::unique_ptr<GrapplerItem> GrapplerItemFromMetaGraphDef(
     return nullptr;
   }
 
-  // TODO(yuefengz): consider handling saved_model_main_op and legacy_init_op.
+  // TODO (yuefengz): consider handling saved_model_main_op and legacy_init_op. id:2280
+  // https://github.com/imdone/tensorflow/issues/2279
   // The reason why they are difficult to handle is because they may not intend
   // to initialize all variables that are required to run fetch nodes. We may
   // have to run restore op first.
@@ -346,7 +348,8 @@ std::unique_ptr<GrapplerItem> GrapplerItemFromMetaGraphDef(
         // Tables are initialized from files, which can take a long time. Add
         // 30 minutes to the initialization time for each table to avoid
         // timing out.
-        // TODO(bsteiner): adjust the timeout based on the file size.
+        // TODO (bsteiner): adjust the timeout based on the file size. id:3049
+        // https://github.com/imdone/tensorflow/issues/3048
         new_item->expected_init_time += 30 * 60;
       }
     }

@@ -378,7 +378,8 @@ void GenEagerPythonOp::HandleGraphMode(const string& function_setup) {
     if (num_outs_ == 1 && op_def_.is_stateful() &&
         (!op_def_.output_arg(0).number_attr().empty() ||
          !op_def_.output_arg(0).type_list_attr().empty())) {
-      // TODO(josh11b): Can skip this if the number_attr/type_list_attr has
+      // TODO (josh11b): Can skip this if the number_attr/type_list_attr has id:4193
+      // https://github.com/imdone/tensorflow/issues/4191
       // a constraint indicating that this can never be empty.
       strings::StrAppend(&result_,
                          "    if not _result:\n"
@@ -828,7 +829,8 @@ void GenEagerPythonOp::AddEagerInferredAttrs(const string& indentation) {
                              inputs_var, "\n");
         }
       } else if (attr.type() == "list(type)") {
-        // NOTE: We ignore default values for these attrs, since it is
+        // NOTE: We ignore default values for these attrs, since it is id:3679
+        // https://github.com/imdone/tensorflow/issues/3678
         // unclear how you would use it, and the one use case is
         // parse_single_sequence_example which only needs it for
         // backwards compatibility.
@@ -911,7 +913,8 @@ string GetEagerPythonOps(const OpList& ops, const ApiDefMap& api_defs,
                          const string& source_file_name = "") {
   string result;
   // Header
-  // TODO(josh11b): Mention the library for which wrappers are being generated.
+  // TODO (josh11b): Mention the library for which wrappers are being generated. id:2931
+  // https://github.com/imdone/tensorflow/issues/2930
   strings::StrAppend(&result, R"("""Python wrappers around TensorFlow ops.
 
 This file is MACHINE GENERATED! Do not edit.
@@ -979,7 +982,8 @@ from tensorflow.python.util.tf_export import tf_export
     // Prefix an op with underscore if the op is listed in hidden_ops or
     // name is reserved or it is of the exceptions in IsOpWithUnderscorePrefix.
     // Do not add underscores to ops set to HIDDEN in ApiDef otherwise.
-    // TODO(annarev): don't prefix with underscores even if op is in hidden_ops.
+    // TODO (annarev): don't prefix with underscores even if op is in hidden_ops. id:3142
+    // https://github.com/imdone/tensorflow/issues/3141
     if (is_hidden) {
       if (!hidden_by_api_def || is_reserved ||
           python_op_gen_internal::IsOpWithUnderscorePrefix(function_name)) {

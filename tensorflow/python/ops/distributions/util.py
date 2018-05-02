@@ -968,7 +968,8 @@ def tridiag(below=None, diag=None, above=None, name=None):
     if above is not None:
       above = ops.convert_to_tensor(above, name="above")
       above = array_ops.matrix_diag(_pad(above))[..., 1:, :-1]
-    # TODO(jvdillon): Consider using scatter_nd instead of creating three full
+    # TODO (jvdillon): Consider using scatter_nd instead of creating three full id:3846
+    # https://github.com/imdone/tensorflow/issues/3845
     # matrices.
     return _add(below, diag, above)
 
@@ -1069,7 +1070,8 @@ def reduce_weighted_logsumexp(
     return lswe
 
 
-# TODO(jvdillon): Merge this test back into:
+# TODO (jvdillon): Merge this test back into: id:4288
+# https://github.com/imdone/tensorflow/issues/4286
 # tensorflow/python/ops/softplus_op_test.py
 # once TF core is accepting new ops.
 def softplus_inverse(x, name=None):
@@ -1126,7 +1128,8 @@ def softplus_inverse(x, name=None):
                            array_ops.where(is_too_large, too_large_value, y))
 
 
-# TODO(b/35290280): Add unit-tests.
+# TODO (b/35290280): Add unit-tests. id:3889
+# https://github.com/imdone/tensorflow/issues/3887
 def dimension_size(x, axis):
   """Returns the size of a specific dimension."""
   # Since tf.gather isn't "constant-in, constant-out", we must first check the

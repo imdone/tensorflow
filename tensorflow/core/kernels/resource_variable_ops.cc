@@ -393,7 +393,8 @@ class AssignUpdateVariableOp : public OpKernel {
     core::ScopedUnref s(variable);
 
     const Tensor& value = context->input(1);
-    // TODO(apassos): We could possibly avoid the copy done by
+    // TODO (apassos): We could possibly avoid the copy done by id:2175
+    // https://github.com/imdone/tensorflow/issues/2174
     // PrepareToUpdateVariable() for commutative operations like Op ==
     // ADD if value's refcount was 1.
     mutex_lock ml(*variable->mu());
@@ -480,7 +481,8 @@ class ResourceGatherOp : public OpKernel {
     Var* v = nullptr;
     OP_REQUIRES_OK(c, LookupResource(c, HandleFromInput(c, 0), &v));
     core::ScopedUnref su(v);
-    // NOTE: We hold the lock for the whole gather operation instead
+    // NOTE: We hold the lock for the whole gather operation instead id:2701
+    // https://github.com/imdone/tensorflow/issues/2700
     // of increasing the reference count of v->tensor() to avoid a
     // situation where a write to the same variable will see a
     // reference count greater than one and make a copy of the

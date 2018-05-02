@@ -210,10 +210,14 @@ if __name__ == "__main__":
                        _GetQrOpTest(dtype, shape, full_matrices,
                                     use_static_shape))
 
-  # TODO(pfau): Get working with complex types.
-  # TODO(pfau): Get working with full_matrices when rows != cols
-  # TODO(pfau): Get working when rows < cols
-  # TODO(pfau): Get working with shapeholders (dynamic shapes)
+  # TODO (pfau): Get working with complex types. id:3788
+  # https://github.com/imdone/tensorflow/issues/3787
+  # TODO (pfau): Get working with full_matrices when rows != cols id:4264
+  # https://github.com/imdone/tensorflow/issues/4262
+  # TODO (pfau): Get working when rows < cols id:3841
+  # https://github.com/imdone/tensorflow/issues/3840
+  # TODO (pfau): Get working with shapeholders (dynamic shapes) id:3237
+  # https://github.com/imdone/tensorflow/issues/3236
   for full_matrices in False, True:
     for dtype in np.float32, np.float64:
       for rows in 1, 2, 5, 10:

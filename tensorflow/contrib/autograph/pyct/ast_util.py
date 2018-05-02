@@ -33,7 +33,8 @@ class CleanCopier(gast.NodeVisitor):
   Exceptions make some annotations.
   """
 
-  # TODO(mdan): Parametrize which annotations get carried over.
+  # TODO (mdan): Parametrize which annotations get carried over. id:686
+  # https://github.com/imdone/tensorflow/issues/687
 
   def generic_visit(self, node):
     new_fields = {}

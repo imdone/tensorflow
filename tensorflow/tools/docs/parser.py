@@ -424,7 +424,8 @@ class ReferenceResolver(object):
   def _cc_link(self, string, link_text, unused_manual_link_text,
                relative_path_to_root):
     """Generate a link for a @{tensorflow::...} reference."""
-    # TODO(josh11b): Fix this hard-coding of paths.
+    # TODO (josh11b): Fix this hard-coding of paths. id:4106
+    # https://github.com/imdone/tensorflow/issues/4104
     if string == 'tensorflow::ClientSession':
       ret = 'class/tensorflow/client-session.md'
     elif string == 'tensorflow::Scope':
@@ -447,7 +448,8 @@ class ReferenceResolver(object):
                                                      link_text)
 
 
-# TODO(aselle): Collect these into a big list for all modules and functions
+# TODO (aselle): Collect these into a big list for all modules and functions id:4019
+# https://github.com/imdone/tensorflow/issues/4017
 # and make a rosetta stone page.
 def _handle_compatibility(doc):
   """Parse and remove compatibility blocks from the main docstring.
@@ -601,7 +603,8 @@ def _parse_md_docstring(py_object, relative_path_to_root, reference_resolver):
   Returns:
     A _DocstringInfo object, all fields will be empty if no docstring was found.
   """
-  # TODO(wicke): If this is a partial, use the .func docstring and add a note.
+  # TODO (wicke): If this is a partial, use the .func docstring and add a note. id:3537
+  # https://github.com/imdone/tensorflow/issues/3536
   raw_docstring = _get_raw_docstring(py_object)
 
   raw_docstring = reference_resolver.replace_references(
@@ -739,8 +742,10 @@ def _generate_signature(func, reverse_index):
 
         if default_text != repr(default):
           # This may be an internal name. If so, handle the ones we know about.
-          # TODO(wicke): This should be replaced with a lookup in the index.
-          # TODO(wicke): (replace first ident with tf., check if in index)
+          # TODO (wicke): This should be replaced with a lookup in the index. id:4096
+          # https://github.com/imdone/tensorflow/issues/4094
+          # TODO (wicke): (replace first ident with tf., check if in index) id:4359
+          # https://github.com/imdone/tensorflow/issues/4356
           internal_names = {
               'ops.GraphKeys': 'tf.GraphKeys',
               '_ops.GraphKeys': 'tf.GraphKeys',
@@ -1166,7 +1171,8 @@ class _ClassPageInfo(object):
           defining_class and defining_class.__name__ in ['CMessage', 'Message',
                                                          'MessageMeta']):
         continue
-      # TODO(markdaoust): Add a note in child docs showing the defining class.
+      # TODO (markdaoust): Add a note in child docs showing the defining class. id:4109
+      # https://github.com/imdone/tensorflow/issues/4107
 
       child_doc = _parse_md_docstring(child, relative_path,
                                       parser_config.reference_resolver)
@@ -1233,7 +1239,8 @@ class _ClassPageInfo(object):
               short_name in ['__slots__', 'DESCRIPTOR']):
             continue
 
-        # TODO(wicke): We may want to also remember the object itself.
+        # TODO (wicke): We may want to also remember the object itself. id:4022
+        # https://github.com/imdone/tensorflow/issues/4020
         self._add_other_member(short_name, child_name, child, child_doc)
 
 
@@ -1447,7 +1454,8 @@ def docs_for_object(full_name, py_object, parser_config):
   master_name = parser_config.reference_resolver.py_master_name(full_name)
   duplicate_names = parser_config.duplicates.get(master_name, [full_name])
 
-  # TODO(wicke): Once other pieces are ready, enable this also for partials.
+  # TODO (wicke): Once other pieces are ready, enable this also for partials. id:3542
+  # https://github.com/imdone/tensorflow/issues/3541
   if (tf_inspect.ismethod(py_object) or tf_inspect.isfunction(py_object) or
       # Some methods in classes from extensions come in as routines.
       tf_inspect.isroutine(py_object)):
@@ -1589,8 +1597,10 @@ def _get_defined_in(py_object, parser_config):
     Either a `_PythonBuiltin`, `_PythonFile`, or a `_GeneratedFile`
   """
   # Every page gets a note about where this object is defined
-  # TODO(wicke): If py_object is decorated, get the decorated object instead.
-  # TODO(wicke): Only use decorators that support this in TF.
+  # TODO (wicke): If py_object is decorated, get the decorated object instead. id:4099
+  # https://github.com/imdone/tensorflow/issues/4097
+  # TODO (wicke): Only use decorators that support this in TF. id:4360
+  # https://github.com/imdone/tensorflow/issues/4357
 
   try:
     path = os.path.relpath(path=tf_inspect.getfile(py_object),
@@ -1598,9 +1608,12 @@ def _get_defined_in(py_object, parser_config):
   except TypeError:  # getfile throws TypeError if py_object is a builtin.
     return _PythonBuiltin()
 
-  # TODO(wicke): If this is a generated file, link to the source instead.
-  # TODO(wicke): Move all generated files to a generated/ directory.
-  # TODO(wicke): And make their source file predictable from the file name.
+  # TODO (wicke): If this is a generated file, link to the source instead. id:4111
+  # https://github.com/imdone/tensorflow/issues/4109
+  # TODO (wicke): Move all generated files to a generated/ directory. id:4026
+  # https://github.com/imdone/tensorflow/issues/4024
+  # TODO (wicke): And make their source file predictable from the file name. id:3545
+  # https://github.com/imdone/tensorflow/issues/3544
 
   # In case this is compiled, point to the original
   if path.endswith('.pyc'):
@@ -1619,7 +1632,8 @@ def _get_defined_in(py_object, parser_config):
     return _PythonFile(path, parser_config)
 
 
-# TODO(markdaoust): This should just parse, pretty_docs should generate the md.
+# TODO (markdaoust): This should just parse, pretty_docs should generate the md. id:4102
+# https://github.com/imdone/tensorflow/issues/4100
 def generate_global_index(library_name, index, reference_resolver):
   """Given a dict of full names to python objects, generate an index page.
 
@@ -1654,5 +1668,6 @@ def generate_global_index(library_name, index, reference_resolver):
   for _, link in sorted(symbol_links, key=lambda x: x[0]):
     lines.append('*  %s' % link)
 
-  # TODO(markdaoust): use a _ModulePageInfo -> prety_docs.build_md_page()
+  # TODO (markdaoust): use a _ModulePageInfo -> prety_docs.build_md_page() id:4361
+  # https://github.com/imdone/tensorflow/issues/4358
   return '\n'.join(lines)

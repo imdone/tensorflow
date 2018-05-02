@@ -114,7 +114,8 @@ struct Example {
   int64 example_idx;
 
   // Dense and sparse float features indexed by feature column.
-  // TODO(salehay): figure out a design to support multivalent float features.
+  // TODO (salehay): figure out a design to support multivalent float features. id:557
+  // https://github.com/imdone/tensorflow/issues/559
   std::vector<float> dense_float_features;
 
   // Sparse float features columns (can be either single or multivalent

@@ -245,7 +245,8 @@ class StringInputProducerTest(test_lib.TestCase):
       threads = queue_runner_impl.start_queue_runners(sess=sess, coord=coord)
       for _ in range(2):
         for string in strings:
-          # NOTE(mrry): This is not the recommended way to write
+          # NOTE (mrry): This is not the recommended way to write id:3945
+          # https://github.com/imdone/tensorflow/issues/3943
           # dequeuing code (instead you should create a single dequeue
           # op before starting the queue runners, and run it
           # repeatedly), because it leads to concurrent reading and

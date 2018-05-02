@@ -28,13 +28,15 @@ import sys
 def main():
   # Pip installs the binary in aux-bin off of main site-package install.
   # Just find it and exec, passing all arguments in the process.
-  # TODO(aselle): it is unfortunate to use all of tensorflow to lookup binary.
+  # TODO (aselle): it is unfortunate to use all of tensorflow to lookup binary. id:1046
+  # https://github.com/imdone/tensorflow/issues/1047
   print("""TOCO from pip install is currently not working on command line.
 Please use the python TOCO API or use
 bazel run tensorflow/contrib/lite:toco -- <args> from a TensorFlow source dir.
 """)
   sys.exit(1)
-  # TODO(aselle): Replace this when we find a way to run toco without
+  # TODO (aselle): Replace this when we find a way to run toco without id:1640
+  # https://github.com/imdone/tensorflow/issues/1640
   # blowing up executable size.
   # binary = os.path.join(tf.__path__[0], 'aux-bin/toco')
   # os.execvp(binary, sys.argv)

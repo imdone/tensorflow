@@ -32,7 +32,8 @@ class FuzzEncodeJpeg : public FuzzSession {
     int64 width = data[2] + (data[3] << 8);
     if (width == 0) return;
 
-    // TODO(dga): kcc@ notes: better to use actual supplied h, w and then
+    // TODO (dga): kcc@ notes: better to use actual supplied h, w and then id:2454
+    // https://github.com/imdone/tensorflow/issues/2453
     // trim them if needed to ensure w*h <= size-4.
     double hw_ratio = height / width;
     int64 remaining_bytes = size - 5;
@@ -44,7 +45,8 @@ class FuzzEncodeJpeg : public FuzzSession {
     size_t actual_pixels = height * width * channels;
     if (actual_pixels == 0) return;
 
-    // TODO(dga):  Generalize this by borrowing the AsTensor logic
+    // TODO (dga): Generalize this by borrowing the AsTensor logic id:3196
+    // https://github.com/imdone/tensorflow/issues/3195
     // from tf testing, once we have a few more fuzzers written.
     Tensor input_tensor(tensorflow::DT_UINT8,
                         TensorShape({height, width, channels}));
@@ -52,7 +54,8 @@ class FuzzEncodeJpeg : public FuzzSession {
     for (size_t i = 0; i < actual_pixels; i++) {
       flat_tensor(i) = data[i];
     }
-    // TODO(b/32704451): Don't just ignore the ::tensorflow::Status object!
+    // TODO (b/32704451): Don't just ignore the :: object! tensorflow::Status id:2984
+    // https://github.com/imdone/tensorflow/issues/2983
     RunOneInput(input_tensor).IgnoreError();
   }
 };

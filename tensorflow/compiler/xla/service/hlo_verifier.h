@@ -24,7 +24,8 @@ namespace xla {
 
 // Visitor which verifies that the output shape is correctly set. Verifies
 // against the inferred shape for the instruction.
-// TODO(b/26024837): Check output shape for all instruction types.
+// TODO (b/26024837): Check output shape for all instruction types. id:408
+// https://github.com/imdone/tensorflow/issues/409
 class ShapeVerifier : public DfsHloVisitor {
  public:
   explicit ShapeVerifier() : allow_mixed_precision_(false) {}

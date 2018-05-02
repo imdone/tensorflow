@@ -52,7 +52,8 @@ def fc_layer(layer_id, inputs, output_size):
       layer immediately after the activation function.
     params: Tuple of (weights, bias), parameters for this layer.
   """
-  # TODO(b/67004004): Delete this function and rely on tf.layers exclusively.
+  # TODO (b/67004004): Delete this function and rely on tf.layers exclusively. id:764
+  # https://github.com/imdone/tensorflow/issues/765
   layer = tf.layers.Dense(
       output_size,
       kernel_initializer=tf.random_normal_initializer(),
@@ -142,7 +143,8 @@ def minimize(loss, accuracy, layer_collection, num_towers, session_config=None):
     update_ops = [thunk() for thunk in update_thunks]
     return tf.group(*update_ops)
 
-  # TODO(b/78537047): change (some) examples to use PeriodicInvCovUpdateKfacOpt
+  # TODO (b/78537047): change (some) examples to use PeriodicInvCovUpdateKfacOpt id:1213
+  # https://github.com/imdone/tensorflow/issues/1214
   # once that gets moved over?  Could still leave more advanced examples as they
   # are (e.g. train_mnist_estimator in this file)
 

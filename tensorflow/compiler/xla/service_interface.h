@@ -30,7 +30,8 @@ class ServiceInterface {
   ServiceInterface() {}
   virtual ~ServiceInterface() = default;
 
-  // TODO(b/31824348): Convert to use StatusOr.
+  // TODO (b/31824348): Convert to use StatusOr. id:602
+  // https://github.com/imdone/tensorflow/issues/603
   virtual tensorflow::Status TransferToClient(
       const TransferToClientRequest* arg, TransferToClientResponse* result) = 0;
 

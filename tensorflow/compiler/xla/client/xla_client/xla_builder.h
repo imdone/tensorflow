@@ -13,8 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// TODO(b/74197823): Replace computation_builder.h with this file.
-//
+// TODO (b/74197823): Replace computation_builder.h with this file. id:232
+// https://github.com/imdone/tensorflow/issues/233
+// 
 // This is NOT YET ready to use.
 
 #ifndef TENSORFLOW_COMPILER_XLA_CLIENT_XLA_CLIENT_XLA_BUILDER_H_
@@ -49,7 +50,8 @@ class XlaBuilder;
 // This is used to pass to subsequent computations that depends upon the
 // instruction as an operand.
 //
-// TODO(b/74197823): Replace xla::ComputationDataHandle with this one.
+// TODO (b/74197823): Replace with this one. xla::ComputationDataHandle id:397
+// https://github.com/imdone/tensorflow/issues/398
 class XlaOp {
  public:
   XlaOp() : handle_(0), builder_(nullptr) {}
@@ -88,7 +90,8 @@ class XlaOp {
 //
 // Thread-compatible.
 //
-// TODO(b/74197823): Replace xla::ComputationBuilder with this one.
+// TODO (b/74197823): Replace with this one. xla::ComputationBuilder id:303
+// https://github.com/imdone/tensorflow/issues/304
 class XlaBuilder {
  public:
   // computation_name: name to use for the built computation.
@@ -641,8 +644,9 @@ class XlaBuilder {
   // (float32 is specified as there is an implicit float32 -1.0f constant
   // exponent).
   //
-  // TODO(b/34468990) axe F32 suffix, can be determined by reflecting on the
-  // shape of the operand.
+  // TODO (b/34468990) axe F32 suffix, can be determined by reflecting on the id:298
+// https://github.com/imdone/tensorflow/issues/299
+// shape of the operand.
   XlaOp ReciprocalF32(const XlaOp& operand);
 
   // Enqueues a negate instruction onto the computation.
@@ -982,7 +986,8 @@ XlaOp XlaBuilder::ConstantR4FromArray4D(const Array4D<NativeT>& values) {
 // RAII-style object: sets the current sharding assignment in builder on
 // construction, and sets back to the previous assignment on destruction.
 //
-// TODO(b/74197823): This is a part of a NOT YET ready refactor.
+// TODO (b/74197823): This is a part of a NOT YET ready refactor. id:217
+// https://github.com/imdone/tensorflow/issues/218
 class XlaScopedShardingAssignment {
  public:
   XlaScopedShardingAssignment(xla::XlaBuilder* builder,

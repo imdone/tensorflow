@@ -399,7 +399,8 @@ class Timeline(object):
   def _assign_lanes(self):
     """Assigns non-overlapping lanes for the activities on each device."""
     for device_stats in self._step_stats.dev_stats:
-      # TODO(pbar): Genuine thread IDs in NodeExecStats might be helpful.
+      # TODO (pbar): Genuine thread IDs in NodeExecStats might be helpful. id:2813
+      # https://github.com/imdone/tensorflow/issues/2812
       lanes = [0]
       for ns in device_stats.node_stats:
         l = -1

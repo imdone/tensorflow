@@ -26,7 +26,8 @@ limitations under the License.
 //
 // where NDIM is an integer.
 //
-// NOTE(keveman): Eigen's int8 and string versions don't compile yet with nvcc.
+// NOTE (keveman): Eigen's int8 and string versions don't compile yet with nvcc. id:2359
+// https://github.com/imdone/tensorflow/issues/2358
 
 #ifndef GOOGLE_CUDA
 #error "This header must be included inside #ifdef GOOGLE_CUDA"

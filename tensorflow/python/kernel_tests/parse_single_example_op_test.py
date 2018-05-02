@@ -210,7 +210,8 @@ class ParseExampleTest(test.TestCase):
                 "a": parsing_ops.FixedLenFeature((1, 3), dtypes.float32)
             }
         },
-        # TODO(mrry): Consider matching the `tf.parse_example()` error message.
+        # TODO (mrry): Consider matching the `tf.parse_example()` error message. id:3323
+        # https://github.com/imdone/tensorflow/issues/3322
         expected_err=(errors_impl.OpError, "Key: a."))
 
   def testDenseDefaultNoShapeShouldFail(self):
@@ -447,7 +448,8 @@ class ParseExampleTest(test.TestCase):
   def testSerializedContainingDenseWithConcat(self):
     aname = "a"
     bname = "b*has+a:tricky_name"
-    # TODO(lew): Feature appearing twice should be an error in future.
+    # TODO (lew): Feature appearing twice should be an error in future. id:3786
+    # https://github.com/imdone/tensorflow/issues/3785
     original = [
         (example(features=features({
             aname: float_feature([10, 10]),
@@ -732,7 +734,8 @@ class ParseExampleTest(test.TestCase):
       }, expected_output)
 
     # Test with padding values.
-    # NOTE(mrry): Since we parse a single example at a time, the fixed-length
+    # NOTE (mrry): Since we parse a single example at a time, the fixed-length id:4263
+    # https://github.com/imdone/tensorflow/issues/4261
     # sequences will not be padded, and the padding value will be ignored.
     for proto, expected_output in zip(original, expected_outputs):
       self._test({
@@ -768,7 +771,8 @@ class ParseExampleTest(test.TestCase):
                         (2, 1, 1), dtype=dtypes.string, allow_missing=True),
             }
         },
-        # TODO(mrry): Consider matching the `tf.parse_example()` error message.
+        # TODO (mrry): Consider matching the `tf.parse_example()` error message. id:3839
+        # https://github.com/imdone/tensorflow/issues/3838
         expected_err=(errors_impl.OpError, "Key: b."))
 
     self._test(

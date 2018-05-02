@@ -209,11 +209,13 @@ class StatefulScatterNdTest(test.TestCase):
   def testVariableRankSub(self):
     self._VariableRankTests(_NumpySub, state_ops.scatter_nd_sub)
 
-  # TODO(ebrevdo): Re-enable when we need ScatterNdMul.
+  # TODO (ebrevdo): Re-enable when we need ScatterNdMul. id:3799
+  # https://github.com/imdone/tensorflow/issues/3798
   # def testVariableRankMul(self):
   #   self._VariableRankTests(_NumpyMul, state_ops.scatter_nd_mul)
 
-  # TODO(ebrevdo): Re-enable when we need ScatterNdDiv.
+  # TODO (ebrevdo): Re-enable when we need ScatterNdDiv. id:4269
+  # https://github.com/imdone/tensorflow/issues/4267
   # def testVariableRankDiv(self):
   #   self._VariableRankTests(_NumpyDiv, state_ops.scatter_nd_div)
 
@@ -227,11 +229,13 @@ class StatefulScatterNdTest(test.TestCase):
     """This tests scatter_add using indices that repeat."""
     self._ScatterRepeatIndicesTest(_NumpyAdd, state_ops.scatter_nd_add)
     self._ScatterRepeatIndicesTest(_NumpySub, state_ops.scatter_nd_sub)
-    # TODO(ebrevdo): Re-enable when we need ScatterNdMul and ScatterNdDiv.
+    # TODO (ebrevdo): Re-enable when we need ScatterNdMul and ScatterNdDiv. id:3851
+    # https://github.com/imdone/tensorflow/issues/3850
     # self._ScatterRepeatIndicesTest(_NumpyMul, state_ops.scatter_nd_mul)
     # self._ScatterRepeatIndicesTest(_NumpyDiv, state_ops.scatter_nd_div)
 
-  # TODO(simister): Re-enable once binary size increase due to
+  # TODO (simister): Re-enable once binary size increase due to id:3298
+  # https://github.com/imdone/tensorflow/issues/3297
   # extra templating is back under control and this op is re-enabled
   # def testBooleanScatterUpdate(self):
   #   with self.test_session(use_gpu=False) as session:
@@ -245,7 +249,8 @@ class StatefulScatterNdTest(test.TestCase):
   #     self.assertAllEqual([False, True], var.eval())
 
   def testScatterOutOfRangeCpu(self):
-    # TODO(simister): Re-enable once binary size increase due to
+    # TODO (simister): Re-enable once binary size increase due to id:3337
+    # https://github.com/imdone/tensorflow/issues/3337
     # scatter_nd ops is under control.
     #  tf.scatter_nd_mul, tf.scatter_nd_div,
     for op in (state_ops.scatter_nd_add, state_ops.scatter_nd_sub,
@@ -329,11 +334,13 @@ class StatefulScatterNdTest(test.TestCase):
       result = sess.run(scatter)
       assert np.allclose(result, expected_result)
 
-  # TODO(fpmc): Re-enable this test when gpu_pip test actually runs on a GPU.
+  # TODO (fpmc): Re-enable this test when gpu_pip test actually runs on a GPU. id:3801
+  # https://github.com/imdone/tensorflow/issues/3800
   def _disabledTestScatterOutOfRangeGpu(self):
     if not test.IsBuiltWithCuda():
       return
-    # TODO(simister): Re-enable once binary size increase due to
+    # TODO (simister): Re-enable once binary size increase due to id:4270
+    # https://github.com/imdone/tensorflow/issues/4268
     # scatter_nd ops is under control.
     # tf.scatter_nd_mul, tf.scatter_nd_div,
     for op in (state_ops.scatter_nd_add, state_ops.scatter_nd_sub,

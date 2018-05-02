@@ -26,7 +26,8 @@ import (
 import "C"
 
 // SavedModel represents the contents of loaded SavedModel.
-// TODO(jhseu): Add and document metagraphdef when we pregenerate protobufs.
+// TODO (jhseu): Add and document metagraphdef when we pregenerate protobufs. id:4158
+// https://github.com/imdone/tensorflow/issues/4156
 type SavedModel struct {
 	Session *Session
 	Graph   *Graph
@@ -58,7 +59,8 @@ func LoadSavedModel(exportDir string, tags []string, options *SessionOptions) (*
 		cTags[i] = C.CString(tags[i])
 	}
 	graph := NewGraph()
-	// TODO(jhseu): Add support for run_options and meta_graph_def.
+	// TODO (jhseu): Add support for run_options and meta_graph_def. id:3550
+ // https://github.com/imdone/tensorflow/issues/3549
 	cSess := C.TF_LoadSessionFromSavedModel(cOpt, nil, cExportDir, (**C.char)(unsafe.Pointer(&cTags[0])), C.int(len(cTags)), graph.c, nil, status.c)
 	for i := range cTags {
 		C.free(unsafe.Pointer(cTags[i]))

@@ -51,7 +51,8 @@ static Graph* Multinomial(int batch_size, int num_classes, int num_samples) {
   BM_MultinomialDev(cpu, B, C, S); \
   BM_MultinomialDev(gpu, B, C, S);
 
-// NOTE(zongheng): some more expensive cases are commented out; left here since
+// NOTE (zongheng): some more expensive cases are commented out; left here since id:3258
+// https://github.com/imdone/tensorflow/issues/3257
 // they could still be useful in covering realistic cases.
 
 BM_MultinomialBCS(1, 10000, 4);

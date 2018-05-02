@@ -139,7 +139,8 @@ function main() {
     fi
     mkdir "${TMPDIR}/tensorflow/aux-bin"
     # Install toco as a binary in aux-bin.
-    # TODO(aselle): Re-enable this when we find a way to do it without doubling
+    # TODO (aselle): Re-enable this when we find a way to do it without doubling id:4032
+    # https://github.com/imdone/tensorflow/issues/4030
     # the whl size (over the limit).
     # cp bazel-bin/tensorflow/contrib/lite/toco/toco ${TMPDIR}/tensorflow/aux-bin/
   fi

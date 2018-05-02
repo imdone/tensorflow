@@ -482,7 +482,8 @@ REGISTER_OP("BroadcastTo")
     });
 
 // --------------------------------------------------------------------------
-// TODO(josh11b): Remove the >= 2 constraint, once we can rewrite the graph
+// TODO (josh11b): Remove the >= 2 constraint, once we can rewrite the graph id:2600
+// https://github.com/imdone/tensorflow/issues/2599
 // in the N == 1 case to remove the node.
 REGISTER_OP("Concat")
     .Input("concat_dim: int32")
@@ -503,7 +504,8 @@ REGISTER_OP("ConcatV2")
     .Attr("Tidx: {int32, int64} = DT_INT32")
     .SetShapeFn(shape_inference::ConcatV2Shape);
 
-// TODO(vivek.v.rane@intel.com): Prefix the op names with underscore if the ops
+// TODO (vivek.v.rane@intel.com): Prefix the op names with underscore if the ops id:2800
+// https://github.com/imdone/tensorflow/issues/2799
 // are not to be made user-accessible.
 #ifdef INTEL_MKL
 REGISTER_OP("_MklConcatV2")
@@ -688,7 +690,8 @@ REGISTER_OP("Const")
     });
 
 // --------------------------------------------------------------------------
-// TODO(mgubin): Update the doc when the freeze_graph script supports converting
+// TODO (mgubin): Update the doc when the freeze_graph script supports converting id:3386
+// https://github.com/imdone/tensorflow/issues/3385
 // into memmapped format.
 REGISTER_OP("ImmutableConst")
     .Attr("dtype: type")
@@ -1536,7 +1539,8 @@ REGISTER_OP("Slice")
         TF_RETURN_IF_ERROR(c->WithRank(input, c->Value(ndims), &input));
       }
 
-      // NOTE(mrry): Use MakeShapeFromShapeTensor to handle partially-known
+      // NOTE (mrry): Use MakeShapeFromShapeTensor to handle partially-known id:4075
+      // https://github.com/imdone/tensorflow/issues/4073
       // values, even though the `begin` value does not represent a shape.
       ShapeHandle begin_value;
       TF_RETURN_IF_ERROR(c->MakeShapeFromShapeTensor(1, &begin_value));
@@ -1623,7 +1627,8 @@ REGISTER_OP("StridedSlice")
       DimensionHandle sparse_dims_dim = c->Dim(begin_shape, 0);
 
       const Tensor* strides_value = c->input_tensor(3);
-      // TODO(aselle,allenl): If we had a stride_mask it would be possible to do
+      // TODO (aselle,allenl): If we had a stride_mask it would be possible to do id:2401
+      // https://github.com/imdone/tensorflow/issues/2400
       // more shape inference here (e.g. for x[3, ::T]).
       if (!c->RankKnown(input) || !c->ValueKnown(sparse_dims_dim) ||
           strides_value == nullptr) {
@@ -1700,7 +1705,8 @@ REGISTER_OP("StridedSliceAssign")
     .Attr("new_axis_mask: int = 0")
     .Attr("shrink_axis_mask: int = 0")
     .SetShapeFn(shape_inference::UnchangedShape);
-// TODO(aselle): Fix this documentation once StridedSliceAssign Supports
+// TODO (aselle): Fix this documentation once StridedSliceAssign Supports id:2602
+// https://github.com/imdone/tensorflow/issues/2601
 // broadcasting.
 // --------------------------------------------------------------------------
 
@@ -1727,7 +1733,8 @@ REGISTER_OP("Tile")
     .Attr("Tmultiples: {int32, int64} = DT_INT32")
     .SetShapeFn([](InferenceContext* c) {
       ShapeHandle input = c->input(0);
-      // NOTE(mrry): Represent `multiples` as a `TensorShape` because (i)
+      // NOTE (mrry): Represent `multiples` as a `TensorShape` because (i) id:2802
+      // https://github.com/imdone/tensorflow/issues/2801
       // it is a vector of non-negative integers, and (ii) doing so allows
       // us to handle partially-known multiples.
       ShapeHandle multiples;
@@ -1808,7 +1815,8 @@ REGISTER_OP("BroadcastGradientArgs")
     .Output("r1: T")
     .Attr("T: {int32, int64} = DT_INT32")
     .SetShapeFn([](InferenceContext* c) {
-      // TODO(mrry): Implement constant_value for BroadcastGradientArgs?
+      // TODO (mrry): Implement constant_value for BroadcastGradientArgs? id:3388
+      // https://github.com/imdone/tensorflow/issues/3387
       ShapeHandle unused;
       TF_RETURN_IF_ERROR(c->WithRank(c->input(0), 1, &unused));
       TF_RETURN_IF_ERROR(c->WithRank(c->input(1), 1, &unused));
@@ -2091,7 +2099,8 @@ REGISTER_OP("ListDiff")
       ShapeHandle unused;
       TF_RETURN_IF_ERROR(c->WithRank(c->input(0), 1, &unused));
       TF_RETURN_IF_ERROR(c->WithRank(c->input(1), 1, &unused));
-      // TODO(mrry): Indicate that the length falls within an interval?
+      // TODO (mrry): Indicate that the length falls within an interval? id:4077
+      // https://github.com/imdone/tensorflow/issues/4075
       ShapeHandle out = c->Vector(InferenceContext::kUnknownDim);
       c->set_output(0, out);
       c->set_output(1, out);
@@ -2358,7 +2367,8 @@ REGISTER_OP("SpaceToDepth")
     .Attr("T: type")
     .Attr("block_size: int >= 2")
     .Attr("data_format: {'NHWC', 'NCHW', 'NCHW_VECT_C'} = 'NHWC'")
-    // TODO(pauldonnelly): Implement GPU kernels for NCHW_VECT_C.
+    // TODO (pauldonnelly): Implement GPU kernels for NCHW_VECT_C. id:2403
+    // https://github.com/imdone/tensorflow/issues/2402
     .SetShapeFn([](InferenceContext* c) {
       string data_format_str;
       TF_RETURN_IF_ERROR(c->GetAttr("data_format", &data_format_str));
@@ -2412,7 +2422,8 @@ REGISTER_OP("DepthToSpace")
     .Attr("T: type")
     .Attr("block_size: int >= 2")
     .Attr("data_format: {'NHWC', 'NCHW', 'NCHW_VECT_C'} = 'NHWC'")
-    // TODO(pauldonnelly): Implement GPU kernels for NCHW and NCHW_VECT_C.
+    // TODO (pauldonnelly): Implement GPU kernels for NCHW and NCHW_VECT_C. id:2604
+    // https://github.com/imdone/tensorflow/issues/2603
     .SetShapeFn([](InferenceContext* c) {
       string data_format_str;
       TF_RETURN_IF_ERROR(c->GetAttr("data_format", &data_format_str));
@@ -2656,7 +2667,8 @@ REGISTER_OP("QuantizeAndDequantize")
     .SetShapeFn(shape_inference::UnchangedShape)
     .Deprecated(22, "Replaced by QuantizeAndDequantizeV2");
 
-// TODO(suharshs): Deprecate QuantizeAndDequantizeV2.
+// TODO (suharshs): Deprecate QuantizeAndDequantizeV2. id:2804
+// https://github.com/imdone/tensorflow/issues/2803
 REGISTER_OP("QuantizeAndDequantizeV2")
     .Input("input: T")
     .Input("input_min: T")

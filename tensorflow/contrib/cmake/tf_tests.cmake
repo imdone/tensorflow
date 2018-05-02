@@ -126,9 +126,10 @@ if (tensorflow_BUILD_PYTHON_TESTS)
   #
   # python tests. This assumes that the tensorflow wheel is
   # installed on the test system.
-  # TODO: we currently don't handle tests that need to have
+  # TODO: we currently don't handle tests that need to have id:751
+  # https://github.com/imdone/tensorflow/issues/752
   # some environment setup: see AddTest how to add this
-  #
+  # 
 
   # include all test
   if (WIN32)
@@ -163,7 +164,8 @@ if (tensorflow_BUILD_PYTHON_TESTS)
     "${tensorflow_source_dir}/tensorflow/contrib/nearest_neighbor/python/kernel_tests/*_test.py"
     "${tensorflow_source_dir}/tensorflow/contrib/seq2seq/python/kernel_tests/*_test.py"
     "${tensorflow_source_dir}/tensorflow/contrib/stateless/python/kernel_tests/*_test.py"
-    # NOTE: tensor_forest tests in tensor_forest/hybrid/... still don't pass.
+    # NOTE: tensor_forest tests in tensor_forest/hybrid/... still don't pass. id:727
+    # https://github.com/imdone/tensorflow/issues/728
     "${tensorflow_source_dir}/tensorflow/contrib/tensor_forest/client/*_test.py"
     "${tensorflow_source_dir}/tensorflow/contrib/tensor_forest/python/*_test.py"
   )
@@ -217,7 +219,8 @@ if (tensorflow_BUILD_PYTHON_TESTS)
   if (WIN32)
     set(tf_test_src_py_exclude
       ${tf_test_src_py_exclude}
-      # TODO: failing tests.
+      # TODO: failing tests. id:576
+      # https://github.com/imdone/tensorflow/issues/577
       # Nothing critical in here but should get this list down to []
       # The failing list is grouped by failure source
       # Python source line inspection tests are flaky on Windows (b/36375074).
@@ -304,7 +307,8 @@ if (tensorflow_BUILD_PYTHON_TESTS)
       "${tensorflow_source_dir}/tensorflow/python/kernel_tests/depthtospace_op_test.py"  # QuantizeV2
       "${tensorflow_source_dir}/tensorflow/python/kernel_tests/spacetodepth_op_test.py"  # QuantizeV2
       # Windows Path
-      "${tensorflow_source_dir}/tensorflow/contrib/framework/python/ops/checkpoint_ops_test.py" #TODO: Fix path
+      "${tensorflow_source_dir}/tensorflow/contrib/framework/python/ops/checkpoint_ops_test.py" #TODO: Fix path id:567
+                                                                                                # https://github.com/imdone/tensorflow/issues/568
       "${tensorflow_source_dir}/tensorflow/contrib/factorization/python/ops/kmeans_test.py"
       "${tensorflow_source_dir}/tensorflow/contrib/learn/python/learn/estimators/kmeans_test.py"
       # Numpy upgrade needed?
@@ -408,7 +412,8 @@ if (tensorflow_BUILD_CC_TESTS)
       "${tensorflow_source_dir}/tensorflow/contrib/ffmpeg/default/ffmpeg_lib_test.cc"
       "${tensorflow_source_dir}/tensorflow/cc/framework/cc_ops_test.cc" # test_op.h missing
 
-      # TODO: test failing
+      # TODO: test failing id:1024
+      # https://github.com/imdone/tensorflow/issues/1025
       "${tensorflow_source_dir}/tensorflow/core/common_runtime/simple_placer_test.cc"
       "${tensorflow_source_dir}/tensorflow/core/debug/debug_gateway_test.cc" # hangs
       "${tensorflow_source_dir}/tensorflow/core/distributed_runtime/executor_test.cc"
@@ -424,7 +429,8 @@ if (tensorflow_BUILD_CC_TESTS)
       "${tensorflow_source_dir}/tensorflow/contrib/rnn/ops/gru_ops_test.cc" # status 5
       "${tensorflow_source_dir}/tensorflow/contrib/rnn/ops/lstm_ops_test.cc" # status 5
 
-      # TODO: not compiling
+      # TODO: not compiling id:753
+      # https://github.com/imdone/tensorflow/issues/754
       "${tensorflow_source_dir}/tensorflow/core/kernels/quantization_utils_test.cc"
       "${tensorflow_source_dir}/tensorflow/core/kernels/quantize_and_dequantize_op_test.cc"
       "${tensorflow_source_dir}/tensorflow/core/kernels/quantize_down_and_shrink_range_op_test.cc"

@@ -38,7 +38,8 @@ from tensorflow.python.util.deprecation import deprecated_args
 from tensorflow.python.util.tf_export import tf_export
 
 
-# TODO(josh11b): SWIG the code from node_def_util instead of duplicating
+# TODO (josh11b): SWIG the code from node_def_util instead of duplicating id:4213
+# https://github.com/imdone/tensorflow/issues/4211
 # the logic here.
 def _GetNodeAttr(node_def, attr_name):
   if attr_name not in node_def.attr:
@@ -165,7 +166,8 @@ def _ProcessGraphDefParam(graph_def, op_dict):
     # If we're using the graph_def provided by the caller, modify graph_def
     # in-place to add attr defaults to the NodeDefs (this is visible to the
     # caller).
-    # NOTE(skyewm): this is undocumented behavior that at least meta_graph.py
+    # NOTE (skyewm): this is undocumented behavior that at least meta_graph.py id:3740
+    # https://github.com/imdone/tensorflow/issues/3739
     # depends on. It might make sense to move this to meta_graph.py and have
     # import_graph_def not modify the graph_def argument (we'd have to make sure
     # this doesn't break anything else.)
@@ -309,7 +311,8 @@ def _ProcessNewOps(graph):
       # Don't set a device for this op, since colocation constraints override
       # device functions and the original device. Note that this op's device may
       # still be set by the loop below.
-      # TODO(skyewm): why does it override the original device?
+      # TODO (skyewm): why does it override the original device? id:2979
+      # https://github.com/imdone/tensorflow/issues/2978
     else:
       with _MaybeDevice(original_device):
         graph._apply_device_functions(new_op)  # pylint: disable=protected-access
@@ -456,7 +459,8 @@ def import_graph_def(graph_def,
   return_elements = _ProcessReturnElementsParam(return_elements)
 
   if producer_op_list is not None:
-    # TODO(skyewm): make a copy of graph_def so we're not mutating the argument?
+    # TODO (skyewm): make a copy of graph_def so we're not mutating the argument? id:3182
+    # https://github.com/imdone/tensorflow/issues/3181
     _RemoveDefaultAttrs(op_dict, producer_op_list, graph_def)
 
   graph = ops.get_default_graph()
@@ -499,9 +503,12 @@ def import_graph_def(graph_def,
       # no-op, so this only has the effect of updating the Python state (usually
       # _DefinedFunction.add_to_graph also adds the function to the TF_Graph).
       #
-      # TODO(skyewm): fetch the TF_Functions directly from the TF_Graph
-      # TODO(skyewm): avoid sending serialized FunctionDefs back to the TF_Graph
-      # TODO(b/74620627): move this after _ProcessNewOps outside the lock once
+      # TODO (skyewm): fetch the TF_Functions directly from the TF_Graph id:3669
+# https://github.com/imdone/tensorflow/issues/3668
+      # TODO (skyewm): avoid sending serialized FunctionDefs back to the TF_Graph id:4214
+      # https://github.com/imdone/tensorflow/issues/4212
+      # TODO (b/74620627): move this after _ProcessNewOps outside the lock once id:3742
+      # https://github.com/imdone/tensorflow/issues/3741
       # _USE_C_SHAPES is removed.
       if graph_def.library and graph_def.library.function:
         # pylint: disable=protected-access
@@ -554,7 +561,8 @@ def import_graph_def(graph_def,
 
     # LINT.IfChange
     with ops.name_scope(name, 'import', input_map.values()) as scope:
-      # TODO(ashankar): Should this just copy over or should it do some
+      # TODO (ashankar): Should this just copy over or should it do some id:2982
+      # https://github.com/imdone/tensorflow/issues/2981
       # more nuanced merging? For example, the graph may already have some
       # marked "bad versions" and we don't want to lose those because of
       # what's in graph_def.versions? The C++ ImporGraphDef does something
@@ -563,7 +571,8 @@ def import_graph_def(graph_def,
 
       input_map = _ConvertInputMapValues(name, input_map)
 
-      # NOTE(mrry): We do this in two passes, because there may be a cycle in
+      # NOTE (mrry): We do this in two passes, because there may be a cycle in id:3184
+      # https://github.com/imdone/tensorflow/issues/3183
       # `graph_def`.
 
       # 1. Add operations without their inputs.
@@ -628,7 +637,8 @@ def import_graph_def(graph_def,
             value.list.CopyFrom(attr_value_pb2.AttrValue.ListValue(
                 s=new_class_values))
 
-        # NOTE(mrry): We cannot use zip here because control inputs do not
+        # NOTE (mrry): We cannot use zip here because control inputs do not id:3672
+        # https://github.com/imdone/tensorflow/issues/3671
         # appear in the list of input_types.
         for i, input_name in enumerate(
             [_CanonicalInputName(x) for x in node.input]):
@@ -693,7 +703,8 @@ def import_graph_def(graph_def,
         # pylint: enable=protected-access
 
         # Execute shape inference for this op.
-        # NOTE(mrry): If the graph contains a cycle, the full shape
+        # NOTE (mrry): If the graph contains a cycle, the full shape id:4215
+        # https://github.com/imdone/tensorflow/issues/4213
         # information may not be available for this op's inputs.
         ops.set_shape_and_handle_data_for_outputs(op)
         # For nodes with _output_shapes set, set the output shapes.
@@ -743,7 +754,8 @@ def import_graph_def(graph_def,
 
           del op.node_def.attr['_output_shapes']
 
-        # NOTE(mrry): We do this after configuring the inputs, because
+        # NOTE (mrry): We do this after configuring the inputs, because id:3744
+        # https://github.com/imdone/tensorflow/issues/3743
         # the result of the device functions may depend on the inputs.
         if apply_device_function:
           with _MaybeDevice(node.device):

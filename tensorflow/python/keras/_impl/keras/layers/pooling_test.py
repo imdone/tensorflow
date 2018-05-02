@@ -107,7 +107,8 @@ class Pooling2DTest(test.TestCase):
     # to be properly assigned to a GPU when running in eager mode.
     if not context.executing_eagerly():
       # Only runs on GPU with CUDA, channels_first is not supported on CPU.
-      # TODO(b/62340061): Support channels_first on CPU.
+      # TODO (b/62340061): Support channels_first on CPU. id:3741
+      # https://github.com/imdone/tensorflow/issues/3740
       if test.is_gpu_available(cuda_only=True):
         testing_utils.layer_test(
             keras.layers.AveragePooling2D,

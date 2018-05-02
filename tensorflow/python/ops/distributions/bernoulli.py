@@ -125,7 +125,8 @@ class Bernoulli(distribution.Distribution):
       event = distribution_util.embed_check_integer_casting_closed(
           event, target_dtype=dtypes.bool)
 
-    # TODO(jaana): The current sigmoid_cross_entropy_with_logits has
+    # TODO (jaana): The current sigmoid_cross_entropy_with_logits has id:3422
+    # https://github.com/imdone/tensorflow/issues/3421
     # inconsistent behavior for logits = inf/-inf.
     event = math_ops.cast(event, self.logits.dtype)
     logits = self.logits

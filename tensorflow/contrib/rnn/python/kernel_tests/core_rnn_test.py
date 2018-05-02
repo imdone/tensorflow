@@ -569,13 +569,14 @@ class LSTMTest(test.TestCase):
             sequence_length=sequence_length,
             scope=scope)
         scope.reuse_variables()
-        # TODO(ebrevdo): For this test, we ensure values are identical and
+        # TODO (ebrevdo): For this test, we ensure values are identical and id:1623
+        # https://github.com/imdone/tensorflow/issues/1623
         # therefore the weights here are tied.  In the future, we may consider
         # making the state_is_tuple property mutable so we can avoid
         # having to do this - especially if users ever need to reuse
         # the parameters from different RNNCell instances.  Right now,
         # this seems an unrealistic use case except for testing.
-        cell_tuple._scope = cell_notuple._scope  # pylint: disable=protected-access
+        #         cell_tuple._scope = cell_notuple._scope  # pylint: disable=protected-access
         outputs_tuple, state_tuple = rnn.static_rnn(
             cell_tuple,
             inputs,
@@ -1058,7 +1059,8 @@ class LSTMTest(test.TestCase):
 
     in_graph_mode = not context.executing_eagerly()
 
-    # TODO(b/68017812): Eager ignores operation seeds, so we need to create a
+    # TODO (b/68017812): Eager ignores operation seeds, so we need to create a id:1195
+    # https://github.com/imdone/tensorflow/issues/1196
     # single cell and reuse it across the static and dynamic RNNs. Remove this
     # special case once is fixed.
     if not in_graph_mode:
@@ -1082,7 +1084,8 @@ class LSTMTest(test.TestCase):
       initializer = init_ops.random_uniform_initializer(
           -0.01, 0.01, seed=self._seed)
 
-      # TODO(akshayka): Remove special case once b/68017812 is fixed.
+      # TODO (akshayka): Remove special case once b/68017812 is fixed. id:1720
+      # https://github.com/imdone/tensorflow/issues/1720
       if in_graph_mode:
         cell = rnn_cell.LSTMCell(
             num_units,
@@ -1141,7 +1144,8 @@ class LSTMTest(test.TestCase):
       initializer = init_ops.random_uniform_initializer(
           -0.01, 0.01, seed=self._seed)
 
-      # TODO(akshayka): Remove this special case once b/68017812 is
+      # TODO (akshayka): Remove this special case once b/68017812 is id:2360
+      # https://github.com/imdone/tensorflow/issues/2359
       # fixed.
       if in_graph_mode:
         cell = rnn_cell.LSTMCell(
@@ -2002,7 +2006,8 @@ class RawRNNTest(test.TestCase):
       self.assertAllClose(outputs_dynamic_rnn_val, outputs_val)
       self.assertAllClose(final_state_dynamic_rnn_val, final_state_val)
 
-      # NOTE: Because with 0 time steps, raw_rnn does not have shape
+      # NOTE: Because with 0 time steps, raw_rnn does not have shape id:2291
+      # https://github.com/imdone/tensorflow/issues/2290
       # information about the input, it is impossible to perform
       # gradients comparisons as the gradients eval will fail.  So
       # this case skips the gradients test.
@@ -2029,7 +2034,8 @@ class RawRNNTest(test.TestCase):
           self.assertAllClose(gradients_dynamic_rnn_val[i], gradients_val[i])
 
   def testRawRNNZeroLength(self):
-    # NOTE: Because with 0 time steps, raw_rnn does not have shape
+    # NOTE: Because with 0 time steps, raw_rnn does not have shape id:1625
+    # https://github.com/imdone/tensorflow/issues/1625
     # information about the input, it is impossible to perform
     # gradients comparisons as the gradients eval will fail.  So this
     # case skips the gradients test.

@@ -126,7 +126,8 @@ class ARModel(model.TimeSeriesModel):
                 [self.input_window_size, self.exogenous_size],
                 dtype=self.dtype))
 
-  # TODO(allenl,agarwal): Support sampling for AR.
+  # TODO (allenl,agarwal): Support sampling for AR. id:1717
+  # https://github.com/imdone/tensorflow/issues/1717
   def random_model_parameters(self, seed=None):
     pass
 
@@ -169,7 +170,8 @@ class ARModel(model.TimeSeriesModel):
   def _create_hidden_stack(self, activation, activation_size):
     activations = []
     for layer_number, layer_size in enumerate(self.hidden_layer_sizes):
-      # TODO(agarwal): Migrate to fully_connected in tf slim
+      # TODO (agarwal): Migrate to fully_connected in tf slim id:1294
+      # https://github.com/imdone/tensorflow/issues/1295
       activation = model_utils.fully_connected(
           activation, activation_size, layer_size,
           name="layer_{}".format(layer_number))
@@ -265,7 +267,8 @@ class ARModel(model.TimeSeriesModel):
     else:
       return embedded
 
-  # TODO(allenl, agarwal): Consider better ways of warm-starting predictions.
+  # TODO (allenl, agarwal): Consider better ways of warm-starting predictions. id:1821
+  # https://github.com/imdone/tensorflow/issues/1821
   def predict(self, features):
     """Computes predictions multiple steps into the future.
 

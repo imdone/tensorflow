@@ -171,7 +171,8 @@ class LinSpaceOp : public OpKernel {
 TF_CALL_float(REGISTER_CPU_KERNEL);
 TF_CALL_double(REGISTER_CPU_KERNEL);
 
-// NOTE(touts): We register the op on GPU but it still runs on CPU
+// NOTE (touts): We register the op on GPU but it still runs on CPU id:2717
+// https://github.com/imdone/tensorflow/issues/2716
 // because its inputs and outputs are tagged as HostMemory.
 #define REGISTER_GPU_KERNEL(T) REGISTER_KERNEL_ALL_NUMS(DEVICE_GPU, T)
 TF_CALL_float(REGISTER_GPU_KERNEL);

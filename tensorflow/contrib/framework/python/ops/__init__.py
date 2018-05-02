@@ -18,7 +18,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-# TODO(ptucker): Add these to tf.contrib.variables?
+# TODO (ptucker): Add these to tf.contrib.variables? id:856
+# https://github.com/imdone/tensorflow/issues/857
 # pylint: disable=wildcard-import
 from tensorflow.contrib.framework.python.ops.arg_scope import *
 from tensorflow.contrib.framework.python.ops.checkpoint_ops import *

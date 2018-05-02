@@ -29,7 +29,8 @@ namespace tflite {
 namespace details {
 void LoadTensorsTable(const ::tflite::Model& input_model,
                       TensorsTable* tensors_table) {
-  // TODO(aselle): add support to toco for multiple subgraphs.
+  // TODO (aselle): add support to toco for multiple subgraphs. id:1049
+  // https://github.com/imdone/tensorflow/issues/1050
   auto tensors = (*input_model.subgraphs())[0]->tensors();
   if (!tensors) return;
   for (const auto* tensor : *tensors) {
@@ -102,7 +103,8 @@ void ImportOperators(
     const std::map<string, std::unique_ptr<BaseOperator>>& ops_by_name,
     const details::TensorsTable& tensors_table,
     const details::OperatorsTable& operators_table, Model* model) {
-  // TODO(aselle): add support for multiple subgraphs.
+  // TODO (aselle): add support for multiple subgraphs. id:1644
+  // https://github.com/imdone/tensorflow/issues/1644
   auto ops = (*input_model.subgraphs())[0]->operators();
 
   if (!ops) return;

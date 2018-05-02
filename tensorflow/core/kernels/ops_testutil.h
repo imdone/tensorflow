@@ -111,7 +111,8 @@ class OpsTestBase : public ::testing::Test {
   // 'input_mapping' maps an index (0...NumElements(shape)) to a
   // value.
   //
-  // TODO(vrv): Replace with something like a BrainClient Feed.
+  // TODO (vrv): Replace with something like a BrainClient Feed. id:3260
+// https://github.com/imdone/tensorflow/issues/3259
   template <typename T>
   void AddInput(const TensorShape& shape, std::function<T(int)> input_mapping) {
     test::FillFn(AddInput(DataTypeToEnum<T>::v(), shape), input_mapping);

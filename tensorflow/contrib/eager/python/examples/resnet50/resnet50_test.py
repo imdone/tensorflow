@@ -173,16 +173,18 @@ class ResNet50Benchmarks(tf.test.Benchmark):
         # Avoid OOM errors with larger batch sizes, which seem to cause errors
         # later on even if caught.
         #
-        # TODO(allenl): Base this on device memory; memory limit information
-        # during the test seems to exclude the amount TensorFlow has allocated,
-        # which isn't useful.
+        # TODO (allenl): Base this on device memory; memory limit information id:811
+# https://github.com/imdone/tensorflow/issues/812
+# during the test seems to exclude the amount TensorFlow has allocated,
+# which isn't useful.
         if 'K20' in device.physical_device_desc:
           return (16,)
         if 'P100' in device.physical_device_desc:
           return (16, 32, 64)
 
       if tf.DeviceSpec.from_string(device.name).device_type == 'TPU':
-        # TODO(iga): Training fails with batch size of 16, probably because of
+        # TODO (iga): Training fails with batch size of 16, probably because of id:672
+        # https://github.com/imdone/tensorflow/issues/673
         # no layout optimizations with op-by-op mode. Investigate more.
         return (8,)
     return (16, 32)

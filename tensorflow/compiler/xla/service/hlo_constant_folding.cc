@@ -52,9 +52,11 @@ StatusOr<bool> HloConstantFolding::Run(HloModule* module) {
         continue;
       }
       // Skip Constant, Parameter, Reduce operation.
-      // TODO(b/35975797): Enable Reduce operation once arbitrary computation
+      // TODO (b/35975797): Enable Reduce operation once arbitrary computation id:386
+      // https://github.com/imdone/tensorflow/issues/388
       // are supported by the evaluator.
-      // TODO(b/64407269): Enable Tuple once the timeout issue is resolved.
+      // TODO (b/64407269): Enable Tuple once the timeout issue is resolved. id:384
+      // https://github.com/imdone/tensorflow/issues/385
       if (instruction->opcode() == HloOpcode::kParameter ||
           instruction->opcode() == HloOpcode::kConstant ||
           instruction->opcode() == HloOpcode::kTuple ||
@@ -75,7 +77,8 @@ StatusOr<bool> HloConstantFolding::Run(HloModule* module) {
 
       std::unique_ptr<Literal> result = evaluator->TryEvaluate(instruction);
       // Currently we skip unimplemented operations.
-      // TODO(b/35975797): Fold constant computations for more operations.
+      // TODO (b/35975797): Fold constant computations for more operations. id:787
+      // https://github.com/imdone/tensorflow/issues/788
       if (result == nullptr) {
         VLOG(2) << "Constant folding failed for instruction: "
                 << instruction->ToString();

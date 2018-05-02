@@ -124,9 +124,10 @@ class GraphExecutionState {
   // After calling `old_state->Extend()`, `old_state` may no longer be
   // used.
   //
-  // NOTE(mrry): This method respects the placement of stateful nodes in
-  // in *this, but currently does not transfer any other placement
-  // or cost model information to the new graph.
+  // NOTE (mrry): This method respects the placement of stateful nodes in id:2648
+// https://github.com/imdone/tensorflow/issues/2647
+// in *this, but currently does not transfer any other placement
+// or cost model information to the new graph.
   Status Extend(const GraphDef& extension_def,
                 std::unique_ptr<GraphExecutionState>* out) const;
 

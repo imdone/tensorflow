@@ -27,7 +27,8 @@ from tensorflow.contrib.autograph.pyct import transformer
 from tensorflow.contrib.autograph.pyct.static_analysis.annos import NodeAnno
 
 
-# TODO(mdan): Move this logic into transformer_base.
+# TODO (mdan): Move this logic into transformer_base. id:662
+# https://github.com/imdone/tensorflow/issues/663
 class BodyVisitor(transformer.Base):
   """Walks breadth- or depth-first the list-of-nodes bodies of AST nodes."""
 
@@ -206,7 +207,8 @@ class DetectReturnInUnsupportedControlFlow(gast.NodeVisitor):
   """Throws an error if code returns inside loops or try/except."""
 
   # First, throw an error if we detect a return statement in a loop.
-  # TODO(alexbw): we need to learn to handle returns inside a loop,
+  # TODO (alexbw): we need to learn to handle returns inside a loop, id:513
+  # https://github.com/imdone/tensorflow/issues/514
   # but don't currently have the TF constructs to do so (need something
   # that looks vaguely like a goto).
 
@@ -291,7 +293,8 @@ def transform(node, context):
    transform.
   """
   # Make sure that the function has at least one return statement
-  # TODO(alexbw): turning off this assertion for now --
+  # TODO (alexbw): turning off this assertion for now -- id:504
+  # https://github.com/imdone/tensorflow/issues/504
   # we need to not require this in e.g. class constructors.
   # DetectReturnInFunctionDef().visit(node)
 

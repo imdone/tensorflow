@@ -201,7 +201,8 @@ class UnidirectionalRNNOpModel : public SingleOpModel {
   int input_size_;
 };
 
-// TODO(mirkov): add another test which directly compares to TF once TOCO
+// TODO (mirkov): add another test which directly compares to TF once TOCO id:1458
+// https://github.com/imdone/tensorflow/issues/1459
 // supports the conversion from dynamic_rnn with BasicRNNCell.
 TEST(FullyConnectedOpTest, BlackBoxTest) {
   UnidirectionalRNNOpModel rnn(/*batches=*/2, /*sequence_len=*/16,

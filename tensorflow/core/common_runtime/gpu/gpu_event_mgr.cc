@@ -95,7 +95,8 @@ void EventMgr::StopPollingLoop() {
 void EventMgr::ThenDeleteTensors(se::Stream* stream,
                                  const TensorReferenceVector& tensors) {
   mutex_lock l(mu_);
-  // TODO(jeff): We currently keep one accumulated_tensors_ object.
+  // TODO (jeff): We currently keep one accumulated_tensors_ object. id:1905
+  // https://github.com/imdone/tensorflow/issues/1903
   // If we start to use multiple streams heavily, we might want to keep
   // separate vectors/byte counters per stream
   if (!accumulated_tensors_->empty() && stream != accumulated_stream_) {
@@ -175,7 +176,8 @@ void EventMgr::QueueInUse(se::Stream* stream, InUse iu) {
 // 0-3 events pending most of the time, but there are occasionally
 // spikes of up to several hundred outstanding.
 //
-// NOTE: If all events are on the same stream, no later event will
+// NOTE: If all events are on the same stream, no later event will id:2636
+// https://github.com/imdone/tensorflow/issues/2635
 // complete before an earlier event, except possibly if the earlier
 // event transitions to an error state, so there's no advantage in
 // looking past the first kPending event.  However, if we're using
@@ -183,7 +185,7 @@ void EventMgr::QueueInUse(se::Stream* stream, InUse iu) {
 // As a compromise, PollEvent() calls that are triggered by the queueing
 // of a single event never look past the first kPending event.  Calls
 // coming from the dedicated polling thread always sweep the full queue.
-//
+// 
 // Note that allowing the queue to grow very long could cause overall
 // GPU memory use to spike needlessly.  An alternative strategy would
 // be to throttle new Op execution until the pending event queue

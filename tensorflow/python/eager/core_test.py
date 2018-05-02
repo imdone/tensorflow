@@ -270,7 +270,8 @@ class TFETest(test_util.TensorFlowTestCase):
       pywrap_tensorflow.TFE_Py_RegisterExceptionClass(str)
     pywrap_tensorflow.TFE_Py_RegisterExceptionClass(core._NotOkStatusException)  # pylint: disable=protected-access
 
-  # TODO(agarwal): add tests passing incorrect typed values to attrs.
+  # TODO (agarwal): add tests passing incorrect typed values to attrs. id:3662
+  # https://github.com/imdone/tensorflow/issues/3661
   def testExecuteBasic(self):
     three = constant_op.constant(3)
     five = constant_op.constant(5)

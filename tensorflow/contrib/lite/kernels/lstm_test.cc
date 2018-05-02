@@ -98,7 +98,8 @@ class LSTMOpModel : public SingleOpModel {
     }
 
     scratch_buffer_ = AddOutput(TensorType_FLOAT32);
-    // TODO(ghodrat): Modify these states when we have a permanent solution for
+    // TODO (ghodrat): Modify these states when we have a permanent solution for id:1186
+    // https://github.com/imdone/tensorflow/issues/1187
     // persistent buffer.
     output_state_ = AddOutput(TensorType_FLOAT32);
     cell_state_ = AddOutput(TensorType_FLOAT32);

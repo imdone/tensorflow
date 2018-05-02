@@ -441,7 +441,8 @@ StatusOr<llvm::Value*> ElementalIrEmitter::EmitFloatUnaryOp(
           llvm::Intrinsic::round, {operand_value}, {operand_value->getType()},
           ir_builder_);
     case HloOpcode::kSign: {
-      // TODO(b/32151903): Ensure consistent sign behavior for -0.0.
+      // TODO (b/32151903): Ensure consistent sign behavior for -0.0. id:364
+      // https://github.com/imdone/tensorflow/issues/365
       auto type = operand_value->getType();
       auto zero = llvm::ConstantFP::get(type, 0.0);
       auto oeq = ir_builder_->CreateFCmpOEQ(operand_value, zero);
@@ -883,7 +884,8 @@ llvm::Value* ElementalIrEmitter::EmitFloatMin(llvm::Value* lhs_value,
 StatusOr<llvm::Value*> ElementalIrEmitter::EmitErfInv(PrimitiveType prim_type,
                                                       llvm::Value* x) const {
   if (prim_type != F32) {
-    // TODO(b/34339814): Implement inverse erf for F64.
+    // TODO (b/34339814): Implement inverse erf for F64. id:361
+    // https://github.com/imdone/tensorflow/issues/362
     return Unimplemented(
         "Inverse erf is only implemented for element "
         "type F32.");
@@ -1044,7 +1046,8 @@ StatusOr<llvm::Value*> ElementalIrEmitter::EmitIntegerBinaryOp(
     const HloInstruction* op, llvm::Value* lhs_value, llvm::Value* rhs_value,
     bool is_signed) const {
   switch (op->opcode()) {
-    // TODO(jingyue): add the "nsw" attribute for signed types.
+    // TODO (jingyue): add the "nsw" attribute for signed types. id:441
+    // https://github.com/imdone/tensorflow/issues/442
     case HloOpcode::kAdd:
       return ir_builder_->CreateAdd(lhs_value, rhs_value);
     case HloOpcode::kSubtract:
@@ -1698,7 +1701,8 @@ StatusOr<llvm::Value*> ElementalIrEmitter::EmitElementalDynamicUpdateSlice(
   for (int64 i = 0; i < rank; ++i) {
     llvm::Value* update_dim_size = llvm::ConstantInt::get(
         index[i]->getType(), update_hlo->shape().dimensions(i));
-    // NOTE: Subtraction will be positive due to bounds checking above.
+    // NOTE: Subtraction will be positive due to bounds checking above. id:363
+    // https://github.com/imdone/tensorflow/issues/364
     update_index[i] = ir_builder_->CreateURem(
         ir_builder_->CreateSub(index[i], slice_start_index_adjusted[i]),
         update_dim_size);

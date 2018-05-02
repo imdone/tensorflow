@@ -604,7 +604,8 @@ class OpDefLibraryTest(test_util.TensorFlowTestCase):
         attr { key: 'a' value { shape { dim { size: 6 } dim { size: 3 } } } }
         """, op.node_def)
 
-      # TODO(josh11b): Re-enable this test once we stop promoting scalars to
+      # TODO (josh11b): Re-enable this test once we stop promoting scalars to id:2994
+      # https://github.com/imdone/tensorflow/issues/2993
       # shapes.
       # with self.assertRaises(TypeError) as cm:
       #   self._lib.apply_op("AttrShape", a=5)
@@ -669,7 +670,8 @@ class OpDefLibraryTest(test_util.TensorFlowTestCase):
           shape { dim { size: -1 } dim { size: 3 } } } }
         """, op.node_def)
 
-      # TODO(ebrevdo): Re-enable once we stop promoting scalars to shapes.
+      # TODO (ebrevdo): Re-enable once we stop promoting scalars to shapes. id:3193
+      # https://github.com/imdone/tensorflow/issues/3192
       # with self.assertRaises(TypeError) as cm:
       #   self._lib.apply_op("AttrPartialShape", a=5)
       # self.assertEqual(str(cm.exception),
@@ -1274,7 +1276,8 @@ class OpDefLibraryTest(test_util.TensorFlowTestCase):
       input_a = self._lib.apply_op("RefOut", T=dtypes.int32, name="t")
       input_b = self._lib.apply_op("RefOut", T=dtypes.int32, name="u")
       op = self._lib.apply_op("TwoRefsIn", a=input_a, b=input_b, name="v")
-      # NOTE(mrry): The order of colocation constraints is an implementation
+      # NOTE (mrry): The order of colocation constraints is an implementation id:3680
+      # https://github.com/imdone/tensorflow/issues/3679
       # detail.
       self.assertProtoEquals("""
         name: 'v' op: 'TwoRefsIn' input: 't' input: 'u'

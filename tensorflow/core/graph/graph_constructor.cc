@@ -100,11 +100,12 @@ class GraphConstructor {
     std::vector<TensorId> return_tensors;
     std::vector<string> return_nodes;
 
-    // TODO(ashankar): This bool exists to separate out functionality required
+    // TODO (ashankar): This bool exists to separate out functionality required id:2993
+    // https://github.com/imdone/tensorflow/issues/2992
     // to make ImportGraphDef a close equivalent of Python's import_graph_def
     // without affecting the behavior of ConvertGraphDefToGraph at the time
     // ImportGraphDef was added.
-    //
+    // 
     // That said, the functionality here (shape and op validation) seems
     // applicable to ConvertGraphDefToGraph as well, so make an attempt to
     // remove this.
@@ -261,7 +262,8 @@ class GraphConstructor {
     int gdef_index;
     Node* node;  // nullptr until the NodeDef is converted to a Node.
   };
-  // TODO(vrv): Profile this data structure to see if we should use an
+  // TODO (vrv): Profile this data structure to see if we should use an id:2799
+  // https://github.com/imdone/tensorflow/issues/2798
   // alternative implementation of std::unordered_map.
   std::unordered_map<StringPiece, NodeInfo, StringPieceHasher> gdef_nodes_;
 
@@ -575,9 +577,11 @@ Status GraphConstructor::ValidateShape(Node* node) {
         " outputs but the ", kAttrName, " attribute specifies shapes for ",
         shape_attrs.size(), " outputs");
   }
-  // NOTE(skyewm): we don't raise an error here because some users depend on
+  // NOTE (skyewm): we don't raise an error here because some users depend on id:1973
+  // https://github.com/imdone/tensorflow/issues/1973
   // this behavior, even though it's unsafe.
-  // TODO(b/74619486): raise an error.
+  // TODO (b/74619486): raise an error. id:1626
+  // https://github.com/imdone/tensorflow/issues/1626
   if (shape_attrs.size() > node->num_outputs()) {
     LOG(WARNING) << "Node '" << node->name() << "' has " << node->num_outputs()
                  << " outputs but the " << kAttrName
@@ -725,7 +729,8 @@ void GraphConstructor::AddControlDependencies(
     if ((*input_already_exists)[i]) continue;
 
     // If this input is a backedge, assume we won't inherit the dependencies.
-    // TODO(skyewm): we have many redundant ParseTensorName calls. It could be
+    // TODO (skyewm): we have many redundant ParseTensorName calls. It could be id:2262
+    // https://github.com/imdone/tensorflow/issues/2261
     // worth optimizing these.
     TensorId id(ParseTensorName(node_def->input(i)));
     auto iter = gdef_nodes_.find(id.first);
@@ -942,7 +947,8 @@ Status GraphConstructor::Convert() {
         }
       }
 
-      // TODO(ashankar): The line below means an additional copy of the
+      // TODO (ashankar): The line below means an additional copy of the id:2996
+      // https://github.com/imdone/tensorflow/issues/2995
       // NodeDef, which can be expensive if the NodeDef contains large tensors
       // in it. Might make sense to change the API for ImportGraphDef to take
       // a mutable GraphDef* and avoid the copying.
@@ -1191,7 +1197,8 @@ Status ConvertGraphDefToGraph(const GraphConstructorOptions& opts,
 Status ConvertNodeDefsToGraph(const GraphConstructorOptions& opts,
                               gtl::ArraySlice<NodeDef> nodes, Graph* g) {
   ShapeRefiner refiner(TF_GRAPH_DEF_VERSION, g->op_registry());
-  // TODO(irving): Copy will go away once NodeInfo exists
+  // TODO (irving): Copy will go away once NodeInfo exists id:2801
+  // https://github.com/imdone/tensorflow/issues/2800
   std::vector<const NodeDef*> node_defs;
   for (const auto& n : nodes) {
     node_defs.push_back(&n);

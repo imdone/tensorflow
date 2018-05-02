@@ -35,7 +35,8 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
   TfLiteTensor* input = GetInput(context, node, kInputTensor);
   TfLiteTensor* output = GetOutput(context, node, kOutputTensor);
 
-  // TODO(ahentz): these two checks would make the new implementation
+  // TODO (ahentz): these two checks would make the new implementation id:1502
+  // https://github.com/imdone/tensorflow/issues/1503
   // incompatible with some existing models, where params is not specified. It
   // is OK not to have them because toco would have set input and output types
   // to match the parameters.

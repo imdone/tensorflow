@@ -74,8 +74,9 @@ struct BatchSelectFunctor<GPUDevice, T> {
     reshape_dims.set(0, batch);
 #endif
 
-    // TODO(ebrevdo): Figure out why this leads to erroneous memory access.
-    //
+    // TODO (ebrevdo): Figure out why this leads to erroneous memory access. id:2370
+    // https://github.com/imdone/tensorflow/issues/2369
+    // 
     // To32Bit(output_flat_outer_dims).device(d) =
     //     To32Bit(cond_vec)
     //         .reshape(reshape_dims)

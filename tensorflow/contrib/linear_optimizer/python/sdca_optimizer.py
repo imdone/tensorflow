@@ -26,7 +26,8 @@ from tensorflow.python.ops import control_flow_ops
 from tensorflow.python.ops import math_ops
 
 
-# TODO(sibyl-vie3Poto, sibyl-Aix6ihai): Add proper testing to this wrapper once the API is
+# TODO (sibyl-vie3Poto, sibyl-Aix6ihai): Add proper testing to this wrapper once the API is id:894
+# https://github.com/imdone/tensorflow/issues/895
 # stable.
 class SDCAOptimizer(object):
   """Wrapper class for SDCA optimizer.
@@ -119,7 +120,8 @@ class SDCAOptimizer(object):
           math_ops.not_equal(dense_tensor,
                              math_ops.cast(ignore_value, dense_tensor.dtype)))
       sparse_values = array_ops.gather_nd(dense_tensor, sparse_indices)
-      # TODO(sibyl-Aix6ihai, sibyl-vie3Poto): Makes this efficient, as now SDCA supports
+      # TODO (sibyl-Aix6ihai, sibyl-vie3Poto): Makes this efficient, as now SDCA supports id:1424
+      # https://github.com/imdone/tensorflow/issues/1425
       # very sparse features with weights and not weights.
       return SparseFeatureColumn(
           array_ops.reshape(
@@ -137,7 +139,8 @@ class SDCAOptimizer(object):
       # Iterate over all feature columns and create appropriate lists for dense
       # and sparse features as well as dense and sparse weights (variables) for
       # SDCA.
-      # TODO(sibyl-vie3Poto): Reshape variables stored as values in column_to_variables
+      # TODO (sibyl-vie3Poto): Reshape variables stored as values in column_to_variables id:1711
+      # https://github.com/imdone/tensorflow/issues/1711
       # dict as 1-dimensional tensors.
       dense_features, sparse_features, sparse_feature_with_values = [], [], []
       dense_feature_weights = []
@@ -168,10 +171,11 @@ class SDCAOptimizer(object):
           # SparseFeatureColumn respresenting the one-hot encoding of the
           # bucketized feature.
           #
-          # TODO(sibyl-vie3Poto): Explore whether it is more efficient to translate a
-          # bucketized feature column to a dense feature in SDCA. This will
-          # likely depend on the number of buckets.
-          dense_bucket_tensor = column._to_dnn_input_layer(transformed_tensor)  # pylint: disable=protected-access
+          # TODO (sibyl-vie3Poto): Explore whether it is more efficient to translate a id:1191
+# https://github.com/imdone/tensorflow/issues/1192
+# bucketized feature column to a dense feature in SDCA. This will
+# likely depend on the number of buckets.
+#           dense_bucket_tensor = column._to_dnn_input_layer(transformed_tensor)  # pylint: disable=protected-access
           sparse_feature_column = _dense_tensor_to_sparse_feature_column(
               dense_bucket_tensor)
           sparse_feature_with_values.append(sparse_feature_column)

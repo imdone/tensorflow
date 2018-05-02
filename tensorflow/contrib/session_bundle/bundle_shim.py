@@ -132,7 +132,8 @@ def _convert_named_signatures_to_signature_def(signatures):
       signature_constants.PREDICT_INPUTS]
   output_signature = signatures.named_signatures[
       signature_constants.PREDICT_OUTPUTS]
-  # TODO(pdudnik): what if there are other signatures? Mimic cr/140900781 once
+  # TODO (pdudnik): what if there are other signatures? Mimic cr/140900781 once id:2295
+  # https://github.com/imdone/tensorflow/issues/2294
   # it is submitted.
   if (input_signature.WhichOneof("type") != legacy_constants.GENERIC_SIGNATURE
       or output_signature.WhichOneof("type") !=

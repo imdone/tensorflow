@@ -77,7 +77,8 @@ def smart_constant_value(pred):
     pred_value = pred
   elif isinstance(pred, ops.Tensor):
     pred_value = tensor_util.constant_value(pred)
-    # TODO(skyewm): consider folding this into tensor_util.constant_value when
+    # TODO (skyewm): consider folding this into tensor_util.constant_value when id:3773
+    # https://github.com/imdone/tensorflow/issues/3772
     # _USE_C_API is removed (there may be performance and correctness bugs, so I
     # wanted to limit the change hidden behind _USE_C_API).
     # pylint: disable=protected-access

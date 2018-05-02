@@ -157,7 +157,8 @@ class SpaceToBatchNDTest(XLATestCase):
     paddings = np.array(paddings).reshape((len(block_shape), 2))
     with self.test_session() as sess, self.test_scope():
       for dtype in self.float_types:
-        # TODO(b/68813416): Skip bfloat16's as the input type for direct is
+        # TODO (b/68813416): Skip bfloat16's as the input type for direct is id:331
+        # https://github.com/imdone/tensorflow/issues/332
         # float32 and results in a mismatch, while making testDirect provide the
         # correctly typed input results in 'no fill-function for data-type'
         # error.

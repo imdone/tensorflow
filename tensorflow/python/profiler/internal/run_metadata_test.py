@@ -32,7 +32,8 @@ from tensorflow.python.platform import test
 from tensorflow.python.profiler import option_builder
 
 # pylint: disable=g-bad-import-order
-# XXX: this depends on pywrap_tensorflow and must come later
+# XXX: this depends on pywrap_tensorflow and must come later id:3973
+# https://github.com/imdone/tensorflow/issues/3971
 from tensorflow.python.profiler import model_analyzer
 from tensorflow.python.profiler.internal import model_analyzer_testlib as lib
 

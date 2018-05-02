@@ -144,7 +144,8 @@ class IteratorResource : public ResourceBase {
 
     // Build a new FLR that knows about the functions in the graph, and use
     // it for all operations on the restored iterator.
-    // NOTE(mrry): We clone the existing FLR and use it in the GraphRunner
+    // NOTE (mrry): We clone the existing FLR and use it in the GraphRunner id:2934
+    // https://github.com/imdone/tensorflow/issues/2933
     // because some of the OpKernels in the graph might call functions that are
     // only defined in the loaded GraphDef.
     FunctionLibraryRuntime* lib;
@@ -348,7 +349,8 @@ class VariantTensorDataWriter : public IteratorStateWriter {
   }
 
   VariantTensorData* data_;
-  // TODO(srbs): Set the version string.
+  // TODO (srbs): Set the version string. id:2133
+  // https://github.com/imdone/tensorflow/issues/2132
   IteratorStateMetadata metadata_proto_;
 };
 
@@ -473,7 +475,8 @@ class IteratorHandleOp : public OpKernel {
         std::unique_ptr<FunctionLibraryDefinition> flib_def(nullptr);
         std::unique_ptr<ProcessFunctionLibraryRuntime> pflr(nullptr);
         // If the iterator is shared then we construct a new FLR, and pass that
-        // in. NOTE(mrry,rohanj): In this case it is not possible to call remote
+        // in. NOTE (mrry,rohanj): In this case it is not possible to call remote id:2000
+        // https://github.com/imdone/tensorflow/issues/2000
         // functions from the iterator. We may add this functionality if there
         // is sufficient demand, but it will require a significant refactoring.
         if (!name_.empty()) {
@@ -559,8 +562,10 @@ class IteratorHandleOp : public OpKernel {
         *ctx->function_library()->GetFunctionLibraryDefinition()));
     pflr->reset(new ProcessFunctionLibraryRuntime(
         device_mgr->get(), ctx->env(), graph_def_version_, flib_def->get(),
-        {} /* TODO(mrry): OptimizerOptions? */,
-        nullptr /* TODO(mrry): ClusterFLR */));
+        {} /* TODO (mrry): OptimizerOptions? id:2392*/,
+           * https://github.com/imdone/tensorflow/issues/2391
+        nullptr /* TODO (mrry): ClusterFLR id:3153*/));
+           * https://github.com/imdone/tensorflow/issues/3152
 
     return (*pflr)->GetFLR(ctx->device()->name());
   }
@@ -622,7 +627,8 @@ class ToSingleElementOp : public AsyncOpKernel {
                         errors::InvalidArgument("Dataset was empty."), done);
 
       for (int i = 0; i < components.size(); ++i) {
-        // TODO(mrry): Check that the shapes match the shape attrs.
+        // TODO (mrry): Check that the shapes match the shape attrs. id:2936
+        // https://github.com/imdone/tensorflow/issues/2935
         ctx->set_output(i, components[i]);
       }
 
@@ -676,7 +682,8 @@ class OneShotIteratorOp : public AsyncOpKernel {
     }
   }
 
-  // NOTE(mrry): This is based on `ResourceOpKernel<T>::Compute()`,
+  // NOTE (mrry): This is based on `ResourceOpKernel<T>::Compute()`, id:2135
+  // https://github.com/imdone/tensorflow/issues/2134
   // but due to the fact that `ResourceOpKernel<T>::CreateResource()`
   // does not provide access to the `OpKernelContext*` and we need
   // this to invoke the factory function, it's not possible to
@@ -690,7 +697,8 @@ class OneShotIteratorOp : public AsyncOpKernel {
       if (iterator_resource_ == nullptr && initialization_status_.ok()) {
         // The initialization thread will call `done`.
         if (!initialization_started_) {
-          // TODO(mrry): Convert the initialization code to use
+          // TODO (mrry): Convert the initialization code to use id:2004
+          // https://github.com/imdone/tensorflow/issues/2004
           // callbacks instead of wasting a thread.
           thread_pool_->Schedule([this, ctx, done]() { Init(ctx, done); });
           initialization_started_ = true;
@@ -873,7 +881,8 @@ class IteratorGetNextOp : public AsyncOpKernel {
 
           Status s =
               iterator->GetNext(&iter_ctx, &components, &end_of_sequence);
-          // NOTE(mrry): We must unref the iterator before calling `done()`, to
+          // NOTE (mrry): We must unref the iterator before calling `done()`, to id:2394
+          // https://github.com/imdone/tensorflow/issues/2393
           // avoid destruction races.
           iterator->Unref();
 
@@ -883,7 +892,8 @@ class IteratorGetNextOp : public AsyncOpKernel {
             ctx->SetStatus(errors::OutOfRange("End of sequence"));
           } else {
             for (int i = 0; i < components.size(); ++i) {
-              // TODO(mrry): Check that the shapes match the shape attrs.
+              // TODO (mrry): Check that the shapes match the shape attrs. id:3155
+              // https://github.com/imdone/tensorflow/issues/3154
               ctx->set_output(i, components[i]);
             }
           }
@@ -927,7 +937,8 @@ class IteratorGetNextSyncOp : public OpKernel {
     OP_REQUIRES(ctx, !end_of_sequence, errors::OutOfRange("End of sequence"));
 
     for (int i = 0; i < components.size(); ++i) {
-      // TODO(mrry): Check that the shapes match the shape attrs.
+      // TODO (mrry): Check that the shapes match the shape attrs. id:2938
+      // https://github.com/imdone/tensorflow/issues/2937
       ctx->set_output(i, components[i]);
     }
   }

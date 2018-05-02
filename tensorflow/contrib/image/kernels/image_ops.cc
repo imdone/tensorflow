@@ -110,7 +110,8 @@ typedef Eigen::GpuDevice GPUDevice;
 
 namespace functor {
 
-// NOTE(ringwalt): We get an undefined symbol error if we don't explicitly
+// NOTE (ringwalt): We get an undefined symbol error if we don't explicitly id:1194
+// https://github.com/imdone/tensorflow/issues/1195
 // instantiate the operator() in GCC'd code.
 #define DECLARE_FUNCTOR(TYPE)                                               \
   template <>                                                               \

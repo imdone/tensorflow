@@ -190,7 +190,8 @@ class BinaryOpsTest(XLATestCase):
           ],
           equality_test=self.ListsAreClose)
 
-      # TODO(b/68813416): Fails with bfloat16.
+      # TODO (b/68813416): Fails with bfloat16. id:124
+      # https://github.com/imdone/tensorflow/issues/125
       if dtype != dtypes.bfloat16.as_numpy_dtype:
         self._testBinary(
             gen_nn_ops.sparse_softmax_cross_entropy_with_logits,
@@ -522,7 +523,8 @@ class BinaryOpsTest(XLATestCase):
           expected=np.array(
               [(2 + 4j) / (1 + 2j), (4 - 8j) / (1 + 2j)], dtype=dtype))
 
-      # TODO(b/68205550): math_ops.squared_difference shouldn't be supported.
+      # TODO (b/68205550): math_ops.squared_difference shouldn't be supported. id:143
+      # https://github.com/imdone/tensorflow/issues/144
 
       self._testBinary(
           nn_ops.bias_add,
@@ -867,7 +869,8 @@ class BinaryOpsTest(XLATestCase):
   def testMatMul(self):
     self._testMatMul(math_ops.matmul)
 
-  # TODO(phawkins): failing on GPU, no registered kernel.
+  # TODO (phawkins): failing on GPU, no registered kernel. id:155
+  # https://github.com/imdone/tensorflow/issues/156
   def DISABLED_testSparseMatMul(self):
     # Binary wrappers for sparse_matmul with different hints
     def SparseMatmulWrapperTF(a, b):

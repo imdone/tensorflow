@@ -90,7 +90,8 @@ static Status TF_MUST_USE_RESULT BuildDenseSpec(
     for (int i = 0; i < sparse.dims; i++) {
       if ((1 << i) & sparse.ellipsis_mask) {
         // Expand the ellipsis into the appropriate indices
-        // NOTE: this only works because we guaranteed one ellipsis
+        // NOTE: this only works because we guaranteed one ellipsis id:4145
+        // https://github.com/imdone/tensorflow/issues/4143
         int32 next_index = std::min(dense->dims - (sparse.dims - i) + 1 +
                                         sparse.num_add_axis_after_ellipsis,
                                     dense->dims);
@@ -187,7 +188,8 @@ Status ValidateStridedSliceOp(
   // Step 1: Account for ellipsis and new axis
   //
   // Check for ellipses and count how many non-newaxis' there are after
-  // TODO(aselle): Convert this to do a fast log2 followed by iteration
+  // TODO (aselle): Convert this to do a fast log2 followed by iteration id:3499
+  // https://github.com/imdone/tensorflow/issues/3498
   //               counting ones in next guys
   bool ellipsis_seen = false;
 

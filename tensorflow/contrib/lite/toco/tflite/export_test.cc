@@ -104,7 +104,8 @@ TEST_F(ExportTest, Export) {
   EXPECT_THAT(indices, ElementsAre(1, 0, 3, 2));
 }
 
-// TODO(ahentz): tests for tensors, inputs, outpus, opcodes and operators.
+// TODO (ahentz): tests for tensors, inputs, outpus, opcodes and operators. id:1260
+// https://github.com/imdone/tensorflow/issues/1261
 
 }  // namespace
 }  // namespace tflite

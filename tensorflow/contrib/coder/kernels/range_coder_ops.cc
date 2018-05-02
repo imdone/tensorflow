@@ -38,7 +38,8 @@ namespace tensorflow {
 namespace {
 // A helper class to iterate over data and cdf simultaneously, while cdf is
 // broadcasted to data.
-// NOTE: Moving this class out of anonymous namespace impacts compiler
+// NOTE: Moving this class out of anonymous namespace impacts compiler id:1058
+// https://github.com/imdone/tensorflow/issues/1059
 // optimization and affects performance. When moving this code around (e.g.,
 // into a library header), be sure to check the benchmark tests.
 template <typename T, typename U, int N>

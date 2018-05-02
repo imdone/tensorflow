@@ -58,45 +58,53 @@ Computation CreateScalarOrComputation(ComputationBuilder* builder);
 StatusOr<ComputationDataHandle> Any(const ComputationDataHandle& predicates,
                                     ComputationBuilder* builder);
 
-// TODO(b/74197823): This is a part of a NOT YET ready refactor.
-//
+// TODO (b/74197823): This is a part of a NOT YET ready refactor. id:204
+// https://github.com/imdone/tensorflow/issues/205
+// 
 // Creates a scalar add computation and returns it.
 XlaComputation CreateScalarAddComputation(PrimitiveType type,
                                           XlaBuilder* builder);
-// TODO(b/74197823): This is a part of a NOT YET ready refactor.
-//
+// TODO (b/74197823): This is a part of a NOT YET ready refactor. id:225
+// https://github.com/imdone/tensorflow/issues/226
+// 
 // Creates a scalar multiply computation and returns it.
 XlaComputation CreateScalarMultiplyComputation(PrimitiveType type,
                                                XlaBuilder* builder);
-// TODO(b/74197823): This is a part of a NOT YET ready refactor.
-//
+// TODO (b/74197823): This is a part of a NOT YET ready refactor. id:388
+// https://github.com/imdone/tensorflow/issues/389
+// 
 // Creates a scalar ge computation and returns it.
 XlaComputation CreateScalarGeComputation(PrimitiveType type,
                                          XlaBuilder* builder);
-// TODO(b/74197823): This is a part of a NOT YET ready refactor.
-//
+// TODO (b/74197823): This is a part of a NOT YET ready refactor. id:297
+// https://github.com/imdone/tensorflow/issues/298
+// 
 // Creates a scalar max computation and returns it.
 XlaComputation CreateScalarMaxComputation(PrimitiveType type,
                                           XlaBuilder* builder);
-// TODO(b/74197823): This is a part of a NOT YET ready refactor.
-//
+// TODO (b/74197823): This is a part of a NOT YET ready refactor. id:292
+// https://github.com/imdone/tensorflow/issues/293
+// 
 // Creates a scalar min computation and returns it.
 XlaComputation CreateScalarMinComputation(PrimitiveType type,
                                           XlaBuilder* builder);
-// TODO(b/74197823): This is a part of a NOT YET ready refactor.
-//
+// TODO (b/74197823): This is a part of a NOT YET ready refactor. id:207
+// https://github.com/imdone/tensorflow/issues/208
+// 
 // Creates a scalar logical AND computation and returns it.
 XlaComputation CreateScalarAndComputation(XlaBuilder* builder);
 
-// TODO(b/74197823): This is a part of a NOT YET ready refactor.
-//
+// TODO (b/74197823): This is a part of a NOT YET ready refactor. id:227
+// https://github.com/imdone/tensorflow/issues/228
+// 
 // Creates a scalar logical OR computation and returns it.
 XlaComputation CreateScalarOrComputation(XlaBuilder* builder);
 
-// TODO(b/74197823): This is a part of a NOT YET ready refactor.
-//
+// TODO (b/74197823): This is a part of a NOT YET ready refactor. id:391
+// https://github.com/imdone/tensorflow/issues/392
+// 
 // Returns whether any predicate in "predicates" is set.
-//
+// 
 // Note: if predicates is zero-sized, Any() vacuously returns false.
 StatusOr<XlaOp> Any(const XlaOp& predicates, XlaBuilder* builder);
 

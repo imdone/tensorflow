@@ -38,7 +38,8 @@ namespace xla {
 // the shape that results from an operation is inferred. Some methods have
 // overloads for inferring shape at the HLO level.
 //
-// TODO(b/73352135): Shape inference does not issue very good error messages, in
+// TODO (b/73352135): Shape inference does not issue very good error messages, in id:594
+// https://github.com/imdone/tensorflow/issues/595
 // part because HloInstruction::ToString() is not available since shape
 // inference runs before the HloInstruction object is created. We need a
 // solution for this.

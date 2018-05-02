@@ -170,7 +170,8 @@ class HierarchicalController(Controller):
 
     # creates self.op_embeddings and self.type_dict
     self.create_op_embeddings(verbose=False)
-    # TODO(azalia) clean up embedding/group_embedding_size names
+    # TODO (azalia) clean up embedding/group_embedding_size names id:3724
+    # https://github.com/imdone/tensorflow/issues/3723
     self.group_emb_size = (
         2 * self.num_groups + len(self.type_dict) +
         self.hparams.max_num_outputs * self.hparams.max_output_size)
@@ -457,7 +458,8 @@ class HierarchicalController(Controller):
     output_embed_dim = (self.hparams.max_num_outputs *
                         self.hparams.max_output_size)
 
-    # TODO(bsteiner): don't filter based on used ops so that we can generalize
+    # TODO (bsteiner): don't filter based on used ops so that we can generalize id:4234
+    # https://github.com/imdone/tensorflow/issues/4232
     # to models that use other types of ops.
     used_ops = set()
     for node in self.important_ops:
@@ -613,7 +615,8 @@ class HierarchicalController(Controller):
     if verbose:
       print("Processing input_graph")
 
-    # TODO(azalia): Build inter-adjacencies dag matrix.
+    # TODO (azalia): Build inter-adjacencies dag matrix. id:3783
+    # https://github.com/imdone/tensorflow/issues/3782
     # record dag_matrix
     dag_matrix = np.zeros([self.num_groups, self.num_groups], dtype=np.float32)
     for op in self.important_ops:

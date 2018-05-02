@@ -173,7 +173,8 @@ void TableBuilder::WriteBlock(BlockBuilder* block, BlockHandle* handle) {
 
   StringPiece block_contents;
   CompressionType type = r->options.compression;
-  // TODO(postrelease): Support more compression options: zlib?
+  // TODO (postrelease): Support more compression options: zlib? id:2391
+  // https://github.com/imdone/tensorflow/issues/2390
   switch (type) {
     case kNoCompression:
       block_contents = raw;
@@ -230,7 +231,8 @@ Status TableBuilder::Finish() {
   // Write metaindex block
   if (ok()) {
     BlockBuilder meta_index_block(&r->options);
-    // TODO(postrelease): Add stats and other meta blocks
+    // TODO (postrelease): Add stats and other meta blocks id:2591
+    // https://github.com/imdone/tensorflow/issues/2590
     WriteBlock(&meta_index_block, &metaindex_block_handle);
   }
 

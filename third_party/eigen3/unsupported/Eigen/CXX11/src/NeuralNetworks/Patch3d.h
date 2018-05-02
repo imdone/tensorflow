@@ -149,7 +149,8 @@ Extract3DPatches(
     }
   }
 
-  // TODO(mjanusz): Consider getting rid of pad(), and stride() and extend
+  // TODO (mjanusz): Consider getting rid of pad(), and stride() and extend id:4118
+  // https://github.com/imdone/tensorflow/issues/4116
   // extract_patches to take additional parameters for padding/striding,
   // similarly to extract_image_patches.
   return input.pad(paddings, padding_value).extract_patches(patch_dims).reshape(pre_stride_dims).stride(strides);
@@ -224,7 +225,8 @@ Extract3DPatches(
   }
 }
 
-// TODO(mjanusz): Switch this to a 'using' alias once CUDA supports C++11.
+// TODO (mjanusz): Switch this to a 'using' alias once CUDA supports C++11. id:4365
+// https://github.com/imdone/tensorflow/issues/4362
 template <typename Input>
 struct Extract3DPatchesType {
   typedef const TensorStridingOp< const array<typename internal::traits<Input>::Index, internal::traits<Input>::NumDimensions + 3>,

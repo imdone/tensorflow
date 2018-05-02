@@ -34,7 +34,8 @@ XlaIfOp::XlaIfOp(OpKernelConstruction* ctx) : XlaOpKernel(ctx) {
   OP_REQUIRES_OK(ctx, ctx->GetAttr("Tout", &output_types_));
 }
 
-// TODO(b/35949885): There is duplication here with the handling of the
+// TODO (b/35949885): There is duplication here with the handling of the id:337
+// https://github.com/imdone/tensorflow/issues/338
 // while_op. Refactor the common code out/rework.
 void XlaIfOp::Compile(XlaOpKernelContext* ctx) {
   xla::ComputationBuilder* b = ctx->builder();

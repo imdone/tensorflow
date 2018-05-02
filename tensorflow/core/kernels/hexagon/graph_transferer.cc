@@ -238,7 +238,8 @@ Status GraphTransferer::LoadGraphFromProtoFile(
 }
 
 void GraphTransferer::SortParams(const std::vector<string>& output_node_names) {
-  // TODO(satok): optimize complexity
+  // TODO (satok): optimize complexity id:2180
+  // https://github.com/imdone/tensorflow/issues/2179
   std::unordered_map<int, GraphTransferNodeInputInfo*> input_map;
   for (GraphTransferNodeInputInfo& input :
        *graph_transfer_info_->mutable_node_input_info()) {
@@ -444,7 +445,8 @@ Status GraphTransferer::RegisterNode(
     RegisterFlattenNode(ops_definitions, shape_refiner, node);
   } else if (ops_definitions.GetOpIdFor(node.type_string(), {}) !=
              IRemoteFusedGraphOpsDefinitions::INVALID_OP_ID) {
-    // TODO(satok): Set correct data type if it's given.
+    // TODO (satok): Set correct data type if it's given. id:2085
+    // https://github.com/imdone/tensorflow/issues/2084
     RegisterGenericNode(ops_definitions, shape_refiner, node);
   } else {
     return errors::InvalidArgument(node.type_string() +
@@ -461,7 +463,8 @@ void GraphTransferer::RegisterConstantNode(const ShapeRefiner& shape_refiner,
   const int id = node_name_to_id_cache_map_[node.name()];
   const int output_node_size = node.num_outputs();
   CHECK_EQ(output_node_size, 1);
-  // TODO(satok): support multiple outputs?
+  // TODO (satok): support multiple outputs? id:2468
+  // https://github.com/imdone/tensorflow/issues/2467
   const int output_index = 0;
   const DataType dt = node.output_type(output_index);
   const size_t max_bytes_per_data = DataTypeSize(dt);
@@ -485,7 +488,8 @@ void GraphTransferer::RegisterConstantNode(const ShapeRefiner& shape_refiner,
       *graph_transfer_info_->add_const_node_info();
   const_node_info.set_name(node.name());
   const_node_info.set_node_id(id);
-  // TODO(satok): Make this generic. Never assume rank is 4.
+  // TODO (satok): Make this generic. Never assume rank is 4. id:3204
+  // https://github.com/imdone/tensorflow/issues/3203
   CHECK_EQ(4, SHAPE_ARRAY_SIZE);
   const_node_info.add_shape(shape_array[0]);
   const_node_info.add_shape(shape_array[1]);
@@ -504,7 +508,8 @@ void GraphTransferer::RegisterConstantNode(const ShapeRefiner& shape_refiner,
 
 int GraphTransferer::RegisterConstantShape(const std::vector<int>& shape) {
   VLOG(1) << "Cache constant shape.";
-  // TODO(satok): Handle non-4dim strides
+  // TODO (satok): Handle non-4dim strides id:3241
+  // https://github.com/imdone/tensorflow/issues/3240
   CHECK_EQ(shape.size(), 4);
   const string shape_name = CONST_SHAPE_PREFIX + ToString(shape.at(0)) + 'x' +
                             ToString(shape.at(1)) + 'x' +
@@ -517,7 +522,8 @@ int GraphTransferer::RegisterConstantShape(const std::vector<int>& shape) {
         *graph_transfer_info_->add_const_node_info();
     const_node_info.set_name(shape_name);
     const_node_info.set_node_id(id);
-    // TODO(satok): Make this generic. Never assume rank is 5.
+    // TODO (satok): Make this generic. Never assume rank is 5. id:2182
+    // https://github.com/imdone/tensorflow/issues/2181
     const_node_info.add_shape(static_cast<int64>(shape[0]));
     const_node_info.add_shape(static_cast<int64>(shape[1]));
     const_node_info.add_shape(static_cast<int64>(shape[2]));
@@ -570,7 +576,8 @@ int GraphTransferer::RegisterConstScalar(const DataType dt, const int val,
         *graph_transfer_info_->add_const_node_info();
     const_node_info.set_name(val_name);
     const_node_info.set_node_id(id);
-    // TODO(satok): Do not assume rank is 4 here.
+    // TODO (satok): Do not assume rank is 4 here. id:2088
+    // https://github.com/imdone/tensorflow/issues/2087
     const_node_info.add_shape(static_cast<int64>(1));
     const_node_info.add_shape(static_cast<int64>(1));
     const_node_info.add_shape(static_cast<int64>(1));
@@ -648,7 +655,8 @@ void GraphTransferer::RegisterNodeWithPaddingAndStrides(
   const int id = node_name_to_id_cache_map_[node.name()];
   shape_inference::InferenceContext* context = shape_refiner.GetContext(&node);
   CHECK(node.attrs().Find(PADDING_ATTR_NAME));
-  // TODO(satok): Use context->GetAttr(...) instead?
+  // TODO (satok): Use context->GetAttr(...) instead? id:2471
+  // https://github.com/imdone/tensorflow/issues/2470
   Padding padding;
   TF_CHECK_OK(context->GetAttr(PADDING_ATTR_NAME, &padding));
   CHECK(node.attrs().Find(STRIDES_ATTR_NAME));
@@ -662,7 +670,8 @@ void GraphTransferer::RegisterNodeWithPaddingAndStrides(
     const int ksize_id = RegisterConstantShape(kernel_sizes);
     extra_inputs.insert(extra_inputs.begin(), ksize_id);
   }
-  // TODO(satok): Set correct data type if it's given.
+  // TODO (satok): Set correct data type if it's given. id:3206
+  // https://github.com/imdone/tensorflow/issues/3205
   const int op_type_id = ops_definitions.GetOpIdFor(node.type_string(), {});
   CHECK(op_type_id >= 0 && op_type_id < ops_definitions.GetTotalOpsCount())
       << "Op " << node.type_string() << " not found in map(id = " << op_type_id
@@ -691,7 +700,8 @@ void GraphTransferer::RegisterNodeWithRank(
   const int const_val_id =
       RegisterConstScalar(DT_INT32, shapes.at(0).dims(), id, node.num_inputs());
   std::vector<int> extra_inputs{const_val_id};
-  // TODO(satok): Set correct data type if it's given.
+  // TODO (satok): Set correct data type if it's given. id:3244
+  // https://github.com/imdone/tensorflow/issues/3243
   const int op_type_id = ops_definitions.GetOpIdFor(node.type_string(), {});
   CHECK(op_type_id >= 0 && op_type_id < ops_definitions.GetTotalOpsCount())
       << "Op " << node.type_string() << " not found in map(id = " << op_type_id
@@ -717,7 +727,8 @@ void GraphTransferer::RegisterPadNode(
   CHECK_EQ(node_name_to_id_cache_map_.count(node.name()), 1);
   const int id = node_name_to_id_cache_map_[node.name()];
 
-  // TODO(satok): Set correct data type if it's given.
+  // TODO (satok): Set correct data type if it's given. id:2184
+  // https://github.com/imdone/tensorflow/issues/2183
   const int op_type_id = ops_definitions.GetOpIdFor(node.type_string(), {});
   CHECK(op_type_id >= 0 && op_type_id < ops_definitions.GetTotalOpsCount());
 
@@ -752,7 +763,8 @@ void GraphTransferer::RegisterPadNode(
     TF_CHECK_OK(MakeTensorFromProto(*proto, &const_tensor));
     CHECK_EQ(DT_INT32, const_tensor.dtype());
     // reshape tensor input to be rank 4.
-    // TODO(satok): Never assume rank is 4.
+    // TODO (satok): Never assume rank is 4. id:2091
+    // https://github.com/imdone/tensorflow/issues/2090
     Tensor new_const_tensor(const_tensor.dtype(), TensorShape{4, 2});
     for (int i = 0; i < PAD_HEIGHT; ++i) {
       for (int j = 0; j < PAD_WIDTH; ++j) {
@@ -789,7 +801,8 @@ void GraphTransferer::RegisterInputNode(
   VLOG(1) << "Register input node: " << node.name() << ", " << op_type;
   CHECK_EQ(node_name_to_id_cache_map_.count(node.name()), 1);
   const int id = node_name_to_id_cache_map_[node.name()];
-  // TODO(satok): Set correct data type if it's given.
+  // TODO (satok): Set correct data type if it's given. id:2475
+  // https://github.com/imdone/tensorflow/issues/2474
   const int op_type_id = ops_definitions.GetOpIdFor("INPUT", {});
   CHECK(op_type_id >= 0 && op_type_id < ops_definitions.GetTotalOpsCount())
       << "Op" << node.name() << ", " << op_type << " is not supported,"
@@ -806,9 +819,11 @@ void GraphTransferer::RegisterFlattenNode(
   VLOG(1) << "Register flatten node: " << node.name();
   CHECK_EQ(node_name_to_id_cache_map_.count(node.name()), 1);
   const int id = node_name_to_id_cache_map_[node.name()];
-  // TODO(satok): Remove dependency to specific type
+  // TODO (satok): Remove dependency to specific type id:3208
+  // https://github.com/imdone/tensorflow/issues/3207
   const string op_type = "FLATTEN";
-  // TODO(satok): Set correct data type if it's given.
+  // TODO (satok): Set correct data type if it's given. id:3264
+  // https://github.com/imdone/tensorflow/issues/3263
   const int op_type_id = ops_definitions.GetOpIdFor(op_type, {});
   CHECK(op_type_id >= 0 && op_type_id < ops_definitions.GetTotalOpsCount());
 
@@ -824,7 +839,8 @@ void GraphTransferer::RegisterGenericNode(
   VLOG(1) << "Register generic node: " << node.name();
   CHECK_EQ(node_name_to_id_cache_map_.count(node.name()), 1);
   const int id = node_name_to_id_cache_map_[node.name()];
-  // TODO(satok): Set correct data type if it's given.
+  // TODO (satok): Set correct data type if it's given. id:2186
+  // https://github.com/imdone/tensorflow/issues/2185
   const int op_type_id = ops_definitions.GetOpIdFor(node.type_string(), {});
   CHECK(op_type_id >= 0 && op_type_id < ops_definitions.GetTotalOpsCount());
 
@@ -834,8 +850,10 @@ void GraphTransferer::RegisterGenericNode(
       true /* append_input */, true /* append_output */);
 }
 
-// TODO(satok): Remove this function.
-// TODO(satok): Remove only_register_const_node.
+// TODO (satok): Remove this function. id:2094
+// https://github.com/imdone/tensorflow/issues/2093
+// TODO (satok): Remove only_register_const_node. id:2481
+// https://github.com/imdone/tensorflow/issues/2480
 Status GraphTransferer::RegisterNodeIfAllInputsAreCached(
     const IRemoteFusedGraphOpsDefinitions& ops_definitions,
     const ShapeRefiner& shape_refiner, const Node& node,
@@ -986,7 +1004,8 @@ GraphTransferer::BuildShapeArray(
            context->Value(context->Dim(shape_handle, 2)),
            context->Value(context->Dim(shape_handle, 3))}};
     default:
-      // TODO(satok): Support more ranks?
+      // TODO (satok): Support more ranks? id:3210
+      // https://github.com/imdone/tensorflow/issues/3209
       LOG(FATAL);
       return std::array<int64, SHAPE_ARRAY_SIZE>();
   }
@@ -1010,7 +1029,8 @@ GraphTransferer::ToTensorShapeArray(const TensorShape& shape) {
           {shape.dim_size(0), shape.dim_size(1), shape.dim_size(2),
            shape.dim_size(3)}};
     default:
-      // TODO(satok): Support more ranks?
+      // TODO (satok): Support more ranks? id:3267
+      // https://github.com/imdone/tensorflow/issues/3266
       LOG(FATAL);
       return std::array<int64, SHAPE_ARRAY_SIZE>();
   }
@@ -1120,7 +1140,8 @@ void GraphTransferer::DumpNodeTransferParams() const {
   LOG(INFO) << "*** Const Nodes ***";
   for (const GraphTransferConstNodeInfo& params :
        graph_transfer_info_->const_node_info()) {
-    // TODO(satok): Stop assuming shape size is 4.
+    // TODO (satok): Stop assuming shape size is 4. id:2188
+    // https://github.com/imdone/tensorflow/issues/2187
     CHECK_EQ(params.shape_size(), 4);
     LOG(INFO) << "[ " << params.node_id() << " \"" << params.name()
               << "\" (Const)";
@@ -1174,7 +1195,8 @@ void GraphTransferer::DumpVerificationStringOfNodeTransferParams() const {
   for (const GraphTransferConstNodeInfo& params :
        graph_transfer_info_->const_node_info()) {
     std::stringstream sstream;
-    // TODO(satok): Stop assuming shape size is 4.
+    // TODO (satok): Stop assuming shape size is 4. id:2097
+    // https://github.com/imdone/tensorflow/issues/2096
     CHECK_EQ(params.shape_size(), 4);
     sstream << "---(CONST) [" << std::hex << params.node_id() << std::dec << ","
             << params.shape(0) << "," << params.shape(1) << ","

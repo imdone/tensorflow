@@ -27,7 +27,8 @@ Example:
   z = tf.get_variable('foo')   # Indirectly affects `loss` and 'foo'
   # Here, `loss` can be guarded. But `z` cannot.
 
-# TODO(mdan): We should probably define a safe mode where we guard everything.
+# TODO (mdan): We should probably define a safe mode where we guard everything. id:601
+# https://github.com/imdone/tensorflow/issues/602
 """
 
 from __future__ import absolute_import
@@ -74,7 +75,8 @@ class SideEffectGuardTransformer(transformer.Base):
     reindent_requested = False
     for n in nodes:
       n = self.visit(n)
-      # NOTE: the order in which these statements execute is important; in
+      # NOTE: the order in which these statements execute is important; in id:655
+      # https://github.com/imdone/tensorflow/issues/656
       # particular, watch out for ending up with cycles in the AST.
       if alias_map:
         n = ast_util.rename_symbols(n, alias_map)
@@ -91,7 +93,8 @@ class SideEffectGuardTransformer(transformer.Base):
         alias_map = new_alias_map
         current_dest = new_dest
     if reindent_requested and not current_dest:
-      # TODO(mdan): There may still be something that could be done.
+      # TODO (mdan): There may still be something that could be done. id:506
+      # https://github.com/imdone/tensorflow/issues/507
       raise ValueError('Unable to insert statement into the computation flow: '
                        'it is not followed by any computation which '
                        'the statement could gate.')
@@ -127,14 +130,17 @@ class SideEffectGuardTransformer(transformer.Base):
       # possible, gate all remaining statements (and that may fail too, see
       # _visit_and_reindent.
       args_scope = anno.getanno(node.value, NodeAnno.ARGS_SCOPE)
-      # NOTE: We can't guard object attributes because they may not be writable.
+      # NOTE: We can't guard object attributes because they may not be writable. id:497
+      # https://github.com/imdone/tensorflow/issues/498
       # In addition, avoid renaming well-known names.
-      # TODO(mdan): Move these names into config.
+      # TODO (mdan): Move these names into config. id:962
+      # https://github.com/imdone/tensorflow/issues/963
       unguarded_names = (qual_names.QN('self'), qual_names.QN('tf'))
       guarded_args = tuple(s for s in args_scope.used
                            if not s.is_composite() and s not in unguarded_names)
 
-      # TODO(mdan): Include all arguments which depended on guarded_args too.
+      # TODO (mdan): Include all arguments which depended on guarded_args too. id:604
+      # https://github.com/imdone/tensorflow/issues/605
       # For example, the following will still cause a race:
       #   tf.assign(a, a + 1)
       #   b = a + 1
@@ -144,7 +150,8 @@ class SideEffectGuardTransformer(transformer.Base):
 
       if guarded_args:
         # The aliases may need new names to avoid incorrectly making them local.
-        # TODO(mdan): This is brutal. It will even rename modules - any fix?
+        # TODO (mdan): This is brutal. It will even rename modules - any fix? id:658
+        # https://github.com/imdone/tensorflow/issues/659
         need_alias = tuple(
             s for s in guarded_args if s not in args_scope.parent.modified)
         aliased_new_names = tuple(

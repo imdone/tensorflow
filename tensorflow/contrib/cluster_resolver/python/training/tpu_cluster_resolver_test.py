@@ -319,7 +319,8 @@ class TPUClusterResolverTest(test.TestCase):
           credentials=None,
           service=self.mock_service_client(tpu_map=tpu_map))
 
-  # TODO(saeta): Convert to parameterized test when included in OSS TF.
+  # TODO (saeta): Convert to parameterized test when included in OSS TF. id:1020
+  # https://github.com/imdone/tensorflow/issues/1021
   def verifyShouldResolve(self, tpu, should_resolve):
     tpu_cluster_resolver = TPUClusterResolver(
         project='test-project',

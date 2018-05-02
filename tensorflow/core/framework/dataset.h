@@ -92,7 +92,8 @@ class GraphDefBuilderWrapper {
   // `*output` contains a pointer to the output `Node`. It is guaranteed to be
   // non-null if the method returns with an OK status.
   // The returned Node pointer is owned by the backing Graph of GraphDefBuilder.
-  // TODO(shivaniagrawal): Consider changing to gtl::ArraySlice?
+  // TODO (shivaniagrawal): Consider changing to gtl::ArraySlice? id:2204
+  // https://github.com/imdone/tensorflow/issues/2203
   template <typename T>
   Status AddVector(const std::vector<T>& val, Node** output) {
     Tensor val_t = Tensor(DataTypeToEnum<T>::v(),
@@ -178,7 +179,8 @@ class GraphDefBuilderWrapper {
     for (const NodeDef& node_def : function_def->node_def()) {
       const OpDef* op_def;
       TF_RETURN_IF_ERROR(lib_def->LookUpOpDef(node_def.op(), &op_def));
-      // TODO(b/65524810): Hack to allow functions to capture Dataset op
+      // TODO (b/65524810): Hack to allow functions to capture Dataset op id:2836
+      // https://github.com/imdone/tensorflow/issues/2835
       // nodes needed for FlatMap. Currently, source datasets nodes have been
       // marked stateful to avoid constant folding since we do not have a
       // good way of serializing them.
@@ -241,10 +243,12 @@ class StatsAggregator;
 // not nested within the lifetime of a single OpKernelContext
 // (e.g. asynchronous prefetching).
 //
-// TODO(mrry): We will probably need to support more of
+// TODO (mrry): We will probably need to support more of id:2718
+// https://github.com/imdone/tensorflow/issues/2717
 // OpKernelContext here. For example, should allocation be handled by
 // the IteratorContext?
-// TODO(mrry): We're making some daring assumptions about the lifetime
+// TODO (mrry): We're making some daring assumptions about the lifetime id:1918
+// https://github.com/imdone/tensorflow/issues/1918
 // of the runner passed in here. A runner will be deleted when the original
 // step ends, but all existing runners only close over session-lifetime (or
 // longer-lived) state, so we can make a copy of the function. There's nothing
@@ -262,10 +266,11 @@ class IteratorContext {
     // A function that returns the current `StatsAggregator` instance to be
     // used when recording statistics about the iterator.
     //
-    // NOTE(mrry): This is somewhat awkward, because (i) the `StatsAggregator`
-    // is a property of the `IteratorResource` (which this class does not know
-    // about), and (ii) it can change after the `IteratorContext` has been
-    // created. Better suggestions are welcome!
+    // NOTE (mrry): This is somewhat awkward, because (i) the `StatsAggregator` id:1539
+// https://github.com/imdone/tensorflow/issues/1539
+// is a property of the `IteratorResource` (which this class does not know
+// about), and (ii) it can change after the `IteratorContext` has been
+// created. Better suggestions are welcome!
     std::function<std::shared_ptr<StatsAggregator>()> stats_aggregator_getter =
         nullptr;
 
@@ -336,8 +341,9 @@ class IteratorBase {
   //
   // This method is thread-safe.
   //
-  // TODO(mrry): Define `GetNextAsync()` or `GetNextManyAsync()`, and
-  // potentially remove this method.
+  // TODO (mrry): Define `GetNextAsync()` or `GetNextManyAsync()`, and id:2205
+// https://github.com/imdone/tensorflow/issues/2205
+// potentially remove this method.
   virtual Status GetNext(IteratorContext* ctx, std::vector<Tensor>* out_tensors,
                          bool* end_of_sequence) = 0;
 
@@ -428,7 +434,8 @@ class DatasetBase : public core::RefCounted {
   }
 
  protected:
-  // TODO(srbs): Ideally all graph related logic should reside in
+  // TODO (srbs): Ideally all graph related logic should reside in id:2840
+  // https://github.com/imdone/tensorflow/issues/2839
   // GraphDatasetBase. However, that would require Datasets defined in all ops
   // to derive from GraphDatasetBase. Once that is done we can move
   // DatasetGraphDefBuilder and AsGraphDefInternal to GraphDatasetBase.

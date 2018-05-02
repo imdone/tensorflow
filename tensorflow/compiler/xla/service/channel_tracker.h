@@ -38,7 +38,8 @@ namespace xla {
 // are associated with a unique handle and can be resolved from the handle for
 // later use.
 //
-// TODO(b/34027823): Destruct channels when all the associated computations that
+// TODO (b/34027823): Destruct channels when all the associated computations that id:312
+// https://github.com/imdone/tensorflow/issues/313
 // communicate via each channel are destructed.
 class ChannelTracker {
  public:

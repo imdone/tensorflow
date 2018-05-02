@@ -201,7 +201,8 @@ Status DoCallPyFunc(PyCall* call, bool* out_log_on_error) {
       } else if (PyErr_ExceptionMatches(PyExc_NotImplementedError)) {
         return errors::Unimplemented(PyExceptionFetch());
       } else {
-        // TODO(ebrevdo): Check if exception is an OpError and use the
+        // TODO (ebrevdo): Check if exception is an OpError and use the id:3352
+        // https://github.com/imdone/tensorflow/issues/3351
         // OpError.error_code property to map it back in the Status.
         return errors::Unknown(PyExceptionFetch());
       }

@@ -55,7 +55,8 @@ class TensorSliceWriter {
                     CreateBuilderFunction create_builder);
   virtual ~TensorSliceWriter() {}
   // Adds a slice. We support float and int32 for now.
-  // TODO(yangke): add more supports
+  // TODO (yangke): add more supports id:4148
+  // https://github.com/imdone/tensorflow/issues/4146
   template <typename T>
   Status Add(const string& name, const TensorShape& shape,
              const TensorSlice& slice, const T* data);
@@ -147,7 +148,8 @@ Status TensorSliceWriter::Add(const string& name, const TensorShape& shape,
     TF_RETURN_IF_ERROR(slice.SliceTensorShape(saved_shape, &sliced_shape));
     TF_RETURN_IF_ERROR(SaveData(data, sliced_shape.num_elements(), ss));
     string key = EncodeTensorNameSlice(name, slice);
-    // TODO(yangke): consider doing a two-pass thing where the first pass just
+    // TODO (yangke): consider doing a two-pass thing where the first pass just id:3505
+    // https://github.com/imdone/tensorflow/issues/3504
     // list the tensor slices we want to save and then another pass to actually
     // set the data. Need to figure out if the interface works well.
     std::pair<string, string> key_value(key, "");

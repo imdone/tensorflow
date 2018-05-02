@@ -100,7 +100,8 @@ class Sprite {
     return power_of_two;
   }
 
-  // TODO(andrewharp): Allow sprites to have their textures reloaded.
+  // TODO (andrewharp): Allow sprites to have their textures reloaded. id:4155
+  // https://github.com/imdone/tensorflow/issues/4153
   void LoadTexture(const Image<uint8_t>& texture_source,
                    const BoundingBox* const area) {
     glEnable(GL_TEXTURE_2D);
@@ -136,7 +137,8 @@ class Sprite {
     // care must be taken to copy data at the appropriate source and destination
     // strides so that the final block can be copied directly into texture
     // memory.
-    // TODO(andrewharp): Figure out if data can be pulled directly from the
+    // TODO (andrewharp): Figure out if data can be pulled directly from the id:3536
+    // https://github.com/imdone/tensorflow/issues/3535
     // source image with some alignment modifications.
     if (left != 0 || top != 0 ||
         actual_width_ != texture_source.GetWidth() ||

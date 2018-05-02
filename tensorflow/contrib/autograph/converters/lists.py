@@ -17,8 +17,10 @@
 This includes converting Python lists to TensorArray/TensorList.
 """
 
-# TODO(mdan): Elaborate the logic here.
-# TODO(mdan): Does it even make sense to attempt to try to use TAs?
+# TODO (mdan): Elaborate the logic here. id:650
+# https://github.com/imdone/tensorflow/issues/651
+# TODO (mdan): Does it even make sense to attempt to try to use TAs? id:498
+# https://github.com/imdone/tensorflow/issues/499
 # The current rule (always convert to TensorArray) is naive and insufficient.
 # In general, a better mechanism could look like:
 #   * convert to TensorList by default
@@ -48,13 +50,15 @@ class ListTransformer(transformer.Base):
           'use set_element_type(<list>, <dtype>) to continue')
     dtype = anno.getanno(node, 'element_type')
     if not isinstance(dtype, dtypes.DType):
-      # TODO(mdan): Allow non-TF dtypes?
+      # TODO (mdan): Allow non-TF dtypes? id:490
+      # https://github.com/imdone/tensorflow/issues/491
       # That would be consistent with the dynamic dispatch pattern, but
       # we must make sure that doesn't become confusing.
       raise NotImplementedError('element type "%s" not yet supported' % dtype)
 
     dtype_name = dtype.name
-    # TODO(mdan): Does it ever make sense not to use tensor lists?
+    # TODO (mdan): Does it ever make sense not to use tensor lists? id:958
+    # https://github.com/imdone/tensorflow/issues/959
     template = """
       tf.TensorArray(tf.dtype_name, size=0, dynamic_size=True)
     """
@@ -104,7 +108,8 @@ class ListTransformer(transformer.Base):
 
     # Only convert lists when they are assigned to a variable, e.g.:
     #   l = []
-    # TODO(mdan): A similar pattern exists in type_info.py
+    # TODO (mdan): A similar pattern exists in type_info.py id:599
+    # https://github.com/imdone/tensorflow/issues/600
     # We should add a generic "unpack_assignment" function to the base
     # transformer, that has the same effect as applying some logic to the SSA
     # form.

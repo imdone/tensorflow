@@ -124,8 +124,9 @@ class CUDADriver {
   //
   // http://docs.nvidia.com/cuda/cuda-driver-api/group__CUDA__MEM.html#group__CUDA__MEM_1g63f450c8125359be87b7623b1c0b2a14
   //
-  // TODO(leary) verify an error will be returned if the location wasn't
-  // previously registered.
+  // TODO (leary) verify an error will be returned if the location wasn't id:4343
+// https://github.com/imdone/tensorflow/issues/4341
+// previously registered.
   static bool HostUnregister(CudaContext* context, void *location);
 
   // Given a device ordinal, returns a device handle into the device outparam,
@@ -182,7 +183,8 @@ class CUDADriver {
       CudaContext* context, CUsharedconfig shared_mem_config);
 
   // Launches a CUDA kernel via cuLaunchKernel.
-  // TODO(leary) describe the structure of kernel_params and extra in a readable
+  // TODO (leary) describe the structure of kernel_params and extra in a readable id:4068
+  // https://github.com/imdone/tensorflow/issues/4066
   // way.
   // http://docs.nvidia.com/cuda/cuda-driver-api/group__CUDA__EXEC.html#group__CUDA__EXEC_1gb8f3dc3031b40da29d5f9a7139e52e15
   static bool LaunchKernel(CudaContext* context, CUfunction function,
@@ -217,7 +219,8 @@ class CUDADriver {
                               size_t *bytes);
 
   // Unloads module from the current context via cuModuleUnload.
-  // TODO(leary) the documentation doesn't say what kind of disasters happen
+  // TODO (leary) the documentation doesn't say what kind of disasters happen id:3803
+  // https://github.com/imdone/tensorflow/issues/3802
   // if you try to unload a module while its CUfunctions are in use.
   // http://docs.nvidia.com/cuda/cuda-driver-api/group__CUDA__MODULE.html#group__CUDA__MODULE_1g8ea3d716524369de3763104ced4ea57b
   static void UnloadModule(CudaContext* context, CUmodule module);
@@ -298,11 +301,12 @@ class CUDADriver {
   // Blocks the calling thread until the operations enqueued onto stream have
   // been completed, via cuStreamSynchronize.
   //
-  // TODO(leary) if a pathological thread enqueues operations onto the stream
-  // while another thread blocks like this, can you wind up waiting an unbounded
-  // amount of time?
-  //
-  // http://docs.nvidia.com/cuda/cuda-driver-api/group__CUDA__STREAM.html#group__CUDA__STREAM_1g15e49dd91ec15991eb7c0a741beb7dad
+  // TODO (leary) if a pathological thread enqueues operations onto the stream id:3490
+// https://github.com/imdone/tensorflow/issues/3489
+// while another thread blocks like this, can you wind up waiting an unbounded
+// amount of time?
+// 
+// http://docs.nvidia.com/cuda/cuda-driver-api/group__CUDA__STREAM.html#group__CUDA__STREAM_1g15e49dd91ec15991eb7c0a741beb7dad
   static port::Status SynchronizeStream(CudaContext* context, CUstream stream);
 
   // Blocks the calling thread until the operations associated with the context

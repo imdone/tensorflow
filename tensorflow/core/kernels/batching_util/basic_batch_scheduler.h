@@ -136,7 +136,8 @@ namespace serving {
 template <typename TaskType>
 class BasicBatchScheduler : public BatchScheduler<TaskType> {
  public:
-  // TODO(b/25089730): Tune defaults based on best practices as they develop.
+  // TODO (b/25089730): Tune defaults based on best practices as they develop. id:2866
+  // https://github.com/imdone/tensorflow/issues/2865
   // (Keep them mirrored to the ones in SharedBatchScheduler::QueueOptions and
   // SharedBatchScheduler::Options.)
   struct Options {

@@ -472,7 +472,8 @@ StatusOr<ComputationStats> Client::GetComputationStats(
     const DebugOptions& debug_options) const {
   ComputationGraphStatsRequest request;
 
-  // TODO(b/74197823): Find a way to avoid the copy of the hlo proto.
+  // TODO (b/74197823): Find a way to avoid the copy of the hlo proto. id:218
+  // https://github.com/imdone/tensorflow/issues/219
   *request.mutable_computation() = computation.proto();
   *request.mutable_debug_options() = debug_options;
   ComputationStatsResponse response;

@@ -281,7 +281,8 @@ void AddToTensorAccumulator(
   gradients_shape.RemoveDim(0);
   hessians_shape.RemoveDim(0);
 
-  // TODO(soroush): Move gradient and hessian shape check to ShapeFn.
+  // TODO (soroush): Move gradient and hessian shape check to ShapeFn. id:741
+  // https://github.com/imdone/tensorflow/issues/742
   OP_REQUIRES(
       context, gradients_shape == accumulator_resource->gradient_shape(),
       errors::InvalidArgument(strings::StrCat(

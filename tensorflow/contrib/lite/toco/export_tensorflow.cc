@@ -387,7 +387,8 @@ void ConvertConvOperator(const Model& model, const ConvOperator& src_op,
     const string& bias_array_name =
         WalkUpToConstantArray(model, src_op.inputs[2]);
     const auto& bias_array = model.GetArray(bias_array_name);
-    // TODO(b/62904716) Bias arrays should be 1-D, and used directly.
+    // TODO (b/62904716) Bias arrays should be 1-D, and used directly. id:2034
+    // https://github.com/imdone/tensorflow/issues/2034
     Shape bias_shape_1d = bias_array.shape();
     UnextendShape(&bias_shape_1d, 1);
     CHECK(bias_array.buffer->type == ArrayDataType::kFloat);
@@ -466,7 +467,8 @@ void ConvertDepthwiseConvOperator(const Model& model,
     CHECK(model.HasArray(src_op.inputs[2]));
     const string& bias_name = WalkUpToConstantArray(model, src_op.inputs[2]);
     const auto& bias_array = model.GetArray(bias_name);
-    // TODO(b/62904716) Bias arrays should be 1-D, and used directly.
+    // TODO (b/62904716) Bias arrays should be 1-D, and used directly. id:1486
+    // https://github.com/imdone/tensorflow/issues/1487
     Shape bias_shape_1d = bias_array.shape();
     UnextendShape(&bias_shape_1d, 1);
     CHECK(bias_array.buffer->type == ArrayDataType::kFloat);
@@ -599,7 +601,8 @@ void ConvertFullyConnectedOperator(const Model& model,
         GetTensorFlowDataType(model, src_op.inputs[0]));
     CHECK(model.HasArray(src_op.inputs[2]));
     const auto& bias_array = model.GetArray(src_op.inputs[2]);
-    // TODO(b/62904716) Bias arrays should be 1-D, and used directly.
+    // TODO (b/62904716) Bias arrays should be 1-D, and used directly. id:1237
+    // https://github.com/imdone/tensorflow/issues/1238
     Shape bias_shape_1d = bias_array.shape();
     UnextendShape(&bias_shape_1d, 1);
     CHECK(bias_array.buffer);
@@ -1244,7 +1247,8 @@ void ConvertResizeBilinearOperator(const Model& model,
 }
 
 namespace {
-// TODO(aselle): Remove when available in absl
+// TODO (aselle): Remove when available in absl id:1034
+// https://github.com/imdone/tensorflow/issues/1035
 absl::string_view FindLongestCommonPrefix(absl::string_view a,
                                           absl::string_view b) {
   if (a.empty() || b.empty()) return absl::string_view();
@@ -1326,7 +1330,8 @@ void ConvertLstmCellOperator(const Model& model, const LstmCellOperator& src_op,
   const string bias_name = WalkUpToConstantArray(
       model, src_op.inputs[LstmCellOperator::BIASES_INPUT]);
   const auto& bias_array = model.GetArray(bias_name);
-  // TODO(b/62904716) Bias arrays should be 1-D, and used directly.
+  // TODO (b/62904716) Bias arrays should be 1-D, and used directly. id:1611
+  // https://github.com/imdone/tensorflow/issues/1611
   Shape bias_shape_1d = bias_array.shape();
   UnextendShape(&bias_shape_1d, 1);
   CHECK(bias_array.buffer);

@@ -164,8 +164,10 @@ class SpecsTest(test.TestCase):
     self.assertTrue("z" in bindings)
     self.assertTrue("q" in bindings)
 
-  # XXX: the cleverness of this code is over 9000
-  # TODO: original author please fix
+  # XXX: the cleverness of this code is over 9000 id:1641
+  # https://github.com/imdone/tensorflow/issues/1641
+  # TODO: original author please fix id:1218
+  # https://github.com/imdone/tensorflow/issues/1219
   def DISABLED_testSpecsOps(self):
     # pylint: disable=undefined-variable
     with self.assertRaises(NameError):
@@ -176,8 +178,10 @@ class SpecsTest(test.TestCase):
     with self.assertRaises(NameError):
       _ = Cr
 
-  # XXX: the cleverness of this code is over 9000
-  # TODO: original author please fix
+  # XXX: the cleverness of this code is over 9000 id:1762
+  # https://github.com/imdone/tensorflow/issues/1762
+  # TODO: original author please fix id:2381
+  # https://github.com/imdone/tensorflow/issues/2380
   def DISABLED_testVar(self):
     with self.test_session() as sess:
       with specs.ops:
@@ -193,8 +197,10 @@ class SpecsTest(test.TestCase):
       self.assertEqual(outputs_value.shape, (2, 2))
       self.assertEqual(outputs_value[1, 1], 42.0)
 
-  # XXX: the cleverness of this code is over 9000
-  # TODO: original author please fix
+  # XXX: the cleverness of this code is over 9000 id:2305
+  # https://github.com/imdone/tensorflow/issues/2304
+  # TODO: original author please fix id:1643
+  # https://github.com/imdone/tensorflow/issues/1643
   def DISABLED_testShared(self):
     with self.test_session():
       with specs.ops:

@@ -38,7 +38,8 @@ def discriminator_model(inputs, _):
 
 
 def get_gan_model():
-  # TODO(joelshor): Find a better way of creating a variable scope.
+  # TODO (joelshor): Find a better way of creating a variable scope. id:731
+  # https://github.com/imdone/tensorflow/issues/732
   with variable_scope.variable_scope('generator') as gen_scope:
     pass
   with variable_scope.variable_scope('discriminator') as dis_scope:
@@ -123,7 +124,8 @@ class SummariesTest(test.TestCase):
   def test_add_regularization_loss_summaries_for_cyclegan(self):
     self._test_add_regularization_loss_summaries_impl(get_cyclegan_model, 4)
 
-  # TODO(joelshor): Add correctness test.
+  # TODO (joelshor): Add correctness test. id:1171
+  # https://github.com/imdone/tensorflow/issues/1172
   def _test_add_image_comparison_summaries_impl(self, get_model_fn,
                                                 expected_num_summary_ops):
     summaries.add_image_comparison_summaries(get_model_fn(), display_diffs=True)

@@ -155,7 +155,8 @@ StatusOr<std::unique_ptr<Literal>> ElementWiseUnaryOpImpl(
   const auto shape = instruction->shape();
   const auto* operand = instruction->operand(0);
 
-  // TODO(b/35950897, b/27796129): add DCHECK back once implicit broadcast is
+  // TODO (b/35950897, b/27796129): add DCHECK back once implicit broadcast is id:565
+  // https://github.com/imdone/tensorflow/issues/566
   // removed.
   if (!ShapeUtil::SameDimensions(shape, operand->shape())) {
     return Unimplemented(
@@ -259,7 +260,8 @@ class HloEvaluator::TypedVisitor : public DfsHloVisitorWithDefault {
                          HloOpcodeString(hlo_instruction->opcode()).c_str());
   }
 
-  // TODO(b/35950897): many of the stl functions used in the handlers are not
+  // TODO (b/35950897): many of the stl functions used in the handlers are not id:393
+  // https://github.com/imdone/tensorflow/issues/394
   // overloaded for every XLA primitive types.
 
   template <typename NativeT,
@@ -2122,7 +2124,8 @@ class HloEvaluator::TypedVisitor : public DfsHloVisitorWithDefault {
     const auto* lhs = instruction->operand(0);
     const auto* rhs = instruction->operand(1);
 
-    // TODO(b/35950897, b/27796129): add DCHECK back once implicit broadcast
+    // TODO (b/35950897, b/27796129): add DCHECK back once implicit broadcast id:387
+    // https://github.com/imdone/tensorflow/issues/386
     // is removed.
     if (!(ShapeUtil::SameDimensions(shape, rhs->shape()) &&
           ShapeUtil::SameDimensions(lhs->shape(), rhs->shape()))) {
@@ -2157,7 +2160,8 @@ class HloEvaluator::TypedVisitor : public DfsHloVisitorWithDefault {
     const auto* rhs = instruction->operand(1);
     const auto* ehs = instruction->operand(2);
 
-    // TODO(b/35950897, b/27796129): add DCHECK back once implicit
+    // TODO (b/35950897, b/27796129): add DCHECK back once implicit id:792
+    // https://github.com/imdone/tensorflow/issues/793
     // broadcast is removed.
     if (!(ShapeUtil::SameDimensions(shape, lhs->shape()) &&
           ShapeUtil::SameDimensions(lhs->shape(), rhs->shape()) &&
@@ -2476,7 +2480,8 @@ Status HloEvaluator::HandleCompare(HloInstruction* compare) {
   HloOpcode opcode = compare->opcode();
   auto lhs = compare->operand(0);
   auto rhs = compare->operand(1);
-  // TODO(b/35950897, b/27796129): add DCHECK back once implicit broadcast is
+  // TODO (b/35950897, b/27796129): add DCHECK back once implicit broadcast is id:466
+  // https://github.com/imdone/tensorflow/issues/467
   // removed.
   if (!(ShapeUtil::SameDimensions(compare->shape(), rhs->shape()) &&
         ShapeUtil::SameDimensions(lhs->shape(), rhs->shape()))) {
@@ -2886,7 +2891,8 @@ Status HloEvaluator::HandleGather(HloInstruction* gather) {
       DCHECK_LT(output_index[i], shape.dimensions(i));
     }
     for (int i = 0, e = input_index.size(); i < e; i++) {
-      // TODO(b/74360564): We should implement whatever out of bounds behavior
+      // TODO (b/74360564): We should implement whatever out of bounds behavior id:568
+      // https://github.com/imdone/tensorflow/issues/569
       // we decide for dynamic-slice here as well.
       input_index[i] = (input_gather_index[i] + input_window_index[i]) %
                        operand_shape.dimensions(i);

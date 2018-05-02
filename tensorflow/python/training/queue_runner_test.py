@@ -190,7 +190,8 @@ class QueueRunnerTest(test.TestCase):
         variables.global_variables_initializer().run()
         coord = coordinator.Coordinator()
         qr = queue_runner_impl.QueueRunner(queue, [count_up_to])
-        # NOTE that this test does not actually start the threads.
+        # NOTE that this test does not actually start the threads. id:4018
+        # https://github.com/imdone/tensorflow/issues/4016
         threads = qr.create_threads(sess, coord=coord)
         other_threads = qr.create_threads(other_sess, coord=coord)
         self.assertEqual(len(threads), len(other_threads))
@@ -206,7 +207,8 @@ class QueueRunnerTest(test.TestCase):
       coord = coordinator.Coordinator()
       qr = queue_runner_impl.QueueRunner(queue, [count_up_to])
       threads = []
-      # NOTE that this test does not actually start the threads.
+      # NOTE that this test does not actually start the threads. id:3703
+      # https://github.com/imdone/tensorflow/issues/3702
       threads.extend(qr.create_threads(sess, coord=coord))
       new_threads = qr.create_threads(sess, coord=coord)
       self.assertEqual([], new_threads)

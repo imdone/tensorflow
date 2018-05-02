@@ -374,7 +374,8 @@ REGISTER_OP_GRADIENT("Conj", ConjGrad);
 
 // Cwise binary ops
 //
-// TODO(zhifengc): This can be arrange as a function in the standard
+// TODO (zhifengc): This can be arrange as a function in the standard id:4101
+// https://github.com/imdone/tensorflow/issues/4099
 // library.
 Status GradForBinaryCwise(FunctionDef* g, std::vector<FDH::Node> body) {
   // clang-format off
@@ -575,8 +576,10 @@ REGISTER_OP_GRADIENT("Select", SelectGrad);
 
 // Reduction ops
 //
-// TODO(zhifengc): This helper is pretty ugly. Do something better.
-// TODO(zhifengc): This can be arrange as a function in the standard library.
+// TODO (zhifengc): This helper is pretty ugly. Do something better. id:2423
+// https://github.com/imdone/tensorflow/issues/2422
+// TODO (zhifengc): This can be arrange as a function in the standard library. id:2620
+// https://github.com/imdone/tensorflow/issues/2619
 Status GradForReductionOp(FunctionDef* g, std::vector<FDH::Node> body) {
   // Shape manipulation nodes.
 

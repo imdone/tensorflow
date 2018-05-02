@@ -20,7 +20,8 @@ limitations under the License.
 namespace tensorflow {
 
 bool GpuOpFilter(KernelDef* kdef) {
-  // TODO(b/31361304): The GPU backend does not parallelize PRNG ops, leading to
+  // TODO (b/31361304): The GPU backend does not parallelize PRNG ops, leading to id:215
+  // https://github.com/imdone/tensorflow/issues/216
   // slow code.
   if (kdef->op() == "RandomStandardNormal" || kdef->op() == "RandomUniform" ||
       kdef->op() == "RandomUniformInt" || kdef->op() == "TruncatedNormal") {

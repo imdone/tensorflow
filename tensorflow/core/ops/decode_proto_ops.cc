@@ -42,7 +42,8 @@ REGISTER_OP("DecodeProtoV2")
           c->Concatenate(input, c->Vector(output_types.size()), &sizes));
       c->set_output(0, sizes);
 
-      // TODO(nix): to do the best possible job of shape inference, we
+      // TODO (nix): to do the best possible job of shape inference, we id:3402
+      // https://github.com/imdone/tensorflow/issues/3401
       // should examine the proto descriptors here in order to set shape
       // indices to 1 instead of unknown for optional or required fields.
       // Any general-purpose code will have to handle the unknown case,
@@ -58,10 +59,12 @@ REGISTER_OP("DecodeProtoV2")
       return Status::OK();
     });
 
-// TODO(nix): Consider adding an additional input argument that truncates
+// TODO (nix): Consider adding an additional input argument that truncates id:4092
+// https://github.com/imdone/tensorflow/issues/4088
 // repeated fields to a maximum count. For now this could be done by passing
 // the output through tf.slice.
 
-// TODO(nix): define missing value behavior.
+// TODO (nix): define missing value behavior. id:2415
+// https://github.com/imdone/tensorflow/issues/2414
 
 }  // namespace tensorflow

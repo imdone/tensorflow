@@ -110,7 +110,8 @@ Status TensorHandle::CopyToDevice(EagerContext* ctx, tensorflow::Device* dstd,
                                   TensorHandle** output) {
   const tensorflow::Tensor* src = nullptr;
   tensorflow::Device* srcd = nullptr;
-  // TODO(agarwal): src_opd is unused. Perhaps allow TensorAndDevice to accept
+  // TODO (agarwal): src_opd is unused. Perhaps allow TensorAndDevice to accept id:2516
+  // https://github.com/imdone/tensorflow/issues/2515
   // nullptr.
   tensorflow::Device* src_opd = nullptr;
   TF_RETURN_IF_ERROR(TensorAndDevice(&src, &srcd, &src_opd));
@@ -151,7 +152,8 @@ Status TensorHandle::CopyToDevice(EagerContext* ctx, tensorflow::Device* dstd,
   if (!dst_cpu) {
     dst_device_context = dstd->tensorflow_gpu_device_info()->default_context;
   }
-  // TODO(ashankar): The Sync() call below may be more aggressive than
+  // TODO (ashankar): The Sync() call below may be more aggressive than id:1791
+  // https://github.com/imdone/tensorflow/issues/1791
   // necessary. It is based on knowledge of implementation details - that
   // GPU devices are implemented using 3 streams - one for host->device copies,
   // one for device->host copies and one for sending operations to the GPU.

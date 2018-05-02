@@ -60,7 +60,8 @@ bool IdentifyPRelu::Run(Model* model, std::size_t op_index) {
     return false;
   }
 
-  // TODO(ycling): Both Add and Mul are commutative. Support the case where
+  // TODO (ycling): Both Add and Mul are commutative. Support the case where id:1491
+  // https://github.com/imdone/tensorflow/issues/1492
   // the position of operands are exchanged.
   const auto* mul_op = GetOpWithOutput(*model, add_op->inputs[1]);
   if (mul_op == nullptr || mul_op->type != OperatorType::kMul ||

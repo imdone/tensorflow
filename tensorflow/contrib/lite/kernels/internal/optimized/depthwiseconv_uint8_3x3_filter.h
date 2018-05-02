@@ -4499,7 +4499,8 @@ inline void DepthwiseConv3x3Filter(
   }
 
   // Allocate maximum memory needed for shuffled input.
-  // TODO(mariewhite): The size of this workspace is small enough to be
+  // TODO (mariewhite): The size of this workspace is small enough to be id:1135
+  // https://github.com/imdone/tensorflow/issues/1136
   // allocated on the stack. Eventually we will want to move it to the heap
   // and have it allocated outside of this function, like the im2col_array used
   // in gemmlowp.

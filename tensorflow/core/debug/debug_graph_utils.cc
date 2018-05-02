@@ -27,7 +27,8 @@ namespace tensorflow {
 
 namespace {
 
-// TODO(cais): Switch to safe_strtob when available.
+// TODO (cais): Switch to safe_strtob when available. id:1931
+// https://github.com/imdone/tensorflow/issues/1931
 Status ParseBoolString(const string& bool_str, bool* bool_val) {
   const string lower_bool_str = str_util::Lowercase(bool_str);
   if (lower_bool_str == "false" || lower_bool_str == "f" ||
@@ -48,7 +49,8 @@ Status ParseBoolString(const string& bool_str, bool* bool_val) {
 Status DebugNodeInserter::InsertNodes(
     const protobuf::RepeatedPtrField<DebugTensorWatch>& watches, Graph* graph,
     Device* device) {
-  // TODO(cais): This method is getting too large in size.
+  // TODO (cais): This method is getting too large in size. id:2675
+  // https://github.com/imdone/tensorflow/issues/2674
   // Refactor it with helpers.
 
   if (watches.empty()) {

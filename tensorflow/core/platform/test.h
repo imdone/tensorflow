@@ -49,7 +49,8 @@ string TensorFlowSrcRoot();
 int RandomSeed();
 
 // Returns an unused port number, for use in multi-process testing.
-// NOTE: This function is not thread-safe.
+// NOTE: This function is not thread-safe. id:3452
+// https://github.com/imdone/tensorflow/issues/3451
 int PickUnusedPortOrDie();
 
 }  // namespace testing

@@ -43,10 +43,12 @@ struct OpTapeEntry {
   std::vector<TapeTensor> output_tensor_info;
   std::vector<int64> input_tensor_id;
 
-  // TODO(apassos) consider narrowing down this interface.
+  // TODO (apassos) consider narrowing down this interface. id:44
+  // https://github.com/imdone/tensorflow/issues/45
   BackwardFunction* backward_function;
 
-  // Should be called before deleting the backward function. TODO(apassos) use
+  // Should be called before deleting the backward function. TODO (apassos) use id:46
+  // https://github.com/imdone/tensorflow/issues/47
   // unique_ptrs to ensure this happens.
   std::function<void()> backward_function_deleter;
 };
@@ -76,7 +78,8 @@ using OpTape = gtl::FlatMap<int64, OpTapeEntry<BackwardFunction>>;
 // (also known as adjoint function) to compute, given downstream gradients,
 // upstream gradients.
 //
-// TODO(apassos) provide concrete template instantiations for TFE_TensorHandle
+// TODO (apassos) provide concrete template instantiations for TFE_TensorHandle id:49
+// https://github.com/imdone/tensorflow/issues/50
 // specialization, which is blocked by quite a few things needing to loop back
 // into python now.
 template <typename Gradient, typename BackwardFunction>
@@ -386,7 +389,8 @@ Status InitialGradients(const VSpace<Gradient, BackwardFunction>& vspace,
     const int64 id = target_tensor_ids[i];
     if (tensor_usage_counts.find(id) != tensor_usage_counts.end()) {
       if (!output_gradients.empty() && output_gradients[i] != nullptr) {
-        // TODO(apassos) figure out how to print debugging information here.
+        // TODO (apassos) figure out how to print debugging information here. id:53
+        // https://github.com/imdone/tensorflow/issues/54
         return errors::InvalidArgument(
             "A gradient was provided for a tensor which is used as part of the "
             "computation.");
@@ -466,7 +470,8 @@ Status GradientTape<Gradient, BackwardFunction>::ComputeGradient(
     return s;
   }
   gtl::FlatMap<int64, int64> gradients_size;
-  // TODO(apassos) multiple threads could be dequeuing from op_stack at the same
+  // TODO (apassos) multiple threads could be dequeuing from op_stack at the same id:100
+  // https://github.com/imdone/tensorflow/issues/101
   // time, for better CPU backprop performance.
   VLOG(1) << "Initial stack:";
   if (VLOG_IS_ON(1)) {

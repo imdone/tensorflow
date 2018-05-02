@@ -138,7 +138,8 @@ TfLiteStatus ArenaPlanner::ExecuteAllocations(int first_node, int last_node) {
   TF_LITE_ENSURE_STATUS(Commit());
 
   for (int i = 0; i < graph_info_->num_tensors(); ++i) {
-    // TODO(ahentz): we could do this only for the tensors that were modified
+    // TODO (ahentz): we could do this only for the tensors that were modified id:897
+    // https://github.com/imdone/tensorflow/issues/898
     // in CalculateAllocations(), instead of redoing it for tensors that
     // already had proper pointers. However we must be very careful, because
     // SimpleMemoryArena::Commit() could move the base pointer.

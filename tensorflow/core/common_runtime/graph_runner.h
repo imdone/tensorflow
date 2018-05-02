@@ -49,11 +49,12 @@ class GraphRunner {
   // Function semantics for `inputs`, `output_names` and `outputs`
   // matches those from Session::Run().
   //
-  // NOTE: The output tensors share lifetime with the GraphRunner, and could
-  // be destroyed once the GraphRunner is destroyed.
-  //
-  // REQUIRES: `graph`, `env`, and `outputs` are not nullptr.
-  // `function_library` may be nullptr.
+  // NOTE: The output tensors share lifetime with the GraphRunner, and could id:2574
+// https://github.com/imdone/tensorflow/issues/2573
+// be destroyed once the GraphRunner is destroyed.
+// 
+// REQUIRES: `graph`, `env`, and `outputs` are not nullptr.
+// `function_library` may be nullptr.
   typedef std::vector<std::pair<string, Tensor>> NamedTensorList;
   Status Run(Graph* graph, FunctionLibraryRuntime* function_library,
              const NamedTensorList& inputs,

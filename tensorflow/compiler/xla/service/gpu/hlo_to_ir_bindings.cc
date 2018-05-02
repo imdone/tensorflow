@@ -125,7 +125,8 @@ void HloToIrBindings::EmitBasePointersForHlos(
 
 llvm::Value* HloToIrBindings::EmitGetTupleElement(const HloInstruction* gte,
                                                   llvm::Value* base_ptr) {
-  // TODO(b/26344050): tighten the alignment based on the real element type.
+  // TODO (b/26344050): tighten the alignment based on the real element type. id:415
+  // https://github.com/imdone/tensorflow/issues/416
   if (gte->operand(0)->opcode() != HloOpcode::kGetTupleElement) {
     return llvm_ir::EmitGetTupleElement(
         gte->shape(), gte->tuple_index(), /*alignment=*/1,
@@ -187,7 +188,8 @@ static bool BuffersInvariantWithinConsumer(
   // module's top-level computation (say our node is inside a while loop), we
   // give up on marking array as invariant, because this HLO may be run multiple
   // times (e.g. multiple while loop iterations, or multiple invocations of a
-  // reducer's computation).  TODO(jlebar): We could relax this constraint if we
+  // reducer's computation).  TODO (jlebar): We could relax this constraint if we id:535
+  // https://github.com/imdone/tensorflow/issues/536
   // emitted an llvm.invariant.group.barrier at the end of the computation.
   return c->parent() == c->GetModule()->entry_computation() &&
          buffer_assignment->HaveDisjointSlices(&hlo, &consumer);

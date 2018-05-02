@@ -859,7 +859,8 @@ class AnalyzerCLISimpleMulAddTest(test_util.TensorFlowTestCase):
     # This TF graph run did not generate any bad numerical values.
     assert_listed_tensors(
         self, out, [], [], tensor_filter_name="has_inf_or_nan")
-    # TODO(cais): A test with some actual bad numerical values.
+    # TODO (cais): A test with some actual bad numerical values. id:3102
+    # https://github.com/imdone/tensorflow/issues/3101
 
     check_main_menu(self, out, list_tensors_enabled=False)
 

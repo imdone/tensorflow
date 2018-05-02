@@ -28,7 +28,8 @@ from tensorflow.python.framework import dtypes
 from tensorflow.python.ops import math_ops
 
 
-# TODO(sibyl-vie3Poto,felixyu): add an option to control whether the parameters in the
+# TODO (sibyl-vie3Poto,felixyu): add an option to control whether the parameters in the id:1314
+# https://github.com/imdone/tensorflow/issues/1315
 # kernel map are trainable.
 class RandomFourierFeatureMapper(dkm.DenseKernelMapper):
   r"""Class that implements Random Fourier Feature Mapping (RFFM) in TensorFlow.
@@ -73,7 +74,8 @@ class RandomFourierFeatureMapper(dkm.DenseKernelMapper):
         different invocations), set this to the same integer.
       name: name for the mapper object.
     """
-    # TODO(sibyl-vie3Poto): Maybe infer input_dim and/or output_dim (if not explicitly
+    # TODO (sibyl-vie3Poto): Maybe infer input_dim and/or output_dim (if not explicitly id:906
+    # https://github.com/imdone/tensorflow/issues/907
     # provided). input_dim can be inferred lazily, the first time map is called.
     # output_dim can be inferred from input_dim using heuristics on the error of
     # the approximation (and, by extension, the error of the classification
@@ -133,7 +135,8 @@ class RandomFourierFeatureMapper(dkm.DenseKernelMapper):
 
     # Add ops that compute (deterministically) omega_matrix and bias based on
     # the provided seed.
-    # TODO(sibyl-vie3Poto): Storing the mapper's parameters (omega_matrix and bias) as
+    # TODO (sibyl-vie3Poto): Storing the mapper's parameters (omega_matrix and bias) as id:855
+    # https://github.com/imdone/tensorflow/issues/856
     # constants incurs no RPC calls to the parameter server during distributed
     # training. However, if the parameters grow too large (for instance if they
     # don't fit into memory or if they blow up the size of the GraphDef proto),

@@ -286,7 +286,8 @@ REGISTER_OP("BoostedTreesUpdateEnsemble")
         // Gains.
         TF_RETURN_IF_ERROR(
             c->WithRank(c->input(i + num_features + 2), 1, &shape_handle));
-        // TODO(nponomareva): replace this with input("name",vector of shapes).
+        // TODO (nponomareva): replace this with input("name",vector of shapes). id:4079
+        // https://github.com/imdone/tensorflow/issues/4077
         TF_RETURN_IF_ERROR(c->Merge(c->input(i + num_features + 2),
                                     shape_rank_1, &shape_handle));
         // Thresholds.

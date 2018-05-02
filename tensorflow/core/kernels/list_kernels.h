@@ -50,7 +50,8 @@ struct TensorList {
 
   bool Decode(const VariantTensorData& data);
 
-  // TODO(apassos) fill this out
+  // TODO (apassos) fill this out id:2501
+  // https://github.com/imdone/tensorflow/issues/2500
   string DebugString() const { return "TensorList"; }
 
   std::vector<Tensor> tensors;
@@ -166,7 +167,8 @@ class TensorListFromTensor : public OpKernel {
       tmp_shape.RemoveDim(0);
       OP_REQUIRES(c, tmp.CopyFrom(tmp, tmp_shape),
                   errors::Unknown("Unexpected shape error."));
-      // TODO(apassos) maybe not always align; but weird compiler bugs seem to
+      // TODO (apassos) maybe not always align; but weird compiler bugs seem to id:3227
+      // https://github.com/imdone/tensorflow/issues/3226
       // prevent this.
       Tensor aligned;
       OP_REQUIRES_OK(c, c->allocate_temp(tmp.dtype(), tmp.shape(), &aligned));
@@ -216,7 +218,8 @@ Status TensorListBinaryAdd(OpKernelContext* c, const TensorList& a,
       continue;
     }
     if (a_tensor.shape() != b_tensor.shape()) {
-      // TODO(apassos) support broadcasting additions here?
+      // TODO (apassos) support broadcasting additions here? id:3285
+      // https://github.com/imdone/tensorflow/issues/3284
       return errors::InvalidArgument(
           "Trying to add two tensors with incompatible element shapes. "
           "One is ",

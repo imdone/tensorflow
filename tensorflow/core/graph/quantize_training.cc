@@ -36,7 +36,8 @@ limitations under the License.
 namespace tensorflow {
 namespace {
 
-// TODO(suharshs): If desired, make these values configurable.
+// TODO (suharshs): If desired, make these values configurable. id:2817
+// https://github.com/imdone/tensorflow/issues/2816
 const uint32 kAllowedInputs = 2;
 const float kEMADecay = 0.999;
 
@@ -66,7 +67,8 @@ struct EdgeToConvert {
 
 // Decide if a node is in backward pass by checking if its name is led by
 // "gradients".
-// TODO(jmchen): Make this check more robust as it is not guaranteed that the
+// TODO (jmchen): Make this check more robust as it is not guaranteed that the id:1999
+// https://github.com/imdone/tensorflow/issues/1999
 // forward node will not be named with a leading "gradients".
 inline bool IsGradientNode(const Graph* graph, const Node* node) {
   static const string tag = "gradients";
@@ -87,7 +89,8 @@ bool FindType(const Graph* graph, const Node* node, bool* signed_input,
     *signed_input = false;
     *range_given = false;
   } else if (src_op == "Relu6") {
-    // TODO(suharshs): Also the theoretical min and max is 0 and 6, if the
+    // TODO (suharshs): Also the theoretical min and max is 0 and 6, if the id:1657
+    // https://github.com/imdone/tensorflow/issues/1657
     // actual activations are somewhere in within this range, we can quantize
     // this even further. This is true for other activations like Sigmoid6 too.
     *signed_input = false;
@@ -126,7 +129,8 @@ bool FindType(const Graph* graph, const Node* node, bool* signed_input,
     }
   } else {
     // Unknown type, could be the model input examples.
-    // TODO(jmchen): Set the params for input with user's hint.
+    // TODO (jmchen): Set the params for input with user's hint. id:2273
+    // https://github.com/imdone/tensorflow/issues/2272
     *signed_input = true;
     *range_given = false;
     return false;
@@ -261,7 +265,8 @@ Status AddRestoreVariableSubgraphs(Graph* graph, Node* save_op,
   for (Node* var : variables) {
     // Add an extra prefix after calling graph->NewName because the "unique"
     // name may conflict with names generated for Send nodes.
-    // TODO(b/77547936): fix this more generally and get rid of the extra prefix
+    // TODO (b/77547936): fix this more generally and get rid of the extra prefix id:3028
+    // https://github.com/imdone/tensorflow/issues/3027
     // here.
     string new_restore_op_name =
         strings::StrCat(graph->NewName(restore_op_name), "_qt");
@@ -421,7 +426,8 @@ Status MakeInitializedEMAVariable(Graph* graph, const string& name, Node* decay,
                                   Node* init_val,
                                   std::vector<Node*>* added_variables,
                                   Node** var) {
-  // TODO(suharshs): Update this to use ResourceVariables when they are ready.
+  // TODO (suharshs): Update this to use ResourceVariables when they are ready. id:2819
+  // https://github.com/imdone/tensorflow/issues/2818
   TF_RETURN_IF_ERROR(
       NodeBuilder(strings::StrCat(name, "/Variable"), "VariableV2")
           .Attr("shape", TensorShape())
@@ -463,7 +469,8 @@ Status MakeInitializedEMAVariable(Graph* graph, const string& name, Node* decay,
 Status MakeEMAMinMaxVars(Graph* graph, const string& name_prefix, Node* input,
                          std::vector<Node*>* added_variables, Node** min_var,
                          Node** max_var) {
-  // TODO(suharshs): The decay will be constant, so we could make only one for
+  // TODO (suharshs): The decay will be constant, so we could make only one for id:2001
+  // https://github.com/imdone/tensorflow/issues/2001
   // all quantize_and_dequantize ops to share, this would have to live outside
   // this function.
   Tensor decay_tensor(DT_FLOAT, TensorShape());

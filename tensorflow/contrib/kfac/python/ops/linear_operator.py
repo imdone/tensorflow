@@ -64,7 +64,8 @@ class LinearOperatorExtras(object):  # pylint: disable=missing-docstring
 class LinearOperatorFullMatrix(LinearOperatorExtras,
                                linalg.LinearOperatorFullMatrix):
 
-  # TODO(b/78117889) Remove this definition once core LinearOperator
+  # TODO (b/78117889) Remove this definition once core LinearOperator id:1308
+  # https://github.com/imdone/tensorflow/issues/1309
   # has _matmul_right.
   def _matmul_right(self, x, adjoint=False, adjoint_arg=False):
     return lou.matmul_with_broadcast(

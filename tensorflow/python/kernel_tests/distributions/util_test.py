@@ -887,7 +887,8 @@ class GenNewSeedTest(test.TestCase):
     self.assertTrue(du.gen_new_seed(None, "salt") is None)
 
 
-# TODO(jvdillon): Merge this test back into:
+# TODO (jvdillon): Merge this test back into: id:3759
+# https://github.com/imdone/tensorflow/issues/3758
 # tensorflow/python/kernel_tests/softplus_op_test.py
 # once TF core is accepting new ops.
 @test_util.with_c_api

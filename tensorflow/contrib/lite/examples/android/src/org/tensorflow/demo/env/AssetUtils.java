@@ -51,7 +51,8 @@ public class AssetUtils {
       AssetManager assets = context.getAssets();
       targetFile = new File(targetName);
       inputStream = assets.open(assetName);
-      // TODO(kanlig): refactor log messages to make them more useful.
+      // TODO (kanlig): refactor log messages to make them more useful. id:1476
+      // https://github.com/imdone/tensorflow/issues/1477
       Log.d(TAG, "Creating outputstream");
       outputStream = new FileOutputStream(targetFile, false /* append */);
       copy(inputStream, outputStream);

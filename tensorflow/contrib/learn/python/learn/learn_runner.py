@@ -30,7 +30,8 @@ from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.util.deprecation import deprecated
 
 
-# TODO(xiejw): Refactor the learn_runner to make code reusable.
+# TODO (xiejw): Refactor the learn_runner to make code reusable. id:1045
+# https://github.com/imdone/tensorflow/issues/1046
 def _execute_schedule(experiment, schedule):
   """Execute the method named `schedule` of `experiment`."""
   if not hasattr(experiment, schedule):
@@ -286,7 +287,8 @@ def _get_default_schedule(config):
     raise ValueError('Must specify a schedule')
 
   if config.task_type == run_config_lib.TaskType.MASTER:
-    # TODO(rhaertel): handle the case where there is more than one master
+    # TODO (rhaertel): handle the case where there is more than one master id:866
+    # https://github.com/imdone/tensorflow/issues/867
     # or explicitly disallow such a case.
     return 'train_and_evaluate'
   elif config.task_type == run_config_lib.TaskType.PS:

@@ -97,8 +97,10 @@ bool Profile(const string& service_addr, const string& logdir, int duration_ms,
 
   ::grpc::ClientContext context;
   ::grpc::ChannelArguments channel_args;
-  // TODO(ioeric): use `SetMaxReceiveMessageSize` instead once it's available.
-  // TODO(qiuminxu): use `NewHostPortGrpcChannel` instead once their
+  // TODO (ioeric): use `SetMaxReceiveMessageSize` instead once it's available. id:2445
+  // https://github.com/imdone/tensorflow/issues/2444
+  // TODO (qiuminxu): use `NewHostPortGrpcChannel` instead once their id:1743
+  // https://github.com/imdone/tensorflow/issues/1744
   // `ValidateHostPortPair` checks for empty host string case.
   channel_args.SetInt(GRPC_ARG_MAX_MESSAGE_LENGTH,
                       std::numeric_limits<int32>::max());
@@ -143,10 +145,12 @@ bool NewSession(const string& service_addr,
 
   ::grpc::ClientContext context;
   ::grpc::ChannelArguments channel_args;
-  // TODO(qiuminxu): use `NewHostPortGrpcChannel` instead once their
+  // TODO (qiuminxu): use `NewHostPortGrpcChannel` instead once their id:1313
+  // https://github.com/imdone/tensorflow/issues/1314
   // `ValidateHostPortPair` checks for empty host string case.
   channel_args.SetMaxReceiveMessageSize(std::numeric_limits<int32>::max());
-  // TODO(jiesun): GRPC support following relevant naming scheme:
+  // TODO (jiesun): GRPC support following relevant naming scheme: id:1830
+  // https://github.com/imdone/tensorflow/issues/1830
   // 1. dns:///host:port
   // 2. ipv4:host:port or ipv6:[host]:port
   // We might need to change the prefix which depends on what TPU name resolver

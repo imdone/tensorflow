@@ -29,8 +29,9 @@ from tensorflow.python.ops import gen_dataset_ops
 from tensorflow.python.util.tf_export import tf_export
 
 
-# TODO(b/64974358): Increase default buffer size to 256 MB.
-_DEFAULT_READER_BUFFER_SIZE_BYTES = 256 * 1024  # 256 KB
+# TODO (b/64974358): Increase default buffer size to 256 MB. id:3568
+# https://github.com/imdone/tensorflow/issues/3567
+# _DEFAULT_READER_BUFFER_SIZE_BYTES = 256 * 1024  # 256 KB
 
 
 @tf_export("data.TextLineDataset")

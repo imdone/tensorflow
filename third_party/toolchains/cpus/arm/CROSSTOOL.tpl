@@ -435,9 +435,9 @@ toolchain {
   # All warnings are enabled. Maybe enable -Werror as well?
   compiler_flag: "-Wall"
   # Enable a few more warnings that aren't part of -Wall.
-  #compiler_flag: "-Wunused-but-set-parameter"
+  #compiler_flag: "-Wunused-but-set-parameter" id:4126
   # But disable some that are problematic.
-  #compiler_flag: "-Wno-free-nonheap-object" # has false positives
+  #compiler_flag: "-Wno-free-nonheap-object" # has false positives id:4367
 
   # Keep stack frames for debugging, even in opt mode.
   compiler_flag: "-fno-omit-frame-pointer"
@@ -445,9 +445,9 @@ toolchain {
   # Anticipated future default.
   linker_flag: "-no-canonical-prefixes"
   # Have gcc return the exit code from ld.
-  #linker_flag: "-pass-exit-codes"
+  #linker_flag: "-pass-exit-codes" id:4129
   # Stamp the binary with a unique identifier.
-  #linker_flag: "-Wl,--build-id=md5"
+  #linker_flag: "-Wl,--build-id=md5" id:4039
   linker_flag: "-Wl,--hash-style=gnu"
   # Gold linker only? Can we enable this by default?
   # linker_flag: "-Wl,--warn-execstack"

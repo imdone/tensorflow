@@ -452,7 +452,8 @@ class ClusterSpec(object):
     """
     self._cluster_def = cluster_pb2.ClusterDef()
 
-    # NOTE(mrry): Sort by job_name to produce deterministic protobufs.
+    # NOTE (mrry): Sort by job_name to produce deterministic protobufs. id:3710
+    # https://github.com/imdone/tensorflow/issues/3709
     for job_name, tasks in sorted(self._cluster_spec.items()):
       try:
         job_name = compat.as_bytes(job_name)

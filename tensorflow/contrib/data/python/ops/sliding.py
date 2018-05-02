@@ -74,7 +74,8 @@ def sliding_window_batch(window_size, stride=1):
   drop the final smaller element. For example:
 
   ```python
-  # NOTE: The following examples use `{ ... }` to represent the
+  # NOTE: The following examples use `{ ... }` to represent the id:603
+  # https://github.com/imdone/tensorflow/issues/604
   # contents of a dataset.
   a = { [1], [2], [3], [4], [5], [6] }
 

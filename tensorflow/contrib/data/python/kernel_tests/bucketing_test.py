@@ -207,13 +207,15 @@ class GroupByWindowSerializationTest(
         verify_exhausted=False)
 
 
-# NOTE(mrry): These tests are based on the tests in bucket_ops_test.py.
+# NOTE (mrry): These tests are based on the tests in bucket_ops_test.py. id:749
+# https://github.com/imdone/tensorflow/issues/750
 # Currently, they use a constant batch size, though should be made to use a
 # different batch size per key.
 class BucketTest(test.TestCase):
 
   def _dynamicPad(self, bucket, window, window_size):
-    # TODO(mrry): To match `tf.contrib.training.bucket()`, implement a
+    # TODO (mrry): To match `tf.contrib.training.bucket()`, implement a id:621
+    # https://github.com/imdone/tensorflow/issues/622
     # generic form of padded_batch that pads every component
     # dynamically and does not rely on static shape information about
     # the arguments.

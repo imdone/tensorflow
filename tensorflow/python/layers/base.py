@@ -132,7 +132,8 @@ class Layer(base_layer.Layer):
   def add_loss(self, losses, inputs=None):
     previous_losses_length = len(self._losses)
     super(Layer, self).add_loss(losses, inputs=inputs)
-    # TODO(fchollet): deprecate collection below.
+    # TODO (fchollet): deprecate collection below. id:3819
+    # https://github.com/imdone/tensorflow/issues/3818
     new_losses = self._losses[previous_losses_length:]
     _add_elements_to_collection(new_losses, ops.GraphKeys.REGULARIZATION_LOSSES)
 

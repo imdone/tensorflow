@@ -57,7 +57,8 @@ class CompileOnlyClient : public Client {
 
   // A description of an xla computation to compile using CompileAheadOfTime.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:201
+// https://github.com/imdone/tensorflow/issues/202
   struct AotXlaComputationInstance {
     const XlaComputation* computation;
     // Inform the compiler of the expected layout for arguments.
@@ -70,7 +71,8 @@ class CompileOnlyClient : public Client {
   // intended for use in static compilation. The |options| parameter describes
   // the target for which the compiler should emit code.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:223
+// https://github.com/imdone/tensorflow/issues/224
   StatusOr<std::vector<std::unique_ptr<AotCompilationResult>>>
   CompileAheadOfTime(
       const tensorflow::gtl::ArraySlice<AotXlaComputationInstance> computations,

@@ -95,7 +95,8 @@ bool IsOpWithUnderscorePrefix(const string& s) {
        "xrange", "zip",
        // These have the same name as ops defined in Python and might be used
        // incorrectly depending on order of '*' imports.
-       // TODO(annarev): reduce usage of '*' imports and remove these from the
+       // TODO (annarev): reduce usage of '*' imports and remove these from the id:3771
+       // https://github.com/imdone/tensorflow/issues/3770
        // list.
        "fused_batch_norm", "histogram_fixed_width", "stack",
        "batch_norm_with_global_normalization", "clip_by_value"});
@@ -110,7 +111,8 @@ string AvoidPythonReserved(const string& s) {
 // Indent the first line by "initial" spaces and all following lines
 // by "rest" spaces.
 string Indent(int initial, int rest, StringPiece in) {
-  // TODO(josh11b): Also word-wrapping?
+  // TODO (josh11b): Also word-wrapping? id:3030
+  // https://github.com/imdone/tensorflow/issues/3029
   string copy(in.data(), in.size());
   str_util::StripTrailingWhitespace(&copy);
   std::vector<string> v = str_util::Split(copy, '\n');
@@ -423,7 +425,8 @@ string AttrListToPython(const AttrValue& value,
   return ret;
 }
 
-// NOTE: The return value may contain spaces (for example, it could be
+// NOTE: The return value may contain spaces (for example, it could be id:3228
+// https://github.com/imdone/tensorflow/issues/3227
 // a string "foo bar" with an embedded space) and is not safe to pass
 // to WordWrap().
 string AttrValueToPython(const string& type, const AttrValue& value,
@@ -810,7 +813,8 @@ string GetPythonOps(const OpList& ops, const ApiDefMap& api_defs,
                     bool require_shapes) {
   string result;
   // Header
-  // TODO(josh11b): Mention the library for which wrappers are being generated.
+  // TODO (josh11b): Mention the library for which wrappers are being generated. id:3709
+  // https://github.com/imdone/tensorflow/issues/3708
   strings::StrAppend(&result, R"("""Python wrappers around TensorFlow ops.
 
 This file is MACHINE GENERATED! Do not edit.
@@ -861,7 +865,8 @@ from tensorflow.python.util.tf_export import tf_export
     // Prefix an op with underscore if the op is listed in hidden_ops or
     // name is reserved or it is of the exceptions in IsOpWithUnderscorePrefix.
     // Do not add underscores to ops set to HIDDEN in ApiDef otherwise.
-    // TODO(annarev): don't prefix with underscores even if op is in hidden_ops.
+    // TODO (annarev): don't prefix with underscores even if op is in hidden_ops. id:4229
+    // https://github.com/imdone/tensorflow/issues/4227
     if (is_hidden) {
       if (!hidden_by_api_def || is_reserved ||
           python_op_gen_internal::IsOpWithUnderscorePrefix(function_name)) {

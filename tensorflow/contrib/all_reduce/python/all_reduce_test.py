@@ -179,7 +179,8 @@ class AllReduceTest(test_util.TensorFlowTestCase):
     self._testRingAllReduce(2, 8, [7, 13], 1)
     self._testRingAllReduce(2, 8, [8, 8], 2)
     self._testRingAllReduce(2, 8, [8, 8], 4)
-    # TODO(tucker): The following test is surprisingly slow.
+    # TODO (tucker): The following test is surprisingly slow. id:638
+    # https://github.com/imdone/tensorflow/issues/639
     # Diagnose and fix before re-enabling.
     # self._testRingAllReduce(4, 8, [8, 8, 2], 4)
 

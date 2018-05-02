@@ -26,7 +26,8 @@ namespace {
 
 // Some hackery to invoke eigen tensor to copy over tensor slices with variable
 // dimension tensors.
-// TODO(yangke): get rid of that once the variable dimension tensor support is
+// TODO (yangke): get rid of that once the variable dimension tensor support is id:3037
+// https://github.com/imdone/tensorflow/issues/3036
 // in.
 static const int kTensorSliceMaxRank = 8;
 
@@ -132,7 +133,8 @@ struct CopyThatWorksWithStringPointer<Eigen::half> {
 // that belongs to the intersection of the two slices from slice_s to
 // slice_d.  Uses Tensor cast<DstT>() to convert from SrcT to DstT. Returns true
 // iff the two slices share any intersection (and thus some data is copied).
-// TODO(yangke): figure out if we can make it private.
+// TODO (yangke): figure out if we can make it private. id:3575
+// https://github.com/imdone/tensorflow/issues/3575
 template <typename SrcT, typename DstT>
 static bool CopyDataFromTensorSliceToTensorSlice(const TensorShape& shape,
                                                  const TensorSlice& slice_s,

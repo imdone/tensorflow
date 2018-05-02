@@ -163,7 +163,8 @@ class ResizeAreaOp : public OpKernel {
       // contribute to the target cell.
       int64 v = floor(in_x);
       x_interp.start = v;
-      // TODO(cwhipkey): simplify this logic.
+      // TODO (cwhipkey): simplify this logic. id:3312
+      // https://github.com/imdone/tensorflow/issues/3311
       x_interp.start_scale =
           v < in_x ? (v + 1 > in_x1 ? st.width_scale : v + 1 - in_x)
                    : (v + 1 > in_x1 ? in_x1 - v : 1.0);
@@ -233,7 +234,8 @@ class ResizeAreaOp : public OpKernel {
           } else {
             scale_y = (i + 1 > in_y1 ? in_y1 - i : 1.0);
           }
-          // TODO(cwhipkey): can this data unified with CachedInterpolation?
+          // TODO (cwhipkey): can this data unified with CachedInterpolation? id:3977
+          // https://github.com/imdone/tensorflow/issues/3975
           y_scales.push_back(scale_y);
           y_ptrs.push_back(
               input_ptr + (b * st.in_height * st.in_width * st.channels +

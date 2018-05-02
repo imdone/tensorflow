@@ -103,7 +103,8 @@ class BidirectionalLSTMOpModel : public SingleOpModel {
     }
 
     fw_scratch_buffer_ = AddOutput(TensorType_FLOAT32);
-    // TODO(ghodrat): Modify these states when we have a permanent solution for
+    // TODO (ghodrat): Modify these states when we have a permanent solution for id:1395
+    // https://github.com/imdone/tensorflow/issues/1396
     // persistent buffer.
     fw_output_state_ = AddOutput(TensorType_FLOAT32);
     fw_cell_state_ = AddOutput(TensorType_FLOAT32);
@@ -165,7 +166,8 @@ class BidirectionalLSTMOpModel : public SingleOpModel {
     }
 
     bw_scratch_buffer_ = AddOutput(TensorType_FLOAT32);
-    // TODO(ghodrat): Modify these states when we have a permanent solution for
+    // TODO (ghodrat): Modify these states when we have a permanent solution for id:1109
+    // https://github.com/imdone/tensorflow/issues/1110
     // persistent buffer.
     bw_output_state_ = AddOutput(TensorType_FLOAT32);
     bw_cell_state_ = AddOutput(TensorType_FLOAT32);

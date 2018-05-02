@@ -64,7 +64,8 @@ def getnamespace(f):
 
 
 def _get_unbound_function(m):
-  # TODO(mdan): Figure out why six.get_unbound_function fails in some cases.
+  # TODO (mdan): Figure out why six.get_unbound_function fails in some cases. id:983
+  # https://github.com/imdone/tensorflow/issues/984
   # The failure case is for tf.keras.Model.
   if hasattr(m, 'im_func'):
     return m.im_func
@@ -129,8 +130,10 @@ def getmethodclass(m):
   owners = []
   caller_frame = tf_inspect.currentframe().f_back
   try:
-    # TODO(mdan): This doesn't consider cell variables.
-    # TODO(mdan): This won't work if the owner is hidden inside a container.
+    # TODO (mdan): This doesn't consider cell variables. id:723
+    # https://github.com/imdone/tensorflow/issues/723
+    # TODO (mdan): This won't work if the owner is hidden inside a container. id:690
+    # https://github.com/imdone/tensorflow/issues/691
     # Cell variables may be pulled using co_freevars and the closure.
     for v in itertools.chain(caller_frame.f_locals.values(),
                              caller_frame.f_globals.values()):

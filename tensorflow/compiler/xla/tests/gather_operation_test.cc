@@ -269,9 +269,10 @@ XLA_TEST_F(GatherOperationTest, OutOfBoundsIndex) {
   // Out of bounds indices must not crash, and the indices in range should
   // produce the same values across all backends.
   //
-  // TODO(b/74360564): Once we have a well defined semantics for OOB accesses,
-  // we should get rid of the mask and check that backends produce the same
-  // value for OOB indices too.
+  // TODO (b/74360564): Once we have a well defined semantics for OOB accesses, id:461
+// https://github.com/imdone/tensorflow/issues/462
+// we should get rid of the mask and check that backends produce the same
+// value for OOB indices too.
 
   const string hlo_text = R"(
 HloModule BatchDynamicSlice
@@ -305,9 +306,10 @@ XLA_TEST_F(GatherOperationTest, NegativeIndex) {
   // Negative indices must not crash, and the indices in range should produce
   // the same values across all backends.
   //
-  // TODO(b/74360564): Once we have a well defined semantics for negative
-  // accesses, we should get rid of the mask and check that backends produce the
-  // same value for negative indices too.
+  // TODO (b/74360564): Once we have a well defined semantics for negative id:442
+// https://github.com/imdone/tensorflow/issues/443
+// accesses, we should get rid of the mask and check that backends produce the
+// same value for negative indices too.
 
   const string hlo_text = R"(
 HloModule BatchDynamicSlice

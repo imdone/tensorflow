@@ -77,7 +77,8 @@ TEST(TFunc, SquarePlusOne) {
       {// a = Square<T>(x)
        {{"a"}, "Square", {"x"}, {{"T", "$T"}}},
        // o = One<T>()
-       // NOTE: We can also have a Cast<Tin, Tout>(x) instead.
+       // NOTE: We can also have a Cast<Tin, Tout>(x) instead. id:2849
+       // https://github.com/imdone/tensorflow/issues/2848
        {{"o"}, "One", {}, {{"T", "$T"}}},
        // y = Add<T>(a, o)
        {{"y"}, "Add", {"a:y", "o:y"}, {{"T", "$T"}}}},
@@ -236,7 +237,8 @@ NTimesT(x:float, y:float) -> (z:float) {
   EXPECT_EQ(DebugString(result.nodes), e2);
 }
 
-// NOTE: This is the simplest Map op. It takes a f:T->U.
+// NOTE: This is the simplest Map op. It takes a id:2729
+// https://github.com/imdone/tensorflow/issues/2728
 REGISTER_OP("Map")
     .Input("x: N * T")
     .Output("y: N * U")
@@ -509,7 +511,8 @@ TEST(InstantiateErrors, Not_Sufficient_Attrs) {
       "Attr T is not found from ");
 }
 
-#if 0  // TODO(josh11b): Enable this test once having an extra attr is an error.
+#if 0  // TODO (josh11b): Enable this test once having an extra attr is an error. id:1926
+       // https://github.com/imdone/tensorflow/issues/1926
 TEST(InstantiateErrors, Too_Many_Attrs) {
   auto fdef =
       FDH::Define("nop", {}, {}, {"T:{float, double, int32, int64}"}, {});
@@ -623,7 +626,8 @@ TEST(InstantiateErrors, FuncRet_NameMismatch) {
            "Return y missing");
 }
 
-// TODO(josh11b): Make this an error.
+// TODO (josh11b): Make this an error. id:1551
+// https://github.com/imdone/tensorflow/issues/1551
 // TEST(InstantiateErrors, FuncRet_Extra) {
 //   auto fdef = FDH::Create("test", {}, {"y: float"}, {},
 //                           {
@@ -1276,7 +1280,8 @@ TEST(FunctionLibraryDefinitionTest, GetAttr_Gradient) {
   EXPECT_EQ(annotation, false);  // WXPlusB has no custom gradient.
 }
 
-// TODO(skyewm): this could be more thorough
+// TODO (skyewm): this could be more thorough id:2211
+// https://github.com/imdone/tensorflow/issues/2210
 TEST(FunctionDefsEqualTest, TestFunctionDefsEqual) {
   // Equal functions
   const FunctionDef fdef1 = test::function::XTimesTwo();

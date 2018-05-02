@@ -16,7 +16,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-# TODO(josh11b): Forked from contrib/eager/python to test OptimizerV2 the same way
+# TODO (josh11b): Forked from contrib/eager/python to test OptimizerV2 the same way id:1568
+# https://github.com/imdone/tensorflow/issues/1568
 # OptimizerV1 is tested. This file should be removed once the fork is resolved.
 
 import functools
@@ -231,8 +232,9 @@ class CheckpointingTests(test.TestCase):
           lambda: model(input_value))
     else:
       train_op = optimizer.minimize(model(input_value))
-      # TODO(allenl): Make initialization more pleasant when graph building.
-      root_checkpointable.save_counter  # pylint: disable=pointless-statement
+      # TODO (allenl): Make initialization more pleasant when graph building. id:1596
+      # https://github.com/imdone/tensorflow/issues/1596
+      #       root_checkpointable.save_counter  # pylint: disable=pointless-statement
       self.evaluate(checkpointable_utils.gather_initializers(
           root_checkpointable))
       self.evaluate(train_op)
@@ -282,7 +284,8 @@ class CheckpointingTests(test.TestCase):
     self.assertAllEqual(optimizer_variables[0], self.evaluate(beta1_power))
     self.assertAllEqual(optimizer_variables[1], self.evaluate(beta2_power))
 
-  # TODO(allenl): Debug garbage created by this test in python3.
+  # TODO (allenl): Debug garbage created by this test in python3. id:1167
+  # https://github.com/imdone/tensorflow/issues/1168
   def testDeferredRestorationUsageEager(self):
     """An idiomatic eager execution example."""
     num_training_steps = 10
@@ -296,7 +299,8 @@ class CheckpointingTests(test.TestCase):
           optimizer_step=training_util.get_or_create_global_step())
       root.restore(core_saver.latest_checkpoint(checkpoint_directory))
       for _ in range(num_training_steps):
-        # TODO(allenl): Use a Dataset and serialize/checkpoint it.
+        # TODO (allenl): Use a Dataset and serialize/checkpoint it. id:1696
+        # https://github.com/imdone/tensorflow/issues/1696
         input_value = constant_op.constant([[3.]])
         optimizer.minimize(
             lambda: model(input_value),  # pylint: disable=cell-var-from-loop
@@ -691,7 +695,8 @@ class CheckpointCompatibilityTests(test.TestCase):
       status.initialize_or_restore()
       self._check_sentinels(root)
 
-  # TODO(allenl): Test for the core name-based saver loading object-based
+  # TODO (allenl): Test for the core name-based saver loading object-based id:2104
+  # https://github.com/imdone/tensorflow/issues/2103
   # checkpoints once object-based checkpointing is in core.
 
   def testSaveGraphLoadEager(self):

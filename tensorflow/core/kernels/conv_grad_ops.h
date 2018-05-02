@@ -248,7 +248,8 @@ Status ConvBackpropComputeDimensions(StringPiece label, int num_spatial_dims,
                                      ConvBackpropDimensions* dims);
 
 // The V2 version computes the same outputs with arbitrary dilation rate.
-// TODO(b/67112639): Merge V2 versions and the original versions eventually.
+// TODO (b/67112639): Merge V2 versions and the original versions eventually. id:2101
+// https://github.com/imdone/tensorflow/issues/2100
 Status ConvBackpropComputeDimensionsV2(
     StringPiece label, int num_spatial_dims, const TensorShape& input_shape,
     const TensorShape& filter_shape, const TensorShape& out_backprop_shape,

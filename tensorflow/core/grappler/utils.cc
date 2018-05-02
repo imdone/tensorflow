@@ -43,8 +43,10 @@ bool SafeSetScalarTensorValue(double value, Tensor* tensor) {
 
 // Is 'node' an operator that consumes only the shape of its input, not the
 // data itself?
-// TODO(ezhulenev): move to op_types.h. Requires to break circular dependency.
-// TODO(ezhulenev): what about Identity passing tensor to Shape consumer?
+// TODO (ezhulenev): move to op_types.h. Requires to break circular dependency. id:3077
+// https://github.com/imdone/tensorflow/issues/3076
+// TODO (ezhulenev): what about Identity passing tensor to Shape consumer? id:2854
+// https://github.com/imdone/tensorflow/issues/2853
 bool IsShapeConsumer(const NodeDef& node) {
   const string& op = node.op();
   return op == "Shape" || op == "ShapeN" || op == "Rank" || op == "Size";
@@ -466,7 +468,8 @@ string SimpleGraphView::PrintToString() const {
     break
 
 Status SetTensorValue(DataType dtype, int value, Tensor* tensor) {
-  // TODO(rmlarsen): Support more general shapes.
+  // TODO (rmlarsen): Support more general shapes. id:2052
+  // https://github.com/imdone/tensorflow/issues/2052
   if (tensor->NumElements() != 1) {
     return errors::InvalidArgument(
         "Expected scalar tensor, got num_elements = ", tensor->NumElements());

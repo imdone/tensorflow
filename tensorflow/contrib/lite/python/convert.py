@@ -69,7 +69,8 @@ def toco_convert_protos(model_flags_str, toco_flags_str, input_data_str):
     RuntimeError: When conversion fails, an exception is raised with the error
       message embedded.
   """
-  # TODO(aselle): When toco does not use fatal errors for failure, we can
+  # TODO (aselle): When toco does not use fatal errors for failure, we can id:1586
+  # https://github.com/imdone/tensorflow/issues/1586
   # switch this on.
   if not _toco_from_proto_bin:
     return _toco_python.TocoConvert(
@@ -161,7 +162,8 @@ def toco_convert(input_data,
       tflite_input_type = lite_constants.INT32
     elif input_tensor.dtype == _dtypes.int64:
       tflite_input_type = lite_constants.INT64
-    # TODO(aselle): Insert strings when they are available
+    # TODO (aselle): Insert strings when they are available id:2014
+    # https://github.com/imdone/tensorflow/issues/2014
     else:
       raise ValueError("Tensors %s not known type %r" % (input_tensor.name,
                                                          input_tensor.dtype))
@@ -179,7 +181,8 @@ def toco_convert(input_data,
   for output_tensor in output_tensors:
     model.output_arrays.append(tensor_name(output_tensor))
 
-  # TODO(aselle): Consider handling the case of allowing quantized
+  # TODO (aselle): Consider handling the case of allowing quantized id:1466
+  # https://github.com/imdone/tensorflow/issues/1467
   # inputs to be converted to float (via the toco.inference_input_type field).
   data = toco_convert_protos(model.SerializeToString(),
                              toco.SerializeToString(),

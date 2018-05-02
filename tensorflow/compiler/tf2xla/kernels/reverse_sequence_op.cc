@@ -78,7 +78,8 @@ class ReverseSequenceOp : public XlaOpKernel {
     });
 
     // For each entry in the batch, reverse the sequence.
-    // TODO(b/65689298): generalize the Map() operator to non-scalar cases and
+    // TODO (b/65689298): generalize the Map() operator to non-scalar cases and id:179
+    // https://github.com/imdone/tensorflow/issues/180
     // use it here, instead of a While loop.
 
     // Condition: lambda (i, _, _): i < batch_size

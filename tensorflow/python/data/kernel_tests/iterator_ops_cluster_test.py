@@ -112,7 +112,8 @@ class IteratorClusterTest(test.TestCase):
   def testCaptureHashTableInSharedIterator(self):
     worker, _ = test_util.create_local_cluster(1, 1)
 
-    # NOTE(mrry): We must use the V2 variants of `HashTable`
+    # NOTE (mrry): We must use the V2 variants of `HashTable` id:4167
+    # https://github.com/imdone/tensorflow/issues/4165
     # etc. because these produce a `tf.resource`-typed output that is
     # compatible with the in-graph function implementation.
     default_val = -1

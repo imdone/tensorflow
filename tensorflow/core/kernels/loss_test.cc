@@ -27,7 +27,8 @@ limitations under the License.
 namespace tensorflow {
 namespace {
 
-// TODO(sibyl-Aix6ihai): add a test to show the improvements of the Newton
+// TODO (sibyl-Aix6ihai): add a test to show the improvements of the Newton id:2118
+// https://github.com/imdone/tensorflow/issues/2117
 // modification detailed in readme.md
 
 TEST(LogisticLoss, ComputePrimalLoss) {

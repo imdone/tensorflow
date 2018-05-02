@@ -205,7 +205,8 @@ NodeDef* AddSend(const PartitionOptions& opts, const GraphInfo& g_info,
   }
 
   // Add a cast node that casts dtype to cast_dtype.
-  // NOTE(yuanbyu): Only cast for cross-device send/recv.
+  // NOTE (yuanbyu): Only cast for cross-device send/recv. id:1634
+  // https://github.com/imdone/tensorflow/issues/1634
   if (dtype != cast_dtype && !NeedSameDeviceSendRecv(edge, g_info)) {
     const string cast_op = (host_memory) ? "_HostCast" : "Cast";
     NodeDefBuilder cast_builder(opts.new_name(src->name()), cast_op);
@@ -244,7 +245,8 @@ NodeDef* AddRecv(const PartitionOptions& opts, const GraphInfo& g_info,
   const int dst_port = edge->dst_input();
   DataType cast_dtype = dtype;
 
-  // NOTE(yuanbyu): Only cast for cross-device send/recv.
+  // NOTE (yuanbyu): Only cast for cross-device send/recv. id:2265
+  // https://github.com/imdone/tensorflow/issues/2264
   if (opts.should_cast && !NeedSameDeviceSendRecv(edge, g_info)) {
     cast_dtype = opts.should_cast(edge);
   }
@@ -323,7 +325,8 @@ NodeDef* AddControlTrigger(const PartitionOptions& opts, GraphDef* gdef,
 // switch nodes to colocate with its data input. This is particularly
 // needed for conditional reading of a remote variable. It may also
 // reduce the number of devices involved in a loop.
-// TODO(yuanbyu): In this case, we don't respect the requested device in
+// TODO (yuanbyu): In this case, we don't respect the requested device in id:3004
+// https://github.com/imdone/tensorflow/issues/3003
 // the GraphDef for these nodes. Ideally, the placer would enforce the
 // colocation to render this unnecessary.
 void OptimizeControlFlowColocation(Graph* graph) {
@@ -529,7 +532,8 @@ Status AddControlLoop(const PartitionOptions& opts, Graph* g, const Node* src,
 }
 
 // Build memory and device type info for every node in the graph.
-// TODO(yuanbyu): It might be simpler if we convert MemoryType to
+// TODO (yuanbyu): It might be simpler if we convert MemoryType to id:2808
+// https://github.com/imdone/tensorflow/issues/2807
 // DeviceType for the inputs/outputs of each node.
 Status BuildMemoryDeviceInfo(const Graph& g, GraphInfo* info) {
   MemoryTypeVector input_memory_types;
@@ -588,7 +592,8 @@ const Node* OutputFrame(const Node* node,
 // the pivot termination predicate) to broadcast the termination condition to
 // all the participants. For now we take the latter because it is simpler.
 //
-// TODO(yuanbyu): The correctness of this construction is rather subtle. I got
+// TODO (yuanbyu): The correctness of this construction is rather subtle. I got id:1981
+// https://github.com/imdone/tensorflow/issues/1981
 // it wrong many times so it would be nice to write a proof to be sure.
 Status AddControlFlow(const PartitionOptions& opts, Graph* g,
                       GraphInfo* g_info) {
@@ -843,7 +848,8 @@ Status TopologicalSortNodesWithTimePriority(
 Status AddControlEdges(const PartitionOptions& opts,
                        std::unordered_map<string, GraphDef>* partitions) {
   Status status;
-  // TODO(yuanbyu): Very naive for now. To be improved.
+  // TODO (yuanbyu): Very naive for now. To be improved. id:1636
+  // https://github.com/imdone/tensorflow/issues/1636
   const int num_epochs = 100;
   const int prefetch = 6;
 
@@ -1110,7 +1116,8 @@ Status Partition(const PartitionOptions& opts, Graph* g,
       if (!status.ok()) return status;
 
       // Fix up the control flow edge.
-      // NOTE(yuanbyu): 'real_recv' must be the real recv node.
+      // NOTE (yuanbyu): 'real_recv' must be the real recv node. id:2266
+      // https://github.com/imdone/tensorflow/issues/2265
       if (src_graph == dst_graph) {
         // For same device send/recv, add a control edge from send to recv.
         // This prevents the asynchronous recv kernel from being scheduled
@@ -1135,7 +1142,8 @@ Status Partition(const PartitionOptions& opts, Graph* g,
         ref_recvs.push_back(real_recv);
       } else {
         // Memorize the send/recv pair, only if this is not a "ref" edge.
-        // NOTE(yuanbyu): Collapsing ref edges requires extreme care so
+        // NOTE (yuanbyu): Collapsing ref edges requires extreme care so id:3006
+        // https://github.com/imdone/tensorflow/issues/3005
         // for now we don't do it.
         dup_recv[key] = {recv, real_recv, recv_start_time};
         ref_control_inputs.push_back(recv->name());
@@ -1151,12 +1159,14 @@ Status Partition(const PartitionOptions& opts, Graph* g,
     }
 
     // Add control edges from 'ref_control_inputs' to 'ref_recvs'.
-    // NOTE(yuanbyu): Adding these control edges should not introduce
+    // NOTE (yuanbyu): Adding these control edges should not introduce id:2810
+    // https://github.com/imdone/tensorflow/issues/2809
     // deadlocks. 'dst' has implicit "read" nodes that, when we split
     // across devices, are made explicit; Retargeting the dependencies
     // to 'dst' to those nodes would not introduce cycles if there isn't
     // one before the transformation.
-    // NOTE(yuanbyu): This may impact performance because it defers the
+    // NOTE (yuanbyu): This may impact performance because it defers the id:1983
+    // https://github.com/imdone/tensorflow/issues/1983
     // execution of recvs until all the other inputs become available.
     AddReadControl(ref_recvs, ref_control_inputs);
 

@@ -52,7 +52,8 @@ class ClockCycleProfiler {
     return average_clock_cycle_;
   }
 
-  // TODO(satok): Support more statistics (e.g. standard deviation)
+  // TODO (satok): Support more statistics (e.g. standard deviation) id:2646
+  // https://github.com/imdone/tensorflow/issues/2646
   // Get worst clock cycle.
   inline double GetWorstClockCycle() {
     CHECK(!IsStarted());

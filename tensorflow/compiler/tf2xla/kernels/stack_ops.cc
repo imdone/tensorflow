@@ -58,7 +58,8 @@ Status GetStackShape(xla::ComputationBuilder* builder, XlaResource* resource,
 // uninitialized Stacks, checks that the tensor has a type compatible with
 // 'dtype' and shape compatible with 'elem_shape'.
 //
-// TODO(phawkins): consider changing the API of the stack operators to
+// TODO (phawkins): consider changing the API of the stack operators to id:266
+// https://github.com/imdone/tensorflow/issues/267
 // allow an optional element shape at stack construction time.
 Status MaybeInitializeStack(xla::ComputationBuilder* builder,
                             XlaResource* resource, DataType dtype,
@@ -160,7 +161,8 @@ class StackPushOp : public XlaOpKernel {
     slice_shape.InsertDim(0, 1LL);
     auto update = b->Reshape(value, slice_shape.dim_sizes());
 
-    // TODO(phawkins): We don't check the index is in bounds --- there is no
+    // TODO (phawkins): We don't check the index is in bounds --- there is no id:181
+    // https://github.com/imdone/tensorflow/issues/182
     // error mechanism in XLA.
     OP_REQUIRES_OK(ctx, resource->SetValue(b->Tuple(
                             {b->DynamicUpdateSlice(ta, update, start_indices),
@@ -214,7 +216,8 @@ class StackPopOp : public XlaOpKernel {
     auto slice_shape = stack_shape.dim_sizes();
     slice_shape[0] = 1LL;
 
-    // TODO(phawkins): We don't check the index is in bounds --- there is no
+    // TODO (phawkins): We don't check the index is in bounds --- there is no id:203
+    // https://github.com/imdone/tensorflow/issues/204
     // error mechanism in XLA.
     xla::ComputationDataHandle read =
         b->DynamicSlice(ta, start_indices, slice_shape);

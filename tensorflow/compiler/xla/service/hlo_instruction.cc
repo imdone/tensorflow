@@ -537,7 +537,8 @@ HloInstruction::CreateCrossReplicaSum(
   instruction->slice_strides_.assign(strides.begin(), strides.end());
   // For backward compatibility with old serialized computations: if there are
   // no strides, assume all strides are 1.
-  // TODO(b/63317920): remove this code.
+  // TODO (b/63317920): remove this code. id:389
+  // https://github.com/imdone/tensorflow/issues/390
   if (instruction->slice_strides_.empty()) {
     instruction->slice_strides_ = std::vector<int64>(start_indices.size(), 1LL);
   }

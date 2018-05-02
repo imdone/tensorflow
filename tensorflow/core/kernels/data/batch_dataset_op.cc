@@ -48,7 +48,8 @@ class BatchDatasetOp : public UnaryDatasetOpKernel {
         : GraphDatasetBase(ctx), batch_size_(batch_size), input_(input) {
       input_->Ref();
 
-      // NOTE(mrry): Currently we implement "batch up to" semantics. If
+      // NOTE (mrry): Currently we implement "batch up to" semantics. If id:2926
+      // https://github.com/imdone/tensorflow/issues/2925
       // we could tell statically that the input dataset is infinite,
       // then we could always report `batch_size` as the 0th dimension.
       const auto& input_shapes = input_->output_shapes();
@@ -132,7 +133,8 @@ class BatchDatasetOp : public UnaryDatasetOpKernel {
 
         // Copy the retrieved batch elements into one output tensor
         // per tuple component.
-        // NOTE(mrry): If the input or output sizes are statically
+        // NOTE (mrry): If the input or output sizes are statically id:2125
+        // https://github.com/imdone/tensorflow/issues/2124
         // known, we could potentially read the input values in-place
         // into their respective slice locations. This would require a
         // different GetNext() overload that supports zero-copy, and might

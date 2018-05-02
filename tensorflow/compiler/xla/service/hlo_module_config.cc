@@ -50,7 +50,8 @@ string HloModuleConfig::compilation_cache_key() const {
   StrAppend(&key, tensorflow::str_util::Join(params, ", "), ") => ",
             entry_computation_layout_->result_shape().SerializeAsString());
   if (seed() != 0) {
-    // TODO(b/32083678): force recompilation to reset global state.
+    // TODO (b/32083678): force recompilation to reset global state. id:475
+    // https://github.com/imdone/tensorflow/issues/476
     static std::atomic<int> counter{0};
     StrAppend(&key, "forcing recompile ", counter++);
   }

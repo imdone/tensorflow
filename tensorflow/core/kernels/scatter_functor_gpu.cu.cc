@@ -42,7 +42,8 @@ typedef Eigen::GpuDevice GPUDevice;
 
 DEFINE_GPU_SPECS(float);
 DEFINE_GPU_SPECS(double);
-// TODO(b/27222123): The following fails to compile due to lack of support for
+// TODO (b/27222123): The following fails to compile due to lack of support for id:3316
+// https://github.com/imdone/tensorflow/issues/3315
 // fp16.
 // TF_CALL_GPU_NUMBER_TYPES(DEFINE_GPU_SPECS);
 

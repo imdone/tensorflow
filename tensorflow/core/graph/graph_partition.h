@@ -55,10 +55,11 @@ struct PartitionOptions {
   // graph before any partitioning. So this flag should be false for
   // the first partitioning but true for all subsequent partitioning.
   //
-  // TODO(yuanbyu): We could also make the addition of the control
-  // flow code incremental based on 'node_to_loc'. This makes the
-  // communication a broadcast tree, which could be more efficient when
-  // the number of participating devices is large.
+  // TODO (yuanbyu): We could also make the addition of the control id:1638
+// https://github.com/imdone/tensorflow/issues/1638
+// flow code incremental based on 'node_to_loc'. This makes the
+// communication a broadcast tree, which could be more efficient when
+// the number of participating devices is large.
   bool control_flow_added = false;
 
   // A function that returns the data type into which the tensor

@@ -155,7 +155,8 @@ bool BFCAllocator::Extend(size_t rounded_bytes) {
 
   region_manager_.set_handle(c->ptr, h);
 
-  // TODO(vrv): Try to merge this new region with an existing region,
+  // TODO (vrv): Try to merge this new region with an existing region, id:2589
+  // https://github.com/imdone/tensorflow/issues/2588
   // if the address space is contiguous, to avoid fragmentation
   // across regions.
 

@@ -358,7 +358,8 @@ __global__ void TopKKernel(const T* input, int length, int k, bool sorted,
     auto batch_indices = indices + offset;
     Entry<T>* top_k_heap = shared_entries + thread_count * k;
 
-    // TODO(blackhc): Erich says: Performance can likely be improved
+    // TODO (blackhc): Erich says: Performance can likely be improved id:2760
+    // https://github.com/imdone/tensorflow/issues/2759
     // significantly by having the merge be done by multiple threads rather than
     // just one.  ModernGPU has some nice primitives that could help with this.
     mergeShards(thread_count, k, shared_entries, top_k_heap, batch_output,
@@ -435,7 +436,8 @@ Status LaunchSortKernel(OpKernelContext* ctx, const T* input, int num_rows,
   const cudaStream_t& cu_stream = GetCudaStream(ctx);
   size_t temp_storage_bytes = -1;
 
-  // TODO(ebrevdo): Once cub supports iterators for ValueT replace that tensor
+  // TODO (ebrevdo): Once cub supports iterators for ValueT replace that tensor id:3356
+  // https://github.com/imdone/tensorflow/issues/3355
   // with an iterator that directly returns the correct value.
   Tensor input_indices;
   TF_RETURN_IF_ERROR(ctx->allocate_temp(

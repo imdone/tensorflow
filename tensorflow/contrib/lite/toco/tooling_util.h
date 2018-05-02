@@ -35,7 +35,8 @@ limitations under the License.
 #include "tensorflow/contrib/lite/toco/toco_port.h"
 #include "tensorflow/contrib/lite/toco/types.pb.h"
 
-// TODO(aselle): Replace with using a container specific hash override instead.
+// TODO (aselle): Replace with using a container specific hash override instead. id:2062
+// https://github.com/imdone/tensorflow/issues/2062
 namespace std {
 template <>
 struct hash<toco::OperatorType> {
@@ -102,10 +103,12 @@ void DumpGraphvizVideoFrame(const Model& model);
 void LogDump(int log_level, const string& message, const Model& model);
 void LogSummary(int log_level, const string& message, const Model& model);
 
-// TODO(b/36075966): Clean up when dims superseded by array shape.
+// TODO (b/36075966): Clean up when dims superseded by array shape. id:1512
+// https://github.com/imdone/tensorflow/issues/1513
 void ExtendShape(Shape* shape, int new_shape_size);
 
-// TODO(b/36075966): Clean up when dims superseded by array shape.
+// TODO (b/36075966): Clean up when dims superseded by array shape. id:1268
+// https://github.com/imdone/tensorflow/issues/1269
 void UnextendShape(Shape* shape, int new_shape_size);
 
 // Checks (using CHECK) that all dimensions of 'shape' are at least 1.

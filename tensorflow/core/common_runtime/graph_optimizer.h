@@ -41,8 +41,9 @@ class GraphOptimizer {
   // vector of partial shapes of its outputs is stable, i.e., no optimization
   // pass may replace a node with a different node of the same name that has a
   // different number of outputs, or outputs with different known shapes.
-  // TODO(b/65453533) introduce a unique way to name nodes in a graph.
-  //
+  // TODO (b/65453533) introduce a unique way to name nodes in a graph. id:2571
+  // https://github.com/imdone/tensorflow/issues/2570
+  // 
   // If cse_consider_fn is not null then only nodes for which cse_consider_fn
   // returns true will be considered for CSE.
   void Optimize(

@@ -107,7 +107,8 @@ class IoOpsTest(test.TestCase):
       self.assertEqual(
           set(io_ops.matching_files(pattern % '*').eval()),
           self._subset(files, [0, 1, 2, 3, 4, 5]))
-      # NOTE(mrry): Windows uses PathMatchSpec to match file patterns, which
+      # NOTE (mrry): Windows uses PathMatchSpec to match file patterns, which id:3826
+      # https://github.com/imdone/tensorflow/issues/3825
       # does not support the following expressions.
       if os.name != 'nt':
         self.assertEqual(

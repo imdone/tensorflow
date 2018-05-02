@@ -61,7 +61,8 @@ xla::StatusOr<xla::ComputationDataHandle> CreateDiagonal(
   // Broadcasting the input is less-than-trivial, since we need to broadcast
   // into a "middle" dimension. We can do this with a reshape + implicit
   // broadcast.
-  // TODO(b/30112114): Replace with in-dim broadcast when those are supported.
+  // TODO (b/30112114): Replace with in-dim broadcast when those are supported. id:265
+  // https://github.com/imdone/tensorflow/issues/266
   std::vector<int64> broadcast_dims(other_dims.begin(), other_dims.end());
   broadcast_dims.push_back(1LL);
   broadcast_dims.push_back(last_dim_size);
@@ -160,7 +161,8 @@ class DiagPartOp : public XlaOpKernel {
 
     xla::ComputationDataHandle diag = ctx->Input(0);
 
-    // TODO(b/30878775): use Slice with strides when supported, in place of
+    // TODO (b/30878775): use Slice with strides when supported, in place of id:260
+    // https://github.com/imdone/tensorflow/issues/261
     // the Pad -> Reshape -> Slice.
 
     // Picture:
@@ -249,7 +251,8 @@ class MatrixDiagPartOp : public XlaOpKernel {
     // The smaller of the last two dimension sizes.
     int64 smaller_dim_size = std::min(dims[last_dim - 1], dims[last_dim]);
 
-    // TODO(b/30878775): use Slice with strides when supported, in place of
+    // TODO (b/30878775): use Slice with strides when supported, in place of id:175
+    // https://github.com/imdone/tensorflow/issues/176
     // the Pad -> Reshape -> Slice.
 
     // Picture: for each 2D matrix in the tensor's last two dimensions:

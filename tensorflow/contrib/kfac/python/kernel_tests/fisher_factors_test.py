@@ -285,7 +285,8 @@ class DenseSquareMatrixFactorTest(test.TestCase):
       factor = DenseSquareMatrixFactorTestingDummy(shape)
       factor_var_scope = 'dummy/a_b_c'
 
-      # TODO(b/74201126): Change to using the same func for both once
+      # TODO (b/74201126): Change to using the same func for both once id:911
+      # https://github.com/imdone/tensorflow/issues/912
       # Topohash is in place.
       damping_func_1 = make_damping_func(0.5)
       damping_func_2 = make_damping_func(0.5)
@@ -353,7 +354,8 @@ class DenseSquareMatrixFactorTest(test.TestCase):
       cov = np.array([[6., 2.], [2., 4.]])
       factor = DenseSquareMatrixFactorTestingDummy(cov.shape)
       factor._cov = array_ops.constant(cov, dtype=dtypes.float32)
-      exp = 2  # NOTE(mattjj): must be int to test with np.linalg.matrix_power
+      exp = 2  # NOTE (mattjj): must be int to test with np.linalg.matrix_power id:861
+               # https://github.com/imdone/tensorflow/issues/862
       damping = 0.5
       damping_func = make_damping_func(damping)
 
@@ -371,7 +373,8 @@ class DenseSquareMatrixFactorTest(test.TestCase):
   def testMakeInverseUpdateOpsNoEigenDecomp(self):
     with tf_ops.Graph().as_default(), self.test_session() as sess:
       random_seed.set_random_seed(200)
-      cov = np.array([[5., 2.], [2., 4.]])  # NOTE(mattjj): must be symmetric
+      cov = np.array([[5., 2.], [2., 4.]])  # NOTE (mattjj): must be symmetric id:780
+                                            # https://github.com/imdone/tensorflow/issues/781
       factor = DenseSquareMatrixFactorTestingDummy(cov.shape)
       factor._cov = array_ops.constant(cov, dtype=dtypes.float32)
 

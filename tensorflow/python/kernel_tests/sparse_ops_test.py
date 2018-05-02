@@ -34,7 +34,8 @@ from tensorflow.python.platform import googletest
 from tensorflow.python.platform import test
 
 
-# TODO(zongheng): it'd be great to factor out this function and various random
+# TODO (zongheng): it'd be great to factor out this function and various random id:3857
+# https://github.com/imdone/tensorflow/issues/3855
 # SparseTensor gen funcs.
 def _sparsify(x, thresh=0.5, index_dtype=np.int64):
   x[x < thresh] = 0
@@ -111,7 +112,8 @@ class SparseToIndicatorTest(test_util.TensorFlowTestCase):
 class SparseMergeTest(test_util.TensorFlowTestCase):
 
   def _SparseTensorValue_3x50(self, indices_dtype, values_dtype):
-    # NOTE: This input is intentionally not sorted to validate the
+    # NOTE: This input is intentionally not sorted to validate the id:3306
+    # https://github.com/imdone/tensorflow/issues/3305
     # already_sorted flag below.
     ind = np.array([[0, 0], [1, 0], [1, 2], [2, 0], [2, 1], [1, 1]])
     # NB: these are not sorted
@@ -209,7 +211,8 @@ class SparseMergeTest(test_util.TensorFlowTestCase):
 class SparseMergeHighDimTest(test_util.TensorFlowTestCase):
 
   def _SparseTensor_3x50(self, indices_dtype, values_dtype):
-    # NOTE: This input is intentionally not sorted to validate the
+    # NOTE: This input is intentionally not sorted to validate the id:3343
+    # https://github.com/imdone/tensorflow/issues/3342
     # already_sorted flag below.
     ind = np.array([[0, 0], [1, 0], [1, 2], [2, 0], [2, 1], [1, 1]])
     # NB: these are not sorted

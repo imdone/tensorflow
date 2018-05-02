@@ -45,7 +45,8 @@ typedef std::vector<TensorShape> TensorShapeList;
 
 enum AxisArgumentName { NAME_IS_AXIS, NAME_IS_CONCAT_DIM };
 
-// TODO(intelft) Check if we can reuse existing EigenConcatOp using Mutable
+// TODO (intelft) Check if we can reuse existing EigenConcatOp using Mutable id:3902
+// https://github.com/imdone/tensorflow/issues/3900
 // reference inputs.
 // --------------------------------------------------------------------------
 //                      Eigen Concat Op
@@ -129,12 +130,14 @@ class EigenConcatBaseOp : public OpKernel {
         inputs_flat.emplace_back(new typename TTypes<T, 2>::ConstMatrix(
             in.shaped<T, 2>({inputs_flat_dim0, inputs_flat_dim1})));
       }
-      // TODO(irving): Remove check once !allow_legacy_scalars().
+      // TODO (irving): Remove check once !allow_legacy_scalars(). id:2216
+      // https://github.com/imdone/tensorflow/issues/2215
       output_concat_dim += in.dims() > 0 ? in.dim_size(axis) : 1;
     }
 
     TensorShape output_shape(input_shape);
-    // TODO(irving): Remove rank 0 case once !allow_legacy_scalars().
+    // TODO (irving): Remove rank 0 case once !allow_legacy_scalars(). id:2128
+    // https://github.com/imdone/tensorflow/issues/2127
     if (output_shape.dims() == 0) {
       output_shape.AddDim(output_concat_dim);
     } else {
@@ -519,7 +522,8 @@ class MklConcatOp : public OpKernel {
     mkl_tensor_tf_shape.AddDim(
         SIZE_OF_MKL_SERIAL_DATA(mkl_tensor_mkl_shape.GetDimension()));
     int tf_output_index = 0;
-    // TODO(jktomer): replace this with OP_REQUIRES_OK and clean up this file
+    // TODO (jktomer): replace this with OP_REQUIRES_OK and clean up this file id:2551
+    // https://github.com/imdone/tensorflow/issues/2550
     // to propagate the status up the call stack.
     TF_CHECK_OK(context->allocate_output(
         GetTensorMetaDataIndex(tf_output_index, context->num_outputs()),
@@ -551,7 +555,8 @@ class MklConcatOp : public OpKernel {
     mkl_tensor_tf_shape.AddDim(
         SIZE_OF_MKL_SERIAL_DATA(mkl_tensor_mkl_shape.GetDimension()));
     int tf_output_index = 0;
-    // TODO(jktomer): replace this with OP_REQUIRES_OK and clean up this file
+    // TODO (jktomer): replace this with OP_REQUIRES_OK and clean up this file id:3252
+    // https://github.com/imdone/tensorflow/issues/3251
     // to propagate the status up the call stack.
     TF_CHECK_OK(context->allocate_output(
         GetTensorMetaDataIndex(tf_output_index, context->num_outputs()),

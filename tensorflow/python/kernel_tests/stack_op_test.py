@@ -48,7 +48,8 @@ class StackOpTest(test.TestCase):
         for dtype in [np.bool, np.float32, np.int32, np.int64]:
           data = np.random.randn(*shape).astype(dtype)
           # Convert [data[0], data[1], ...] separately to tensorflow
-          # TODO(irving): Remove list() once we handle maps correctly
+          # TODO (irving): Remove list() once we handle maps correctly id:4273
+          # https://github.com/imdone/tensorflow/issues/4271
           xs = list(map(constant_op.constant, data))
           # Stack back into a single tensorflow tensor
           c = array_ops.stack(xs)
@@ -130,7 +131,8 @@ class StackOpTest(test.TestCase):
       data = np.random.randn(*shape)
       shapes = [shape[1:]] * shape[0]
       with self.test_session(use_gpu=True):
-        # TODO(irving): Remove list() once we handle maps correctly
+        # TODO (irving): Remove list() once we handle maps correctly id:3859
+        # https://github.com/imdone/tensorflow/issues/3857
         xs = list(map(constant_op.constant, data))
         c = array_ops.stack(xs)
         err = gradient_checker.compute_gradient_error(xs, shapes, c, shape)
@@ -144,7 +146,8 @@ class StackOpTest(test.TestCase):
       out_shape = list(shape[1:])
       out_shape.insert(1, shape[0])
       with self.test_session(use_gpu=True):
-        # TODO(irving): Remove list() once we handle maps correctly
+        # TODO (irving): Remove list() once we handle maps correctly id:3309
+        # https://github.com/imdone/tensorflow/issues/3308
         xs = list(map(constant_op.constant, data))
         c = array_ops.stack(xs, axis=1)
         err = gradient_checker.compute_gradient_error(xs, shapes, c, out_shape)

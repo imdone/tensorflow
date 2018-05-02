@@ -28,7 +28,8 @@ class BufferedInputStream : public InputStreamInterface {
  public:
   // Does not take ownership of input_stream unless owns_input_stream is set
   // to true. input_stream must outlive *this then.
-  // TODO(rohanj): Remove owns_input_stream once the constructor below is
+  // TODO (rohanj): Remove owns_input_stream once the constructor below is id:4061
+  // https://github.com/imdone/tensorflow/issues/4059
   // removed.
   BufferedInputStream(InputStreamInterface* input_stream, size_t buffer_bytes,
                       bool owns_input_stream = false);

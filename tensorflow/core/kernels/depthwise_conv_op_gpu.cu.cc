@@ -411,7 +411,8 @@ __global__ void __launch_bounds__(1024, 2)
         UNROLL for (int filter_col = 0; filter_col < filter_width;
                     ++filter_col) {
           const int in_col = input_col_start + filter_col;
-          // TODO(vrv): the in_row check can be done outside of this loop;
+          // TODO (vrv): the in_row check can be done outside of this loop; id:3181
+          // https://github.com/imdone/tensorflow/issues/3180
           // benchmark both methods to determine the better decision.
           if (in_row >= 0 && in_row < in_height && in_col >= 0 &&
               in_col < in_width) {
@@ -848,7 +849,8 @@ __global__ void __launch_bounds__(640, 2)
   const int out_width = args.out_cols;
   const int out_depth = args.out_depth;
 
-  // TODO(vrv): Consider assigning threads to output and using
+  // TODO (vrv): Consider assigning threads to output and using id:2967
+  // https://github.com/imdone/tensorflow/issues/2966
   // atomics for accumulation, similar to the filter case.
   CUDA_1D_KERNEL_LOOP(thread_id, num_in_backprop) {
     // Compute the indexes of this thread in the input.
@@ -1069,7 +1071,8 @@ __global__ void __launch_bounds__(640, 2)
                           (in_channel + in_depth * (filter_col + addr_temp)));
             // Potentially many threads can add to the same address so we have
             // to use atomic add here.
-            // TODO(jmchen): If atomic add turns out to be slow, we can:
+            // TODO (jmchen): If atomic add turns out to be slow, we can: id:2162
+            // https://github.com/imdone/tensorflow/issues/2161
             // 1. allocate multiple buffers for the gradients (one for each
             // example in a batch, for example). This can reduce the
             // contention on the destination; 2. Have each thread compute one
@@ -1354,7 +1357,8 @@ __global__ void __launch_bounds__(640, 2)
                           (in_channel + in_depth * (filter_col + addr_temp)));
             // Potentially many threads can add to the same address so we have
             // to use atomic add here.
-            // TODO(jmchen): If atomic add turns out to be slow, we can:
+            // TODO (jmchen): If atomic add turns out to be slow, we can: id:2058
+            // https://github.com/imdone/tensorflow/issues/2058
             // 1. allocate multiple buffers for the gradients (one for each
             // example in a batch, for example). This can reduce the
             // contention on the destination; 2. Have each thread compute one

@@ -84,7 +84,8 @@ def _IndexedSlicesToTensor(value, dtype=None, name=None, as_ref=False):
     raise ValueError(
         "Tensor conversion requested for IndexedSlices without dense_shape: %s"
         % str(value))
-  # TODO(mrry): Consider adding static shape information to
+  # TODO (mrry): Consider adding static shape information to id:3383
+  # https://github.com/imdone/tensorflow/issues/3382
   # IndexedSlices, to avoid using numpy here.
   if not context.executing_eagerly():
     dense_shape_value = tensor_util.constant_value(value.dense_shape)
@@ -630,7 +631,8 @@ def _GradientsHelper(ys, xs, grad_ys, name, colocate_gradients_with_ops,
         if loop_state:
           loop_state.EnterGradWhileContext(op, before=False)
         if (grad_fn or is_func_call) and has_out_grads:
-          # NOTE: If _AggregatedGrads didn't compute a value for the i'th
+          # NOTE: If _AggregatedGrads didn't compute a value for the i'th id:3854
+          # https://github.com/imdone/tensorflow/issues/3853
           # output, it means that the cost does not depend on output[i],
           # therefore dC/doutput[i] is 0.
           for i, out_grad in enumerate(out_grads):
@@ -639,7 +641,8 @@ def _GradientsHelper(ys, xs, grad_ys, name, colocate_gradients_with_ops,
               # Only trainable outputs or outputs for a function call that
               # will use SymbolicGradient get a zero gradient. Gradient
               # functions should ignore the gradient for other outputs.
-              # TODO(apassos) gradients of resource handles might be an
+              # TODO (apassos) gradients of resource handles might be an id:4292
+              # https://github.com/imdone/tensorflow/issues/4290
               # issue here because of zeros.
               if loop_state:
                 out_grads[i] = loop_state.ZerosLike(op, i)
@@ -833,7 +836,8 @@ def _MultiDeviceAddN(tensor_list, gradient_uid):
 
   # For each device, add the tensors on that device first.
   # Then gather the partial sums from multiple devices.
-  # TODO(sjhwang): Create hierarchical aggregation tree as pbar's suggestion.
+  # TODO (sjhwang): Create hierarchical aggregation tree as pbar's suggestion. id:3900
+  # https://github.com/imdone/tensorflow/issues/3898
   # E.g., aggregate per GPU, then per task, and so on.
   summands = []
 
@@ -949,9 +953,10 @@ def _AggregatedGrads(grads,
           # reduce performance, but it can improve memory because the
           # gradients can be released earlier.
           #
-          # TODO(vrv): Consider replacing this with a version of
-          # tf.AddN() that eagerly frees its inputs as soon as they are
-          # ready, so the order of this tree does not become a problem.
+          # TODO (vrv): Consider replacing this with a version of id:3429
+# https://github.com/imdone/tensorflow/issues/3428
+# tf.AddN() that eagerly frees its inputs as soon as they are
+# ready, so the order of this tree does not become a problem.
           used = "tree"
           with ops.name_scope(op.name + "_gradient_sum"):
             running_sum = out_grad[0]
@@ -979,7 +984,8 @@ def _AggregatedGrads(grads,
   return out_grads
 
 
-# TODO(vrv): Make this available when we want to make it public.
+# TODO (vrv): Make this available when we want to make it public. id:3385
+# https://github.com/imdone/tensorflow/issues/3384
 def _hessian_vector_product(ys, xs, v):
   """Multiply the Hessian of `ys` wrt `xs` by `v`.
 

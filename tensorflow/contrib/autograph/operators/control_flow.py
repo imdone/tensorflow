@@ -25,8 +25,10 @@ from tensorflow.python.framework import tensor_util
 from tensorflow.python.ops import control_flow_ops
 from tensorflow.python.ops import gen_math_ops
 
-# TODO(mdan): Rename _loop to _stmt to follow Python nomenclature.
-# TODO(mdan): Rename arguments to match the AST names.
+# TODO (mdan): Rename _loop to _stmt to follow Python nomenclature. id:679
+# https://github.com/imdone/tensorflow/issues/680
+# TODO (mdan): Rename arguments to match the AST names. id:528
+# https://github.com/imdone/tensorflow/issues/529
 
 
 def for_loop(iterated, extra_cond, loop_body, init_state):
@@ -64,7 +66,8 @@ def _py_for_loop(iterated, extra_cond, loop_body, init_state):
       break
     state = loop_body(iterate, *state)
 
-  # TODO(mdan): Remove this special case.
+  # TODO (mdan): Remove this special case. id:520
+  # https://github.com/imdone/tensorflow/issues/521
   if len(state) == 1:
     return state[0]
   return state
@@ -91,7 +94,8 @@ def _known_len_for_loop(iterated, extra_cond, loop_body, init_state):
   # Dropping the iteration index because it's not syntactically visible.
   results = results[1:]
 
-  # TODO(mdan): Remove this special case.
+  # TODO (mdan): Remove this special case. id:976
+  # https://github.com/imdone/tensorflow/issues/977
   if len(results) == 1:
     return results[0]
   return results
@@ -134,7 +138,8 @@ def _dataset_for_loop(ds, extra_cond, loop_body, init_state):
   # visible.
   results = results[2:]
 
-  # TODO(mdan): Remove this special case.
+  # TODO (mdan): Remove this special case. id:630
+  # https://github.com/imdone/tensorflow/issues/631
   if len(results) == 1:
     return results[0]
   return results
@@ -162,7 +167,8 @@ def while_loop(loop_cond, loop_body, init_state, extra_deps, opts=None):
   Returns:
     Tuple containing the final state.
   """
-  # TODO(mdan): Consider adding a generic mechanism for dynamic dispatch.
+  # TODO (mdan): Consider adding a generic mechanism for dynamic dispatch. id:682
+  # https://github.com/imdone/tensorflow/issues/683
   # That could be somethins as simple as a collection of dispatch rules, with
   # some prioritization.
   if any(tensor_util.is_tensor(v) for v in init_state + extra_deps):

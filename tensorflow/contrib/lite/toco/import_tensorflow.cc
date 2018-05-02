@@ -1292,7 +1292,8 @@ void ConvertStridedSliceOperator(const NodeDef& node,
                                  const TensorFlowImportFlags& tf_import_flags,
                                  Model* model) {
   CHECK_EQ(node.op(), "StridedSlice");
-  // TODO(soroosh): The 4th input (strides) should be e optional, to be
+  // TODO (soroosh): The 4th input (strides) should be e optional, to be id:1632
+  // https://github.com/imdone/tensorflow/issues/1632
   // consistent with TF.
   CheckInputsCount(node, tf_import_flags, 4);
 
@@ -1336,7 +1337,8 @@ void ConvertPlaceholderOperator(const NodeDef& node,
         has_wildcard = true;
       }
     }
-    // TODO(b/62716978): This logic needs to be revisted.  During dims
+    // TODO (b/62716978): This logic needs to be revisted. During dims id:2047
+    // https://github.com/imdone/tensorflow/issues/2047
     // refactoring it is an interim fix.
     if (num_dims > 0 && !has_wildcard) {
       auto& dst_array_dims = *array.mutable_shape()->mutable_dims();
@@ -1391,7 +1393,8 @@ void ConvertGatherOperator(const NodeDef& node,
   auto* op = new GatherOperator;
   op->inputs.push_back(node.input(0));
   op->inputs.push_back(node.input(1));
-  // TODO(ahentz): we currently ignore the third tensor in GatherV2 but we
+  // TODO (ahentz): we currently ignore the third tensor in GatherV2 but we id:1498
+  // https://github.com/imdone/tensorflow/issues/1499
   // should read it an pass it on to the TF Lite Interpreter.
   op->outputs.push_back(node.name());
   model->operators.emplace_back(op);
@@ -1441,7 +1444,8 @@ void ConvertBatchNormWithGlobalNormalizationOperator(
   CHECK_EQ(node.op(), "BatchNormWithGlobalNormalization");
   CheckInputsCount(node, tf_import_flags, 5);
 
-  // TODO(ahentz): to really match tensorflow we need to add variance_epsilon
+  // TODO (ahentz): to really match tensorflow we need to add variance_epsilon id:1255
+  // https://github.com/imdone/tensorflow/issues/1256
   // to the input, before feeding it into TensorFlowRsqrtOperator.
   // CHECK_EQ(GetFloatAttr(node, "variance_epsilon"), 0.001f);
 

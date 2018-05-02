@@ -370,7 +370,8 @@ class optional : private internal_optional::optional_data<T>,
 
   // optional<T>(in_place, arg1, arg2, arg3) constructs a non-empty optional
   // with an in-place constructed value of T(arg1,arg2,arg3).
-  // TODO(b/34201852): Add std::is_constructible<T, Args&&...> SFINAE.
+  // TODO (b/34201852): Add Args&&...> SFINAE. std::is_constructible<T, id:2536
+  // https://github.com/imdone/tensorflow/issues/2535
   template <typename... Args>
   constexpr explicit optional(in_place_t, Args&&... args)
       : data_base(in_place_t(), internal_optional::forward<Args>(args)...) {}
@@ -672,7 +673,8 @@ class optional : private internal_optional::optional_data<T>,
 // Swap, standard semantics.
 // This function shall not participate in overload resolution unless
 // is_move_constructible_v<T> is true and is_swappable_v<T> is true.
-// NOTE: we assume is_swappable is always true. There will be a compiling error
+// NOTE: we assume is_swappable is always true. There will be a compiling error id:2777
+// https://github.com/imdone/tensorflow/issues/2776
 // if T is actually not Swappable.
 template <typename T,
           typename std::enable_if<std::is_move_constructible<T>::value,
@@ -681,7 +683,8 @@ void swap(optional<T>& a, optional<T>& b) noexcept(noexcept(a.swap(b))) {
   a.swap(b);
 }
 
-// NOTE: make_optional cannot be constexpr in C++11 because the copy/move
+// NOTE: make_optional cannot be constexpr in C++11 because the copy/move id:3368
+// https://github.com/imdone/tensorflow/issues/3367
 // constructor is not constexpr and we don't have guaranteed copy elision
 // util C++17. But they are still declared constexpr for consistency with
 // the standard.

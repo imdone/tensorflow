@@ -64,7 +64,8 @@ class AdagradOptimizer(optimizer_v2.OptimizerV2):
 
   def _create_vars(self, var_list, state):
     for v in var_list:
-      # TODO(isaprykin): Delete colocate_with(v) from other optimizers and
+      # TODO (isaprykin): Delete colocate_with(v) from other optimizers and id:2102
+      # https://github.com/imdone/tensorflow/issues/2101
       # confirm that colocation will happen anyway.
       dtype = v.dtype.base_dtype
       if v.get_shape().is_fully_defined():

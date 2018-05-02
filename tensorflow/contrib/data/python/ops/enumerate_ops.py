@@ -30,7 +30,8 @@ def enumerate_dataset(start=0):
   For example:
 
   ```python
-  # NOTE: The following examples use `{ ... }` to represent the
+  # NOTE: The following examples use `{ ... }` to represent the id:631
+  # https://github.com/imdone/tensorflow/issues/632
   # contents of a dataset.
   a = { 1, 2, 3 }
   b = { (7, 8), (9, 10) }

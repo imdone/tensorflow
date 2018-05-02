@@ -59,7 +59,8 @@ class ReplaceTransformer(gast.NodeTransformer):
       elif (isinstance(repl, (list, tuple)) and repl and
             all(isinstance(r, gast.keyword) for r in repl)):
         return repl
-      # TODO(mdan): We may allow replacing with a string as well.
+      # TODO (mdan): We may allow replacing with a string as well. id:1004
+      # https://github.com/imdone/tensorflow/issues/1005
       # For example, if one wanted to replace foo with bar in foo=baz, then
       # we could allow changing just node arg, so that we end up with bar=baz.
       raise ValueError(

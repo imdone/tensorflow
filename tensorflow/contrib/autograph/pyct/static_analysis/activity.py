@@ -27,7 +27,8 @@ from tensorflow.contrib.autograph.pyct import transformer
 from tensorflow.contrib.autograph.pyct.qual_names import QN
 from tensorflow.contrib.autograph.pyct.static_analysis.annos import NodeAnno
 
-# TODO(mdan): Add support for PY3 (e.g. Param vs arg).
+# TODO (mdan): Add support for PY3 (e.g. Param vs arg). id:544
+# https://github.com/imdone/tensorflow/issues/545
 
 
 class Scope(object):
@@ -59,7 +60,8 @@ class Scope(object):
     self.params = set()
     self.returned = set()
 
-  # TODO(mdan): Rename to `locals`
+  # TODO (mdan): Rename to `locals` id:529
+  # https://github.com/imdone/tensorflow/issues/530
   @property
   def referenced(self):
     if not self.isolated and self.parent is not None:
@@ -181,7 +183,8 @@ class ActivityAnalyzer(transformer.Base):
   def _node_sets_self_attribute(self, node):
     if anno.hasanno(node, anno.Basic.QN):
       qn = anno.getanno(node, anno.Basic.QN)
-      # TODO(mdan): The 'self' argument is not guaranteed to be called 'self'.
+      # TODO (mdan): The 'self' argument is not guaranteed to be called 'self'. id:994
+      # https://github.com/imdone/tensorflow/issues/996
       if qn.has_attr and qn.parent.qn == ('self',):
         return True
 
@@ -206,7 +209,8 @@ class ActivityAnalyzer(transformer.Base):
     elif isinstance(node.ctx, gast.Param):
       # Param contexts appear in function defs, so they have the meaning of
       # defining a variable.
-      # TODO(mdan): This bay be incorrect with nested functions.
+      # TODO (mdan): This bay be incorrect with nested functions. id:728
+      # https://github.com/imdone/tensorflow/issues/729
       # For nested functions, we'll have to add the notion of hiding args from
       # the parent scope, not writing to them.
       self.scope.mark_creation(qn)
@@ -259,7 +263,8 @@ class ActivityAnalyzer(transformer.Base):
     self.scope = args_scope
     for n in node.args:
       self.visit(n)
-    # TODO(mdan): Account starargs, kwargs
+    # TODO (mdan): Account starargs, kwargs id:697
+    # https://github.com/imdone/tensorflow/issues/698
     for n in node.keywords:
       self.visit(n)
     anno.setanno(node, NodeAnno.ARGS_SCOPE, args_scope)

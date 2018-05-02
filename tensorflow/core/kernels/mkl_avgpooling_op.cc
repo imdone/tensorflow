@@ -375,7 +375,8 @@ class MklAvgPoolingGradOp : public OpKernel {
                                             "4-dimensional"));
       }
 
-      // TODO(inteltf): Get outbackprop layout.
+      // TODO (inteltf): Get outbackprop layout. id:3250
+      // https://github.com/imdone/tensorflow/issues/3249
       // Do we need to create layout in every invocation?
       if (!outbackprop_in_mkl_format) {
         CHECK_EQ(dnnLayoutCreate_F32(&lt_user_outbackprop, params.in_dim,

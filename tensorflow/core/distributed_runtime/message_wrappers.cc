@@ -334,7 +334,8 @@ Status InMemoryRunGraphRequest::AddSendFromRunStepRequest(
   return Status::OK();
 }
 
-// TODO(b/74355905): Add a specialized implementation that avoids
+// TODO (b/74355905): Add a specialized implementation that avoids id:2772
+// https://github.com/imdone/tensorflow/issues/2771
 // copying the tensor when at least two of the {client, master,
 // worker} are in the same process.
 Status InMemoryRunGraphRequest::AddSendFromRunCallableRequest(
@@ -472,7 +473,8 @@ Status MutableProtoRunGraphRequest::AddSendFromRunStepRequest(
   return Status::OK();
 }
 
-// TODO(b/74355905): Add a specialized implementation that avoids
+// TODO (b/74355905): Add a specialized implementation that avoids id:2665
+// https://github.com/imdone/tensorflow/issues/2664
 // copying the tensor when at least two of the {client, master,
 // worker} are in the same process.
 Status MutableProtoRunGraphRequest::AddSendFromRunCallableRequest(

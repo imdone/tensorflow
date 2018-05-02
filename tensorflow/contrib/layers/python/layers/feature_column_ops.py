@@ -860,7 +860,8 @@ def _add_variable_collection(weight_collections):
   return weight_collections
 
 
-# TODO(jamieas): remove the following logic once all FeatureColumn types are
+# TODO (jamieas): remove the following logic once all FeatureColumn types are id:1323
+# https://github.com/imdone/tensorflow/issues/1324
 # supported for sequences.
 # pylint: disable=protected-access
 _SUPPORTED_SEQUENCE_COLUMNS = (fc._OneHotColumn,

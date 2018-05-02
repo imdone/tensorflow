@@ -229,7 +229,8 @@ def _rnn_step(
         # else copy some of it through
         lambda: _copy_some_through(flat_new_output, flat_new_state))
 
-  # TODO(ebrevdo): skipping these conditionals may cause a slowdown,
+  # TODO (ebrevdo): skipping these conditionals may cause a slowdown, id:3437
+  # https://github.com/imdone/tensorflow/issues/3436
   # but benefits from removing cond() and its gradient.  We should
   # profile with and without this switch here.
   if skip_conditionals:
@@ -1237,7 +1238,8 @@ def static_rnn(cell,
       first_input = first_input[0]
 
     # Temporarily avoid EmbeddingWrapper and seq2seq badness
-    # TODO(lukaszkaiser): remove EmbeddingWrapper
+    # TODO (lukaszkaiser): remove EmbeddingWrapper id:3891
+    # https://github.com/imdone/tensorflow/issues/3889
     if first_input.get_shape().ndims != 1:
 
       input_shape = first_input.get_shape().with_rank_at_least(2)

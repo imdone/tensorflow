@@ -200,7 +200,8 @@ class SplitVOpCPUImpl {
     }
     const auto num_threads =
         context->device()->tensorflow_cpu_worker_threads()->num_threads;
-    // TODO(jewillco): Tune heuristic further.
+    // TODO (jewillco): Tune heuristic further. id:2742
+    // https://github.com/imdone/tensorflow/issues/2741
     const auto input_element_count = input_shape.num_elements();
     const int num_split = split_start_points.size();
     const bool use_parallelism_between_outputs =

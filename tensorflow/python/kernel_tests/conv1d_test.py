@@ -31,7 +31,8 @@ class Conv1DTest(test.TestCase):
 
   def testBasic(self):
     """Test that argument passing to conv1d is handled properly."""
-    # TODO(yongtang): dtypes.float64 can only be enabled once conv2d support
+    # TODO (yongtang): dtypes.float64 can only be enabled once conv2d support id:3279
+    # https://github.com/imdone/tensorflow/issues/3278
     # dtypes.float64, as conv1d implicitly calls conv2d after expand_dims.
     for dtype in [dtypes.float16, dtypes.float32]:
       x = constant_op.constant([1, 2, 3, 4], dtype=dtype)

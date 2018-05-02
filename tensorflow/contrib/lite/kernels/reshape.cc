@@ -30,7 +30,8 @@ constexpr int kOutputTensor = 0;
 TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
   auto* params = reinterpret_cast<TfLiteReshapeParams*>(node->builtin_data);
 
-  // TODO(ahentz): we are often given a tensor with the shape but we only pay
+  // TODO (ahentz): we are often given a tensor with the shape but we only pay id:1995
+  // https://github.com/imdone/tensorflow/issues/1995
   // attention to what the shape specified in 'params'.
   TF_LITE_ENSURE(context, NumInputs(node) == 1 || NumInputs(node) == 2);
   TF_LITE_ENSURE_EQ(context, NumOutputs(node), 1);

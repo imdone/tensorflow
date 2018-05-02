@@ -79,7 +79,8 @@ GrpcServer::~GrpcServer() {
   delete master_service_;
   delete worker_service_;
 
-  // TODO(mrry): Refactor the *Env classes so that it is less fiddly
+  // TODO (mrry): Refactor the *Env classes so that it is less fiddly id:1962
+  // https://github.com/imdone/tensorflow/issues/1962
   // to destroy them.
 
   // Shut down all outstanding rendezvous.
@@ -173,9 +174,10 @@ Status GrpcServer::Init(
   // start serving requests until `this->Start()` is called, which
   // happens after this method returns.
   //
-  // TODO(mrry): Provide a general mechanism for dynamically setting
-  // the identities of tasks in the worker pool after the service is
-  // running.
+  // TODO (mrry): Provide a general mechanism for dynamically setting id:2786
+// https://github.com/imdone/tensorflow/issues/2785
+// the identities of tasks in the worker pool after the service is
+// running.
   ::grpc::ServerBuilder builder;
   builder.AddListeningPort(strings::StrCat("0.0.0.0:", requested_port),
                            GetServerCredentials(server_def_), &bound_port_);

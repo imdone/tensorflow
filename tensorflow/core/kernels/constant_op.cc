@@ -57,7 +57,8 @@ std::unique_ptr<const NodeDef> StripTensorDataFromNodeDef(
   ret->set_op(original.op());
   ret->set_device(original.device());
   // Strip the "value" attr from the returned NodeDef.
-  // NOTE(mrry): The present implementation of `OpKernel::OpKernel()` only uses
+  // NOTE (mrry): The present implementation of ` only uses OpKernel::OpKernel()` id:1774
+  // https://github.com/imdone/tensorflow/issues/1774
   // attrs that affect the cardinality of list-typed inputs and outputs, so it
   // is safe to drop other attrs from the NodeDef.
   AddNodeAttr("dtype", ctx->output_type(0), ret);
@@ -161,7 +162,8 @@ void HostConstantOp::Compute(OpKernelContext* ctx) {
 
 #if GOOGLE_CUDA
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:2339
+// https://github.com/imdone/tensorflow/issues/2338
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(Name("Const")
                             .Device(DEVICE_GPU)
@@ -227,7 +229,8 @@ class FillOp : public OpKernel {
 
 #define REGISTER_CPU_KERNEL(TYPE) REGISTER_KERNEL(CPU, TYPE)
 TF_CALL_ALL_TYPES(REGISTER_CPU_KERNEL);
-// TODO(b/28917570): Add a test for this. Currently python 3 is not happy about
+// TODO (b/28917570): Add a test for this. Currently python 3 is not happy about id:3107
+// https://github.com/imdone/tensorflow/issues/3106
 // the conversion from uint8 to quint8.
 REGISTER_KERNEL(CPU, quint8);
 REGISTER_KERNEL(CPU, quint16);
@@ -269,7 +272,8 @@ REGISTER_KERNEL(GPU, bool);
 // Currently we do not support filling strings on GPU
 
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:2884
+// https://github.com/imdone/tensorflow/issues/2883
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(Name("Fill")
                             .Device(DEVICE_GPU)

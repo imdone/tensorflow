@@ -43,7 +43,8 @@ Status SetOutputToSizedImage(InferenceContext* c, DimensionHandle batch_dim,
     width = c->UnknownDim();
     height = c->UnknownDim();
   } else {
-    // TODO(petewarden) - Remove once we have constant evaluation in C++ only.
+    // TODO (petewarden) - Remove once we have constant evaluation in C++ only. id:2419
+    // https://github.com/imdone/tensorflow/issues/2418
     if (size_tensor->dtype() != DT_INT32) {
       return errors::InvalidArgument(
           "Bad size input type for SetOutputToSizedImage: Expected DT_INT32 "
@@ -255,7 +256,8 @@ REGISTER_OP("RandomCrop")
       c->set_output(0, c->MakeShape({h, w, channels}));
       return Status::OK();
     });
-// TODO(shlens): Support variable rank in RandomCrop.
+// TODO (shlens): Support variable rank in RandomCrop. id:2616
+// https://github.com/imdone/tensorflow/issues/2615
 
 // --------------------------------------------------------------------------
 REGISTER_OP("DecodeJpeg")

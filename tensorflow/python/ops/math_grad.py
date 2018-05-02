@@ -75,7 +75,8 @@ def _SumGrad(op, grad):
         return [array_ops.tile(grad, input_shape), None]
 
   input_shape = array_ops.shape(op.inputs[0])
-  # TODO(apassos) remove this once device placement for eager ops makes more
+  # TODO (apassos) remove this once device placement for eager ops makes more id:3531
+  # https://github.com/imdone/tensorflow/issues/3530
   # sense.
   with ops.colocate_with(input_shape):
     output_shape_kept_dims = math_ops.reduced_shape(input_shape, op.inputs[1])
@@ -621,7 +622,8 @@ def _DigammaGrad(op, grad):
 @ops.RegisterGradient("Igamma")
 def _IgammaGrad(op, grad):
   """Returns gradient of igamma(a, x) with respect to x."""
-  # TODO(ebrevdo): Perhaps add the derivative w.r.t. a
+  # TODO (ebrevdo): Perhaps add the derivative w.r.t. a id:3409
+  # https://github.com/imdone/tensorflow/issues/3408
   a = op.inputs[0]
   x = op.inputs[1]
   sa = array_ops.shape(a)
@@ -631,7 +633,8 @@ def _IgammaGrad(op, grad):
   # Perform operations in log space before summing, because Gamma(a)
   # and Gamma'(a) can grow large.
   partial_x = math_ops.exp(-x + (a - 1) * math_ops.log(x) - math_ops.lgamma(a))
-  # TODO(b/36815900): Mark None return values as NotImplemented
+  # TODO (b/36815900): Mark None return values as NotImplemented id:3874
+  # https://github.com/imdone/tensorflow/issues/3872
   return (None, array_ops.reshape(
       math_ops.reduce_sum(partial_x * grad, rx), sx))
 
@@ -646,7 +649,8 @@ def _IgammacGrad(op, grad):
 @ops.RegisterGradient("Betainc")
 def _BetaincGrad(op, grad):
   """Returns gradient of betainc(a, b, x) with respect to x."""
-  # TODO(ebrevdo): Perhaps add the derivative w.r.t. a, b
+  # TODO (ebrevdo): Perhaps add the derivative w.r.t. a, b id:4302
+  # https://github.com/imdone/tensorflow/issues/4300
   a, b, x = op.inputs
 
   # two cases: x is a scalar and a/b are same-shaped tensors, or vice
@@ -663,7 +667,8 @@ def _BetaincGrad(op, grad):
   partial_x = math_ops.exp((b - 1) * math_ops.log(1 - x) +
                            (a - 1) * math_ops.log(x) - log_beta)
 
-  # TODO(b/36815900): Mark None return values as NotImplemented
+  # TODO (b/36815900): Mark None return values as NotImplemented id:3928
+  # https://github.com/imdone/tensorflow/issues/3926
   return (
       None,  # da
       None,  # db
@@ -673,7 +678,8 @@ def _BetaincGrad(op, grad):
 @ops.RegisterGradient("Zeta")
 def _ZetaGrad(op, grad):
   """Returns gradient of zeta(x, q) with respect to x and q."""
-  # TODO(tillahoffmann): Add derivative with respect to x
+  # TODO (tillahoffmann): Add derivative with respect to x id:3535
+  # https://github.com/imdone/tensorflow/issues/3534
   x = op.inputs[0]
   q = op.inputs[1]
   # Broadcast gradients
@@ -685,7 +691,8 @@ def _ZetaGrad(op, grad):
     x = math_ops.conj(x)
     q = math_ops.conj(q)
     partial_q = -x * math_ops.zeta(x + 1, q)
-    # TODO(b/36815900): Mark None return values as NotImplemented
+    # TODO (b/36815900): Mark None return values as NotImplemented id:3412
+    # https://github.com/imdone/tensorflow/issues/3411
     return (None,
             array_ops.reshape(math_ops.reduce_sum(partial_q * grad, rq), sq))
 
@@ -693,7 +700,8 @@ def _ZetaGrad(op, grad):
 @ops.RegisterGradient("Polygamma")
 def _PolygammaGrad(op, grad):
   """Returns gradient of psi(n, x) with respect to n and x."""
-  # TODO(tillahoffmann): Add derivative with respect to n
+  # TODO (tillahoffmann): Add derivative with respect to n id:3876
+  # https://github.com/imdone/tensorflow/issues/3874
   n = op.inputs[0]
   x = op.inputs[1]
   # Broadcast gradients
@@ -705,7 +713,8 @@ def _PolygammaGrad(op, grad):
     n = math_ops.conj(n)
     x = math_ops.conj(x)
     partial_x = math_ops.polygamma(n + 1, x)
-    # TODO(b/36815900): Mark None return values as NotImplemented
+    # TODO (b/36815900): Mark None return values as NotImplemented id:4303
+    # https://github.com/imdone/tensorflow/issues/4301
     return (None,
             array_ops.reshape(math_ops.reduce_sum(partial_x * grad, rx), sx))
 
@@ -1208,7 +1217,8 @@ def _ConjGrad(_, grad):
 @ops.RegisterGradient("ComplexAbs")
 def _ComplexAbsGrad(op, grad):
   """Returns the gradient of ComplexAbs."""
-  # TODO(b/27786104): The cast to complex could be removed once arithmetic
+  # TODO (b/27786104): The cast to complex could be removed once arithmetic id:3931
+  # https://github.com/imdone/tensorflow/issues/3929
   # supports mixtures of complex64 and real values.
   return (math_ops.complex(grad, array_ops.zeros_like(grad)) * math_ops.sign(
       op.inputs[0]))
@@ -1253,7 +1263,8 @@ def _CumprodGrad(op, grad):
   exclusive = op.get_attr("exclusive")
   reverse = op.get_attr("reverse")
 
-  # TODO This fails when x contains 0 and should be fixed
+  # TODO This fails when x contains 0 and should be fixed id:3540
+  # https://github.com/imdone/tensorflow/issues/3539
   prod = math_ops.cumprod(x, axis, exclusive=exclusive, reverse=reverse)
   out = math_ops.cumsum(
       prod * grad, axis, exclusive=exclusive, reverse=not reverse)

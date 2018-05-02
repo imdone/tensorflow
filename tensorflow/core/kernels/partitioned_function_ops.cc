@@ -38,7 +38,8 @@ namespace {
 // partitions a given function's underlying graph, and executes each of the
 // partitioned subgraphs as a function.
 //
-// TODO(akshayka): Support distributed execution.
+// TODO (akshayka): Support distributed execution. id:2560
+// https://github.com/imdone/tensorflow/issues/2559
 class PartitionedCallOp : public AsyncOpKernel {
  public:
   explicit PartitionedCallOp(OpKernelConstruction* ctx) : AsyncOpKernel(ctx) {
@@ -61,15 +62,18 @@ class PartitionedCallOp : public AsyncOpKernel {
     // function, and exactly one function shard is created for each device
     // Inputs and outputs are pinned to the local device, for simplicity.
     //
-    // TODO(akshayka): Support re-sharding the function on subsequent calls,
-    // via, e.g., virtual device annotations and a list of device names supplied
-    // through an attribute.
-    //
-    // TODO(akshayka): Lift the constraint pinning inputs and outputs to the
-    // local device.
-    //
-    // TODO(akshayka): Add a fastpath for functions that execute on a single
-    // device.
+    // TODO (akshayka): Support re-sharding the function on subsequent calls, id:3263
+// https://github.com/imdone/tensorflow/issues/3262
+// via, e.g., virtual device annotations and a list of device names supplied
+// through an attribute.
+// 
+    // TODO (akshayka): Lift the constraint pinning inputs and outputs to the id:3926
+// https://github.com/imdone/tensorflow/issues/3924
+// local device.
+// 
+    // TODO (akshayka): Add a fastpath for functions that execute on a single id:2225
+// https://github.com/imdone/tensorflow/issues/2224
+// device.
     {
       mutex_lock l(mu_);
       if (!partitioned_) {
@@ -105,10 +109,12 @@ class PartitionedCallOp : public AsyncOpKernel {
 
         // Partition the graph into subgraphs: exactly one subgraph per device.
         //
-        // TODO(akshayka): Let devices rewrite their graphs.
+        // TODO (akshayka): Let devices rewrite their graphs. id:2142
+// https://github.com/imdone/tensorflow/issues/2141
         PartitionOptions partition_options;
         partition_options.node_to_loc = [](const Node* node) {
-          // TODO(akshayka): To better support the distributed case, first split
+          // TODO (akshayka): To better support the distributed case, first split id:2562
+          // https://github.com/imdone/tensorflow/issues/2561
           // the graph by worker (e.g,. using the master session's
           // `SplitByWorker` policy), and then recursively partition the
           // per-worker shards at the remote worker(s).
@@ -184,11 +190,13 @@ class PartitionedCallOp : public AsyncOpKernel {
     opts.step_container = ctx->step_container();
     opts.cancellation_manager = ctx->cancellation_manager();
     opts.stats_collector = ctx->stats_collector();
-    // TODO(akshayka): Consider selecting a runner on a per-device basis, i.e.,
+    // TODO (akshayka): Consider selecting a runner on a per-device basis, i.e., id:3265
+    // https://github.com/imdone/tensorflow/issues/3264
     // using device-specific threadpools when available.
     opts.runner = ctx->runner();
     opts.source_device = local_device_name_;
-    // TODO(akshayka): Accommodate the multiple-worker scenario by adding the
+    // TODO (akshayka): Accommodate the multiple-worker scenario by adding the id:3929
+    // https://github.com/imdone/tensorflow/issues/3927
     // constructed rendezvous to a rendezvous manager.
     Rendezvous* rendez = new IntraProcessRendezvous(lib->device_mgr());
     opts.rendezvous = rendez;

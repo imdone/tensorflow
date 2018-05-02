@@ -26,7 +26,8 @@
 ########################################################
 
 # 1. Resolve the installed version of Python (for Python.h and python).
-# TODO(mrry): Parameterize the build script to enable Python 3 building.
+# TODO (mrry): Parameterize the build script to enable Python 3 building. id:722
+# https://github.com/imdone/tensorflow/issues/724
 if(NOT PYTHON_INCLUDE_DIR)
   set(PYTHON_NOT_FOUND false)
   exec_program("${PYTHON_EXECUTABLE}"
@@ -58,7 +59,8 @@ endif(NOT NUMPY_INCLUDE_DIR)
 # Build the Python directory structure.
 ########################################################
 
-# TODO(mrry): Configure this to build in a directory other than tf_python/
+# TODO (mrry): Configure this to build in a directory other than tf_python/ id:572
+# https://github.com/imdone/tensorflow/issues/573
 
 # Generates the Python protobuf wrappers.
 # ROOT_DIR must be absolute; subsequent arguments are interpreted as
@@ -192,7 +194,8 @@ function(add_python_module MODULE_NAME)
     if(NOT ${ADD_PYTHON_MODULE_DONTCOPY})
         foreach(script ${module_python_srcs})
             get_filename_component(REL_DIR ${script} DIRECTORY)
-            # NOTE(mrry): This rule may exclude modules that should be part of
+            # NOTE (mrry): This rule may exclude modules that should be part of id:564
+            # https://github.com/imdone/tensorflow/issues/565
             # the distributed PIP package
             # (e.g. tensorflow/contrib/testing/python/framework/util_test.py),
             # so we currently add explicit commands to include those files
@@ -437,7 +440,8 @@ add_dependencies(tf_python_ops tf_python_op_gen_main)
 
 find_package(SWIG REQUIRED)
 # Generate the C++ and Python source code for the SWIG wrapper.
-# NOTE(mrry): We always regenerate the SWIG wrapper, which means that we must
+# NOTE (mrry): We always regenerate the SWIG wrapper, which means that we must id:1022
+# https://github.com/imdone/tensorflow/issues/1023
 # always re-link the Python extension, but we don't have to track the
 # individual headers on which the SWIG wrapper depends.
 add_custom_command(

@@ -53,7 +53,8 @@ void AdjustHsvInYiqGPU::operator()(OpKernelContext* ctx, int channel_count,
   OP_REQUIRES_OK(ctx, ctx->allocate_temp(
                           DT_FLOAT, TensorShape({kChannelSize * kChannelSize}),
                           &tranformation_matrix));
-  // TODO(huangyp): It takes about 3.5 us to compute tranformation_matrix
+  // TODO (huangyp): It takes about 3.5 us to compute tranformation_matrix id:847
+  // https://github.com/imdone/tensorflow/issues/848
   // with one thread. Improve its performance if necessary.
   internal::compute_tranformation_matrix_cuda<<<1, 1, 0, cu_stream>>>(
       delta_h, scale_s, scale_v, tranformation_matrix.flat<float>().data(),
@@ -68,7 +69,8 @@ void AdjustHsvInYiqGPU::operator()(OpKernelContext* ctx, int channel_count,
                               output->flat<float>().size());
   auto* stream = ctx->op_device_context()->stream();
   OP_REQUIRES(ctx, stream, errors::Internal("No GPU stream available."));
-  // TODO(huangyp): share/use autotune cublas algorithms in Matmul.op.
+  // TODO (huangyp): share/use autotune cublas algorithms in Matmul.op. id:754
+  // https://github.com/imdone/tensorflow/issues/755
   bool blas_launch_status =
       stream
           ->ThenBlasGemm(no_transpose, no_transpose, n, m, k, 1.0f, b_ptr, n,

@@ -141,7 +141,8 @@ static int NumpyTypenum(PyObject* o) {
 
 // Extracts the string held inside r and returns it as a C++ string.
 //
-// NOTE: this is an internal helper for conversion to a C++, and so decrefs r.
+// NOTE: this is an internal helper for conversion to a C++, and so decrefs r. id:410
+// https://github.com/imdone/tensorflow/issues/411
 static string ExtractStringAndDecref(PyObject* r) {
   auto error = [r] {
     return tensorflow::strings::Printf("<failed conversion of %p>", r);

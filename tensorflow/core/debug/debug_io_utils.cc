@@ -259,7 +259,8 @@ Status PublishEncodedGraphDefInChunks(const string& encoded_graph_def,
     event.set_wall_time(static_cast<double>(wall_time));
     // Prefix the chunk with
     //   <hash64>,<device_name>,<wall_time>|<index>|<num_chunks>|.
-    // TODO(cais): Use DebuggerEventMetadata to store device_name, num_chunks
+    // TODO (cais): Use DebuggerEventMetadata to store device_name, num_chunks id:1850
+    // https://github.com/imdone/tensorflow/issues/1850
     // and chunk_index, instead.
     event.set_graph_def(strings::StrCat(hash, ",", device_name, ",", wall_time,
                                         "|", i, "|", num_chunks, "|",
@@ -737,7 +738,8 @@ Status DebugGrpcChannel::ReceiveServerRepliesAndClose() {
 mutex DebugGrpcIO::streams_mu(LINKER_INITIALIZED);
 
 int64 DebugGrpcIO::channel_connection_timeout_micros = 900 * 1000 * 1000;
-// TODO(cais): Make this configurable?
+// TODO (cais): Make this configurable? id:1453
+// https://github.com/imdone/tensorflow/issues/1454
 
 const size_t DebugGrpcIO::kGrpcMessageSizeLimitBytes = 4000 * 1024;
 
@@ -771,7 +773,8 @@ Status DebugGrpcIO::SendTensorThroughGrpcStream(
       TF_RETURN_IF_ERROR(
           GetOrCreateDebugGrpcChannel(grpc_stream_url, &debug_grpc_channel));
       debug_grpc_channel->ReceiveAndProcessEventReplies(1);
-      // TODO(cais): Support new tensor value carried in the EventReply for
+      // TODO (cais): Support new tensor value carried in the EventReply for id:1933
+      // https://github.com/imdone/tensorflow/issues/1933
       // overriding the value of the tensor being published.
     }
     return Status::OK();

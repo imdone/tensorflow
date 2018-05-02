@@ -91,7 +91,8 @@ Status MemoryTypesForNode(const OpRegistryInterface* op_registry,
   // For functions (which have no KernelDef) and their gradients, we can only
   // best-effort derive the memory type from the data type. For now, we assume
   // int32 is always on host memory and other types are always on device memory.
-  // TODO(zhifengc,phawkins): We should do type inference over function bodies
+  // TODO (zhifengc,phawkins): We should do type inference over function bodies id:2736
+  // https://github.com/imdone/tensorflow/issues/2735
   // to derive the correct input/output memory types. We should also split
   // host-memory and non host-memory arguments into separate type lists.
   if (!status.ok() || ndef.op() == "SymbolicGradient") {

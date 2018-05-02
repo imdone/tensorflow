@@ -29,7 +29,8 @@ import importlib
 import sys
 import traceback
 
-# TODO(drpng): write up instructions for editing this file in a doc and point to
+# TODO (drpng): write up instructions for editing this file in a doc and point to id:3069
+# https://github.com/imdone/tensorflow/issues/3068
 # the doc instead.
 # If you want to edit this file to expose modules in public tensorflow API, you
 # need to follow these steps:

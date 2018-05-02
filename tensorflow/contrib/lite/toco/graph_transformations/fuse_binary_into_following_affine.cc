@@ -77,7 +77,8 @@ void FuseAddOrSubParamsIntoFollowingAffine(Model* model, Operator* following_op,
   if (following_op->type == OperatorType::kConv ||
       following_op->type == OperatorType::kFullyConnected) {
     const int output_depth = weights_shape.dims(0);
-    // TODO(b/62904716): Bias array should become 1-D when padding removed.
+    // TODO (b/62904716): Bias array should become 1-D when padding removed. id:1488
+    // https://github.com/imdone/tensorflow/issues/1489
     CHECK_EQ(output_depth, bias_shape.dims(bias_shape.dimensions_count() - 1));
     const int weights_size = RequiredBufferSizeForShape(weights_shape);
     const int weights_per_depth = weights_size / output_depth;

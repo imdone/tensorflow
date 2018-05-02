@@ -354,7 +354,8 @@ TEST_F(GraphPartitionTest, CrossDevice_DataControl) {
   string b = "/job:a/replica:0/task:0/cpu:1";
   a1 = FloatInput(scope_a_.WithOpName("A1"));
   auto c = Const(scope_a_.WithOpName("A1/_0").WithControlDependencies(a1), {});
-  // NOTE: Send 0 A1/_1 -> A1/_2 is not necessarily needed. We could
+  // NOTE: Send 0 A1/_1 -> A1/_2 is not necessarily needed. We could id:2267
+  // https://github.com/imdone/tensorflow/issues/2266
   // use A1/_0 -> A1/_4 as the control as a minor optimization.
   _Send(scope_a_.WithOpName("A1/_1"), c, "edge_1_A1", a, 82, b);
   _Send(scope_a_.WithOpName("A1/_4"), a1, "edge_2_A1", a, 82, b);

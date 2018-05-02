@@ -281,7 +281,8 @@ def _make_metrics_ops(metrics, features, labels, predictions):
       result[name] = metric.create_metric_ops(features, labels, predictions)
       continue
 
-    # TODO(b/31229024): Remove the rest of this loop
+    # TODO (b/31229024): Remove the rest of this loop id:905
+    # https://github.com/imdone/tensorflow/issues/906
     logging.warning('Please specify metrics using MetricSpec. Using bare '
                     'functions or (key, fn) tuples is deprecated and support '
                     'for it will be removed on Oct 1, 2016.')
@@ -407,8 +408,9 @@ class BaseEstimator(sklearn.BaseEstimator, evaluable.Evaluable,
 
   # Note that for Google users, this is overridden with
   # learn_runner.EstimatorConfig.
-  # TODO(wicke): Remove this once launcher takes over config functionality
-  _Config = run_config.RunConfig  # pylint: disable=invalid-name
+  # TODO (wicke): Remove this once launcher takes over config functionality id:818
+  # https://github.com/imdone/tensorflow/issues/819
+  #   _Config = run_config.RunConfig  # pylint: disable=invalid-name
 
   @deprecated(None, 'Please replace uses of any Estimator from tf.contrib.learn'
               ' with an Estimator from tf.estimator.*')
@@ -437,7 +439,8 @@ class BaseEstimator(sklearn.BaseEstimator, evaluable.Evaluable,
     # Model directory.
     if (model_dir is not None) and (self._config.model_dir is not None):
       if model_dir != self._config.model_dir:
-        # TODO(b/9965722): remove this suppression after it is no longer
+        # TODO (b/9965722): remove this suppression after it is no longer id:1339
+        # https://github.com/imdone/tensorflow/issues/1340
         #                  necessary.
         # pylint: disable=g-doc-exception
         raise ValueError(
@@ -459,7 +462,8 @@ class BaseEstimator(sklearn.BaseEstimator, evaluable.Evaluable,
     self._device_fn = _get_replica_device_setter(self._config)
 
     # Features and labels TensorSignature objects.
-    # TODO(wicke): Rename these to something more descriptive
+    # TODO (wicke): Rename these to something more descriptive id:1363
+    # https://github.com/imdone/tensorflow/issues/1363
     self._features_info = None
     self._labels_info = None
 
@@ -467,7 +471,8 @@ class BaseEstimator(sklearn.BaseEstimator, evaluable.Evaluable,
 
   @property
   def config(self):
-    # TODO(wicke): make RunConfig immutable, and then return it without a copy.
+    # TODO (wicke): make RunConfig immutable, and then return it without a copy. id:998
+    # https://github.com/imdone/tensorflow/issues/999
     return copy.deepcopy(self._config)
 
   @property
@@ -884,7 +889,8 @@ class BaseEstimator(sklearn.BaseEstimator, evaluable.Evaluable,
                       checkpoint_path=None,
                       hooks=None,
                       log_progress=True):
-    # TODO(wicke): Remove this once Model and associated code are gone.
+    # TODO (wicke): Remove this once Model and associated code are gone. id:909
+    # https://github.com/imdone/tensorflow/issues/910
     if (hasattr(self._config, 'execution_mode') and
         self._config.execution_mode not in ('all', 'evaluate', 'eval_evalset')):
       return None, None
@@ -1387,7 +1393,8 @@ class Estimator(BaseEstimator):
       input_alternatives, features = (
           saved_model_export_utils.get_input_alternatives(input_ops))
 
-      # TODO(b/34388557) This is a stopgap, pending recording model provenance.
+      # TODO (b/34388557) This is a stopgap, pending recording model provenance. id:820
+      # https://github.com/imdone/tensorflow/issues/821
       # Record which features are expected at serving time.  It is assumed that
       # these are the features that were used in training.
       for feature_key in input_ops.features.keys():
@@ -1432,7 +1439,8 @@ class Estimator(BaseEstimator):
                            'must specify no transforms.')
         untransformed_tags = graph_rewrite_specs[0].tags
 
-        # TODO(soergel): switch to main_op or otherwise update when dust settles
+        # TODO (soergel): switch to main_op or otherwise update when dust settles id:1342
+        # https://github.com/imdone/tensorflow/issues/1343
         builder.add_meta_graph_and_variables(
             session,
             untransformed_tags,
@@ -1462,7 +1470,8 @@ class Estimator(BaseEstimator):
     # Write the additional MetaGraphDefs
     for graph_rewrite_spec in graph_rewrite_specs[1:]:
 
-      # TODO(soergel) consider moving most of this to saved_model.builder_impl
+      # TODO (soergel) consider moving most of this to saved_model.builder_impl id:1367
+      # https://github.com/imdone/tensorflow/issues/1368
       # as e.g. builder.add_rewritten_meta_graph(rewritten_graph_def, tags)
 
       transformed_meta_graph_def = meta_graph_transform.meta_graph_transform(

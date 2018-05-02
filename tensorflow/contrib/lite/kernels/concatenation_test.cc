@@ -26,7 +26,8 @@ using ::testing::ElementsAreArray;
 
 class BaseConcatenationOpModel : public SingleOpModel {
  public:
-  // TODO(ahentz): Also test different activation types, axis, input
+  // TODO (ahentz): Also test different activation types, axis, input id:1757
+  // https://github.com/imdone/tensorflow/issues/1757
   // dimensions.
   BaseConcatenationOpModel() {}
   BaseConcatenationOpModel(const TensorData& input_template, int axis,

@@ -113,7 +113,8 @@ void XlaTransferManager::CopyCPUTensorToDevice(const Tensor* cpu_tensor,
       status = TransferLiteralToDevice(*cpu_tensor, device_tensor);
     } else {
       stream_->ThenMemcpy(&dev_dst_ptr, src_ptr, total_bytes);
-      // TODO(hpucha): Make this asynchronous.
+      // TODO (hpucha): Make this asynchronous. id:141
+      // https://github.com/imdone/tensorflow/issues/142
       Status block_status = stream_->BlockHostUntilDone();
       if (!block_status.ok()) {
         status = xla::InternalError(
@@ -154,7 +155,8 @@ void XlaTransferManager::CopyDeviceTensorToCPU(const Tensor* device_tensor,
       status = TransferLiteralFromDevice(cpu_tensor, *device_tensor);
     } else {
       stream_->ThenMemcpy(dst_ptr, dev_src_ptr, total_bytes);
-      // TODO(hpucha): Make this asynchronous.
+      // TODO (hpucha): Make this asynchronous. id:152
+      // https://github.com/imdone/tensorflow/issues/153
       Status block_status = stream_->BlockHostUntilDone();
       if (!block_status.ok()) {
         status = xla::InternalError(

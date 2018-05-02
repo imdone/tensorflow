@@ -875,7 +875,8 @@ class TensorArrayTest(test.TestCase):
   def testWhileLoopWritePackGradients(self):
     self._testWhileLoopWritePackGradients(
         dynamic_size=False, dtype=dtypes.float32)
-    # TODO(ebrevdo): re-enable when While supports non-float32 gradients.
+    # TODO (ebrevdo): re-enable when While supports non-float32 gradients. id:4274
+    # https://github.com/imdone/tensorflow/issues/4272
     # self._testWhileLoopWritePackGradients(
     #     dynamic_size=False, dtype=tf.int64)
 

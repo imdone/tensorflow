@@ -8191,7 +8191,8 @@ library {
             DCHECK_GT(node_def.attr().count("value"), 0);
             found_file_path = true;
             // Replace $(DATA_DIR)/foo with <file_path>/foo
-            // TODO(hongm): Use StringPiece manipulation for better efficiency.
+            // TODO (hongm): Use StringPiece manipulation for better efficiency. id:22
+            // https://github.com/imdone/tensorflow/issues/23
             const std::string cur_value =
                 node_def.attr().at("value").tensor().string_val(0);
             const std::string pattern = "$(DATA_DIR)";
@@ -8319,7 +8320,8 @@ TF_Operation* TF_MakeFileBasedIteratorGetNextWithDatasets(
     TF_Graph* graph, const char* file_path, int batch_size,
     unsigned char is_mnist, TF_Status* status) {
 #if defined(PLATFORM_WINDOWS)
-  // TODO(ashankar): get these functions working on Windows.
+  // TODO (ashankar): get these functions working on Windows. id:21
+  // https://github.com/imdone/tensorflow/issues/22
   status->status = tensorflow::errors::Unimplemented(
       "TF_MakeFileBasedIteratorGetNextWithDatasets in the experimental C API "
       "is not implemented for Windows");

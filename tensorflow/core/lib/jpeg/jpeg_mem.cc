@@ -419,7 +419,8 @@ uint8* UncompressLow(const void* srcdata, FewerArgsForCompiler* argball) {
   }
 
 #if !defined(LIBJPEG_TURBO_VERSION)
-  // TODO(tanmingxing): delete all these code after migrating to libjpeg_turbo
+  // TODO (tanmingxing): delete all these code after migrating to libjpeg_turbo id:2793
+  // https://github.com/imdone/tensorflow/issues/2792
   // for Windows.
   if (flags.crop) {
     // Update target output height and width based on crop window.
@@ -602,7 +603,8 @@ bool CompressInternal(const uint8* srcdata, int width, int height,
 
   JOCTET* buffer = nullptr;
 
-  // NOTE: for broader use xmp_metadata should be made a unicode string
+  // NOTE: for broader use xmp_metadata should be made a unicode string id:3378
+  // https://github.com/imdone/tensorflow/issues/3375
   CHECK(srcdata != nullptr);
   CHECK(output != nullptr);
   // This struct contains the JPEG compression parameters and pointers to

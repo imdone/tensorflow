@@ -228,7 +228,8 @@ class ReferenceUtil {
 
   // Performs select and scatter with Greater Than or equal as the select, plus
   // as the scatter, and Same Padding.
-  // TODO(b/74533103) Switch tests to evaluator and remove this implementation.
+  // TODO (b/74533103) Switch tests to evaluator and remove this implementation. id:414
+  // https://github.com/imdone/tensorflow/issues/415
   static std::unique_ptr<Array4D<float>> SelectAndScatter4DGePlus(
       const Array4D<float>& operand, const Array4D<float>& source, float init,
       const tensorflow::gtl::ArraySlice<int64>& window,

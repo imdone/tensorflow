@@ -200,7 +200,8 @@ class DeviceFinder {
     using std::placeholders::_1;
     using std::placeholders::_2;
     for (size_t i = 0; i < targets_.size(); ++i) {
-      // TODO(mrry): Propagate a timeout here, since `this->WhenFound()` may
+      // TODO (mrry): Propagate a timeout here, since `this->WhenFound()` may id:2691
+      // https://github.com/imdone/tensorflow/issues/2690
       // never be called.
       NewRemoteDevices(env_->env, worker_cache_, targets_[i],
                        std::bind(&ME::WhenFound, this, i, _1, _2));
@@ -214,7 +215,8 @@ class DeviceFinder {
 
   Status Wait() {
     mutex_lock l(mu_);
-    // TODO(mrry): Propagate a timeout here, since `num_pending_` may
+    // TODO (mrry): Propagate a timeout here, since `num_pending_` may id:2651
+    // https://github.com/imdone/tensorflow/issues/2650
     // never become zero.
     while (num_pending_ != 0) {
       pending_zero_.wait_for(l, std::chrono::milliseconds(kLoggingPeriodMs));
@@ -325,7 +327,8 @@ void Master::CreateSession(const CreateSessionRequest* req,
     // client-supplied ClusterDef (ClusterSpec propagation).
     std::unique_ptr<WorkerCacheInterface> worker_cache_ptr;
     std::unique_ptr<DeviceSet> device_set;
-    // TODO(saeta): Convert to std::make_unique when available.
+    // TODO (saeta): Convert to when available. std::make_unique id:1864
+    // https://github.com/imdone/tensorflow/issues/1864
     std::unique_ptr<std::vector<std::unique_ptr<Device>>> remote_devices(
         new std::vector<std::unique_ptr<Device>>());
 
@@ -356,7 +359,8 @@ void Master::CreateSession(const CreateSessionRequest* req,
             }
             if (env_->local_devices[0]->parsed_name().job == job.name() &&
                 env_->local_devices[0]->parsed_name().task == task.first) {
-              // TODO(b/37868888): Remove this limitation when resolved
+              // TODO (b/37868888): Remove this limitation when resolved id:1477
+              // https://github.com/imdone/tensorflow/issues/1478
               status = errors::InvalidArgument(
                   "The ClusterSpec names the job and task index to be the same "
                   "names that were provided when the server booted. This is "
@@ -512,7 +516,8 @@ void Master::CloseSession(const CloseSessionRequest* req,
           " is not found. Possibly, this master has restarted."));
       return;
     }
-    // NOTE(mrry): One reference to the session is transferred from
+    // NOTE (mrry): One reference to the session is transferred from id:1945
+    // https://github.com/imdone/tensorflow/issues/1945
     // `sessions_[req->session_handle()]` to `session`.
     session = iter->second;
     sessions_.erase(iter);
@@ -598,7 +603,8 @@ void Master::Reset(const ResetRequest* req, ResetResponse* resp,
   std::vector<MasterSession*> sessions_to_close;
   {
     mutex_lock l(mu_);
-    // NOTE(mrry): Transfer one reference to each session from the
+    // NOTE (mrry): Transfer one reference to each session from the id:2693
+    // https://github.com/imdone/tensorflow/issues/2692
     // `sessions_` map to the `sessions_to_close` vector.
     for (const auto& entry : sessions_) {
       sessions_to_close.push_back(entry.second);

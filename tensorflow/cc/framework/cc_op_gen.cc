@@ -556,7 +556,8 @@ OpInfo::OpInfo(const OpDef& graph_op_def, const ApiDef& api_def,
         "::tensorflow::", ArgIsList(arg) ? "InputList" : "Input"));
     arg_names.push_back(AvoidCPPKeywords(api_def_arg.rename_to()));
 
-    // TODO(keveman): Include input type information.
+    // TODO (keveman): Include input type information. id:76
+    // https://github.com/imdone/tensorflow/issues/77
     StringPiece description = api_def_arg.description();
     if (!description.empty()) {
       ConsumeEquals(&description);
@@ -585,7 +586,8 @@ OpInfo::OpInfo(const OpDef& graph_op_def, const ApiDef& api_def,
 
     string attr_comment;
     if (!api_def_attr.description().empty()) {
-      // TODO(keveman): Word wrap and indent this, to handle multi-line
+      // TODO (keveman): Word wrap and indent this, to handle multi-line id:57
+      // https://github.com/imdone/tensorflow/issues/58
       // descriptions.
       strings::StrAppend(&attr_comment, "* ", attr_name, ": ",
                          api_def_attr.description(), "\n");
@@ -635,7 +637,8 @@ OpInfo::OpInfo(const OpDef& graph_op_def, const ApiDef& api_def,
       strings::StrAppend(&comment, "The ", api_def.out_arg(0).name(),
                          " tensor.\n");
     } else {
-      // TODO(josh11b): Word wrap this.
+      // TODO (josh11b): Word wrap this. id:62
+      // https://github.com/imdone/tensorflow/issues/63
       strings::StrAppend(&comment, api_def.out_arg(0).description(), "\n");
     }
   } else {  // Multiple outputs.
@@ -649,7 +652,8 @@ OpInfo::OpInfo(const OpDef& graph_op_def, const ApiDef& api_def,
       if (api_def.out_arg(i).description().empty()) {
         strings::StrAppend(&comment, "\n");
       } else {
-        // TODO(josh11b): Word wrap this.
+        // TODO (josh11b): Word wrap this. id:106
+        // https://github.com/imdone/tensorflow/issues/107
         strings::StrAppend(&comment, ": ", api_def.out_arg(i).description(),
                            "\n");
       }
@@ -982,12 +986,14 @@ void StartFiles(bool internal, const string& dot_h_fname, WritableFile* h,
 #include "tensorflow/core/lib/gtl/array_slice.h"
 )header";
 
-  // TODO(keveman): Make namespaces configurable.
+  // TODO (keveman): Make namespaces configurable. id:58
+  // https://github.com/imdone/tensorflow/issues/59
   const string namespace_begin = internal ? R"namespace(
 namespace tensorflow {
 namespace ops {
 namespace internal {
-// NOTE: This namespace has internal TensorFlow details that
+// NOTE: This namespace has internal TensorFlow details that id:78
+// https://github.com/imdone/tensorflow/issues/79
 // are not part of TensorFlow's public API.
 
 )namespace"
@@ -1082,7 +1088,8 @@ void WriteCCOps(const OpList& ops, const ApiDefMap& api_def_map,
 
   for (const auto& graph_op_def : ops.op()) {
     // Skip deprecated ops.
-    // TODO(josh11b): If needed, can put them into a "deprecated" namespace
+    // TODO (josh11b): If needed, can put them into a "deprecated" namespace id:60
+    // https://github.com/imdone/tensorflow/issues/61
     // instead of skipping.
     if (graph_op_def.has_deprecation() &&
         graph_op_def.deprecation().version() <= TF_GRAPH_DEF_VERSION) {

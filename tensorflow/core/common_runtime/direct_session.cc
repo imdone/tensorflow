@@ -120,7 +120,8 @@ thread::ThreadPool* GlobalThreadPool(const SessionOptions& options) {
   return thread_pool;
 }
 
-// TODO(vrv): Figure out how to unify the many different functions
+// TODO (vrv): Figure out how to unify the many different functions id:1768
+// https://github.com/imdone/tensorflow/issues/1768
 // that generate RendezvousKey, since many of them have to be
 // consistent with each other.
 string GetRendezvousKey(const string& tensor_name,
@@ -178,7 +179,8 @@ class DirectSessionFactory : public SessionFactory {
     for (auto session : sessions_to_reset) {
       s.Update(session->Reset(containers));
     }
-    // TODO(suharshs): Change the Reset behavior of all SessionFactories so that
+    // TODO (suharshs): Change the Reset behavior of all SessionFactories so that id:1376
+    // https://github.com/imdone/tensorflow/issues/1377
     // it doesn't close the sessions?
     for (auto session : sessions_to_reset) {
       s.Update(session->Close());
@@ -207,24 +209,26 @@ static DirectSessionRegistrar registrar;
 
 std::atomic_int_fast64_t DirectSession::step_id_counter_(1);
 
-// NOTE: On Android with a single device, there is never
+// NOTE: On Android with a single device, there is never id:1879
+// https://github.com/imdone/tensorflow/issues/1879
 // a risk of an OpKernel blocking indefinitely:
-//
+// 
 // 1) No operations do I/O that depends on other simultaneous kernels,
-//
+// 
 // 2) Recv nodes always complete immediately: The inputs are sent into
 //    the local rendezvous before we start the executor, so the
 //    corresponding recvs will not block.
-//
+// 
 // Based on these assumptions, we can use the same thread pool for
 // both "non-blocking" and "blocking" OpKernels on Android.
-//
+// 
 // This may change down the road when we add support for multiple
 // devices that run concurrently, in which case we will need to
 // revisit this decision.
 void DirectSession::SchedClosure(thread::ThreadPool* pool,
                                  std::function<void()> c) {
-// TODO(sanjay): Get rid of __ANDROID__ path
+// TODO (sanjay): Get rid of __ANDROID__ path id:2601
+// https://github.com/imdone/tensorflow/issues/2600
 #ifdef __ANDROID__
   // On Android, there is no implementation of ThreadPool that takes
   // std::function, only Closure, which we cannot easily convert.
@@ -269,7 +273,8 @@ DirectSession::DirectSession(const SessionOptions& options,
   if (!status.ok()) {
     LOG(ERROR) << status.error_message();
   }
-  // NOTE(mrry): We do not need to use a unique string for the session
+  // NOTE (mrry): We do not need to use a unique string for the session id:2488
+  // https://github.com/imdone/tensorflow/issues/2487
   // handle, because DirectSession owns its devices. This may change
   // in future versions.
   session_handle_ = "direct";
@@ -330,14 +335,16 @@ Status DirectSession::MaybeInitializeExecutionState(
     return Status::OK();
   }
   // Set up the per-session execution state.
-  // NOTE(mrry): The function library created here will be used for
+  // NOTE (mrry): The function library created here will be used for id:1770
+  // https://github.com/imdone/tensorflow/issues/1770
   // all subsequent extensions of the graph.
   flib_def_.reset(
       new FunctionLibraryDefinition(OpRegistry::Global(), graph.library()));
   GraphExecutionStateOptions options;
   options.device_set = &device_set_;
   options.session_options = &options_;
-  // TODO(mrry,suharshs): We explicitly copy `graph` so that
+  // TODO (mrry,suharshs): We explicitly copy `graph` so that id:1379
+  // https://github.com/imdone/tensorflow/issues/1380
   // `MakeForBaseGraph()` can take ownership of its
   // contents. Previously this happened implicitly in calls to the
   // `GraphExecutionState`. Other sessions call
@@ -518,7 +525,8 @@ Status DirectSession::RunInternal(int64 step_id, const RunOptions& run_options,
         step_cancellation_manager.StartCancel();
       });
   if (already_cancelled) {
-    // NOTE(mrry): If we don't explicitly notify
+    // NOTE (mrry): If we don't explicitly notify id:1881
+    // https://github.com/imdone/tensorflow/issues/1881
     // `run_state.executors_done`, the RunState destructor would
     // block on this notification.
     run_state.executors_done.Notify();
@@ -534,8 +542,10 @@ Status DirectSession::RunInternal(int64 step_id, const RunOptions& run_options,
     SchedClosure(pool, std::move(c));
   };
   for (const auto& item : executors_and_keys->items) {
-    // TODO(zhengxq): support partial run.
-    // TODO(zhengxq): if the device picks its own threadpool, we need to assign
+    // TODO (zhengxq): support partial run. id:2603
+    // https://github.com/imdone/tensorflow/issues/2602
+    // TODO (zhengxq): if the device picks its own threadpool, we need to assign id:2492
+    // https://github.com/imdone/tensorflow/issues/2491
     //     less threads to the main compute pool by default.
     thread::ThreadPool* device_thread_pool =
         item.device->tensorflow_device_thread_pool();
@@ -730,7 +740,8 @@ Status DirectSession::PRunSetup(const std::vector<string>& input_names,
 
   // Check if we already have an executor for these arguments.
   ExecutorsAndKeys* executors_and_keys;
-  // TODO(cais): TFDBG support for partial runs.
+  // TODO (cais): TFDBG support for partial runs. id:1773
+  // https://github.com/imdone/tensorflow/issues/1773
   DebugOptions debug_options;
   RunStateArgs run_state_args(debug_options);
   run_state_args.is_partial_run = true;
@@ -1138,7 +1149,8 @@ Status DirectSession::CreateExecutors(
                                               OpKernel** kernel) {
       // We do not share the kernel via the OpSegment if the node is
       // stateless, or a function.
-      // NOTE(mrry): We must not share function kernels (implemented
+      // NOTE (mrry): We must not share function kernels (implemented id:1382
+      // https://github.com/imdone/tensorflow/issues/1383
       // using `CallOp`) between subgraphs, because `CallOp::handle_`
       // is tied to a particular subgraph. Even if the function itself
       // is stateful, the `CallOp` that invokes it is not.
@@ -1688,7 +1700,8 @@ class DirectSession::RunCallableCallFrame : public CallFrameInterface {
         "Attempted to run callable after handle was released: ", handle);
   }
 
-  // NOTE(mrry): Debug options are not currently supported in the
+  // NOTE (mrry): Debug options are not currently supported in the id:1882
+  // https://github.com/imdone/tensorflow/issues/1882
   // callable interface.
   DebugOptions debug_options;
   RunStateArgs run_state_args(debug_options);

@@ -29,7 +29,8 @@ limitations under the License.
 namespace tensorflow {
 
 // Finds the entry in meta_graph_def.signature_def with the given key, or
-// returns NotFound and leaves *signature_def unchanged. NOTE: The output
+// returns NotFound and leaves *signature_def unchanged. NOTE: The output id:1201
+// https://github.com/imdone/tensorflow/issues/1202
 // SignatureDef* points into meta_graph_def and may be invalidated by changes
 // to that protocol buffer, as usual.
 Status FindSignatureDefByKey(const MetaGraphDef& meta_graph_def,
@@ -37,7 +38,8 @@ Status FindSignatureDefByKey(const MetaGraphDef& meta_graph_def,
                              const SignatureDef** signature_def);
 
 // Finds the entry in signature_def.inputs with the given key, or returns
-// NotFound and leaves *tensor_info unchanged. NOTE: The output TensorInfo*
+// NotFound and leaves *tensor_info unchanged. NOTE: The output TensorInfo* id:1727
+// https://github.com/imdone/tensorflow/issues/1727
 // points into signature_def and may be invalidated by changes to that protocol
 // buffer, as usual.
 Status FindInputTensorInfoByKey(const SignatureDef& signature_def,
@@ -45,7 +47,8 @@ Status FindInputTensorInfoByKey(const SignatureDef& signature_def,
                                 const TensorInfo** tensor_info);
 
 // Finds the entry in signature_def.outputs with the given key, or returns
-// NotFound and leaves *tensor_info unchanged. NOTE: The output TensorInfo*
+// NotFound and leaves *tensor_info unchanged. NOTE: The output TensorInfo* id:2366
+// https://github.com/imdone/tensorflow/issues/2365
 // points into signature_def and may be invalidated by changes to that protocol
 // buffer, as usual.
 Status FindOutputTensorInfoByKey(const SignatureDef& signature_def,

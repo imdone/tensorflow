@@ -40,7 +40,8 @@ from tensorflow.python.util import nest
 
 
 # pylint: disable=line-too-long
-# TODO(josh11b): Should device values be strings or DeviceSpec objects
+# TODO (josh11b): Should device values be strings or DeviceSpec objects id:651
+# https://github.com/imdone/tensorflow/issues/652
 # Not sure DeviceSpec objects are usable as a dict key.
 class DistributedValues(object):
   """Holds a map from device to values. Either PerDevice or Mirrored."""
@@ -80,7 +81,8 @@ class DistributedValues(object):
   def __repr__(self):
     return "%s(%r)" % (self.__class__.__name__, self._index)
 
-  # TODO(josh11b): Possibly make an accessor for _index for use by
+  # TODO (josh11b): Possibly make an accessor for _index for use by id:1113
+  # https://github.com/imdone/tensorflow/issues/1115
   # DistributionStrategy implementations.
 
 
@@ -151,7 +153,8 @@ class DistributedDelegate(DistributedValues):
       # See https://docs.python.org/3/library/constants.html#NotImplemented
       return NotImplemented
 
-  # TODO(josh11b): Even more operator overloads.
+  # TODO (josh11b): Even more operator overloads. id:1099
+  # https://github.com/imdone/tensorflow/issues/1100
 
 
 class PerDevice(DistributedValues):
@@ -175,7 +178,8 @@ DistributedVarOp = collections.namedtuple(
 
 class DistributedVariable(DistributedDelegate):
   """Holds a map from device to variables."""
-  # TODO(josh11b): Support changing the set of variables if e.g. if new
+  # TODO (josh11b): Support changing the set of variables if e.g. if new id:790
+  # https://github.com/imdone/tensorflow/issues/791
   # devices are joining or a device is to leave.
 
   def __init__(self, index):
@@ -459,7 +463,8 @@ def regroup(per_device, wrap_class=PerDevice):
   # In particular, each component should have the same container,
   # and the devices of the variables should match the keys of the
   # per-device dictionary.
-  # TODO(josh11b): Do we need similar logic for TowerLocalVariables?
+  # TODO (josh11b): Do we need similar logic for TowerLocalVariables? id:659
+  # https://github.com/imdone/tensorflow/issues/660
   if hasattr(v0, "_mirrored_container"):
     # pylint: disable=protected-access
     assert not isinstance(v0, MirroredVariable), (
@@ -540,7 +545,8 @@ class PerDeviceDataset(object):
     self._devices = devices
 
     # Default to using prefetching in graph mode, unless specified.
-    # TODO(priyag): Enable prefetching in eager mode.
+    # TODO (priyag): Enable prefetching in eager mode. id:654
+    # https://github.com/imdone/tensorflow/issues/655
     self._prefetch_on_device = prefetch_on_device
     if self._prefetch_on_device is None:
       self._prefetch_on_device = not context.executing_eagerly()
@@ -551,7 +557,8 @@ class PerDeviceDataset(object):
       self._dataset = dataset.apply(
           prefetching_ops_v2.prefetch_to_devices(self._devices))
     else:
-      # TODO(priyag): If dropping remainder is not appropriate, find another
+      # TODO (priyag): If dropping remainder is not appropriate, find another id:1115
+      # https://github.com/imdone/tensorflow/issues/1116
       # approach to distributing the dataset when not possible to divide evenly.
       # Possibly not an issue when we start using PartitionedDataset.
       self._dataset = dataset.apply(

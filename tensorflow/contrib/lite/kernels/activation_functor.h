@@ -25,7 +25,8 @@ namespace tflite {
 
 // Dynamic (non-fused) activation functor. perhaps it is worth having
 // template instantiation?
-// TODO(aselle): Make this more efficient by pulling the switch to conv_eval
+// TODO (aselle): Make this more efficient by pulling the switch to conv_eval id:1494
+// https://github.com/imdone/tensorflow/issues/1495
 // using template inlining.
 class ActivationFunctor {
  public:
@@ -44,7 +45,8 @@ class ActivationFunctor {
       case kTfLiteActSigmoid:
         return 1.0f / (1.0f + std::exp(-a));
       default:
-        // TODO(aselle): More informative fatal error!
+        // TODO (aselle): More informative fatal error! id:1748
+        // https://github.com/imdone/tensorflow/issues/1748
         exit(1);
     }
   }

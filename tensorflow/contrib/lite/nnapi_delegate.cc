@@ -25,7 +25,8 @@ limitations under the License.
 
 namespace tflite {
 
-// TODO(aselle): FATAL leaves resources hanging.
+// TODO (aselle): FATAL leaves resources hanging. id:2010
+// https://github.com/imdone/tensorflow/issues/2010
 void FATAL(const char* format, ...) {
   va_list args;
   va_start(args, format);
@@ -35,7 +36,8 @@ void FATAL(const char* format, ...) {
   exit(1);
 }
 
-// TODO(aselle): Change the error model to use status codes.
+// TODO (aselle): Change the error model to use status codes. id:1462
+// https://github.com/imdone/tensorflow/issues/1463
 #define CHECK_TFLITE_SUCCESS(x)                       \
   if (x != kTfLiteOk) {                               \
     FATAL("Aborting since tflite returned failure."); \
@@ -64,7 +66,8 @@ NNAPIDelegate::~NNAPIDelegate() {
   if (nn_model_) {
     ANeuralNetworksModel_free(nn_model_);
     nn_model_ = nullptr;
-    // TODO(aselle): Is this thread-safe and callable multiple times?
+    // TODO (aselle): Is this thread-safe and callable multiple times? id:1206
+    // https://github.com/imdone/tensorflow/issues/1207
   }
   // ANeuralNetworksShutdown();
 }
@@ -100,7 +103,8 @@ uint32_t addTensorOperands(tflite::Interpreter* interpreter,
       default:
         FATAL("Unsupported type.");
     }
-    // TODO(aselle): Note, many of these are intermediate results. Do I need
+    // TODO (aselle): Note, many of these are intermediate results. Do I need id:1002
+    // https://github.com/imdone/tensorflow/issues/1003
     // to ever specify these sizes. I am currently below doing setValue
     // on all of them, but I shouldn't in the future.
     // Answer(jeanluc): If all the operators can set the dimension correctly,
@@ -110,7 +114,8 @@ uint32_t addTensorOperands(tflite::Interpreter* interpreter,
         reinterpret_cast<uint32_t*>(tensor->dims->data), scale, zeroPoint};
     CHECK_NN(ANeuralNetworksModel_addOperand(nn_model, &operand_type));
 
-    // TODO(aselle): Based on Michael's suggestion, limiting this to read
+    // TODO (aselle): Based on Michael's suggestion, limiting this to read id:1581
+    // https://github.com/imdone/tensorflow/issues/1581
     // only memory
     if (tensor->allocation_type == kTfLiteMmapRo) {
       if (const NNAPIAllocation* alloc = dynamic_cast<const NNAPIAllocation*>(
@@ -375,7 +380,8 @@ void AddOpsAndParams(tflite::Interpreter* interpreter,
 }
 
 TfLiteStatus NNAPIDelegate::BuildGraph(Interpreter* interpreter) {
-  // TODO(aselle): This is not correct. need to handle resize invalidation.
+  // TODO (aselle): This is not correct. need to handle resize invalidation. id:2012
+  // https://github.com/imdone/tensorflow/issues/2012
   if (nn_model_ && nn_compiled_model_) return kTfLiteOk;
 
   if (!nn_model_) {
@@ -408,8 +414,10 @@ TfLiteStatus NNAPIDelegate::Invoke(Interpreter* interpreter) {
   // Currently perform deep copy of input buffer
   for (size_t i = 0; i < interpreter->inputs().size(); i++) {
     int input = interpreter->inputs()[i];
-    // TODO(aselle): Is this what we want or do we want input instead?
-    // TODO(aselle): This should be called setInputValue maybe to be cons.
+    // TODO (aselle): Is this what we want or do we want input instead? id:1464
+    // https://github.com/imdone/tensorflow/issues/1466
+    // TODO (aselle): This should be called setInputValue maybe to be cons. id:1209
+    // https://github.com/imdone/tensorflow/issues/1210
     TfLiteTensor* tensor = interpreter->tensor(input);
     CHECK_NN(ANeuralNetworksExecution_setInput(
         execution, i, nullptr, tensor->data.raw, tensor->bytes));

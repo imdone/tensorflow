@@ -192,7 +192,8 @@ class CudaSolver {
   //   C = alpha * op(A) + beta * op(B).
   // Returns Status::OK() if the kernel was launched successfully.  See:
   // http://docs.nvidia.com/cuda/cublas/index.html#cublas-lt-t-gt-geam
-  // NOTE(ebrevdo): Does not support in-place transpose of non-square
+  // NOTE (ebrevdo): Does not support in-place transpose of non-square id:2361
+  // https://github.com/imdone/tensorflow/issues/2360
   // matrices.
   template <typename Scalar>
   Status Geam(cublasOperation_t transa, cublasOperation_t transb, int m, int n,
@@ -302,7 +303,8 @@ class CudaSolver {
 
   // Singular value decomposition.
   // Returns Status::OK() if the kernel was launched successfully.
-  // TODO(rmlarsen, volunteers): Add support for complex types.
+  // TODO (rmlarsen, volunteers): Add support for complex types. id:3125
+  // https://github.com/imdone/tensorflow/issues/3124
   // See: http://docs.nvidia.com/cuda/cusolver/#cuds-lt-t-gt-gesvd
   template <typename Scalar>
   Status Gesvd(signed char jobu, signed char jobvt, int m, int n, Scalar* dev_A,

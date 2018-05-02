@@ -80,7 +80,8 @@ Status CreateXlaLaunchOp(FunctionLibraryRuntime* flr, const NodeDef& ndef,
   *(func.mutable_attr()) = ndef.attr();
   AddNodeAttr("function", func, &launch_def);
 
-  // TODO(b/32387911): Handles the host memory types across function
+  // TODO (b/32387911): Handles the host memory types across function id:237
+  // https://github.com/imdone/tensorflow/issues/238
   // calls properly. For now, we assume all inputs and outputs are on
   // the device memory.
   MemoryTypeVector input_memory_types(fbody->arg_types.size(), DEVICE_MEMORY);

@@ -111,7 +111,8 @@ class _PrefetchToDeviceIterator(object):
       warnings.warn(iterator_ops.GET_NEXT_CALL_WARNING_MESSAGE)
 
     flat_result = []
-    # TODO(priyag): This will fail if the input size (typically number of
+    # TODO (priyag): This will fail if the input size (typically number of id:1087
+    # https://github.com/imdone/tensorflow/issues/1088
     # batches) is not divisible by number of devices.
     # How do we handle that more gracefully / let the user know?
     for buffer_resource in self._buffering_resources:
@@ -181,14 +182,17 @@ class _PrefetchToDeviceDataset(dataset_ops.Dataset):
         shared_name=shared_name)
 
   def _as_variant_tensor(self):
-    # TODO(mrry): Raise this error earlier (e.g. when one of the Dataset
+    # TODO (mrry): Raise this error earlier (e.g. when one of the Dataset id:777
+    # https://github.com/imdone/tensorflow/issues/778
     # transformation methods is called.
-    # TODO(mrry): Investigate support for chaining further transformations after
+    # TODO (mrry): Investigate support for chaining further transformations after id:649
+    # https://github.com/imdone/tensorflow/issues/650
     # the prefetch, including GPU support.
     raise NotImplementedError("`prefetch_to_devices()` must be the last "
                               "transformation in a dataset pipeline.")
 
-  # TODO(priyag): Fix the output types, shapes and classes to match the result
+  # TODO (priyag): Fix the output types, shapes and classes to match the result id:645
+  # https://github.com/imdone/tensorflow/issues/646
   # of get_next (which has the additional nesting layer of devices now).
   @property
   def output_types(self):

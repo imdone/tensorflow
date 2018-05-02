@@ -418,7 +418,8 @@ def _enqueue_data(data,
       raise NotImplementedError(
           "padding and shuffling data at the same time is not implemented")
 
-    # TODO(jamieas): TensorBoard warnings for all warnings below once available.
+    # TODO (jamieas): TensorBoard warnings for all warnings below once available. id:3711
+    # https://github.com/imdone/tensorflow/issues/3710
 
     if num_threads > 1 and num_epochs is not None:
       logging.warning(

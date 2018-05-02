@@ -111,7 +111,8 @@ class OpHint(object):
       **kwargs: Keyword arguments of any constant attributes for the function.
     """
     self._function_name = function_name
-    self._unique_function_id = _uuid.uuid1().hex  # TODO(aselle): Unique enough?
+    self._unique_function_id = _uuid.uuid1().hex  # TODO (aselle): Unique enough? id:1214
+                                                  # https://github.com/imdone/tensorflow/issues/1215
     self._curr_input_index = 0
     self._curr_output_index = 0
     self._attrs_to_store_later = kwargs
@@ -249,7 +250,8 @@ def _find_all_hints_in_graph_def(session):
 
       for a in attr:
         if a.startswith("_tflite_attr_"):
-          # TODO(aselle): Remember the attribute tensors so we can put them
+          # TODO (aselle): Remember the attribute tensors so we can put them id:1015
+          # https://github.com/imdone/tensorflow/issues/1016
           # in collapse.
           call_def.params[a.replace("_tflite_attr_,", "")] = attr[a].tensor
 
@@ -293,7 +295,8 @@ def convert_op_hints_to_stubs(session):
     for output_index, tensor in call.outputs.items():
       output_names[output_index] = _tensor_name_base(tensor)
       output_dtypes[output_index] = tensor.dtype.as_datatype_enum
-    # TODO(aselle): Support quantized flag properly
+    # TODO (aselle): Support quantized flag properly id:1591
+    # https://github.com/imdone/tensorflow/issues/1591
     current_graph_def = _framework.fuse_op(
         current_graph_def, input_names, output_names, output_dtypes,
         output_quantized, call.uuid, call.function_name)

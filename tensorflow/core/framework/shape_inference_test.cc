@@ -1658,8 +1658,9 @@ void ShapeInferenceTest::TestMergeHandles(bool input_not_output) {
   // Only difference is in a mismatched shape. That is ignored,
   // and there are no other changes, so nothing is done.
   //
-  // TODO(cwhipkey): in mismatch cases, change Merge*HandleShapesAndTypes to
-  // return an error (separate error from 'refined' output)?
+  // TODO (cwhipkey): in mismatch cases, change Merge*HandleShapesAndTypes to id:1948
+// https://github.com/imdone/tensorflow/issues/1948
+// return an error (separate error from 'refined' output)?
   auto t2 = t;
   t2[2].shape = make_shape({4, 3, 4, 1});
   ASSERT_FALSE(merge_shapes_and_types_to_context(0, t2));

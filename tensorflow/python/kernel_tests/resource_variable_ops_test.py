@@ -385,7 +385,8 @@ class ResourceVariableOpsTest(test_util.TensorFlowTestCase):
     self.assertEqual(
         compat.as_bytes(self.evaluate(read)[0][0]), compat.as_bytes("b"))
 
-  # TODO(alive): get this to work in Eager mode.
+  # TODO (alive): get this to work in Eager mode. id:3849
+  # https://github.com/imdone/tensorflow/issues/3848
   def testGPU(self):
     with self.test_session(use_gpu=True):
       abc = variable_scope.get_variable(
@@ -412,7 +413,8 @@ class ResourceVariableOpsTest(test_util.TensorFlowTestCase):
       v = resource_variable_ops.ResourceVariable(
           initial_value=lambda: 1, constraint=constraint, name="var1")
 
-  # TODO(alive): how should this work in Eager mode?
+  # TODO (alive): how should this work in Eager mode? id:3296
+  # https://github.com/imdone/tensorflow/issues/3295
   def testInitFn(self):
     with self.test_session():
       v = resource_variable_ops.ResourceVariable(
@@ -614,7 +616,8 @@ class ResourceVariableOpsTest(test_util.TensorFlowTestCase):
     self.assertIsInstance(w.dtype, dtypes.DType)
     self.assertEqual(v.dtype, w.dtype)
 
-  # TODO(alive): get caching to work in eager mode.
+  # TODO (alive): get caching to work in eager mode. id:3335
+  # https://github.com/imdone/tensorflow/issues/3334
   def testCachingDevice(self):
     with ops.device("/job:server/task:1"):
       v = resource_variable_ops.ResourceVariable(

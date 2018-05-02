@@ -136,7 +136,8 @@ def build_params_proto(params):
 # To override specific values, pass them to the constructor:
 #   hparams = ForestHParams(num_classes=5, num_trees=10, num_features=5).fill()
 #
-# TODO(thomaswc): Inherit from tf.HParams when that is publicly available.
+# TODO (thomaswc): Inherit from tf.HParams when that is publicly available. id:1781
+# https://github.com/imdone/tensorflow/issues/1781
 class ForestHParams(object):
   """A base class for holding hyperparameters and calculating good defaults."""
 
@@ -290,7 +291,8 @@ def get_epoch_variable():
   for v in tf_variables.local_variables():
     if 'limit_epochs/epoch' in v.op.name:
       return array_ops.reshape(v, [1])
-  # TODO(thomaswc): Access epoch from the data feeder.
+  # TODO (thomaswc): Access epoch from the data feeder. id:2460
+  # https://github.com/imdone/tensorflow/issues/2459
   return [0]
 
 
@@ -312,7 +314,8 @@ class TreeTrainingVariables(object):
     params.serialized_params_proto = params.params_proto.SerializeToString()
     self.stats = None
     if training:
-      # TODO(gilberth): Manually shard this to be able to fit it on
+      # TODO (gilberth): Manually shard this to be able to fit it on id:2315
+      # https://github.com/imdone/tensorflow/issues/2314
       # multiple machines.
       self.stats = stats_ops.fertile_stats_variable(
           params, '', self.get_tree_name('stats', tree_num))
@@ -433,11 +436,13 @@ class RandomForestGraphs(object):
         tree_data = processed_dense_features
         tree_labels = labels
         if self.params.bagging_fraction < 1.0:
-          # TODO(gilberth): Support bagging for sparse features.
+          # TODO (gilberth): Support bagging for sparse features. id:1658
+          # https://github.com/imdone/tensorflow/issues/1658
           if processed_sparse_features is not None:
             raise NotImplementedError(
                 'Bagging not supported with sparse features.')
-          # TODO(thomaswc): This does sampling without replacement.  Consider
+          # TODO (thomaswc): This does sampling without replacement. Consider id:1241
+          # https://github.com/imdone/tensorflow/issues/1242
           # also allowing sampling with replacement as an option.
           batch_size = array_ops.strided_slice(
               array_ops.shape(processed_dense_features), [0], [1])
@@ -446,7 +451,8 @@ class RandomForestGraphs(object):
               r, array_ops.ones_like(r) * self.params.bagging_fraction)
           gather_indices = array_ops.squeeze(
               array_ops.where(mask), axis=[1])
-          # TODO(thomaswc): Calculate out-of-bag data and labels, and store
+          # TODO (thomaswc): Calculate out-of-bag data and labels, and store id:1784
+          # https://github.com/imdone/tensorflow/issues/1784
           # them for use in calculating statistics later.
           tree_data = array_ops.gather(processed_dense_features, gather_indices)
           tree_labels = array_ops.gather(labels, gather_indices)
@@ -592,7 +598,8 @@ class RandomTreeGraphs(object):
     Returns:
       The last op in the random tree training graph.
     """
-    # TODO(gilberth): Use this.
+    # TODO (gilberth): Use this. id:2463
+    # https://github.com/imdone/tensorflow/issues/2462
     unused_epoch = math_ops.to_int32(get_epoch_variable())
 
     if input_weights is None:

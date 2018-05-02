@@ -54,7 +54,8 @@ namespace xla {
 
 // Class representing literal values in XLA.
 //
-// TODO(b/67651157): The methods in this class should be reduced to a minimal
+// TODO (b/67651157): The methods in this class should be reduced to a minimal id:221
+// https://github.com/imdone/tensorflow/issues/222
 // set of methods which construct Literals and accessors methods. Other methods
 // which perform computation on Literals (Reshape, Slice, etc) should be moved
 // elsewhere, and perhaps combined with evaluator code which operates on
@@ -89,7 +90,8 @@ class Literal {
   // Return the shape of the literal.
   const Shape& shape() const { return shape_; }
 
-  // TODO(b/67651157): Remove this accessor. Literal users should not be able to
+  // TODO (b/67651157): Remove this accessor. Literal users should not be able to id:240
+  // https://github.com/imdone/tensorflow/issues/241
   // mutate the shape as this can produce malformed Literals.
   Shape* mutable_shape_do_not_use() { return &shape_; }
 
@@ -352,8 +354,9 @@ class Literal {
   // round_f32_to_bf16: if true, converting F32 elements to BF16 uses rounding
   // instead of truncation; otherwise, truncation is used.
   //
-  // TODO(b/69266521): remove the round_to_bfloat16 flag when rounding becomes
-  // the default behavior.
+  // TODO (b/69266521): remove the round_to_bfloat16 flag when rounding becomes id:405
+// https://github.com/imdone/tensorflow/issues/406
+// the default behavior.
   StatusOr<std::unique_ptr<Literal>> ConvertToShape(
       const Shape& dest_shape, bool round_f32_to_bf16 = false) const;
 
@@ -824,7 +827,8 @@ std::ostream& operator<<(std::ostream& out, const Literal& literal);
 // A read-only view of a Literal. A LiteralView contains pointers to buffers
 // owned by the viewed Literal.
 //
-// TODO(b/71550060): Replace LiteralView with Literal slice classes (immutable
+// TODO (b/71550060): Replace LiteralView with Literal slice classes (immutable id:307
+// https://github.com/imdone/tensorflow/issues/308
 // and mutable) similar to (Mutable)ArraySlice.
 class LiteralView : public Literal {
  public:

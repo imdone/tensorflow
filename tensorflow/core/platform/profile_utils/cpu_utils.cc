@@ -63,7 +63,8 @@ static ICpuUtilsHelper* cpu_utils_helper_instance_ = nullptr;
 }
 
 /* static */ int64 CpuUtils::GetCycleCounterFrequencyImpl() {
-// TODO(satok): do not switch by macro here
+// TODO (satok): do not switch by macro here id:2983
+// https://github.com/imdone/tensorflow/issues/2982
 #if defined(__ANDROID__)
   return GetCpuUtilsHelperSingletonInstance().CalculateCpuFrequency();
 #elif defined(__linux__)
@@ -100,7 +101,8 @@ static ICpuUtilsHelper* cpu_utils_helper_instance_ = nullptr;
   }
   return freq_hz;
 #else
-  // TODO(satok): Support other OS if needed
+  // TODO (satok): Support other OS if needed id:3449
+  // https://github.com/imdone/tensorflow/issues/3448
   // Return INVALID_FREQUENCY on unsupported OS
   return INVALID_FREQUENCY;
 #endif

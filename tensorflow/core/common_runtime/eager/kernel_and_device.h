@@ -45,22 +45,25 @@ class KernelAndDevice {
   // The provided FunctionLibraryRuntime MUST outlive all calls to
   // Run() on the returned KernelAndDevice.
   //
-  // TODO(ashankar): Figure out thread-safety concerns around
-  // FunctionLibraryRuntime (in particular, how the underlying
-  // FunctionLibraryDefinition might be mutated by another thread as new
-  // functions are registered with it).  Conservatively, thread-safe usage of
-  // the FunctionLibraryRuntime is pushed on to the caller (see locking in
-  // c_api.cc).
+  // TODO (ashankar): Figure out thread-safety concerns around id:1401
+// https://github.com/imdone/tensorflow/issues/1402
+// FunctionLibraryRuntime (in particular, how the underlying
+// FunctionLibraryDefinition might be mutated by another thread as new
+// functions are registered with it).  Conservatively, thread-safe usage of
+// the FunctionLibraryRuntime is pushed on to the caller (see locking in
+// c_api.cc).
   static Status Init(const NodeDef& ndef, FunctionLibraryRuntime* flib,
                      KernelAndDevice* out);
-  // TODO(ashankar): Remove this
+  // TODO (ashankar): Remove this id:1888
+  // https://github.com/imdone/tensorflow/issues/1888
   static Status InitOp(Device* device, const NodeDef& ndef,
                        KernelAndDevice* out);
 
   KernelAndDevice(tensorflow::Rendezvous* rendez)
       : device_(nullptr), flib_(nullptr), rendez_(rendez) {}
 
-  // TODO(ashankar): Handle list-valued inputs.
+  // TODO (ashankar): Handle list-valued inputs. id:2617
+  // https://github.com/imdone/tensorflow/issues/2616
   Status Run(std::vector<Tensor>* inputs, std::vector<Tensor>* outputs,
              NodeExecStats* stats);
 

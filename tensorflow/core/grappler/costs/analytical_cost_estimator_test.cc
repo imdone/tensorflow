@@ -105,9 +105,11 @@ TEST_F(AnalyticalCostEstimatorTest, SimpleTest) {
   EXPECT_EQ(Costs::NanoSeconds(9151), summary.execution_time);
 
   // Make this estimate accurate:
-  // TODO(http://b/70031255): Accurate estimator for RandomUniform op needed
-  // TODO(http://b/70031363): Accurate estimator for Softmax needed
-  //
+  // TODO (http://b/70031255): Accurate estimator for RandomUniform op needed id:2823
+  // https://github.com/imdone/tensorflow/issues/2822
+  // TODO (http://b/70031363): Accurate estimator for Softmax needed id:2006
+  // https://github.com/imdone/tensorflow/issues/2006
+  // 
   // Change to EXPECT_FALSE when the above TODOs are done:
   EXPECT_TRUE(summary.inaccurate);
 }

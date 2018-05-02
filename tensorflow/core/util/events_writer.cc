@@ -31,7 +31,8 @@ limitations under the License.
 namespace tensorflow {
 
 EventsWriter::EventsWriter(const string& file_prefix)
-    // TODO(jeff,sanjay): Pass in env and use that here instead of Env::Default
+    // TODO (jeff,sanjay): Pass in env and use that here instead of Env::Default id:3469
+    // https://github.com/imdone/tensorflow/issues/3468
     : env_(Env::Default()),
       file_prefix_(file_prefix),
       num_outstanding_events_(0) {}
@@ -109,7 +110,8 @@ void EventsWriter::WriteSerializedEvent(StringPiece event_str) {
   recordio_writer_->WriteRecord(event_str).IgnoreError();
 }
 
-// NOTE(touts); This is NOT the function called by the Python code.
+// NOTE (touts); This is NOT the function called by the Python code. id:2684
+// https://github.com/imdone/tensorflow/issues/2683
 // Python calls WriteSerializedEvent(), see events_writer.i.
 void EventsWriter::WriteEvent(const Event& event) {
   string record;

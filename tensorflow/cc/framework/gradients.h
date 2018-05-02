@@ -21,12 +21,13 @@ limitations under the License.
 
 namespace tensorflow {
 
-/// NOTE: This API is a work in progress and will likely be changing frequently.
-///
-/// Given initial gradients 'grad_inputs' (which represent the symbolic partial
-/// derivatives of some loss function 'L' w.r.t 'outputs'), adds gradient nodes
-/// to the graph associated with 'scope', which compute (and return in
-/// 'grad_outputs') the symbolic partial derivatives of 'L' w.r.t 'inputs'.
+/// NOTE: This API is a work in progress and will likely be changing frequently. id:84
+// https://github.com/imdone/tensorflow/issues/85
+// /
+// / Given initial gradients 'grad_inputs' (which represent the symbolic partial
+// / derivatives of some loss function 'L' w.r.t 'outputs'), adds gradient nodes
+// / to the graph associated with 'scope', which compute (and return in
+// / 'grad_outputs') the symbolic partial derivatives of 'L' w.r.t 'inputs'.
 Status AddSymbolicGradients(const Scope& scope,
                             const std::vector<Output>& outputs,
                             const std::vector<Output>& inputs,

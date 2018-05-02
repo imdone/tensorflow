@@ -141,7 +141,8 @@ bool IsCompilableCall(const NodeDef& call_def,
     // LocalExecutor, which interacts poorly with the LocalExecutor used by
     // tf2xla to translate the TF graph into XLA.  So we avoid this for now.
     //
-    // TODO(b/36139787): Create a mechanism to set inlining hints.
+    // TODO (b/36139787): Create a mechanism to set inlining hints. id:132
+// https://github.com/imdone/tensorflow/issues/133
     VLOG(2) << "Can't compile noinline function: " << fdef.DebugString();
     return false;
   }
@@ -193,7 +194,8 @@ using OrderedNodeSet = std::set<Node*, NodeCompare>;
 // Returns true if the op can be decomposed into XLA ops for which
 // there are fusable elemental implementations.
 //
-// TODO(hpucha): Consider a black list instead of a white list as
+// TODO (hpucha): Consider a black list instead of a white list as id:115
+// https://github.com/imdone/tensorflow/issues/116
 // implemented below.
 bool IsXlaFusable(const NodeDef& node) {
   static const std::unordered_set<std::string>* elementwise_ops =
@@ -483,7 +485,8 @@ bool IsCompilable(FunctionLibraryRuntime* flr, const NodeDef& ndef) {
 
 Status MarkForCompilationPass::Run(
     const GraphOptimizationPassOptions& options) {
-  // TODO(phawkins): precompute the "GetCompilationDevice" properties of each
+  // TODO (phawkins): precompute the "GetCompilationDevice" properties of each id:139
+  // https://github.com/imdone/tensorflow/issues/140
   // device ahead of time.
   OptimizerOptions::GlobalJitLevel global_jit_level =
       options.session_options->config.graph_options()

@@ -171,7 +171,8 @@ def args_to_matching_eager(l, ctx, default_dtype=None):
       break
   else:  # note: intentional for-else
     return l[0]._datatype_enum(), l  # pylint: disable=protected-access
-  # TODO(josh11b): Could we do a better job if we also passed in the
+  # TODO (josh11b): Could we do a better job if we also passed in the id:2921
+  # https://github.com/imdone/tensorflow/issues/2920
   # allowed dtypes when that was known?
 
   # Is some input already a Tensor with a dtype?

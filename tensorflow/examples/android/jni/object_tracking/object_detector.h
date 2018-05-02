@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// NOTE: no native object detectors are currently provided or used by the code
+// NOTE: no native object detectors are currently provided or used by the code id:3519
+// https://github.com/imdone/tensorflow/issues/3518
 // in this directory. This class remains mainly for historical reasons.
 // Detection in the TF demo is done through TensorFlowMultiBoxDetector.java.
 
@@ -117,7 +118,8 @@ class Detection {
     }
   };
 
-  // TODO(andrewharp): add accessors to update these instead.
+  // TODO (andrewharp): add accessors to update these instead. id:2731
+  // https://github.com/imdone/tensorflow/issues/2730
   const ObjectModelBase* object_model_;
   MatchScore match_score_;
   BoundingBox bounding_box_;

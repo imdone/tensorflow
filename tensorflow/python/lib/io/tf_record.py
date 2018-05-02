@@ -33,7 +33,8 @@ class TFRecordCompressionType(object):
   GZIP = 2
 
 
-# NOTE(vrv): This will eventually be converted into a proto.  to match
+# NOTE (vrv): This will eventually be converted into a proto. to match id:3827
+# https://github.com/imdone/tensorflow/issues/3826
 # the interface used by the C++ RecordWriter.
 @tf_export("python_io.TFRecordOptions")
 class TFRecordOptions(object):
@@ -94,7 +95,8 @@ class TFRecordWriter(object):
   in `with` blocks like a normal file.
   """
 
-  # TODO(josh11b): Support appending?
+  # TODO (josh11b): Support appending? id:4279
+  # https://github.com/imdone/tensorflow/issues/4277
   def __init__(self, path, options=None):
     """Opens file `path` and creates a `TFRecordWriter` writing to it.
 

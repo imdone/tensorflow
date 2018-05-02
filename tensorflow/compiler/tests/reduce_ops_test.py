@@ -139,7 +139,8 @@ class ReduceOpsTest(XLATestCase):
                           self.REAL_DATA)
 
   def testReduceMeanF32(self):
-    # TODO(phawkins): mean on XLA currently returns 0 instead of NaN when
+    # TODO (phawkins): mean on XLA currently returns 0 instead of NaN when id:163
+    # https://github.com/imdone/tensorflow/issues/165
     # reducing across zero inputs.
     self._testReduction(math_ops.reduce_mean, np.mean, np.float32,
                         self.NONEMPTY_REAL_DATA)

@@ -97,7 +97,8 @@ void ChromeTraceFormatter::EmitCounter(
   event["args"] = args;
   events_.push_back(event);
 
-  // TODO(xpan): chrome://tracing is not ideal visualization for memory.
+  // TODO (xpan): chrome://tracing is not ideal visualization for memory. id:2671
+  // https://github.com/imdone/tensorflow/issues/2670
   // It would be great to have a customized UI for it.
   Json::Value event2 =
       CreateEvent("C", category, "Top Allocations", pid + 1, 0, ts);
@@ -188,9 +189,11 @@ void Timeline::AllocateTimeNodes(GraphNode* gnode) {
       for (const auto& exec : kernel_execs.second) {
         int64 start_micros = exec.first;
         int64 exec_micros = exec.second;
-        // TODO(xpan): There might be start time duplication here.
+        // TODO (xpan): There might be start time duplication here. id:3003
+        // https://github.com/imdone/tensorflow/issues/3002
         if (tnodes_[device].find(start_micros) == tnodes_[device].end()) {
-          // TODO(xpan): Give each kernel call a unique_name.
+          // TODO (xpan): Give each kernel call a unique_name. id:3514
+          // https://github.com/imdone/tensorflow/issues/3513
           tnodes_[device][start_micros].reset(
               new TimeNode(p, gnode, start_micros, exec_micros));
         }
@@ -248,7 +251,8 @@ void Timeline::GenerateGraphTimeline(const std::vector<GraphNode*>& gnodes) {
                                      process.first, lane.first, "Op",
                                      tnode->name(), args);
         // Flow is a directed arrow pointing from src to dst.
-        // TODO(xpan): Disable flow to reduce json file size for now. Need
+        // TODO (xpan): Disable flow to reduce json file size for now. Need id:4135
+        // https://github.com/imdone/tensorflow/issues/4134
         // to think of a better way to make flow interpretable.
         for (TimeNode* next_tnode : node.second->next_tnodes) {
           chrome_formatter_.EmitFlowStart(
@@ -264,7 +268,8 @@ void Timeline::GenerateGraphTimeline(const std::vector<GraphNode*>& gnodes) {
   }
   for (const auto& dev : mem_tracker_.devices()) {
     if (IsPlacedOnCPU(dev.first)) {
-      // TODO(xpan): Maybe also support CPU allocator memory tracking.
+      // TODO (xpan): Maybe also support CPU allocator memory tracking. id:3455
+      // https://github.com/imdone/tensorflow/issues/3454
       continue;
     }
     int64 pid = AllocatePID();

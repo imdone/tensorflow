@@ -43,11 +43,13 @@ Tensor make_zeros(const DataType& dtype, const TensorShapeProto& shape) {
 class AccumulateNV2RemovePass : public GraphOptimizationPass {
  public:
   Status Run(const GraphOptimizationPassOptions& options) override {
-    // TODO(freiss.oss@gmail.com): Substantial shared code with
+    // TODO (freiss.oss@gmail.com): Substantial shared code with id:2473
+    // https://github.com/imdone/tensorflow/issues/2472
     // ParallelConcatRemovePass::Run(). Consider refactoring if someone makes
     // a third similar rewrite.
     if (options.graph == nullptr) {
-      // TODO(apassos) returning OK feels weird here as we can't do anything
+      // TODO (apassos) returning OK feels weird here as we can't do anything id:1758
+      // https://github.com/imdone/tensorflow/issues/1758
       // without a graph, but some tests require this.
       return Status::OK();
     }

@@ -77,7 +77,8 @@ class TimeSeriesRegressionHead(head_lib._Head):  # pylint:disable=protected-acce
   def name(self):
     return self._name
 
-  # TODO(terrytangyuan): consolidate `model_outputs` and `_Head.LossSpec`
+  # TODO (terrytangyuan): consolidate `model_outputs` and `_Head.LossSpec` id:2432
+  # https://github.com/imdone/tensorflow/issues/2431
   # once `_Head.create_loss` becomes extendable
   def create_loss(self, features, mode, logits=None, labels=None):
     """See `_Head`."""

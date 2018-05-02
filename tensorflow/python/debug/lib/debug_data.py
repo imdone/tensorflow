@@ -38,7 +38,8 @@ from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.util import compat
 
 
-# TODO(cais): Tie these string constants in with C++?
+# TODO (cais): Tie these string constants in with C++? id:3581
+# https://github.com/imdone/tensorflow/issues/3580
 METADATA_FILE_PREFIX = "_tfdbg_"
 CORE_METADATA_TAG = "core_metadata_"
 GRAPH_FILE_TAG = "graph_"
@@ -349,7 +350,8 @@ class DebugTensorDatum(object):
 
     return load_tensor_from_event_file(self.file_path)
 
-  # TODO(cais): Add time unit suffix to timestamp and t0 (us).
+  # TODO (cais): Add time unit suffix to timestamp and t0 (us). id:2907
+  # https://github.com/imdone/tensorflow/issues/2906
   @property
   def timestamp(self):
     """Timestamp of when this tensor value was dumped.
@@ -1561,7 +1563,8 @@ class DebugDumpDir(object):
       raise WatchKeyDoesNotExistInDebugDumpDirError(
           "Watch key \"%s\" does not exist in the debug dump" % watch_key)
 
-    # TODO(cais): Figure out whether this should be relative to the global t0.
+    # TODO (cais): Figure out whether this should be relative to the global t0. id:3116
+    # https://github.com/imdone/tensorflow/issues/3116
     return self._watch_key_to_rel_time[device_name][watch_key]
 
   def get_dump_sizes_bytes(self,

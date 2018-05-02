@@ -33,27 +33,28 @@ limitations under the License.
 // to your function, your callers will automatically convert bools, integers,
 // and floating point values to strings for you.
 //
-// NOTE: Use of AlphaNum outside of the //strings package is unsupported except
+// NOTE: Use of AlphaNum outside of the //strings package is unsupported except id:4073
+// https://github.com/imdone/tensorflow/issues/4071
 // for the specific case of function parameters of type "AlphaNum" or "const
 // AlphaNum &". In particular, instantiating AlphaNum directly as a stack
 // variable is not supported.
-//
+// 
 // Conversion from 8-bit values is not accepted because if it were, then an
 // attempt to pass ':' instead of ":" might result in a 58 ending up in your
 // result.
-//
+// 
 // Bools convert to "0" or "1".
-//
+// 
 // Floating point values are converted to a string which, if passed to strtod(),
 // would produce the exact same original double (except in case of NaN; all NaNs
 // are considered the same value). We try to keep the string short but it's not
 // guaranteed to be as short as possible.
-//
+// 
 // You can convert to Hexadecimal output rather than Decimal output using Hex.
 // To do this, pass strings::Hex(my_int) as a parameter to StrCat. You may
 // specify a minimum field width using a separate parameter, so the equivalent
 // of Printf("%04x", my_int) is StrCat(Hex(my_int, strings::ZERO_PAD_4))
-//
+// 
 // This class has implicit constructors.
 namespace tensorflow {
 namespace strings {

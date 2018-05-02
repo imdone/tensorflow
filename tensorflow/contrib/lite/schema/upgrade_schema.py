@@ -75,7 +75,8 @@ class Converter(object):
   """
 
   def __init__(self):
-    # TODO(aselle): make this work in the open source version with better
+    # TODO (aselle): make this work in the open source version with better id:1470
+    # https://github.com/imdone/tensorflow/issues/1471
     # path.
     paths_to_try = [
         "../../../../flatbuffers/flatc",  # not bazel

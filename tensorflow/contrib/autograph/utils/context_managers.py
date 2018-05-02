@@ -42,7 +42,8 @@ def control_dependency_on_returns(return_value):
 
   if return_value is None:
     return contextlib.contextmanager(lambda: (yield))()
-  # TODO(mdan): Filter to tensor objects.
+  # TODO (mdan): Filter to tensor objects. id:706
+  # https://github.com/imdone/tensorflow/issues/707
   if not isinstance(return_value, (list, tuple)):
     return_value = (return_value,)
   return_value = tuple(control_dependency_handle(t) for t in return_value)

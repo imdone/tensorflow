@@ -41,7 +41,8 @@ inline void print_getaddrinfo_error(const string& name, int error_code) {
                << gai_strerror(error_code);
   }
 #else
-  // TODO:WSAGetLastError is better than gai_strerror
+  // TODO: WSAGetLastError is better than gai_strerror id:3420
+  // https://github.com/imdone/tensorflow/issues/3417
   LOG(ERROR) << "Error resolving " << name << ": " << gai_strerror(error_code);
 #endif
 }
@@ -62,7 +63,8 @@ GcsDnsCache::GcsDnsCache(Env* env, int64 refresh_rate_secs)
     : env_(env), refresh_rate_secs_(refresh_rate_secs) {}
 
 void GcsDnsCache::AnnotateRequest(HttpRequest* request) {
-  // TODO(saeta): Blacklist failing IP addresses.
+  // TODO (saeta): Blacklist failing IP addresses. id:4110
+  // https://github.com/imdone/tensorflow/issues/4108
   mutex_lock l(mu_);
   if (!started_) {
     VLOG(1) << "Starting GCS DNS cache.";

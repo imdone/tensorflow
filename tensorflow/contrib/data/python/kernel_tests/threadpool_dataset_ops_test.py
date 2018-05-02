@@ -67,7 +67,8 @@ class OverrideThreadpoolDatasetTest(test.TestCase):
           pass
         self.assertEqual(len(thread_ids), len(set(thread_ids)))
         self.assertGreater(len(thread_ids), 0)
-        # NOTE(mrry): We don't control the thread pool scheduling, and
+        # NOTE (mrry): We don't control the thread pool scheduling, and id:756
+        # https://github.com/imdone/tensorflow/issues/757
         # so cannot guarantee that all of the threads in the pool will
         # perform work.
         self.assertLessEqual(len(thread_ids), num_threads)

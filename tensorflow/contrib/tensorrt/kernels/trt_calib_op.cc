@@ -57,7 +57,8 @@ void* GetTensorAddress(const Tensor* tensor_ptr) {
 }
 
 void TRTCalibOp::Compute(tensorflow::OpKernelContext* ctx) {
-  // TODO(aaroey): make sure ctx->resource_mgr() is used in future PR.
+  // TODO (aaroey): make sure ctx->resource_mgr() is used in future PR. id:2515
+  // https://github.com/imdone/tensorflow/issues/2514
   auto trt_rm = tensorflow::tensorrt::TRTResourceManager::instance();
   auto res_mgr = trt_rm->getManager("TRTCalibOps");
   tensorflow::tensorrt::TRTCalibrationResource* calib_res = nullptr;
@@ -122,7 +123,8 @@ void TRTCalibOp::Compute(tensorflow::OpKernelContext* ctx) {
                                                 ->CudaStreamMemberHack()));
   calib_res->calibrator_->setBatch(input_data, *stream);
   VLOG(2) << "Passed calibration data";
-  // TODO(aaroey): make sure we wait for the completion of calibration on the
+  // TODO (aaroey): make sure we wait for the completion of calibration on the id:2420
+  // https://github.com/imdone/tensorflow/issues/2419
   // last batch in future PR.
 };
 

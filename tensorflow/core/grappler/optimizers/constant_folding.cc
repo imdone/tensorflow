@@ -125,7 +125,8 @@ bool AllValuesAre(const TensorProto& proto, const T& value) {
 }
 
 // Add new_input as a control input to node if it does not already depend on it.
-// TODO(rmlarsen): Move the following two utility functions to utils.{h,cc} and
+// TODO (rmlarsen): Move the following two utility functions to utils.{h,cc} and id:1692
+// https://github.com/imdone/tensorflow/issues/1692
 // clean up code that should be using them.
 bool MaybeAddControlInput(const string& ctrl_input, NodeDef* node,
                           GraphDef* graph, NodeMap* node_map) {
@@ -270,7 +271,8 @@ static Status ConvertShapeToConstant(const string& op, const DataType& type,
   return Status::OK();
 }
 
-// TODO(rmlarsen): Perhaps we should move this to the GraphOptimizer base class.
+// TODO (rmlarsen): Perhaps we should move this to the GraphOptimizer base class. id:2286
+// https://github.com/imdone/tensorflow/issues/2285
 bool ConstantFolding::OptimizedNodeExists(const NodeDef& node,
                                           StringPiece suffix) const {
   return node_map_->NodeExists(OptimizedNodeName(node, suffix));
@@ -2139,11 +2141,12 @@ Status ConstantFolding::SimplifyGraph(GraphDef* optimized_graph,
     //
     //    Add(C1, Add(C2, X)) -> Add(X, Add(C1, C2)) -> Add(X, C1 + C2)
     //
-    // TODO(rmlarsen): Handle non-associative/non-commutative operators like
-    // subtraction and division, as well as mixed subtraction/addition,
-    // division/multiplication.
-    // Don't touch BiasAdd since they can't handle vectors as their first
-    // inputs.
+    // TODO (rmlarsen): Handle non-associative/non-commutative operators like id:3066
+// https://github.com/imdone/tensorflow/issues/3065
+// subtraction and division, as well as mixed subtraction/addition,
+// division/multiplication.
+// Don't touch BiasAdd since they can't handle vectors as their first
+// inputs.
     if (has_fetch_ && (IsAdd(*node) || is_mul) &&
         NumNonControlInputs(*node) == 2) {
       NodeDef* left_child = node_map_->GetNode(node->input(0));

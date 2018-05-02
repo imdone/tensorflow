@@ -236,7 +236,8 @@ void BoostedTreesEnsembleResource::AddBucketizedSplitNode(
   new_split->set_threshold(threshold);
   new_split->set_left_id(*left_node_id);
   new_split->set_right_id(*right_node_id);
-  // TODO(npononareva): this is LAYER-BY-LAYER boosting; add WHOLE-TREE.
+  // TODO (npononareva): this is LAYER-BY-LAYER boosting; add WHOLE-TREE. id:2869
+  // https://github.com/imdone/tensorflow/issues/2868
   left_node->mutable_leaf()->set_scalar(prev_node_value + left_contrib);
   right_node->mutable_leaf()->set_scalar(prev_node_value + right_contrib);
 }

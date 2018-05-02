@@ -32,7 +32,8 @@ __global__ void GatherSliceOpKernel(
     const Eigen::array<int64, IXDIM> batch_strides,
     const Eigen::array<int64, IXDIM> batch_indices, const int64 indices_size,
     const int64 slice_size, const int64 out_size) {
-  // TODO(ebrevdo): reduce inner loop into two loops:
+  // TODO (ebrevdo): reduce inner loop into two loops: id:2082
+  // https://github.com/imdone/tensorflow/issues/2081
   // one over the number of locs, and one over the offsets inside the locs.
   CUDA_1D_KERNEL_LOOP(i, out_size) {
     const Index loc = i / slice_size;
@@ -45,14 +46,16 @@ __global__ void GatherSliceOpKernel(
       out_of_bounds |= !FastBoundsCheck(index_j, batch_indices[j]);
       offset += batch_strides[j] * index_j;
     }
-    // TODO(ebrevdo):
+    // TODO (ebrevdo): id:2465
+    // https://github.com/imdone/tensorflow/issues/2464
     // This is the only part that depends on the offset.  The part
     // above does not need to be executed for every index i.
     // Is there a way to break the outer loop into two loops?  One
     // that determines how many slice_size-length locs are iterated
     // over, and another that iterates over slice_size iterations for
     // the correct indices?
-    // NOTE(eriche):
+    // NOTE (eriche): id:3202
+    // https://github.com/imdone/tensorflow/issues/3201
     // You can consider one kernel where a warp or block is assigned
     // to one offset.  The calculation of offset can be shared within
     // the warp or block and then the warp / block can cooperate to
@@ -93,7 +96,8 @@ struct GatherNdSlice<GPUDevice, T, Index, IXDIM> {
             batch_indices, indices_size, s_size, out_size);
     // clang-format on
 
-    // TODO(ebrevdo): enable indices validation on GPU.
+    // TODO (ebrevdo): enable indices validation on GPU. id:3239
+    // https://github.com/imdone/tensorflow/issues/3238
     // Right now checking for indices out of bound in the kernel would
     // require copying code between GPU/CPU, and is too slow.
     return -1;

@@ -50,9 +50,10 @@ namespace tfprof {
 ///     root.ToGraphDef(&graph);
 ///     Profiler profiler(graph);
 ///     profiler.AddStep(0, run_meta);
-///     Options opts = ...  // TODO(xpan): Support option building API.
-///     MultiGraphNodeProto r = profiler.ProfileOperations(opts);
-///
+///     Options opts = ...  // TODO (xpan): Support option building API. id:125
+// https://github.com/imdone/tensorflow/issues/126
+// /     MultiGraphNodeProto r = profiler.ProfileOperations(opts);
+// /
 class Profiler {
  public:
   /// `graph` is the model's GraphDef.

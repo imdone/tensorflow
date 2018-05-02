@@ -78,7 +78,8 @@ Status HandleElementToSlice<Variant>(Tensor element, Tensor* parent,
   return Status::OK();
 }
 
-// TODO(b/78245576): Consider removing this overload.
+// TODO (b/78245576): Consider removing this overload. id:2864
+// https://github.com/imdone/tensorflow/issues/2863
 template <typename T>
 void HandleSliceToElement(const Tensor& parent, Tensor* element, int64 index) {
   element->flat<T>() = parent.flat_outer_dims<T>().chip(index, 0);
@@ -165,7 +166,8 @@ Status CopySliceToElement(const Tensor& parent, Tensor* element, int64 index) {
 
 // Copies the index^th slice of parent (in the 0th dimension) into element.
 //
-// NOTE(mrry): The implementation may be able to optimize the copy to a move.
+// NOTE (mrry): The implementation may be able to optimize the copy to a move. id:2065
+// https://github.com/imdone/tensorflow/issues/2065
 // This is particularly important for DT_STRING tensors.
 Status MaybeMoveSliceToElement(Tensor* parent, Tensor* element, int64 index) {
   TF_RETURN_IF_ERROR(ValidateInput(*parent, *element, index));
@@ -188,7 +190,8 @@ Status MaybeMoveSliceToElement(Tensor* parent, Tensor* element, int64 index) {
 }
 
 // The following five functions are copied from padding_fifo_queue.cc.
-// TODO(mrry): Reconcile these functions with the similar methods in the
+// TODO (mrry): Reconcile these functions with the similar methods in the id:1728
+// https://github.com/imdone/tensorflow/issues/1728
 // queue implementation.
 Status ValidateElementToLargerSlice(const Tensor& element, Tensor* parent) {
   DCHECK_NE(parent->dim_size(0), 0);

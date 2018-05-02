@@ -80,7 +80,8 @@ using internal::GrpcCall;
 GrpcRPCFactory::GrpcRPCFactory(OpKernelConstruction* ctx, bool fail_fast,
                                int64 timeout_in_ms)
     : RPCFactory(), fail_fast_(fail_fast), timeout_in_ms_(timeout_in_ms) {
-  // TODO(ebrevdo): Investigate possible performance improvements by
+  // TODO (ebrevdo): Investigate possible performance improvements by id:1508
+  // https://github.com/imdone/tensorflow/issues/1509
   // replacing this thread with a threadpool.
   polling_thread_ =
       ctx->env()->StartThread(ThreadOptions(), "rpc_op_grpc_factory", [this]() {

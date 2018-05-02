@@ -93,7 +93,8 @@ class DNNLinearCombinedClassifierIntegrationTest(test.TestCase,
         dnn_feature_columns=dnn_feature_columns,
         label_dimension=label_dimension,
         model_dir=self._model_dir,
-        # TODO(isaprykin): Work around the colocate_with error.
+        # TODO (isaprykin): Work around the colocate_with error. id:1009
+        # https://github.com/imdone/tensorflow/issues/1010
         dnn_optimizer=adagrad.AdagradOptimizer(0.001),
         linear_optimizer=adagrad.AdagradOptimizer(0.001),
         config=run_config.RunConfig(train_distribute=distribution))

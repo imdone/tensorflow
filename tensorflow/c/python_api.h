@@ -59,7 +59,8 @@ std::string GetResourceHandleShapeAndType(TF_Graph* graph, TF_Output output);
 
 // Sets `output` based on `proto`, which should be a serialized
 // CppShapeInferenceResult::HandleData proto.
-// NOTE(skyewm): `proto` is passed a void*/size_t pair instead of a std::string
+// NOTE (skyewm): `proto` is passed a void id:48*/size_t pair instead of a std::string
+// https://github.com/imdone/tensorflow/issues/49
 // because I couldn't get SWIG to work otherwise.
 void SetResourceHandleShapeAndType(TF_Graph* graph, TF_Output output,
                                    const void* proto, size_t proto_len,

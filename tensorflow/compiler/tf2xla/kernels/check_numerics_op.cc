@@ -27,7 +27,8 @@ class CheckNumericsOp : public XlaOpKernel {
       : XlaOpKernel(context) {}
 
   void Compile(XlaOpKernelContext* ctx) override {
-    // TODO(b/32223192): add a real implementation of CheckNumerics
+    // TODO (b/32223192): add a real implementation of CheckNumerics id:190
+    // https://github.com/imdone/tensorflow/issues/191
     {
       static mutex mu(tensorflow::LINKER_INITIALIZED);
       static int log_counter = 0;

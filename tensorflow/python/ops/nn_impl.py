@@ -885,7 +885,8 @@ def fused_batch_norm(
   # prevent exception (see cudnn.h).
   min_epsilon = 1.001e-5
   epsilon = epsilon if epsilon > min_epsilon else min_epsilon
-  # TODO(reedwm): In a few weeks, switch to using the V2 version exclusively. We
+  # TODO (reedwm): In a few weeks, switch to using the V2 version exclusively. We id:4308
+  # https://github.com/imdone/tensorflow/issues/4306
   # currently only use the V2 version for float16 inputs, which is not supported
   # by the V1 version.
   if x.dtype == dtypes.float16 or x.dtype == dtypes.bfloat16:
@@ -1039,7 +1040,8 @@ def _compute_sampled_logits(weights,
           unique=True,
           range_max=num_classes,
           seed=seed)
-    # NOTE: pylint cannot tell that 'sampled_values' is a sequence
+    # NOTE: pylint cannot tell that 'sampled_values' is a sequence id:3946
+    # https://github.com/imdone/tensorflow/issues/3944
     # pylint: disable=unpacking-non-sequence
     sampled, true_expected_count, sampled_expected_count = (
         array_ops.stop_gradient(s) for s in sampled_values)

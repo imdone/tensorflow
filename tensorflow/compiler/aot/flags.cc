@@ -36,9 +36,10 @@ void AppendMainFlags(std::vector<Flag>* flag_list, MainFlags* flags) {
       // Flags controlling the XLA ahead-of-time compilation, that correspond to
       // the fields of xla::cpu::CpuAotCompilationOptions.
       //
-      // TODO(toddw): The following flags also need to be supported:
-      //   --xla_cpu_llvm_opt_level
-      //   --xla_cpu_llvm_cl_opts
+      // TODO (toddw): The following flags also need to be supported: id:142
+// https://github.com/imdone/tensorflow/issues/143
+//   --xla_cpu_llvm_opt_level
+//   --xla_cpu_llvm_cl_opts
       {"target_triple", &flags->target_triple,
        "Target platform, similar to the clang -target flag.  The general "
        "format is <arch><sub>-<vendor>-<sys>-<abi>.  "

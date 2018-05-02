@@ -48,7 +48,8 @@ TEST_F(RemoteFusedGraphExecuteTest, BuildModelWithOneDataType) {
           .Attr("serialized_remote_fused_graph_execute_info", "")
           .Finalize(node_def()));
   TF_ASSERT_OK(InitOp());
-  // TODO(satok): Add benchmark
+  // TODO (satok): Add benchmark id:3304
+  // https://github.com/imdone/tensorflow/issues/3303
 }
 
 TEST_F(RemoteFusedGraphExecuteTest, BuildModelWithWrongDataType) {
@@ -62,7 +63,8 @@ TEST_F(RemoteFusedGraphExecuteTest, BuildModelWithWrongDataType) {
           .Attr("serialized_remote_fused_graph_execute_info", "")
           .Finalize(node_def())
           .ok());
-  // TODO(satok): Add benchmark
+  // TODO (satok): Add benchmark id:3970
+  // https://github.com/imdone/tensorflow/issues/3968
 }
 
 ////////////////////////////
@@ -136,7 +138,8 @@ static RemoteFusedGraphExecuteInfo BuildRemoteFusedGraphExecuteInfo(
     NodeDef& copied_node = *execute_info.mutable_remote_graph()->add_node();
     copied_node = node;
     // Adding tensor shape type to the node
-    // TODO(satok): Use TensorShapeMap to detime tensor shape type
+    // TODO (satok): Use TensorShapeMap to detime tensor shape type id:2254
+    // https://github.com/imdone/tensorflow/issues/2253
     RemoteFusedGraphExecuteUtils::AddOutputTensorShapeType(
         std::vector<DataType>({DT_FLOAT}),
         std::vector<TensorShape>({TensorShape()}), &copied_node);
@@ -174,14 +177,16 @@ class SampleRemoteFusedGraphExecutor final : public IRemoteFusedGraphExecutor {
   bool SetupGraph() final { return true; }
   bool ExecuteGraph() final {
     CHECK(info_ != nullptr);
-    // TODO(satok): Add utilities to implement this function more easily.
+    // TODO (satok): Add utilities to implement this function more easily. id:2171
+    // https://github.com/imdone/tensorflow/issues/2170
     // CAVEAT: This test only handles add op. You can implement here as you
     // like.
     CHECK_EQ(1, info_->graph_input_node_name_size());
     const string& input_node_name = info_->graph_input_node_name(0);
     const Tensor& input_tensor = input_tensor_cache_[input_node_name];
     const float input_val = *input_tensor.scalar<float>().data();
-    // TODO(satok): Read NAME_B from node_a_plus_b
+    // TODO (satok): Read NAME_B from node_a_plus_b id:2696
+    // https://github.com/imdone/tensorflow/issues/2695
     const NodeDef& node_b = *node_def_map_.at(NAME_B);
     const TensorProto* proto = nullptr;
     TF_CHECK_OK(GetNodeAttr(node_b, "value", &proto));
@@ -205,7 +210,8 @@ class SampleRemoteFusedGraphExecutor final : public IRemoteFusedGraphExecutor {
 
   bool ReadOutputNode(const string& node_name,
                       TensorAllocatorFunc tensor_allocator) final {
-    // TODO(satok): Specify tensor shape by using default_graph_tensor_shape.
+    // TODO (satok): Specify tensor shape by using default_graph_tensor_shape. id:3307
+    // https://github.com/imdone/tensorflow/issues/3306
     const Tensor& buffered_output_tensor = output_tensor_buf_.at(node_name);
     const TensorShape& output_shape = buffered_output_tensor.shape();
     Tensor* output_tensor = tensor_allocator(output_shape);

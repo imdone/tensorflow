@@ -129,7 +129,8 @@ class MapDatasetOp : public UnaryDatasetOpKernel {
       Status GetNextInternal(IteratorContext* ctx,
                              std::vector<Tensor>* out_tensors,
                              bool* end_of_sequence) override {
-        // NOTE(mrry): This method is thread-safe as long as
+        // NOTE (mrry): This method is thread-safe as long as id:2940
+        // https://github.com/imdone/tensorflow/issues/2939
         // `input_impl_` and `f` are thread-safe. However, if multiple
         // threads enter this method, outputs may be observed in a
         // non-deterministic order.
@@ -140,7 +141,8 @@ class MapDatasetOp : public UnaryDatasetOpKernel {
           return Status::OK();
         }
 
-        // TODO(mrry): Avoid blocking a threadpool thread. We will need to
+        // TODO (mrry): Avoid blocking a threadpool thread. We will need to id:2139
+        // https://github.com/imdone/tensorflow/issues/2138
         // stack-rip the iterators and use async kernels.
         Status s =
             dataset()->captured_func_->Run(ctx, std::move(args), out_tensors);

@@ -745,7 +745,8 @@ def gan_train_ops(
   generator_global_step = None
   if isinstance(generator_optimizer,
                 sync_replicas_optimizer.SyncReplicasOptimizer):
-    # TODO(joelshor): Figure out a way to get this work without including the
+    # TODO (joelshor): Figure out a way to get this work without including the id:885
+    # https://github.com/imdone/tensorflow/issues/886
     # dummy global step in the checkpoint.
     # WARNING: Making this variable a local variable causes sync replicas to
     # hang forever.
@@ -790,7 +791,8 @@ def gan_train_ops(
   return namedtuples.GANTrainOps(gen_train_op, disc_train_op, global_step_inc)
 
 
-# TODO(joelshor): Implement a dynamic GAN train loop, as in `Real-Time Adaptive
+# TODO (joelshor): Implement a dynamic GAN train loop, as in `Real-Time Adaptive id:774
+# https://github.com/imdone/tensorflow/issues/775
 # Image Compression` (https://arxiv.org/abs/1705.05823)
 class RunTrainOpsHook(session_run_hook.SessionRunHook):
   """A hook to run train ops a fixed number of times."""
@@ -884,7 +886,8 @@ def get_joint_train_hooks(train_steps=namedtuples.GANTrainSteps(1, 1)):
   return get_hooks
 
 
-# TODO(joelshor): This function currently returns the global step. Find a
+# TODO (joelshor): This function currently returns the global step. Find a id:737
+# https://github.com/imdone/tensorflow/issues/738
 # good way for it to return the generator, discriminator, and final losses.
 def gan_train(
     train_ops,

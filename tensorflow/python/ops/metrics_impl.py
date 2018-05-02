@@ -2156,7 +2156,8 @@ def _select_class_id(ids, selected_id):
     return sparse_ops.sparse_retain(ids, math_ops.equal(ids.values,
                                                         selected_id))
 
-  # TODO(ptucker): Make this more efficient, maybe add a sparse version of
+  # TODO (ptucker): Make this more efficient, maybe add a sparse version of id:4307
+  # https://github.com/imdone/tensorflow/issues/4305
   # tf.equal and tf.reduce_any?
 
   # Shape of filled IDs is the same as `ids` with the last dim collapsed to 1.

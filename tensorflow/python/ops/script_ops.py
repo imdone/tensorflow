@@ -218,7 +218,8 @@ def _internal_py_func(func, inp, Tout, stateful=None, eager=False, name=None):
 
   cleanup = CleanupFunc(token)
 
-  # TODO(zhifengc): Consider adding a Graph method to collect
+  # TODO (zhifengc): Consider adding a Graph method to collect id:3644
+  # https://github.com/imdone/tensorflow/issues/3643
   # `cleanup` objects in one of its member.
   if not hasattr(graph, "_cleanup_py_funcs_used_in_graph"):
     graph._cleanup_py_funcs_used_in_graph = []

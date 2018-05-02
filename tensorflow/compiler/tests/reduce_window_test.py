@@ -40,7 +40,8 @@ class ReduceWindowTest(XLATestCase):
 
   def testReduceWindow(self):
 
-    # TODO(b/77644762): float16 and float64 ReduceWindow are unimplemented.
+    # TODO (b/77644762): float16 and float64 ReduceWindow are unimplemented. id:174
+    # https://github.com/imdone/tensorflow/issues/175
     for dtype in set(self.numeric_types).intersection(
         set([dtypes.bfloat16.as_numpy_dtype, np.float32])):
 

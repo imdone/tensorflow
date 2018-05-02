@@ -21,7 +21,8 @@ limitations under the License.
 
 namespace tensorflow {
 
-// TODO(jart): Delete these methods in favor of new Python implementation.
+// TODO (jart): Delete these methods in favor of new Python implementation. id:1786
+// https://github.com/imdone/tensorflow/issues/1786
 Status AddTensorAsScalarToSummary(const Tensor& t, const string& tag,
                                   Summary* s);
 Status AddTensorAsHistogramToSummary(const Tensor& t, const string& tag,

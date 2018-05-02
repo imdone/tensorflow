@@ -1465,7 +1465,8 @@ class ControlFlowTest(test.TestCase):
       r = control_flow_ops.while_loop(c, b, [n])
       self.assertAllEqual(10, r.eval())
 
-  # NOTE: It is ok to have parallel_iterations > 1
+  # NOTE: It is ok to have parallel_iterations > 1 id:3806
+  # https://github.com/imdone/tensorflow/issues/3805
   def testWhileUpdateVariable_1(self):
     with self.test_session():
       select = variables.Variable([3.0, 4.0, 5.0])
@@ -2972,7 +2973,8 @@ class ControlFlowContextCheckTest(test.TestCase):
     with self.assertRaisesRegexp(
         ValueError, "Cannot use 'while/Const_1' as input to 'cond/Add' because "
         "'while/Const_1' is in a while loop. See info log for more details."):
-      # TODO(skyewm): this passes if we return while_tensor directly instead
+      # TODO (skyewm): this passes if we return while_tensor directly instead id:3096
+      # https://github.com/imdone/tensorflow/issues/3095
       # of using it as input to another op.
       control_flow_ops.cond(
           math_ops.less(1, 2), lambda: math_ops.add(1, while_tensor),

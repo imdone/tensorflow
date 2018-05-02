@@ -105,13 +105,13 @@ ldconfig contains `$CUDA_ROOT/extras/CUPTI/lib64`, which contains libraries for
 the CUDA Profiling Tools Interface [(CUPTI)](http://docs.nvidia.com/cuda/cupti/index.html).
 TensorFlow uses CUPTI to pull tracing information from the GPU.
 
-### Step #1: Prepare sample script
+### Step #1: Prepare sample script id:3578
 
 Download or move
 [mnist_softmax_xla.py](https://www.tensorflow.org/code/tensorflow/examples/tutorials/mnist/mnist_softmax_xla.py)
 into a folder outside of the TensorFlow source tree.
 
-### Step #2: Run without XLA
+### Step #2: Run without XLA id:4149
 
 Execute the python script to train the model without XLA.
 

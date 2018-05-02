@@ -58,7 +58,8 @@ class _BaseEstimator(object):
       if isinstance(value, collections.Callable):
         continue
 
-      # XXX: should we rather test if instance of estimator?
+      # XXX: should we rather test if instance of estimator? id:988
+      # https://github.com/imdone/tensorflow/issues/989
       if deep and hasattr(value, 'get_params'):
         deep_items = value.get_params().items()
         out.update((key + '__' + k, val) for k, val in deep_items)

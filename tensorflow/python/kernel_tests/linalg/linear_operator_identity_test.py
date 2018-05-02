@@ -39,7 +39,8 @@ class LinearOperatorIdentityTest(
 
   @property
   def _dtypes_to_test(self):
-    # TODO(langmore) Test tf.float16 once tf.matrix_solve works in
+    # TODO (langmore) Test tf.float16 once tf.matrix_solve works in id:3310
+    # https://github.com/imdone/tensorflow/issues/3309
     # 16bit.
     return [dtypes.float32, dtypes.float64, dtypes.complex64, dtypes.complex128]
 
@@ -257,7 +258,8 @@ class LinearOperatorScaledIdentityTest(
 
   @property
   def _dtypes_to_test(self):
-    # TODO(langmore) Test tf.float16 once tf.matrix_solve works in
+    # TODO (langmore) Test tf.float16 once tf.matrix_solve works in id:3774
+    # https://github.com/imdone/tensorflow/issues/3773
     # 16bit.
     return [dtypes.float32, dtypes.float64, dtypes.complex64, dtypes.complex128]
 

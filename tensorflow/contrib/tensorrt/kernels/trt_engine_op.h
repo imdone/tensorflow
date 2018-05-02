@@ -46,7 +46,8 @@ class TRTEngineOp : public OpKernel {
   template <typename T>
   using destroyed_ptr = std::unique_ptr<T, Destroyer<T>>;
   destroyed_ptr<nvinfer1::ICudaEngine> trt_engine_ptr_;
-  // TODO(samikama): context should go to a resource manager!
+  // TODO (samikama): context should go to a resource manager! id:1706
+  // https://github.com/imdone/tensorflow/issues/1706
   destroyed_ptr<nvinfer1::IExecutionContext> trt_execution_context_ptr_;
 
   std::vector<string> input_nodes_;

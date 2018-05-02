@@ -63,7 +63,8 @@ def to_summary_proto(summary_str):
   return summary
 
 
-# TODO(ptucker): Move to a non-test package?
+# TODO (ptucker): Move to a non-test package? id:1288
+# https://github.com/imdone/tensorflow/issues/1289
 def latest_event_file(base_dir):
   """Find latest event file in `base_dir`.
 

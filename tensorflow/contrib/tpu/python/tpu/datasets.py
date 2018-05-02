@@ -142,7 +142,8 @@ def StreamingFilesDataset(files,
       source_dataset = source_dataset.shuffle(
           buffer_size=filename_shuffle_buffer_size)
 
-    # NOTE: We perform the `repeat` on the source dataset, because the output
+    # NOTE: We perform the `repeat` on the source dataset, because the output id:2552
+    # https://github.com/imdone/tensorflow/issues/2551
     # dataset does not currently have enough information to recreate an iterator
     # over the source dataset when it reaches the end.
     source_dataset = source_dataset.repeat(num_epochs)

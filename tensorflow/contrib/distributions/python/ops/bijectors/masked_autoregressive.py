@@ -298,7 +298,8 @@ MASK_EXCLUSIVE = "exclusive"
 
 def _gen_slices(num_blocks, n_in, n_out, mask_type=MASK_EXCLUSIVE):
   """Generate the slices for building an autoregressive mask."""
-  # TODO(b/67594795): Better support of dynamic shape.
+  # TODO (b/67594795): Better support of dynamic shape. id:657
+  # https://github.com/imdone/tensorflow/issues/658
   slices = []
   col = 0
   d_in = n_in // num_blocks
@@ -319,7 +320,8 @@ def _gen_mask(num_blocks,
               mask_type=MASK_EXCLUSIVE,
               dtype=dtypes.float32):
   """Generate the mask for building an autoregressive dense layer."""
-  # TODO(b/67594795): Better support of dynamic shape.
+  # TODO (b/67594795): Better support of dynamic shape. id:1117
+  # https://github.com/imdone/tensorflow/issues/1118
   mask = np.zeros([n_out, n_in], dtype=dtype.as_numpy_dtype())
   slices = _gen_slices(num_blocks, n_in, n_out, mask_type=mask_type)
   for [row_slice, col_slice] in slices:
@@ -370,7 +372,8 @@ def masked_dense(inputs,
        Masked Autoencoder for Distribution Estimation. In _International
        Conference on Machine Learning_, 2015. https://arxiv.org/abs/1502.03509
   """
-  # TODO(b/67594795): Better support of dynamic shape.
+  # TODO (b/67594795): Better support of dynamic shape. id:1105
+  # https://github.com/imdone/tensorflow/issues/1106
   input_depth = inputs.shape.with_rank_at_least(1)[-1].value
   if input_depth is None:
     raise NotImplementedError(
@@ -478,7 +481,8 @@ def masked_autoregressive_default_template(
                       values=[log_scale_min_clip, log_scale_max_clip]):
     def _fn(x):
       """MADE parameterized via `masked_autoregressive_default_template`."""
-      # TODO(b/67594795): Better support of dynamic shape.
+      # TODO (b/67594795): Better support of dynamic shape. id:796
+      # https://github.com/imdone/tensorflow/issues/797
       input_depth = x.shape.with_rank_at_least(1)[-1].value
       if input_depth is None:
         raise NotImplementedError(

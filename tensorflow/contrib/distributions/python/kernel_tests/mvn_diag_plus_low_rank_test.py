@@ -126,7 +126,8 @@ class MultivariateNormalDiagPlusLowRankTest(test.TestCase):
       self.assertAllEqual(mu, dist.mean().eval())
 
   def testSample(self):
-    # TODO(jvdillon): This test should be the basis of a new test fixture which
+    # TODO (jvdillon): This test should be the basis of a new test fixture which id:661
+    # https://github.com/imdone/tensorflow/issues/662
     # is applied to every distribution. When we make this fixture, we'll also
     # separate the analytical- and sample-based tests as well as for each
     # function tested. For now, we group things so we can recycle one batch of

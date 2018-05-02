@@ -140,7 +140,8 @@ class NestedTestModel2(keras.Model):
 
 def get_nested_model_3(input_dim, num_classes):
   # A functional-API model with a subclassed model inside.
-  # NOTE: this requires the inner subclass to implement `compute_output_shape`.
+  # NOTE: this requires the inner subclass to implement `compute_output_shape`. id:3797
+  # https://github.com/imdone/tensorflow/issues/3796
 
   inputs = keras.Input(shape=(input_dim,))
   x = keras.layers.Dense(32, activation='relu')(inputs)
@@ -414,7 +415,8 @@ class ModelSubclassingTest(test.TestCase):
   def test_trainable_mutation(self):
     # test that you can change `trainable` on a model or layer, and that
     # it freezes the model state during training
-    # TODO(fchollet): add test after we unify BN behavior in eager and symbolic.
+    # TODO (fchollet): add test after we unify BN behavior in eager and symbolic. id:3076
+    # https://github.com/imdone/tensorflow/issues/3075
     pass
 
   @test_util.run_in_graph_and_eager_modes()

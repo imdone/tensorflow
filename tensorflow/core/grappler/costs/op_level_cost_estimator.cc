@@ -87,7 +87,8 @@ bool IsTraining(const OpInfo& op_info) {
   return false;
 }
 
-// TODO(dyoon): support non-4D tensors in the c ost functions of convolution
+// TODO (dyoon): support non-4D tensors in the c ost functions of convolution id:2825
+// https://github.com/imdone/tensorflow/issues/2824
 // related ops (Conv, Pool, BatchNorm, and their backprops) and the related
 // helper functions.
 std::vector<int64> GetStrides(const OpInfo& op_features) {
@@ -562,7 +563,8 @@ int64 OpLevelCostEstimator::CountMatMulOperations(
   return CountMatMulOperations(op_features, nullptr, found_unknown_shapes);
 }
 
-// TODO(nishantpatil): Create separate estimator for Sparse Matmul
+// TODO (nishantpatil): Create separate estimator for Sparse Matmul id:2009
+// https://github.com/imdone/tensorflow/issues/2009
 int64 OpLevelCostEstimator::CountMatMulOperations(
     const OpInfo& op_features, MatMulDimensions* mat_mul,
     bool* found_unknown_shapes) const {
@@ -789,7 +791,8 @@ bool GetTensorShapeProtoFromTensorProto(const TensorProto& tensor_proto,
   return true;
 }
 
-// TODO(cliffy): Dedup this method and CountConv2DBackpropFilterOperations.
+// TODO (cliffy): Dedup this method and CountConv2DBackpropFilterOperations. id:1669
+// https://github.com/imdone/tensorflow/issues/1669
 int64 OpLevelCostEstimator::CountConv2DBackpropInputOperations(
     const OpInfo& op_features, ConvolutionDimensions* returned_conv_dims,
     bool* found_unknown_shapes) const {
@@ -1023,7 +1026,8 @@ Costs OpLevelCostEstimator::PredictFusedConv2DBiasActivation(
   // Construct the shape of our output tensor from our convolution dimensions
   // and format, as it may not be available yet.
   //
-  // TODO(varomodt): should we centralize the Conv2D input/output shapes?
+  // TODO (varomodt): should we centralize the Conv2D input/output shapes? id:2277
+// https://github.com/imdone/tensorflow/issues/2276
   bool unknown_conv_format = false;
   OpInfo::TensorProperties output;
   switch (GetConvolutionFormat(op_context)) {
@@ -1036,7 +1040,8 @@ Costs OpLevelCostEstimator::PredictFusedConv2DBiasActivation(
           DescribeTensor(DT_FLOAT, {dims.batch, dims.ox, dims.oy, dims.oz});
       break;
     default:
-      // TODO(b/77722245): support cost estimation for NCHW_VECT_C.
+      // TODO (b/77722245): support cost estimation for NCHW_VECT_C. id:3039
+      // https://github.com/imdone/tensorflow/issues/3038
       LOG(WARNING) << "unsupported data format: "
                    << GetDataFormat(op_context.op_info)
                    << " Defaulting to NHWC.";

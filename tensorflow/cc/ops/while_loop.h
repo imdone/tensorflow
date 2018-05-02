@@ -53,15 +53,18 @@ typedef std::function<Status(const Scope&, const std::vector<Output>& inputs,
 //     WhileContexts. This is set to false for loops used as part of gradient
 //     computations, since they're part of the gradient for a loop in the
 //     forward-pass.
-//     TODO(skyewm): revisit this. Should we create WhileContexts for all loops,
+//     TODO (skyewm): revisit this. Should we create WhileContexts for all loops, id:226
+// https://github.com/imdone/tensorflow/issues/227
 //     even if we don't need them?
 // * cond_output: if non-null, the output of the predicate is returned. This
 //     will always be a LoopCond node.
-//
+// 
 // Returns an error if the while loop could not be fully constructed.
-//
-// TODO(skyewm): clean up partially-constructed loop in error case
-// TODO(skyewm): create public interface to this method
+// 
+// TODO (skyewm): clean up partially-constructed loop in error case id:109
+// https://github.com/imdone/tensorflow/issues/110
+// TODO (skyewm): create public interface to this method id:93
+// https://github.com/imdone/tensorflow/issues/94
 Status BuildWhileLoop(const Scope& scope, const std::vector<Output>& inputs,
                       const CondGraphBuilderFn& cond,
                       const BodyGraphBuilderFn& body, const string& frame_name,

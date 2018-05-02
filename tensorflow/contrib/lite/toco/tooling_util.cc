@@ -461,7 +461,8 @@ void DumpGraphvizVideoFrame(const Model& model) {
     return;
   }
   CHECK(!dump_options.dump_graphviz.empty());
-  // TODO(benoitjacob): the static data here means that this function
+  // TODO (benoitjacob): the static data here means that this function id:1266
+  // https://github.com/imdone/tensorflow/issues/1267
   // is stateful, not reentrant, and effectively leaks memory till exit
   // (since dump_hashes can only grow in size). It also means that it
   // really only is intended to be called for a single model during the
@@ -546,7 +547,8 @@ void ExtendShape(Shape* shape, int new_shape_size) {
   shape_dims->insert(shape_dims->begin(), size_increase, 1);
 }
 
-// TODO(b/62904716) Remove along with remaining uses.
+// TODO (b/62904716) Remove along with remaining uses. id:1053
+// https://github.com/imdone/tensorflow/issues/1054
 void UnextendShape(Shape* shape, int new_shape_size) {
   CHECK_LE(new_shape_size, shape->dimensions_count());
   const int size_reduction = shape->dimensions_count() - new_shape_size;
@@ -1809,7 +1811,8 @@ void ShuffleArrayTemplate(const Shape& input_shape, AxesOrder input_axes_order,
   const std::vector<int>& extended_input_dims = extended_input_shape.dims();
   const std::vector<int>& extended_output_dims = extended_output_shape.dims();
 
-  // TODO(starka): Rework to handle different numbers of dimensions.
+  // TODO (starka): Rework to handle different numbers of dimensions. id:1650
+  // https://github.com/imdone/tensorflow/issues/1650
   int input_strides[4];
   input_strides[3] = 1;
   input_strides[2] = extended_input_dims[3];

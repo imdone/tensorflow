@@ -21,7 +21,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-# TODO(mdan): Use six for compatibility here.
+# TODO (mdan): Use six for compatibility here. id:537
+# https://github.com/imdone/tensorflow/issues/538
 import atexit
 import imp
 import os

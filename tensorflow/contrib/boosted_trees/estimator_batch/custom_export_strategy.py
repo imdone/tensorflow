@@ -106,7 +106,8 @@ def convert_to_universal_format(dtec, sorted_feature_names,
   """Convert GTFlow trees to universal format."""
   del num_sparse_int  # unused.
   model_and_features = generic_tree_model_pb2.ModelAndFeatures()
-  # TODO(jonasz): Feature descriptions should contain information about how each
+  # TODO (jonasz): Feature descriptions should contain information about how each id:549
+  # https://github.com/imdone/tensorflow/issues/550
   # feature is processed before it's fed to the model (e.g. bucketing
   # information). As of now, this serves as a list of features the model uses.
   for feature_name in sorted_feature_names:
@@ -168,7 +169,8 @@ def convert_to_universal_format(dtec, sorted_feature_names,
           split = gtflow_node.sparse_float_binary_split_default_right.split
           node.default_direction = (
               generic_tree_model_pb2.BinaryNode.RIGHT)
-          # TODO(nponomareva): adjust this id assignement when we allow multi-
+          # TODO (nponomareva): adjust this id assignement when we allow multi- id:1010
+          # https://github.com/imdone/tensorflow/issues/1011
           # column sparse tensors.
           feature_id = split.feature_column + num_dense
           inequality_test = node.inequality_left_child_test

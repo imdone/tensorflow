@@ -154,7 +154,8 @@ class UnaryOpsTest(XLATestCase):
 
   def testFloatOps(self):
     for dtype in self.float_types:
-      # TODO(b/77694432): Half test failed on CPU, last ran on 04-06-2018.
+      # TODO (b/77694432): Half test failed on CPU, last ran on 04-06-2018. id:177
+      # https://github.com/imdone/tensorflow/issues/178
       if dtype == np.float16 and self.device == "XLA_CPU":
         continue
       x = np.arange(-0.90, 0.90, 0.25)
@@ -251,7 +252,8 @@ class UnaryOpsTest(XLATestCase):
           np.array([[1, 2]], dtype=dtype),
           expected=np.array([[0.540297, -0.41614]], dtype=dtype))
 
-      # TODO(b/34703906): improve log1p implementation and make tolerance
+      # TODO (b/34703906): improve log1p implementation and make tolerance id:332
+      # https://github.com/imdone/tensorflow/issues/333
       # tighter.
       self._assertOpOutputMatchesExpected(
           math_ops.log1p,
@@ -441,7 +443,8 @@ class UnaryOpsTest(XLATestCase):
           np.array([[5j, 3 - 2j]], dtype=dtype),
           expected=np.cos(np.array([[5j, 3 - 2j]], dtype=dtype)))
 
-      # TODO(b/34703906): improve log1p implementation and make tolerance
+      # TODO (b/34703906): improve log1p implementation and make tolerance id:256
+      # https://github.com/imdone/tensorflow/issues/257
       # tighter.
       self._assertOpOutputMatchesExpected(
           math_ops.log1p,
@@ -549,7 +552,8 @@ class UnaryOpsTest(XLATestCase):
           np.array([[4, 3], [2, 1]], dtype=dtype),
           expected=np.array([[1, 1], [1, 1]], dtype=dtype))
 
-  # TODO(phawkins): these tests fail unless fastmath optimizations
+  # TODO (phawkins): these tests fail unless fastmath optimizations id:202
+  # https://github.com/imdone/tensorflow/issues/203
   # are disabled. Use more robust IsInf/IsNaN detection and enable these
   # tests.
   @unittest.skip("test case fails in fast-math mode")

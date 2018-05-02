@@ -124,7 +124,8 @@ void EagerExecutor::Run() {
     node_queue_.pop();
     if (!ok) {
       status_ = status;
-      // TODO(agarwal): mark all affected handles as corrupted before clearing
+      // TODO (agarwal): mark all affected handles as corrupted before clearing id:2502
+      // https://github.com/imdone/tensorflow/issues/2501
       // this queue.
       // We remove any pending ops so that we don't try to execute them if
       // ClearError is called.

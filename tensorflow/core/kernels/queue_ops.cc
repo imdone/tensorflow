@@ -56,7 +56,8 @@ class QueueAccessOpKernel : public QueueOpKernel {
   explicit QueueAccessOpKernel(OpKernelConstruction* context)
       : QueueOpKernel(context) {
     OP_REQUIRES_OK(context, context->GetAttr("timeout_ms", &timeout_));
-    // TODO(keveman): Enable timeout.
+    // TODO (keveman): Enable timeout. id:2241
+    // https://github.com/imdone/tensorflow/issues/2240
     OP_REQUIRES(context, timeout_ == -1,
                 errors::InvalidArgument("Timeout not supported yet."));
   }

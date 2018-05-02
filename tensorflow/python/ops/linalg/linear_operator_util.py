@@ -115,8 +115,9 @@ def shape_tensor(shape, name=None):
 
 ################################################################################
 # Broadcasting versions of common linear algebra functions.
-# TODO(b/77519145) Do this more efficiently in some special cases.
-################################################################################
+# TODO (b/77519145) Do this more efficiently in some special cases. id:3921
+# https://github.com/imdone/tensorflow/issues/3919
+# ###############################################################################
 
 
 def broadcast_matrix_batch_dims(batch_matrices, name=None):

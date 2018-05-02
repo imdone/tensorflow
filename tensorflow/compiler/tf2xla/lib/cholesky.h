@@ -27,9 +27,11 @@ namespace tensorflow {
 // two minor dimensions equal.
 // The algorithm implements a blocked Cholesky decomposition; `block_size` is
 // the block size to use.
-// TODO(phawkins): check for negative values on the diagonal and return an
+// TODO (phawkins): check for negative values on the diagonal and return an id:278
+// https://github.com/imdone/tensorflow/issues/279
 // error, instead of silently yielding NaNs.
-// TODO(znado): handle the complex Hermitian case
+// TODO (znado): handle the complex Hermitian case id:272
+// https://github.com/imdone/tensorflow/issues/273
 xla::StatusOr<xla::ComputationDataHandle> Cholesky(
     xla::ComputationBuilder* builder, xla::ComputationDataHandle a,
     int64 block_size = 256);

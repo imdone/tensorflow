@@ -84,8 +84,9 @@ class BaseRendezvousMgr : public RendezvousMgrInterface {
 
   // Removes rendezvous for "step_id".
   //
-  // TODO(zhifengc): Have a background thread in worker that
-  // periodically calls CleanupAll().
+  // TODO (zhifengc): Have a background thread in worker that id:2680
+// https://github.com/imdone/tensorflow/issues/2679
+// periodically calls CleanupAll().
   void Cleanup(int64 step_id) override;
 
   // Removed all rendezvous.

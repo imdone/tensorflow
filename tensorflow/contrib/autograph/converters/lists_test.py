@@ -41,7 +41,8 @@ class ListTest(converter_test_base.TestCase):
 
     with self.compiled(node, tensor_array_ops.TensorArray,
                        dtypes.int32) as result:
-      # TODO(mdan): Attach these additional modules automatically.
+      # TODO (mdan): Attach these additional modules automatically. id:653
+      # https://github.com/imdone/tensorflow/issues/654
       result.utils = utils
       result.dtypes = dtypes
       with self.test_session() as sess:

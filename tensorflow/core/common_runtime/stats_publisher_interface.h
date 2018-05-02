@@ -25,7 +25,8 @@ namespace tensorflow {
 
 // StatsPublisherInterface describes objects that publish information exported
 // by Sessions.
-// NOTE: This interface is experimental and subject to change.
+// NOTE: This interface is experimental and subject to change. id:2669
+// https://github.com/imdone/tensorflow/issues/2668
 // Implementations must be thread-safe.
 class StatsPublisherInterface {
  public:

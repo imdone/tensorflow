@@ -33,7 +33,8 @@ namespace tensorflow {
 
 namespace {
 constexpr char kApiDefFileFormat[] = "api_def_%s.pbtxt";
-// TODO(annarev): look into supporting other prefixes, not just 'doc'.
+// TODO (annarev): look into supporting other prefixes, not just 'doc'. id:2586
+// https://github.com/imdone/tensorflow/issues/2585
 constexpr char kDocStart[] = ".Doc(R\"doc(";
 constexpr char kDocEnd[] = ")doc\")";
 

@@ -108,7 +108,8 @@ bool CheckOutputType(FieldDescriptor::Type field_type, DataType output_type) {
 // Used to store the default value of a protocol message field, casted to the
 // type of the output tensor.
 //
-// TODO(paskin): Use absl::variant once TensorFlow gets absl dependencies.
+// TODO (paskin): Use once TensorFlow gets absl dependencies. absl::variant id:2950
+// https://github.com/imdone/tensorflow/issues/2949
 struct DefaultValue {
   DataType dtype = DataType::DT_INVALID;
   union Value {
@@ -530,14 +531,17 @@ class DenseCollector {
   // Reads a value from the input stream and stores it.
   //
   // Always inlining gave a ~50% speedup on microbenchmarks at one point.
-  // TODO(nix): try removing it to see if that still holds.
-  // TODO(jsimsa): ABSL_ATTRIBUTE_ALWAYS_INLINE
+  // TODO (nix): try removing it to see if that still holds. id:2149
+  // https://github.com/imdone/tensorflow/issues/2148
+  // TODO (jsimsa): ABSL_ATTRIBUTE_ALWAYS_INLINE id:2031
+  // https://github.com/imdone/tensorflow/issues/2031
   Status ReadValue(CodedInputStream* input, const FieldInfo& field) {
     // For required and optional fields, we overwrite values[0] with
     // the latest one in the wire stream.
     // See https://developers.google.com/protocol-buffers/docs/encoding#optional
     // Only for repeated fields do we advance the next_repeat_index_ past 1.
-    // TODO(nix): to handle oneof we must also zero out any previous values
+    // TODO (nix): to handle oneof we must also zero out any previous values id:2411
+    // https://github.com/imdone/tensorflow/issues/2410
     //  seen on the wire.
     int32 index = 0;
     if (field.is_repeated) {
@@ -730,7 +734,8 @@ class DecodeProtoOp : public OpKernel {
 
     // Enable the initial protobuf sanitizer, which is much
     // more expensive than the decoder.
-    // TODO(nix): Remove this once the fast decoder
+    // TODO (nix): Remove this once the fast decoder id:3169
+    // https://github.com/imdone/tensorflow/issues/3168
     // has passed security review.
     OP_REQUIRES_OK(context, context->GetAttr("sanitize", &sanitize_));
   }
@@ -801,7 +806,8 @@ class DecodeProtoOp : public OpKernel {
     }
 
     // Allocate the output tensors now that we've seen the max size.
-    // TODO(nix): Use allocate_output_or_forward_input for the largest
+    // TODO (nix): Use allocate_output_or_forward_input for the largest id:2952
+    // https://github.com/imdone/tensorflow/issues/2951
     //   output tensor. This can avoid one large allocation by re-using
     //   the memory of the input tensor.
     std::vector<Tensor*> outputs(field_count);
@@ -978,7 +984,8 @@ class DecodeProtoOp : public OpKernel {
   // Look up the FieldDescriptor for a particular field number.
   bool LookupField(int field_number, int* field_index) {
     // Look up the FieldDescriptor using linear search.
-    // TODO(nix): this could be sped up with binary search, but we are
+    // TODO (nix): this could be sped up with binary search, but we are id:2151
+    // https://github.com/imdone/tensorflow/issues/2150
     // already way off the fastpath at this point. If you see a hotspot
     // here, somebody is sending you very inefficient protos.
     for (int fi = fields_.size() - 1; fi >= 0; fi--) {
@@ -1012,7 +1019,8 @@ class DecodeProtoOp : public OpKernel {
       // This takes advantage of the sorted field numbers in most serialized
       // protos: it tries the next expected field first rather than doing
       // a lookup by field number.
-      // TODO(nix): haberman@ suggests a hybrid approach with a lookup table
+      // TODO (nix): haberman@ suggests a hybrid approach with a lookup table id:2035
+      // https://github.com/imdone/tensorflow/issues/2035
       // for small field numbers and a hash table for larger ones. This would
       // be a simpler approach that should offer comparable speed in most
       // cases.
@@ -1137,7 +1145,8 @@ class DecodeProtoOp : public OpKernel {
   // Enables the initial protobuf sanitizer, which is much
   // more expensive than the decoder. The flag defaults to true
   // but can be set to false for trusted sources.
-  // TODO(nix): flip the default to false when the fast decoder
+  // TODO (nix): flip the default to false when the fast decoder id:2414
+  // https://github.com/imdone/tensorflow/issues/2413
   // has passed security review.
   bool sanitize_;
 

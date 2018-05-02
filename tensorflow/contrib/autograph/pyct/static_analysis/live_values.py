@@ -70,14 +70,17 @@ class LiveValueResolver(transformer.Base):
             pass
         else:
           pass
-          # TODO(mdan): Should we raise an error here?
+          # TODO (mdan): Should we raise an error here? id:997
+          # https://github.com/imdone/tensorflow/issues/998
           # Can encounter this when:
           #  * a symbol truly lacks reference
           #  * a symbol is new, like the new name of a function we just renamed.
       else:
         pass
-        # TODO(mdan): Attempt to trace its value through the local chain.
-        # TODO(mdan): Use type annotations as fallback.
+        # TODO (mdan): Attempt to trace its value through the local chain. id:730
+        # https://github.com/imdone/tensorflow/issues/731
+        # TODO (mdan): Use type annotations as fallback. id:700
+        # https://github.com/imdone/tensorflow/issues/701
 
       if not symbol_is_modified:
         if node.id in self.context.arg_values:
@@ -97,7 +100,8 @@ class LiveValueResolver(transformer.Base):
       anno.setanno(node, 'parent_type', type(parent_object))
       anno.setanno(node, 'live_val', getattr(parent_object, node.attr))
       anno.setanno(node, 'fqn', anno.getanno(node.value, 'fqn') + (node.attr,))
-    # TODO(mdan): Investigate the role built-in annotations can play here.
+    # TODO (mdan): Investigate the role built-in annotations can play here. id:550
+    # https://github.com/imdone/tensorflow/issues/551
     elif anno.hasanno(node.value, 'type'):
       parent_type = anno.getanno(node.value, 'type')
       if hasattr(parent_type, node.attr):
@@ -113,7 +117,8 @@ class LiveValueResolver(transformer.Base):
       stem_name = node.value
       # All nonlocal symbols should be fully resolved.
       assert anno.hasanno(stem_name, NodeAnno.IS_LOCAL), stem_name
-      # TODO(mdan): Figure out what to do when calling attribute on local object
+      # TODO (mdan): Figure out what to do when calling attribute on local object id:536
+      # https://github.com/imdone/tensorflow/issues/537
       # Maybe just leave as-is?
     return node
 

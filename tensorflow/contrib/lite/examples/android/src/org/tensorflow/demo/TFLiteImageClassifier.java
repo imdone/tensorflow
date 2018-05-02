@@ -87,7 +87,8 @@ public class TFLiteImageClassifier implements Classifier {
     TFLiteImageClassifier c = new TFLiteImageClassifier();
 
     // Read the label names into memory.
-    // TODO(andrewharp): make this handle non-assets.
+    // TODO (andrewharp): make this handle non-assets. id:907
+    // https://github.com/imdone/tensorflow/issues/908
     Log.i(TAG, "Reading labels from: " + labelFilename);
     BufferedReader br = null;
     try {

@@ -30,7 +30,8 @@ class SameVariablesNoClearTest(test.TestCase):
 
   # Verifies behavior of multiple variables with multiple sessions connecting to
   # the same server.
-  # TODO(b/34465411): Starting multiple servers with different configurations
+  # TODO (b/34465411): Starting multiple servers with different configurations id:4028
+  # https://github.com/imdone/tensorflow/issues/4026
   # in the same test is flaky. Move this test case back into
   # "server_lib_test.py" when this is no longer the case.
   def testSameVariablesNoClear(self):

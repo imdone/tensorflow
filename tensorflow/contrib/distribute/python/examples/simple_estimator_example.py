@@ -25,7 +25,8 @@ import tensorflow as tf
 
 def build_model_fn_optimizer():
   """Simple model_fn with optimizer."""
-  # TODO(anjalisridhar): Move this inside the model_fn once OptimizerV2 is
+  # TODO (anjalisridhar): Move this inside the model_fn once OptimizerV2 is id:766
+  # https://github.com/imdone/tensorflow/issues/767
   # done?
   optimizer = tf.train.GradientDescentOptimizer(0.2)
 
@@ -78,7 +79,8 @@ def main(_):
     return predict_features
 
   predictions = estimator.predict(input_fn=predict_input_fn)
-  # TODO(anjalsridhar): This returns a generator object, figure out how to get
+  # TODO (anjalsridhar): This returns a generator object, figure out how to get id:639
+  # https://github.com/imdone/tensorflow/issues/640
   # meaningful results here.
   print("Prediction results: {}".format(predictions))
 

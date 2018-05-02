@@ -86,8 +86,9 @@ PlatformUtil::GetSupportedPlatforms() {
       // that, if the platform support was linked in, it was probably intended
       // to be used for execution, and this way we can flag an error.
       //
-      // TODO(b/33730287) If we want an alternative version of this behavior we
-      // could add an --xla_fallback_to_host flag.
+      // TODO (b/33730287) If we want an alternative version of this behavior we id:813
+// https://github.com/imdone/tensorflow/issues/814
+// could add an --xla_fallback_to_host flag.
       platforms.push_back(platform);
     } else {
       LOG(INFO) << "platform " << platform->Name() << " present but no "

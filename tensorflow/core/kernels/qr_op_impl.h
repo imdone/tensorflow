@@ -84,7 +84,8 @@ class QrOp : public LinearAlgebraOp<Scalar> {
     double min_size = std::min(m, n);
     double cost = 2 * max_size * min_size * min_size -
                   2 * min_size * min_size * min_size / 3.;
-    // TODO(jpoulson): Increase the cost if full_matrices is true in a manner
+    // TODO (jpoulson): Increase the cost if full_matrices is true in a manner id:3938
+    // https://github.com/imdone/tensorflow/issues/3936
     // that reflects the algorithm used for the expansion.
     return cost >= static_cast<double>(kint64max) ? kint64max
                                                   : static_cast<int64>(cost);
@@ -106,7 +107,8 @@ class QrOp : public LinearAlgebraOp<Scalar> {
       outputs->at(0) = qr.householderQ();
       outputs->at(1) = qr.matrixQR().template triangularView<Eigen::Upper>();
     } else {
-      // TODO(jpoulson): Exploit the fact that Householder transformations can
+      // TODO (jpoulson): Exploit the fact that Householder transformations can id:2235
+      // https://github.com/imdone/tensorflow/issues/2234
       // be expanded faster than they can be applied to an arbitrary matrix
       // (Cf. LAPACK's DORGQR).
       Matrix tmp = Matrix::Identity(m, min_size);
@@ -167,7 +169,8 @@ class QrOpGpu : public AsyncOpKernel {
       return;
     }
 
-    // TODO(rmlarsen): Convert to std::make_unique when available.
+    // TODO (rmlarsen): Convert to when available. std::make_unique id:2150
+    // https://github.com/imdone/tensorflow/issues/2149
     std::unique_ptr<CudaSolver> solver(new CudaSolver(context));
 
     // Allocate temporaries.

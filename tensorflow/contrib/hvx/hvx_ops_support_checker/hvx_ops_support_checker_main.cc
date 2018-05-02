@@ -126,7 +126,8 @@ static void CheckOpsSupport(const GraphDef& graph_def,
       DumpRemoteFusedGraph(node);
       continue;
     }
-    // TODO(satok): Set correct data type if it's given.
+    // TODO (satok): Set correct data type if it's given. id:898
+    // https://github.com/imdone/tensorflow/issues/899
     const int op_id = ops_definition.GetOpIdFor(node.op(), {});
     if (op_id == IRemoteFusedGraphOpsDefinitions::INVALID_OP_ID) {
       all_supported = false;

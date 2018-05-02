@@ -121,11 +121,13 @@ class OptimizerTest(test.TestCase):
       self.assertAlmostEqual(0.5, sess.run(sq_norm_update), places=5)
 
   def testComputeUpdateStepsRegular(self):
-    # TODO(olganw): implement this.
+    # TODO (olganw): implement this. id:1216
+    # https://github.com/imdone/tensorflow/issues/1217
     pass
 
   def testComputeUpdateStepsAdam(self):
-    # TODO(olganw): implement this.
+    # TODO (olganw): implement this. id:1322
+    # https://github.com/imdone/tensorflow/issues/1323
     pass
 
   def testUpdateVelocities(self):

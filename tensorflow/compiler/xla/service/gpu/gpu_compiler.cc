@@ -139,7 +139,8 @@ tensorflow::Status OptimizeHloModule(HloModule* hlo_module,
         &pipeline, hlo_module->config().debug_options(),
         ReducePrecisionInsertion::PassTiming::BEFORE_OPTIMIZATION);
 
-    // TODO(b/64094172): make Call work on GPU instead of inlining.
+    // TODO (b/64094172): make Call work on GPU instead of inlining. id:505
+    // https://github.com/imdone/tensorflow/issues/506
     pipeline.AddPass<CallInliner>();
     // Convert BF16 operations to F32 operations so that the GPU backend can
     // support BF16 operations without directly implementing a BF16 lowering for
@@ -732,7 +733,8 @@ std::vector<uint8> GpuCompiler::CompilePtxOrGetCachedResult(const string& ptx,
             // binaries are not available. We don't want to spam logs with
             // identical warnings in this case.
 
-            // TODO(zhengxq): we should implement a LOG_FIRST_N and LOG_EVERY_N
+            // TODO (zhengxq): we should implement a LOG_FIRST_N and LOG_EVERY_N id:369
+            // https://github.com/imdone/tensorflow/issues/370
             // for more general usage.
             static std::atomic<bool> warning_done(false);
             log_warning = !warning_done.exchange(true);

@@ -86,7 +86,8 @@ void MetricTableReport::WriteReportToInfoLog(double expected_metric_sum) {
     }
     tensorflow::StringPiece line(report.data() + pos, end_of_line - pos);
 
-    // TODO(b/34779244): Figure out how to do this without the verbose log-line
+    // TODO (b/34779244): Figure out how to do this without the verbose log-line id:224
+    // https://github.com/imdone/tensorflow/issues/225
     // prefix. The usual way didn't compile on open source.
     LOG(INFO) << line;
 

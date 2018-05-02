@@ -32,7 +32,8 @@ from tensorflow.python.framework import ops
 from tensorflow.python.ops import gen_dataset_ops as core_gen_dataset_ops
 
 
-# TODO(rohanj): Add a python class that constructs resource in the __init__
+# TODO (rohanj): Add a python class that constructs resource in the __init__ id:596
+# https://github.com/imdone/tensorflow/issues/597
 # method and provides a get_next() that calls the prefetch op.
 def function_buffering_resource(string_arg,
                                 target_device,
@@ -223,7 +224,8 @@ class _PrefetchToDeviceEagerIterator(iterator_ops.EagerIterator):
     """
     # This runs in sync mode as iterators use an error status to communicate
     # that there is no more data to iterate over.
-    # TODO(b/77291417): Fix
+    # TODO (b/77291417): Fix id:1085
+    # https://github.com/imdone/tensorflow/issues/1086
     with context.execution_mode(context.SYNC):
       with ops.device(self._device):
         ret = gen_dataset_ops.function_buffering_resource_get_next(
@@ -284,9 +286,11 @@ class _PrefetchToDeviceDataset(dataset_ops.Dataset):
         shared_name=shared_name)
 
   def _as_variant_tensor(self):
-    # TODO(mrry): Raise this error earlier (e.g. when one of the Dataset
+    # TODO (mrry): Raise this error earlier (e.g. when one of the Dataset id:996
+    # https://github.com/imdone/tensorflow/issues/997
     # transformation methods is called.
-    # TODO(mrry): Investigate support for chaining further transformations after
+    # TODO (mrry): Investigate support for chaining further transformations after id:761
+    # https://github.com/imdone/tensorflow/issues/762
     # the prefetch, including GPU support.
     raise NotImplementedError("`prefetch_to_device()` must be the last "
                               "transformation in a dataset pipeline.")

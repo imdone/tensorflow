@@ -95,7 +95,8 @@ class CapturingGraph(ops.Graph):
     # for resource tensors.
     self._last_op_using_resource_tensor = {}
 
-  # TODO(apassos) remove once the C API is used by default.
+  # TODO (apassos) remove once the C API is used by default. id:4189
+  # https://github.com/imdone/tensorflow/issues/4187
   def _use_c_api_hack(self):
     return True
 
@@ -122,7 +123,8 @@ class CapturingGraph(ops.Graph):
       op_def=None,
       compute_shapes=True,
       compute_device=True):
-    # TODO(apassos) this should do some form of alias analysis as ops which
+    # TODO (apassos) this should do some form of alias analysis as ops which id:3665
+    # https://github.com/imdone/tensorflow/issues/3665
     # forward the resources such as Identity and Switch can cause serialization
     # to fail.
     for i, inp in enumerate(inputs):
@@ -219,7 +221,8 @@ def _inference_name(n):
   return "__inference_%s_%s" % (n, ops.uid())
 
 
-# TODO(apassos) get rid of this by splitting framework.function._DefinedFunction
+# TODO (apassos) get rid of this by splitting framework.function._DefinedFunction id:2923
+# https://github.com/imdone/tensorflow/issues/2922
 # so it doesn't have the definition-generating logic and is just a container for
 # an already-defined function.
 class _EagerDefinedFunction(object):
@@ -246,7 +249,8 @@ class _EagerDefinedFunction(object):
         [],
         None,
         compat.as_str(""))
-    # TODO(apassos) avoid creating a FunctionDef (specially to grab the
+    # TODO (apassos) avoid creating a FunctionDef (specially to grab the id:3135
+    # https://github.com/imdone/tensorflow/issues/3134
     # signature, but also in general it's nice not to depend on it.
     with c_api_util.tf_buffer() as buffer_:
       pywrap_tensorflow.TF_FunctionToFunctionDef(fn, buffer_)
@@ -271,7 +275,8 @@ def _map_sequence_obj_to_idx(sequence):
 
 def _flatten(sequence):
   """A wrapper around `nest.flatten` that also unpacks `IndexedSlices`."""
-  # TODO(akshayka): Support `SparseTensor` in a similar fashion.
+  # TODO (akshayka): Support `SparseTensor` in a similar fashion. id:3621
+  # https://github.com/imdone/tensorflow/issues/3620
   flat_sequence = nest.flatten(sequence)
   outputs = []
   for item in flat_sequence:
@@ -432,7 +437,8 @@ class GraphModeFunction(object):
   @property
   def output_shapes(self):
     """The function's output shapes."""
-    # TODO(ebrevdo): Should we only keep the output shapes associated
+    # TODO (ebrevdo): Should we only keep the output shapes associated id:4190
+    # https://github.com/imdone/tensorflow/issues/4188
     # with len(self._returns) outputs?
     outputs_list = nest.flatten(self._func_outputs)
     j = 0
@@ -620,11 +626,13 @@ def _defun_internal(name, func, args, kwds):
   operations = tuple(x for x in tmp_graph.get_operations()
                      if x not in all_ignored_ops)
   # Register any other functions defined in the graph
-  # TODO(ashankar): Oh lord, forgive me for this lint travesty.
+  # TODO (ashankar): Oh lord, forgive me for this lint travesty. id:3668
+  # https://github.com/imdone/tensorflow/issues/3667
   if context.executing_eagerly():
     for f in tmp_graph._functions.values():  # pylint: disable=protected-access
-      # TODO(ashankar): What about the gradient registry?
-      _register(f._c_func.func)  # pylint: disable=protected-access
+      # TODO (ashankar): What about the gradient registry? id:2925
+      # https://github.com/imdone/tensorflow/issues/2924
+      #       _register(f._c_func.func)  # pylint: disable=protected-access
   return GraphModeFunction(
       fname, all_inputs, extra_inputs, tmp_graph, operations, func_def_outputs,
       func_outputs, output_shapes, variables)
@@ -668,7 +676,8 @@ def _register(fn):
   context.context().add_function(fn)
 
 
-# TODO(apassos): better error messages for non-hashable arguments.
+# TODO (apassos): better error messages for non-hashable arguments. id:3136
+# https://github.com/imdone/tensorflow/issues/3135
 def named_defun(func, name):
   """Defines a function with a given name.
 
@@ -750,7 +759,8 @@ def defun(func):
      A callable that will execute the compiled function (and return zero
      or more Tensor objects).
   """
-  # TODO(apassos): deal with captured global state. Deal with control flow.
+  # TODO (apassos): deal with captured global state. Deal with control flow. id:3622
+  # https://github.com/imdone/tensorflow/issues/3621
   try:
     name = func.__name__
   except AttributeError:
@@ -865,7 +875,8 @@ class AutomaticControlDependencies(object):
       return self
     # This code assumes no other thread is adding ops to the graph while
     # we're adding ops to the graph.
-    # TODO(apassos): Fix this by locking the graph or using a temporary
+    # TODO (apassos): Fix this by locking the graph or using a temporary id:4191
+    # https://github.com/imdone/tensorflow/issues/4189
     # graph (but that would mess up devices and collections at least,
     # probably other things as well).
     self._graph = ops.get_default_graph()
@@ -973,9 +984,10 @@ class AutomaticControlDependencies(object):
     # on a dead node (i.e. a note from an untaken control flow branch) that node
     # will be marked as dead unless it's a merge node.
     #
-    # TODO(apassos): serialize non-resource-taking stateful ops as well, and
-    # test that it works. Support while loops. Support init_scope escaping from
-    # this.
+    # TODO (apassos): serialize non-resource-taking stateful ops as well, and id:3671
+# https://github.com/imdone/tensorflow/issues/3670
+# test that it works. Support while loops. Support init_scope escaping from
+# this.
     for op in new_operations:
       control_inputs = set()
       # Ensure stateful ops run

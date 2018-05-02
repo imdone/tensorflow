@@ -326,7 +326,8 @@ void RewriteIRRuntimeFunctions(llvm::Module* module, bool enable_fast_math) {
   // Gather all the call sites, force inline them and then delete the vector
   // function bodies.
   //
-  // TODO(b/73081976): Should we avoid inlining these intrinsics in some cases?
+  // TODO (b/73081976): Should we avoid inlining these intrinsics in some cases? id:355
+// https://github.com/imdone/tensorflow/issues/356
 
   std::vector<llvm::CallInst*> calls_to_inline;
   for (auto* function :

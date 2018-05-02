@@ -94,9 +94,10 @@ def _get_feeds_for_indexed_slices(feed, feed_val):
 # feeds of one or more tensors and their corresponding values: `feed_fn1` is
 # used to feed a run, `feed_fn2` to set up a partial run.
 #
-# TODO(touts): We could reimplement these as specialized _FeedMapper
+# TODO (touts): We could reimplement these as specialized _FeedMapper id:4161
+# https://github.com/imdone/tensorflow/issues/4159
 # implementations after we refactor the feed handling code to use them.
-#
+# 
 # Eventually, this registration could be opened up to support custom Tensor
 # expansions.
 # pylint: disable=g-long-lambda
@@ -241,7 +242,8 @@ class _FetchMapper(object):
       raise TypeError('Fetch argument %r has invalid type %r' % (fetch,
                                                                  type(fetch)))
     elif isinstance(fetch, (list, tuple)):
-      # NOTE(touts): This is also the code path for namedtuples.
+      # NOTE (touts): This is also the code path for namedtuples. id:3556
+      # https://github.com/imdone/tensorflow/issues/3555
       return _ListFetchMapper(fetch)
     elif isinstance(fetch, dict):
       return _DictFetchMapper(fetch)
@@ -408,7 +410,8 @@ class _FetchHandler(object):
   containing the corresponding results.
   """
 
-  # TODO(touts): Make this class also take care of destructuring the feed
+  # TODO (touts): Make this class also take care of destructuring the feed id:2754
+  # https://github.com/imdone/tensorflow/issues/2753
   # dict instead of doing it in the callers.
 
   def __init__(self, graph, fetches, feeds, feed_handles=None):
@@ -952,7 +955,8 @@ class BaseSession(SessionInterface):
     Raises:
       tf.errors.OpError: Or one of its subclasses on error.
     """
-    # TODO(touts): Support feeding and fetching the same tensor.
+    # TODO (touts): Support feeding and fetching the same tensor. id:3071
+    # https://github.com/imdone/tensorflow/issues/3070
     return self._run(handle, fetches, feed_dict, None, None)
 
   def partial_run_setup(self, fetches, feeds=None):
@@ -1017,7 +1021,8 @@ class BaseSession(SessionInterface):
           raise e
 
     # Validate and process fetches.
-    # TODO(touts): Support feeding and fetching the same tensor.
+    # TODO (touts): Support feeding and fetching the same tensor. id:3593
+    # https://github.com/imdone/tensorflow/issues/3592
     fetch_handler = _FetchHandler(self._graph, fetches, {})
 
     # Set up a graph with feeds and fetches for partial run.
@@ -1123,7 +1128,8 @@ class BaseSession(SessionInterface):
     # We need to keep the returned movers alive for the following _do_run().
     # These movers are no longer needed when _do_run() completes, and
     # are deleted when `movers` goes out of scope when this _run() ends.
-    # TODO(yuanbyu, keveman): Revisit whether we should just treat feeding
+    # TODO (yuanbyu, keveman): Revisit whether we should just treat feeding id:4162
+    # https://github.com/imdone/tensorflow/issues/4160
     # of a handle from a different device as an error.
     _ = self._update_with_movers(feed_dict_tensor, feed_map)
     final_fetches = fetch_handler.fetches()
@@ -1176,7 +1182,8 @@ class BaseSession(SessionInterface):
       if not isinstance(feed_list, (list, tuple)):
         raise TypeError('`feed_list` must be a list or tuple.')
       # Delegate any non-empty feed lists to the existing `run()` logic.
-      # TODO(mrry): Refactor the feed handling logic from
+      # TODO (mrry): Refactor the feed handling logic from id:3557
+      # https://github.com/imdone/tensorflow/issues/3556
       # `Session._run()` so that we can convert the feeds to a list of
       # strings here.
       def _generic_run(*feed_args, **kwargs):
@@ -1443,7 +1450,8 @@ class BaseSession(SessionInterface):
         tf_session.TF_DeleteBuffer(options_ptr)
 
     def __call__(self, *args):
-      # TODO(b/74355905): Support argument and return value nested structures,
+      # TODO (b/74355905): Support argument and return value nested structures, id:2757
+      # https://github.com/imdone/tensorflow/issues/2756
       # and tensor-like objects such as SparseTensors.
       with errors.raise_exception_on_not_ok_status() as status:
         if self._session._created_with_new_api:
@@ -1454,7 +1462,8 @@ class BaseSession(SessionInterface):
               self._session._session, self._handle, args, status, None)
 
     def __del__(self):
-      # NOTE(mrry): It is possible that `self._session.__del__()` could be
+      # NOTE (mrry): It is possible that `self._session.__del__()` could be id:3073
+      # https://github.com/imdone/tensorflow/issues/3072
       # called before this destructor, in which case `self._session._session`
       # will be `None`.
       if self._handle is not None and self._session._session is not None:
@@ -1467,7 +1476,8 @@ class BaseSession(SessionInterface):
                 self._session._session, self._handle, status)
   # pylint: enable=protected-access
 
-  # TODO(b/74355905): Reimplement `Session.make_callable()` using this method
+  # TODO (b/74355905): Reimplement `Session.make_callable()` using this method id:3594
+  # https://github.com/imdone/tensorflow/issues/3593
   # where possible.
   def _make_callable_from_options(self, callable_options):
     """Returns a handle to a "callable" with the given options.
@@ -1561,7 +1571,8 @@ class Session(BaseSession):
 
     """
     super(Session, self).__init__(target, graph, config=config)
-    # NOTE(mrry): Create these on first `__enter__` to avoid a reference cycle.
+    # NOTE (mrry): Create these on first `__enter__` to avoid a reference cycle. id:4163
+    # https://github.com/imdone/tensorflow/issues/4161
     self._default_graph_context_manager = None
     self._default_session_context_manager = None
 
@@ -1585,7 +1596,8 @@ class Session(BaseSession):
                                                      exec_tb)
     except RuntimeError as error:
       if error == exec_value:
-        # NOTE(skyewm): for some reason, in Python3,
+        # NOTE (skyewm): for some reason, in Python3, id:3559
+        # https://github.com/imdone/tensorflow/issues/3558
         # _default_session_context_manager.__exit__ will re-raise the "not
         # re-entrant" exception raised in __enter__ above (note that if we're
         # here, we're in the outer session context manager, since __exit__ is
@@ -1716,7 +1728,8 @@ class InteractiveSession(BaseSession):
                       'explicitly call `InteractiveSession.close()` to release '
                       'resources held by the other session(s).')
       InteractiveSession._active_session_count += 1
-    # NOTE(mrry): We do not use `Session._closed` here because it has unhelpful
+    # NOTE (mrry): We do not use `Session._closed` here because it has unhelpful id:2807
+    # https://github.com/imdone/tensorflow/issues/2806
     # semantics (in particular, it is not set to true if `Session.close()` is
     # called on a session that has not been "opened" by running a step) and we
     # cannot change those semantics without breaking existing code.

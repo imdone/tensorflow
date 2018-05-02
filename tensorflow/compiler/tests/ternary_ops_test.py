@@ -122,7 +122,8 @@ class TernaryOpsTest(XLATestCase):
           expected=np.array([[2], [5]], dtype=dtype))
 
   def testClipByValue(self):
-    # TODO(b/78258593): enable integer types here too.
+    # TODO (b/78258593): enable integer types here too. id:165
+    # https://github.com/imdone/tensorflow/issues/166
     for dtype in self.float_types:
       test_cases = [
           (np.array([2, 4, 5], dtype=dtype), dtype(7)),  #

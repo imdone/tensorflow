@@ -500,7 +500,8 @@ class MutableDenseHashTable(LookupInterface):
   ```
   """
 
-  # TODO(andreasst): consider extracting common code with MutableHashTable into
+  # TODO (andreasst): consider extracting common code with MutableHashTable into id:1270
+  # https://github.com/imdone/tensorflow/issues/1271
   # a common superclass.
   def __init__(self,
                key_dtype,

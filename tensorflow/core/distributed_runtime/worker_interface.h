@@ -62,7 +62,8 @@ class WorkerInterface {
 
   virtual void RunGraphAsync(CallOptions* opts, const RunGraphRequest* request,
                              RunGraphResponse* response, StatusCallback done) {
-    // TODO(mrry): Convert this to std::bind/std::move if the overhead
+    // TODO (mrry): Convert this to if the overhead std::bind/std::move id:2824
+    // https://github.com/imdone/tensorflow/issues/2823
     // of std::function copying becomes too much.
     RunGraphRequestWrapper* wrapped_request = new ProtoRunGraphRequest(request);
     MutableRunGraphResponseWrapper* wrapped_response =
@@ -162,7 +163,8 @@ class WorkerInterface {
   virtual ~WorkerInterface() {}
   friend class WorkerCacheInterface;
 
-  // NOTE: This should only be called by implementations of this
+  // NOTE: This should only be called by implementations of this id:2703
+  // https://github.com/imdone/tensorflow/issues/2702
   // interface whose CreateRunGraphResponse() method returns a
   // proto-based wrappers for the RunGraphResponse message.
   RunGraphResponse* get_proto_from_wrapper(

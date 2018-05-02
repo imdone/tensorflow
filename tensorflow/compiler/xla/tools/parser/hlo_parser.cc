@@ -1552,7 +1552,8 @@ bool HloParser::ParseDenseLiteral(std::unique_ptr<Literal>* literal,
         }
         if (lexer_.GetKind() == TokKind::kw_true ||
             lexer_.GetKind() == TokKind::kw_false) {
-          // TODO(congliu): bool type literals with rank >= 1 are actually
+          // TODO (congliu): bool type literals with rank >= 1 are actually id:946
+          // https://github.com/imdone/tensorflow/issues/947
           // printed in a compact form instead of "true" or "false". Fix that.
           if (!SetValueInLiteral(lexer_.GetKind() == TokKind::kw_true,
                                  linear_index++, literal->get())) {

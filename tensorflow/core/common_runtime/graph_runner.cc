@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// TODO(skyewm): this is necessary to make the single_threaded_cpu_device.h
+// TODO (skyewm): this is necessary to make the single_threaded_cpu_device.h id:1831
+// https://github.com/imdone/tensorflow/issues/1831
 // include work. Some other include must be including eigen without defining
 // this. Consider defining in this in a BUILD rule.
 #define EIGEN_USE_THREADS
@@ -110,7 +111,8 @@ Status GraphRunner::Run(Graph* graph, FunctionLibraryRuntime* function_library,
       function_library->device()->device_type() != device_->device_type()) {
     // Mismatch between function_library's device_type and device_'s
     // device_type.
-    // TODO(matthewmurray) Can we create a new FunctionLibraryRuntime that is
+    // TODO (matthewmurray) Can we create a new FunctionLibraryRuntime that is id:1431
+    // https://github.com/imdone/tensorflow/issues/1432
     // identical to function_library except that it uses the given 'device_'?
     VLOG(1) << "Cannot run on: " << device_->device_type()
             << " with a function library for a "
@@ -118,7 +120,8 @@ Status GraphRunner::Run(Graph* graph, FunctionLibraryRuntime* function_library,
     function_library = nullptr;
   }
 
-  // TODO(vrv): Instead of copying the entire graph, consider modifying
+  // TODO (vrv): Instead of copying the entire graph, consider modifying id:1915
+  // https://github.com/imdone/tensorflow/issues/1915
   // the existing graph, and then removing those removed edges.
   // prior to returning.
   std::unique_ptr<Graph> graph_to_run(new Graph(graph->op_registry()));
@@ -170,7 +173,8 @@ Status GraphRunner::Run(Graph* graph, FunctionLibraryRuntime* function_library,
   std::unique_ptr<Executor> executor_unref(executor);
 
   Executor::Args args;
-  // NOTE: we could take a step id as an argument, but currently
+  // NOTE: we could take a step id as an argument, but currently id:2654
+  // https://github.com/imdone/tensorflow/issues/2653
   // there is no need since we never trace the running of a graph
   // called via this method.
   args.step_id = LogMemory::CONSTANT_FOLDING_STEP_ID;

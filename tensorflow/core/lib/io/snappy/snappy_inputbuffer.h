@@ -100,7 +100,8 @@ class SnappyInputBuffer : public InputStreamInterface {
   size_t output_buffer_capacity_;  // Size of `output_buffer_`
 
   // Buffer for storing contents read from compressed file.
-  // TODO(srbs): Consider using circular buffers. That would greatly simplify
+  // TODO (srbs): Consider using circular buffers. That would greatly simplify id:2389
+  // https://github.com/imdone/tensorflow/issues/2388
   // the implementation.
   std::unique_ptr<char[]> input_buffer_;
 

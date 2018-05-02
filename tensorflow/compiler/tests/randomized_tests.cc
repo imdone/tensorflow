@@ -31,15 +31,17 @@ limitations under the License.
 //   --tf_xla_test_use_jit=true --tf_xla_test_device=CPU:0 \
 //   --tf_xla_test_repetitions=20
 
-// TODO(phawkins): add tests for:
+// TODO (phawkins): add tests for: id:162
+// https://github.com/imdone/tensorflow/issues/163
 // * DepthwiseConv2DNative
 // * Gather
 // * InvertPermutation
 // * MaxPoolGrad (requires implementation of forward operator)
 // * Select
 // * Unpack
-//
-// TODO(phawkins): improve tests for:
+// 
+// TODO (phawkins): improve tests for: id:320
+// https://github.com/imdone/tensorflow/issues/321
 // * StridedSliceGrad (need to use shape function to compute sensible inputs)
 
 #include <random>
@@ -282,13 +284,15 @@ class OpTest : public ::testing::Test {
       std::vector<int64> dims);
 
   // Builds a random pair of broadcastable dims.
-  // TODO(phawkins): currently the maximum rank is 3, because broadcasting > 3
+  // TODO (phawkins): currently the maximum rank is 3, because broadcasting > 3 id:160
+  // https://github.com/imdone/tensorflow/issues/161
   // dimensions is unimplemented by the Tensorflow Eigen code (b/29268487)
   std::pair<std::vector<int64>, std::vector<int64>> BroadcastableDims();
 
   // Returns a tensor filled with random but "reasonable" values from the middle
   // of the type's range. If the shape is omitted, a random shape is used.
-  // TODO(phawkins): generalize this code to a caller-supplied distribution.
+  // TODO (phawkins): generalize this code to a caller-supplied distribution. id:182
+  // https://github.com/imdone/tensorflow/issues/183
   Tensor RandomTensor(DataType dtype, gtl::ArraySlice<int64> shape);
   Tensor RandomTensor(DataType dtype);
 
@@ -422,7 +426,8 @@ std::vector<int64> OpTest::RandomDims(int min_rank, int max_rank,
   std::uniform_int_distribution<int> rank_distribution(min_rank, max_rank);
   int rank = rank_distribution(generator());
   std::vector<int64> dims(rank);
-  // TODO(phawkins): too small a maximum tensor size could lead to an infinite
+  // TODO (phawkins): too small a maximum tensor size could lead to an infinite id:153
+  // https://github.com/imdone/tensorflow/issues/154
   // loop here.
   do {
     std::generate(dims.begin(), dims.end(), [this, min_size, max_size]() {
@@ -1035,7 +1040,8 @@ TEST_F(OpTest, AvgPool) {
             .Attr("padding", padding)
             .Attr("data_format", "NHWC"));
   });
-  // TODO(phawkins): the CPU device only implements spatial pooling. Add tests
+  // TODO (phawkins): the CPU device only implements spatial pooling. Add tests id:164
+  // https://github.com/imdone/tensorflow/issues/164
   // for batch pooling when supported.
 }
 
@@ -1065,7 +1071,8 @@ TEST_F(OpTest, AvgPool3D) {
             .Attr("padding", padding)
             .Attr("data_format", "NDHWC"));
   });
-  // TODO(phawkins): test NCHW format (not supported by CPU)
+  // TODO (phawkins): test NCHW format (not supported by CPU) id:323
+  // https://github.com/imdone/tensorflow/issues/325
 }
 
 TEST_F(OpTest, AvgPoolGrad) {
@@ -1216,7 +1223,8 @@ TEST_F(OpTest, BiasAdd) {
   Repeatedly([this]() {
     auto x_dims = RandomDims(2, kDefaultMaxRank);
     auto y_dims = {x_dims[x_dims.size() - 1]};
-    // TODO(phawkins): test both data formats.
+    // TODO (phawkins): test both data formats. id:166
+    // https://github.com/imdone/tensorflow/issues/167
     auto type = Choose<DataType>({DT_INT32, DT_FLOAT, DT_COMPLEX64});
     return ExpectTfAndXlaOutputsAreClose(OpTestBuilder("BiasAdd")
                                              .RandomInput(type, x_dims)
@@ -1227,7 +1235,8 @@ TEST_F(OpTest, BiasAdd) {
 
 TEST_F(OpTest, BiasAddGrad) {
   Repeatedly([this]() {
-    // TODO(phawkins): test both data formats.
+    // TODO (phawkins): test both data formats. id:186
+    // https://github.com/imdone/tensorflow/issues/187
     auto type = Choose<DataType>({DT_INT32, DT_FLOAT, DT_COMPLEX64});
     return ExpectTfAndXlaOutputsAreClose(
         OpTestBuilder("BiasAddGrad").RandomInput(type).Attr("T", type));
@@ -1270,7 +1279,8 @@ TEST_F(OpTest, BitwiseOr) {
 
 TEST_F(OpTest, BroadcastArgs) {
   Repeatedly([this]() {
-    // TODO(phawkins): only int32 seems to be implemented in Tensorflow.
+    // TODO (phawkins): only int32 seems to be implemented in Tensorflow. id:156
+    // https://github.com/imdone/tensorflow/issues/157
     // auto type = Choose<DataType>({DT_INT32, DT_INT64});
     DataType type = DT_INT32;
     auto dims = BroadcastableDims();
@@ -1284,7 +1294,8 @@ TEST_F(OpTest, BroadcastArgs) {
 
 TEST_F(OpTest, BroadcastGradientArgs) {
   Repeatedly([this]() {
-    // TODO(phawkins): only int32 seems to be implemented in Tensorflow.
+    // TODO (phawkins): only int32 seems to be implemented in Tensorflow. id:168
+    // https://github.com/imdone/tensorflow/issues/169
     // auto type = Choose<DataType>({DT_INT32, DT_INT64});
     DataType type = DT_INT32;
     auto dims = BroadcastableDims();
@@ -1798,7 +1809,8 @@ TEST_F(OpTest, DynamicStitch) {
     builder.Attr("N", n);
     std::vector<std::vector<int64>> index_dims;
     int size = 0;
-    // TODO(phawkins): the XLA implementation of DynamicStitch does not
+    // TODO (phawkins): the XLA implementation of DynamicStitch does not id:326
+    // https://github.com/imdone/tensorflow/issues/327
     // accept an empty set of indices.
     do {
       size = 0;
@@ -1811,7 +1823,8 @@ TEST_F(OpTest, DynamicStitch) {
     } while (size == 0);
 
     // Shuffle the range of indices that cover the output.
-    // TODO(phawkins): The documentation for DynamicStitch doesn't require
+    // TODO (phawkins): The documentation for DynamicStitch doesn't require id:248
+    // https://github.com/imdone/tensorflow/issues/249
     // that the indices cover all positions of the output. The XLA
     // implementation does so require. However, the native TF implementation
     // leaves undefined values if we don't cover everything, so we can't
@@ -2097,7 +2110,8 @@ TEST_F(OpTest, LogSoftmax) {
 
 TEST_F(OpTest, LRN) {
   Repeatedly([this]() {
-    // TODO(b/31362467): Crashes with 0 dims on GPU. Re-enable when fixed.
+    // TODO (b/31362467): Crashes with 0 dims on GPU. Re-enable when fixed. id:189
+    // https://github.com/imdone/tensorflow/issues/190
     std::vector<int64> data_dims = RandomDims(4, 4, 1, 8);
     // CuDNN requires depth_radius > 0.
     std::uniform_int_distribution<int> radius(1, data_dims[3]);
@@ -2115,7 +2129,8 @@ TEST_F(OpTest, LRN) {
 
 TEST_F(OpTest, LRNGrad) {
   Repeatedly([this]() {
-    // TODO(b/31362467): Crashes with 0 dims on GPU. Re-enable when fixed.
+    // TODO (b/31362467): Crashes with 0 dims on GPU. Re-enable when fixed. id:158
+    // https://github.com/imdone/tensorflow/issues/159
     std::vector<int64> dims = RandomDims(4, 4, 1, 8);
     // CuDNN requires depth_radius > 0.
     std::uniform_int_distribution<int> radius(1, dims[3]);
@@ -2226,7 +2241,8 @@ TEST_F(OpTest, MaxPool) {
             .Attr("padding", padding)
             .Attr("data_format", "NHWC"));
   });
-  // TODO(phawkins): test NCHW format (not supported by CPU)
+  // TODO (phawkins): test NCHW format (not supported by CPU) id:170
+  // https://github.com/imdone/tensorflow/issues/171
 }
 
 TEST_F(OpTest, MaxPool3D) {
@@ -2259,13 +2275,15 @@ TEST_F(OpTest, MaxPool3D) {
             .Attr("padding", padding)
             .Attr("data_format", "NDHWC"));
   });
-  // TODO(phawkins): test NCHW format (not supported by CPU)
+  // TODO (phawkins): test NCHW format (not supported by CPU) id:328
+  // https://github.com/imdone/tensorflow/issues/329
 }
 
 TEST_F(OpTest, Mean) {
   Repeatedly([this]() {
     auto type = Choose<DataType>({DT_INT32, DT_FLOAT, DT_COMPLEX64});
-    // TODO(phawkins): CPU and XLA differ output for reducing across a
+    // TODO (phawkins): CPU and XLA differ output for reducing across a id:250
+    // https://github.com/imdone/tensorflow/issues/251
     // size-0 dimension (nan vs 0). For now, require size >= 1.
     std::vector<int64> data_dims = RandomDims(0, kDefaultMaxRank, 1);
     Tensor indices = RandomReductionIndices(data_dims.size());
@@ -2402,13 +2420,15 @@ TEST_F(OpTest, Pack) {
   });
 }
 
-// TODO(b/31741898): crashes on GPU.
+// TODO (b/31741898): crashes on GPU. id:192
+// https://github.com/imdone/tensorflow/issues/193
 TEST_F(OpTest, Pad) {
   Repeatedly([this]() {
     auto type = Choose<DataType>(kAllXlaTypes);
     std::vector<int64> t_dims = RandomDims();
 
-    // TODO(b/31741996): re-enable DT_INT64 when bug is fixed.
+    // TODO (b/31741996): re-enable DT_INT64 when bug is fixed. id:161
+    // https://github.com/imdone/tensorflow/issues/162
     // DataType tpaddings = Choose<DataType>({DT_INT32, DT_INT64});
     DataType tpaddings = DT_INT32;
     std::vector<int64> paddings_vec;
@@ -2430,7 +2450,8 @@ TEST_F(OpTest, Pad) {
 }
 
 TEST_F(OpTest, Pow) {
-  // TODO(phawkins): Feeding large DT_INT32 values to Pow() leads to
+  // TODO (phawkins): Feeding large DT_INT32 values to Pow() leads to id:172
+  // https://github.com/imdone/tensorflow/issues/173
   // nontermination.
   Repeatedly([this]() {
     auto dims = BroadcastableDims();
@@ -3076,7 +3097,8 @@ TEST_F(OpTest, StridedSlice) {
           -2 * data_dims[i], 2 * data_dims[i])(generator());
       end[i] = std::uniform_int_distribution<int32>(
           -2 * data_dims[i], 2 * data_dims[i])(generator());
-      // TODO(b/31360685): support strides other than 1 or -1
+      // TODO (b/31360685): support strides other than 1 or -1 id:330
+      // https://github.com/imdone/tensorflow/issues/331
       strides[i] = std::bernoulli_distribution()(generator()) ? 1 : -1;
     }
     int64 max_bitmask = (1LL << data_dims.size()) - 1;
@@ -3143,7 +3165,8 @@ TEST_F(OpTest, StridedSliceGrad) {
     int64 new_axis_mask = bitmask_distribution(generator());
     int64 shrink_axis_mask = bitmask_distribution(generator());
 
-    // TODO(phawkins): use shape inference for the forward op to compute the
+    // TODO (phawkins): use shape inference for the forward op to compute the id:251
+    // https://github.com/imdone/tensorflow/issues/252
     // gradient shape for the backward op. At present, there is a low
     // probability of the golden op succeeding.
     return ExpectTfAndXlaOutputsAreClose(
@@ -3260,7 +3283,8 @@ int main(int argc, char** argv) {
           "tf_xla_random_seed", &tensorflow::tf_xla_random_seed,
           "Random seed to use for XLA tests. <= 0 means choose a seed "
           "nondetermistically."),
-      // TODO(phawkins): it might make more sense to run each test up to a
+      // TODO (phawkins): it might make more sense to run each test up to a id:196
+      // https://github.com/imdone/tensorflow/issues/197
       // configurable time bound.
       tensorflow::Flag("tf_xla_test_repetitions",
                        &tensorflow::tf_xla_test_repetitions,

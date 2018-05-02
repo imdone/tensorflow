@@ -44,7 +44,8 @@ class RegressionTest(test.TestCase):
     regressor_weights = regressor.get_variable_value("linear//weight")
     # Have to flatten weights since they come in (x, 1) shape.
     self.assertAllClose(weights, regressor_weights.flatten(), rtol=0.01)
-    # TODO(ispir): Disable centered_bias.
+    # TODO (ispir): Disable centered_bias. id:840
+    # https://github.com/imdone/tensorflow/issues/841
     # assert abs(bias - regressor.bias_) < 0.1
 
 

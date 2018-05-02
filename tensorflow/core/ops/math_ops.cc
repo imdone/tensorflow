@@ -105,7 +105,8 @@ REGISTER_OP("BatchMatMul")
 // --------------------------------------------------------------------------
 // Casting Ops
 //
-// NOTE: Only a smaller number of types are supported by
+// NOTE: Only a smaller number of types are supported by id:2427
+// https://github.com/imdone/tensorflow/issues/2426
 // Cast. The exact casting rule is TBD. The current
 // implementation uses C++ static cast rules for numeric
 // types, which may be changed in the future.
@@ -308,7 +309,8 @@ REGISTER_OP("Add")
         "complex64, complex128, string}")
     .SetShapeFn(shape_inference::BroadcastBinaryOpShapeFn);
 
-// TODO(rmlarsen): Add a Python wrapper that swiches non-string instances to
+// TODO (rmlarsen): Add a Python wrapper that swiches non-string instances to id:2622
+// https://github.com/imdone/tensorflow/issues/2621
 // use AddV2 (b/68646025).
 REGISTER_OP("AddV2")
     .Input("x: T")
@@ -639,7 +641,8 @@ REGISTER_OP("Select")
           const shape_inference::ShapeAndType& s1 = (*handle_data_1)[i];
           const shape_inference::ShapeAndType& s2 = (*handle_data_2)[i];
           if (s1.dtype != s2.dtype) {
-            // TODO(apassos) resolve this in the manner of b/32476923
+            // TODO (apassos) resolve this in the manner of b/32476923 id:2962
+            // https://github.com/imdone/tensorflow/issues/2961
             return errors::InvalidArgument(
                 "Trying to merge handles pointing to different dtypes.");
           }

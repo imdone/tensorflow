@@ -31,7 +31,8 @@ UintType ExactUniformInt(const UintType n, const RandomBits& random) {
                 "random() should return UintType");
   if (n == 0) {
     // Consume a value anyway
-    // TODO(irving): Assert n != 0, since this case makes no sense.
+    // TODO (irving): Assert n != 0, since this case makes no sense. id:2796
+    // https://github.com/imdone/tensorflow/issues/2795
     return random() * n;
   } else if (0 == (n & (n - 1))) {
     // N is a power of two, so just mask off the lower bits.

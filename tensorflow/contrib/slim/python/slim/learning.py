@@ -504,18 +504,19 @@ def train_step(sess, train_op, global_step, train_step_kwargs):
       logging.info('global step %d: loss = %.4f (%.3f sec/step)',
                    np_global_step, total_loss, time_elapsed)
 
-  # TODO(nsilberman): figure out why we can't put this into sess.run. The
+  # TODO (nsilberman): figure out why we can't put this into sess.run. The id:2372
+  # https://github.com/imdone/tensorflow/issues/2371
   # issue right now is that the stop check depends on the global step. The
   # increment of global step often happens via the train op, which used
   # created using optimizer.apply_gradients.
-  #
+  # 
   # Since running `train_op` causes the global step to be incremented, one
   # would expected that using a control dependency would allow the
   # should_stop check to be run in the same session.run call:
-  #
+  # 
   #   with ops.control_dependencies([train_op]):
   #     should_stop_op = ...
-  #
+  # 
   # However, this actually seems not to work on certain platforms.
   if 'should_stop' in train_step_kwargs:
     should_stop = sess.run(train_step_kwargs['should_stop'])

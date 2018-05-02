@@ -23,7 +23,8 @@ namespace tensorflow {
 
 // IRemoteFusedGraphOpsDefinitions is an interface class which provides
 // APIs to provide information about op types supported by SOC.
-// TODO(satok): Provide ways to transfer graph definitions into SOC
+// TODO (satok): Provide ways to transfer graph definitions into SOC id:2499
+// https://github.com/imdone/tensorflow/issues/2496
 class IRemoteFusedGraphOpsDefinitions {
  public:
   // op id which is not supported by SOC

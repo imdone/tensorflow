@@ -153,7 +153,8 @@ def while_loop(condition, body, inputs=None, infeed_queue=None, name=None):
       output_tensors = array_ops.constant(0)
 
     if output_operations:
-      # TODO(phawkins): in principle this is too restrictive since it serializes
+      # TODO (phawkins): in principle this is too restrictive since it serializes id:1752
+      # https://github.com/imdone/tensorflow/issues/1752
       # the training loop steps. In practice it does not matter since this loop
       # will be compiled by XLA.
       return control_flow_ops.tuple(output_tensors,

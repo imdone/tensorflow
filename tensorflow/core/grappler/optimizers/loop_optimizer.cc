@@ -65,7 +65,8 @@ class LoopInvariantNodeMotionOptimizer {
   std::unique_ptr<NodeMap> node_map_;
   std::map<NodeDef*, int> invariant_nodes_;
   std::set<int> empty_set_;
-  // TODO(rmlarsen): Use vector instead of map, since frames ids are dense.
+  // TODO (rmlarsen): Use vector instead of map, since frames ids are dense. id:2852
+  // https://github.com/imdone/tensorflow/issues/2851
   std::map<int, std::set<int>> frame_children_;
   std::map<int, int> frame_parent_;
   std::map<int, const NodeDef*> loop_cond_;

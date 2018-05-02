@@ -43,17 +43,18 @@ limitations under the License.
 // (RepeatedPtrField for byte list). So refer to its documentation of
 // RepeatedField for full list of supported methods.
 //
-// NOTE: Due to the nature of oneof proto fields setting a feature of one type
+// NOTE: Due to the nature of oneof proto fields setting a feature of one type id:2826
+// https://github.com/imdone/tensorflow/issues/2825
 // automatically clears all values stored as another type with the same feature
 // key.
-//
+// 
 // This library also has tools to work with SequenceExample protos.
-//
+// 
 // To get a value from SequenceExample.context:
 //   int id = GetFeatureValues<protobuf_int64>("tag", se.context()).Get(0);
 // To add a value to the context:
 //   GetFeatureValues<protobuf_int64>("tag", se.mutable_context())->Add(42);
-//
+// 
 // To add values to feature_lists:
 //   AppendFeatureValues({4.0},
 //                       GetFeatureList("images", &se)->Add());
@@ -68,7 +69,7 @@ limitations under the License.
 //         feature { float_list { value: [5.0, 3.0] } }
 //       }
 //     } }
-//
+// 
 // Functions exposed by this library:
 //   HasFeature<[FeatureType]>(key, proto) -> bool
 //     Returns true if a feature with the specified key, and optionally
@@ -86,7 +87,7 @@ limitations under the License.
 //   AppendFeatureValues(begin, end, key, proto)
 //   AppendFeatureValues(container or initializer_list, key, proto)
 //     Copies values into Features and Example protos with the specified key.
-//
+// 
 // Auxiliary functions, it is unlikely you'll need to use them directly:
 //   GetFeatures(proto) -> Features
 //     A convenience function to get Features proto.
@@ -114,7 +115,8 @@ namespace tensorflow {
 namespace internal {
 
 // DEPRECATED: Use GetFeature instead.
-// TODO(gorban): Update all clients in a followup CL.
+// TODO (gorban): Update all clients in a followup CL. id:2707
+// https://github.com/imdone/tensorflow/issues/2706
 // Returns a reference to a feature corresponding to the name.
 // Note: it will create a new Feature if it is missing in the example.
 Feature& ExampleFeature(const string& name, Example* example);
@@ -315,7 +317,8 @@ bool HasFeature(const string& key, const Example& example) {
 }
 
 // DEPRECATED: use HasFeature instead.
-// TODO(gorban): update all clients in a followup CL.
+// TODO (gorban): update all clients in a followup CL. id:1910
+// https://github.com/imdone/tensorflow/issues/1910
 template <typename... FeatureType>
 bool ExampleHasFeature(const string& key, const Example& example) {
   return HasFeature<FeatureType...>(key, example);

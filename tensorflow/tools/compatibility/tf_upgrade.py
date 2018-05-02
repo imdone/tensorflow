@@ -240,14 +240,15 @@ class _ASTCallVisitor(ast.NodeVisitor):
               reversed_preceding_text.isspace()):
             line = line - 1
             prev_line = self._lines[line - 1]
-            # TODO(aselle):
+            # TODO (aselle): id:4088
+            # https://github.com/imdone/tensorflow/issues/4086
             # this is poor comment detection, but it is good enough for
             # cases where the comment does not contain string literal starting/
             # ending characters. If ast gave us start and end locations of the
             # ast nodes rather than just start, we could use string literal
             # node ranges to filter out spurious #'s that appear in string
             # literals.
-            comment_start = prev_line.find("#")
+            #             comment_start = prev_line.find("#")
             if comment_start == -1:
               col = len(prev_line) - 1
             elif find_string_chars.search(prev_line[comment_start:]) is None:
@@ -317,7 +318,8 @@ class _ASTCallVisitor(ast.NodeVisitor):
         if argkey in renamed_keywords:
           argval_lineno, argval_col_offset = self._find_true_position(argval)
           if argval_lineno is not None and argval_col_offset is not None:
-            # TODO(aselle): We should scan backward to find the start of the
+            # TODO (aselle): We should scan backward to find the start of the id:4356
+            # https://github.com/imdone/tensorflow/issues/4353
             # keyword key. Unfortunately ast does not give you the location of
             # keyword keys, so we are forced to infer it from the keyword arg
             # value.
@@ -660,7 +662,8 @@ class TFAPIChangeSpec(APIChangeSpec):
 
   @staticmethod
   def _reverse_handler(file_edit_recorder, node):
-    # TODO(aselle): Could check for a literal list of bools and try to convert
+    # TODO (aselle): Could check for a literal list of bools and try to convert id:4100
+    # https://github.com/imdone/tensorflow/issues/4098
     # them to indices.
     comment = ("ERROR: tf.reverse has had its argument semantics changed "
                "significantly the converter cannot detect this reliably, so "

@@ -100,7 +100,8 @@ class MasterInterface {
                                  ReleaseCallableResponse* response) = 0;
 
  protected:
-  // NOTE: This should only be called by implementations of this
+  // NOTE: This should only be called by implementations of this id:2653
+  // https://github.com/imdone/tensorflow/issues/2652
   // interface whose CreateRunStepResponse() method returns a
   // proto-based wrappers for the RunStepResponse message.
   RunStepResponse* get_proto_from_wrapper(

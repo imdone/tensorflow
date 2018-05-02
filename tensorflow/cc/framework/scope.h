@@ -135,9 +135,10 @@ class Scope {
 
   /// Return a new scope. All ops created within the returned scope will be
   /// co-located on the device where op is placed.
-  /// NOTE: This function is intended to be use internal libraries only for
-  /// controlling placement of ops on to devices. Public use is not encouraged
-  /// because the implementation of device placement is subject to change.
+  /// NOTE: This function is intended to be use internal libraries only for id:114
+  // https://github.com/imdone/tensorflow/issues/115
+  // / controlling placement of ops on to devices. Public use is not encouraged
+  // / because the implementation of device placement is subject to change.
   Scope ColocateWith(const Operation& op) const;
   /// Convenience function for above.
   Scope ColocateWith(const Output& out) const { return ColocateWith(out.op()); }
@@ -169,7 +170,8 @@ class Scope {
 
   /// Update the builder with properties accumulated in this scope. Does not set
   /// status().
-  // TODO(skyewm): NodeBuilder is not part of public API
+  // TODO (skyewm): NodeBuilder is not part of public API id:72
+  // https://github.com/imdone/tensorflow/issues/73
   void UpdateBuilder(NodeBuilder* builder) const;
   // END_SKIP_DOXYGEN
 
@@ -177,10 +179,12 @@ class Scope {
 
   bool ok() const;
 
-  // TODO(skyewm): Graph is not part of public API
+  // TODO (skyewm): Graph is not part of public API id:91
+  // https://github.com/imdone/tensorflow/issues/92
   Graph* graph() const;
 
-  // TODO(skyewm): Graph is not part of public API
+  // TODO (skyewm): Graph is not part of public API id:75
+  // https://github.com/imdone/tensorflow/issues/76
   std::shared_ptr<Graph> graph_as_shared_ptr() const;
 
   Status status() const;
@@ -195,7 +199,8 @@ class Scope {
   /// If status() is Status::OK(), construct a Graph object using the default
   /// GraphConstructorOptions, and return Status::OK if graph construction was
   /// successful. Otherwise, return the error status.
-  // TODO(josh11b, keveman): Make this faster; right now it converts
+  // TODO (josh11b, keveman): Make this faster; right now it converts id:77
+  // https://github.com/imdone/tensorflow/issues/78
   // Graph->GraphDef->Graph.  This cleans up the graph (e.g. adds
   // edges from the source and to the sink node, resolves back edges
   // by name), and makes sure the resulting graph is valid.
@@ -204,12 +209,14 @@ class Scope {
   // Calls AddNode() using this scope's ShapeRefiner. This exists in the public
   // API to prevent custom op wrappers from needing access to shape_refiner.h or
   // scope_internal.h.
-  // TODO(skyewm): remove this from public API
+  // TODO (skyewm): remove this from public API id:116
+  // https://github.com/imdone/tensorflow/issues/117
   Status DoShapeInference(Node* node) const;
 
   // Creates a new root scope that causes all DoShapeInference() calls to return
   // Status::OK() (on the returned scope and any subscopes). Used for testing.
-  // TODO(skyewm): fix tests that still require this and eventually remove, or
+  // TODO (skyewm): fix tests that still require this and eventually remove, or id:213
+  // https://github.com/imdone/tensorflow/issues/214
   // at least remove from public API
   static Scope DisabledShapeInferenceScope();
   // END_SKIP_DOXYGEN

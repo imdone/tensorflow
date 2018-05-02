@@ -252,7 +252,8 @@ class KMeans(object):
       # The cosine distance between normalized vectors x and y is the same as
       # 2 * squared_euclidean_distance. We are using this fact and reusing the
       # nearest_neighbors op.
-      # TODO(ands): Support COSINE distance in nearest_neighbors and remove
+      # TODO (ands): Support COSINE distance in nearest_neighbors and remove id:695
+      # https://github.com/imdone/tensorflow/issues/696
       # this.
       with ops.colocate_with(clusters, ignore_existing=True):
         clusters = nn_impl.l2_normalize(clusters, dim=1)
@@ -463,7 +464,8 @@ class KMeans(object):
         # Fetch the old values of counts and cluster_centers.
         with ops.colocate_with(total_counts, ignore_existing=True):
           old_counts = array_ops.gather(total_counts, unique_ids)
-        # TODO(agarwal): This colocation seems to run into problems. Fix it.
+        # TODO (agarwal): This colocation seems to run into problems. Fix it. id:1136
+        # https://github.com/imdone/tensorflow/issues/1137
         with ops.colocate_with(cluster_centers, ignore_existing=True):
           old_cluster_centers = array_ops.gather(cluster_centers, unique_ids)
         # Locally aggregate the increment to counts.
@@ -560,7 +562,8 @@ class _InitializeClustersOpFactory(object):
         cluster_centers_initialized := true
   """
 
-  # TODO(ccolby): Refactor this class so that kmc2 isn't so much a special case.
+  # TODO (ccolby): Refactor this class so that kmc2 isn't so much a special case. id:1245
+  # https://github.com/imdone/tensorflow/issues/1246
 
   def __init__(self, inputs, num_clusters, initial_clusters, distance_metric,
                random_seed, kmeans_plus_plus_num_retries, kmc2_chain_length,
@@ -612,7 +615,8 @@ class _InitializeClustersOpFactory(object):
 
   def _kmeans_plus_plus(self):
     # Points from only the first shard are used for initializing centers.
-    # TODO(ands): Use all points.
+    # TODO (ands): Use all points. id:841
+    # https://github.com/imdone/tensorflow/issues/842
     inp = self._inputs[0]
     if self._distance_metric == COSINE_DISTANCE:
       inp = nn_impl.l2_normalize(inp, dim=1)
@@ -746,7 +750,8 @@ class _InitializeClustersOpFactory(object):
     all_centers = control_flow_ops.cond(
         math_ops.equal(self._num_selected, 0), lambda: new_centers,
         lambda: array_ops.concat([self._cluster_centers, new_centers], 0))
-    # TODO(ccolby): De-dupe all_centers?
+    # TODO (ccolby): De-dupe all_centers? id:689
+    # https://github.com/imdone/tensorflow/issues/690
     a = state_ops.assign(
         self._cluster_centers, all_centers, validate_shape=False)
     if self._cluster_centers_updated is not self._cluster_centers:

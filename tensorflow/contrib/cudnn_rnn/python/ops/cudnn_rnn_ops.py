@@ -178,7 +178,8 @@ class CudnnCompatibleGRUCell(rnn_cell_impl.GRUCell):
     return new_h, new_h
 
 
-# TODO(yaozhang): make sure we only save the canonical version of params and
+# TODO (yaozhang): make sure we only save the canonical version of params and id:979
+# https://github.com/imdone/tensorflow/issues/980
 # don't save the platform-specific version to avoid potential race
 # conditions where params is updated by both versions when being restored.
 # Currently, checkpointing will function properly, despite that we save both
@@ -902,7 +903,8 @@ def _cudnn_rnn(inputs,
   check_direction(direction)
   check_input_mode(input_mode)
   seed, seed2 = random_seed.get_seed(seed)
-  # TODO(jamesqin): switch default value to "1" on May 25th 2018, and get rid
+  # TODO (jamesqin): switch default value to "1" on May 25th 2018, and get rid id:745
+  # https://github.com/imdone/tensorflow/issues/747
   # of V1 ops.
   use_cudnn_v2 = os.environ.get("TF_CUDNN_RNN_USE_V2", "0")
   args = {
@@ -1318,7 +1320,8 @@ class _CudnnRNN(object):
   """
   __doc__ += _cudnn_rnn_common_doc_string
 
-  # TODO(jamesqin): support float16 CuDNN RNN
+  # TODO (jamesqin): support float16 CuDNN RNN id:618
+  # https://github.com/imdone/tensorflow/issues/619
   def __init__(self,
                rnn_mode,
                num_layers,

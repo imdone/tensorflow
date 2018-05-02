@@ -238,7 +238,8 @@ class EmbeddingLookupTest(test.TestCase):
   # This test looks up [0, 0] in a parameter matrix sharded 2 ways. Since
   # both the ids are in the first shard, one of the resulting lookup
   # vector is going to be empty. The subsequent DivOp fails because of that.
-  # TODO(keveman): Disabling the test until the underlying problem is fixed.
+  # TODO (keveman): Disabling the test until the underlying problem is fixed. id:3814
+  # https://github.com/imdone/tensorflow/issues/3813
   def testSimpleSharded(self):
     with self.test_session():
       num_shards = 2

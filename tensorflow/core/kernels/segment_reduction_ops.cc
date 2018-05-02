@@ -122,7 +122,8 @@ class SegmentReductionOp : public OpKernel {
     Index uninitialized_index = 0;  // Index from which the output is not set.
     Index out_index = internal::SubtleMustCopy(segment_vec(start));
 
-    // TODO(agarwal): if this loop becomes a bottleneck, consider sharding it
+    // TODO (agarwal): if this loop becomes a bottleneck, consider sharding it id:3322
+    // https://github.com/imdone/tensorflow/issues/3321
     // across threads.
     Eigen::DSizes<Eigen::DenseIndex, 1> out_slice_shape(num_col);
     while (end <= num_indices) {
@@ -196,7 +197,8 @@ class SegmentReductionOp : public OpKernel {
 
 #ifdef GOOGLE_CUDA
 //  SegmentSumGPUOp is a segment sum operator implemented for GPU only.
-//  TODO: This implementation of SegmentSumGPUOp is sometimes slower than
+//  TODO: This implementation of SegmentSumGPUOp is sometimes slower than id:3998
+// https://github.com/imdone/tensorflow/issues/3996
 //  its unsorted counterpart (mostly when problem size is small).
 //  This is due to the following two main reasons and a cost-effective way
 //  to resolve these problems is desirable.

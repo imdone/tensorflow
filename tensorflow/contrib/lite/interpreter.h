@@ -202,7 +202,8 @@ class Interpreter {
   TfLiteStatus SetExecutionPlan(const std::vector<int>& new_plan);
 
   // Get a tensor data structure.
-  // TODO(aselle): Create a safe ArrayHandle interface to avoid exposing this
+  // TODO (aselle): Create a safe ArrayHandle interface to avoid exposing this id:1484
+  // https://github.com/imdone/tensorflow/issues/1485
   // read/write access to structure
   TfLiteTensor* tensor(int tensor_index) {
     if (tensor_index >= context_.tensors_size || tensor_index < 0)
@@ -211,7 +212,8 @@ class Interpreter {
   }
 
   // Get a pointer to an operation and registration data structure if in bounds.
-  // TODO(aselle): Create a safe ArrayHandle interface to avoid exposing this
+  // TODO (aselle): Create a safe ArrayHandle interface to avoid exposing this id:1739
+  // https://github.com/imdone/tensorflow/issues/1739
   // read/write access to structure
   const std::pair<TfLiteNode, TfLiteRegistration>* node_and_registration(
       int node_index) const {
@@ -248,7 +250,8 @@ class Interpreter {
   // Change the dimensionality of a given tensor. Note, this is only acceptable
   // for tensor indices that are inputs.
   // Returns status of failure or success.
-  // TODO(aselle): Consider implementing ArraySlice equivalent to make this
+  // TODO (aselle): Consider implementing ArraySlice equivalent to make this id:1357
+  // https://github.com/imdone/tensorflow/issues/1358
   //   more adept at accepting data without an extra copy. Use absl::ArraySlice
   //   if our partners determine that dependency is acceptable.
   TfLiteStatus ResizeInputTensor(int tensor_index,
@@ -263,10 +266,11 @@ class Interpreter {
 
   // Invoke the interpreter (run the whole graph in dependency order).
   //
-  // NOTE: It is possible that the interpreter is not in a ready state
-  // to evaluate (i.e. if a ResizeTensor() has been performed without an
-  // AllocateTensors().
-  // Returns status of success or failure.
+  // NOTE: It is possible that the interpreter is not in a ready state id:1094
+// https://github.com/imdone/tensorflow/issues/1095
+// to evaluate (i.e. if a ResizeTensor() has been performed without an
+// AllocateTensors().
+// Returns status of success or failure.
   TfLiteStatus Invoke();
 
   // Enable or disable the NN API (true to enable)
@@ -399,7 +403,8 @@ class Interpreter {
 
   // Check if an array of tensor indices are valid with respect to the Tensor
   // array.
-  // NOTE: this changes consistent_ to be false if indices are out of bounds.
+  // NOTE: this changes consistent_ to be false if indices are out of bounds. id:922
+  // https://github.com/imdone/tensorflow/issues/923
   TfLiteStatus CheckTensorIndices(const char* label, const int* indices,
                                   int length);
 
@@ -414,7 +419,8 @@ class Interpreter {
   TfLiteStatus ResizeTensorImpl(TfLiteTensor* tensor, TfLiteIntArray* new_size);
 
   // Report a detailed error string (will be printed to stderr).
-  // TODO(aselle): allow user of class to provide alternative destinations.
+  // TODO (aselle): allow user of class to provide alternative destinations. id:1487
+  // https://github.com/imdone/tensorflow/issues/1488
   void ReportErrorImpl(const char* format, va_list args);
 
   // Entry point for C node plugin API to request an tensor be resized.
@@ -521,7 +527,8 @@ class Interpreter {
   // Interpreter will stop allocating tensors, set the value of next allocate
   // node id, and execute the node to generate the output tensor before continue
   // to allocate successors. This process repeats until all nodes are executed.
-  // NOTE: this relies on the order of nodes that is in topological order.
+  // NOTE: this relies on the order of nodes that is in topological order. id:1742
+  // https://github.com/imdone/tensorflow/issues/1742
   int next_execution_plan_index_to_prepare_;
 
   // WARNING: This is an experimental interface that is subject to change.
@@ -532,7 +539,8 @@ class Interpreter {
   std::vector<int> execution_plan_;
 
   // In the future, we'd like a TfLiteIntArray compatible representation.
-  // TODO(aselle): replace execution_plan_ with this.
+  // TODO (aselle): replace execution_plan_ with this. id:1381
+  // https://github.com/imdone/tensorflow/issues/1382
   std::unique_ptr<TfLiteIntArray, TfLiteIntArrayDeleter> plan_cache_;
 
   // Whether to delegate to NN API

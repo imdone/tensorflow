@@ -226,14 +226,16 @@ class BatchNormalization(Layer):
     if self.fused:
       # Currently fused batch norm doesn't support renorm. It also only supports
       # an input tensor of rank 4 and a channel dimension on axis 1 or 3.
-      # TODO(yaozhang): if input is not 4D, reshape it to 4D and reshape the
+      # TODO (yaozhang): if input is not 4D, reshape it to 4D and reshape the id:3253
+      # https://github.com/imdone/tensorflow/issues/3252
       # output back to its original shape accordingly.
       self.fused = (not self.renorm and
                     ndims == 4 and
                     self.axis in [[1], [3]] and
                     self.virtual_batch_size is None and
                     self.adjustment is None)
-      # TODO(chrisying): fused batch norm is currently not supported for
+      # TODO (chrisying): fused batch norm is currently not supported for id:3739
+      # https://github.com/imdone/tensorflow/issues/3738
       # multi-axis batch norm and by extension virtual batches. In some cases,
       # it might be possible to use fused batch norm but would require reshaping
       # the Tensor to 4D with the axis in 1 or 3 (preferred 1) which is
@@ -331,7 +333,8 @@ class BatchNormalization(Layer):
         # These are used in training and thus are different from the moving
         # averages above. The renorm variables are colocated with moving_mean
         # and moving_variance.
-        # NOTE: below, the outer `with device` block causes the current device
+        # NOTE: below, the outer `with device` block causes the current device id:4240
+        # https://github.com/imdone/tensorflow/issues/4238
         # stack to be cleared. The nested ones use a `lambda` to set the desired
         # device and ignore any devices that may be set by the custom getter.
         def _renorm_variable(name, shape):
@@ -469,7 +472,8 @@ class BatchNormalization(Layer):
         new_var = self._assign_moving_average(var, value, self.renorm_momentum)
         new_weight = self._assign_moving_average(weight, weight_value,
                                                  self.renorm_momentum)
-        # TODO(yuefengz): the updates to var and weighted can not be batched
+        # TODO (yuefengz): the updates to var and weighted can not be batched id:3795
+        # https://github.com/imdone/tensorflow/issues/3794
         # together if we fetch their updated values here. Consider calculating
         # new values and delaying the updates.
         return new_var / new_weight
@@ -478,7 +482,8 @@ class BatchNormalization(Layer):
         return array_ops.identity(var)
       return tf_utils.smart_cond(training, _do_update, _fake_update)
 
-    # TODO(yuefengz): colocate the operations
+    # TODO (yuefengz): colocate the operations id:3072
+    # https://github.com/imdone/tensorflow/issues/3071
     new_mean = _update_renorm_variable(self.renorm_mean,
                                        self.renorm_mean_weight, mean)
     new_stddev = _update_renorm_variable(self.renorm_stddev,

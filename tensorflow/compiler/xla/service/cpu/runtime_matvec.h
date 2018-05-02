@@ -104,7 +104,8 @@ void DispatchMatVec(T* out, T* lhs, T* rhs, int64 m, int64 n, int64 k,
 //
 // This requires that m = 1 or n = 1.
 //
-// TODO(b/64684907): Compare runtime performance of these functions with dot
+// TODO (b/64684907): Compare runtime performance of these functions with dot id:362
+// https://github.com/imdone/tensorflow/issues/363
 // simplification.
 template <typename T>
 void EigenMatVec(T* out, T* lhs, T* rhs, tensorflow::int64 m,

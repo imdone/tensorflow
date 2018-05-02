@@ -23,7 +23,8 @@ limitations under the License.
 #include <unordered_map>
 #include <utility>
 
-#include "tensorflow/core/framework/tensor.pb.h"  // TODO(b/62899350): Remove
+#include "tensorflow/core/framework/tensor.pb.h"  // TODO (b/62899350): Remove id:1960
+                                                  // https://github.com/imdone/tensorflow/issues/1960
 #include "tensorflow/core/framework/type_index.h"
 #include "tensorflow/core/framework/variant_tensor_data.h"
 #include "tensorflow/core/lib/core/status.h"

@@ -778,7 +778,8 @@ string BufferAssignment::ToString() const {
 
 BufferAssignmentProto BufferAssignment::ToProto() const {
   BufferAssignmentProto proto;
-  // NOTE: TuplePointsToAnalysis state is serialized here in BufferAssigment,
+  // NOTE: TuplePointsToAnalysis state is serialized here in BufferAssigment, id:308
+  // https://github.com/imdone/tensorflow/issues/309
   // because we need to do the HasAllocation check for each buffer. Otherwise
   // the buffer_size_ call might fail for some backends.
   const TuplePointsToAnalysis& points_to_analysis =
@@ -1006,7 +1007,8 @@ Status BufferAssigner::AssignBuffersForComputation(
     const HloInstruction* instruction = buffer->instruction();
     if (instruction->opcode() == HloOpcode::kConstant) {
       // No BufferAllocations for constants.
-      // TODO(b/32248867): For consistency, constants should get allocations.
+      // TODO (b/32248867): For consistency, constants should get allocations. id:238
+      // https://github.com/imdone/tensorflow/issues/239
       VLOG(3) << "Skipping constant: " << *buffer;
       continue;
     }
@@ -1043,7 +1045,8 @@ Status BufferAssigner::AssignBuffersForComputation(
     }
 
     if (ShapeUtil::IsTuple(buffer->shape())) {
-      // TODO(b/34669761): Don't reuse tuple buffers because the GPU backend
+      // TODO (b/34669761): Don't reuse tuple buffers because the GPU backend id:274
+      // https://github.com/imdone/tensorflow/issues/275
       // assumes longer buffer liveness than indicated by the analysis.
       BufferAllocation* allocation = assignment->NewAllocation(
           *buffer, buffer_size, is_thread_local, /*is_reusable=*/false);
@@ -1064,7 +1067,8 @@ Status BufferAssigner::AssignBuffersForComputation(
           BufferAllocation* allocation =
               assignment->GetMutableAllocation(operand_slice.index());
           if (colocated_allocations.count(allocation->index()) == 0) {
-            // TODO(b/32491382) Colocated buffers are currently assigned in an
+            // TODO (b/32491382) Colocated buffers are currently assigned in an id:425
+            // https://github.com/imdone/tensorflow/issues/426
             // earlier pass, and so can break the "increasing allocation size"
             // invariant in this function (causing this CHECK to fail). However,
             // the call to MaybeAssignBuffer is safe as it returns false if
@@ -1095,7 +1099,8 @@ Status BufferAssigner::AssignBuffersForComputation(
         // previously create allocation must be large enough to hold this
         // instruction's output (with the exception of colocated buffers).
         if (colocated_allocations.count(allocation->index()) == 0) {
-          // TODO(b/32491382) Colocated buffers are currently assigned in an
+          // TODO (b/32491382) Colocated buffers are currently assigned in an id:316
+          // https://github.com/imdone/tensorflow/issues/317
           // earlier pass, and so can break the "increasing allocation size"
           // invariant in this function (causing this CHECK to fail). However,
           // the call to MaybeAssignBuffer is safe as it returns false if
@@ -1534,11 +1539,12 @@ void BufferAssigner::BuildColocatedBufferSets(
 
   // Try to find more coalescing opportunities among the colocated buffer sets.
   //
-  // TODO(b/32491382): We should be able to remove this by using the
-  // module-level liveness analysis, which would let us directly detect buffer
-  // sharing opportunities between the while instruction buffer and the buffers
-  // from the predicate and body computation, as well as sharing across
-  // different while instructions.
+  // TODO (b/32491382): We should be able to remove this by using the id:310
+// https://github.com/imdone/tensorflow/issues/311
+// module-level liveness analysis, which would let us directly detect buffer
+// sharing opportunities between the while instruction buffer and the buffers
+// from the predicate and body computation, as well as sharing across
+// different while instructions.
   std::vector<ColocatedBufferSet> new_colocated_buffer_sets =
       MergeColocatedBufferSets(*colocated_buffer_sets, buffer_liveness,
                                buffer_size);
@@ -1572,7 +1578,8 @@ void BufferAssigner::AssignColocatedBufferSets(
     for (const LogicalBuffer* buffer : colocated_buffer_set) {
       const int64 buffer_size = assignment->buffer_size_(*buffer);
       if (allocation == nullptr) {
-        // TODO(b/32491382) Avoid current trivial solution of using new
+        // TODO (b/32491382) Avoid current trivial solution of using new id:242
+        // https://github.com/imdone/tensorflow/issues/243
         // allocations for each colocated buffer set. When liveness has
         // module-level scope, we can allow buffers to be shared across
         // computations (in some cases).

@@ -256,7 +256,8 @@ TfLiteStatus CheckLstmTensorDimensions(
   // 1) If projection weight is not present, then projection bias should not be
   // present.
   // 2) If projection weight is present, then projection bias is optional.
-  // TODO(ghodrat): make sure this is correct.
+  // TODO (ghodrat): make sure this is correct. id:935
+  // https://github.com/imdone/tensorflow/issues/936
   const bool projecton_tensors_consistent =
       ((projection_weights != nullptr) || (projection_bias == nullptr));
   TF_LITE_ENSURE(context, projecton_tensors_consistent == true);
@@ -330,7 +331,8 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
   TfLiteTensor* fw_output_state =
       GetOutput(context, node, kFwOutputStateTensor);
   TfLiteTensor* fw_cell_state = GetOutput(context, node, kFwCellStateTensor);
-  // TODO(ghodrat): Modify this as soon as we have a finalized method for
+  // TODO (ghodrat): Modify this as soon as we have a finalized method for id:1500
+  // https://github.com/imdone/tensorflow/issues/1501
   // scratch buffers.
   TfLiteTensor* fw_scratch_buffer =
       GetOutput(context, node, kFwScratchBufferTensor);
@@ -397,7 +399,8 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
   TfLiteTensor* bw_output_state =
       GetOutput(context, node, kBwOutputStateTensor);
   TfLiteTensor* bw_cell_state = GetOutput(context, node, kBwCellStateTensor);
-  // TODO(ghodrat): Modify this as soon as we have a finalized method for
+  // TODO (ghodrat): Modify this as soon as we have a finalized method for id:1753
+  // https://github.com/imdone/tensorflow/issues/1753
   // scratch buffers.
   TfLiteTensor* bw_scratch_buffer =
       GetOutput(context, node, kBwScratchBufferTensor);

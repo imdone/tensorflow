@@ -277,7 +277,8 @@ TEST(VerifyModel, UseUnsupportedCustomOps) {
   ASSERT_FALSE(builder.Verify());
 }
 
-// TODO(yichengfan): make up malicious files to test with.
+// TODO (yichengfan): make up malicious files to test with. id:2066
+// https://github.com/imdone/tensorflow/issues/2066
 
 }  // namespace tflite
 

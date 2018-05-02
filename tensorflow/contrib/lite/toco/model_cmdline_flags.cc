@@ -437,7 +437,8 @@ ParsedModelFlags* GlobalParsedModelFlags() {
 }
 
 void ParseModelFlagsOrDie(int* argc, char* argv[]) {
-  // TODO(aselle): in the future allow Google version to use
+  // TODO (aselle): in the future allow Google version to use id:2050
+  // https://github.com/imdone/tensorflow/issues/2050
   // flags, and only use this mechanism for open source
   auto* flags = UncheckedGlobalParsedModelFlags(false);
   string msg;

@@ -68,7 +68,8 @@ TfLiteStatus LessEval(TfLiteContext* context, TfLiteNode* node) {
                         GetTensorData<type>(input2), GetTensorDims(input2), \
                         GetTensorData<bool>(output), GetTensorDims(output));
 
-  // TODO(renjieliu): Support quantized data.
+  // TODO (renjieliu): Support quantized data. id:1755
+  // https://github.com/imdone/tensorflow/issues/1755
   if (requires_broadcast) {
     switch (input1->type) {
       case kTfLiteFloat32:

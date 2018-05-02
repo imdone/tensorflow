@@ -33,19 +33,23 @@ from tensorflow.python.ops import control_flow_ops
 from tensorflow.python.util import nest
 
 
-# TODO(isaprykin):  Consider whether inheriting is really appropriate.
+# TODO (isaprykin): Consider whether inheriting is really appropriate. id:1110
+# https://github.com/imdone/tensorflow/issues/1111
 class TPUStrategy(one_device_strategy.OneDeviceStrategy):
   """Experimental TPU distribution strategy implementation."""
 
   def __init__(self,
                num_cores_per_host=2,
                iterations_per_step=2):
-    # TODO(isaprykin): Generalize the defaults.  They are currently tailored for
+    # TODO (isaprykin): Generalize the defaults. They are currently tailored for id:1096
+    # https://github.com/imdone/tensorflow/issues/1097
     # the unit test.
     super(TPUStrategy, self).__init__('/cpu:0')
-    # TODO(isaprykin): Auto-detect number of cores and hosts.
+    # TODO (isaprykin): Auto-detect number of cores and hosts. id:784
+    # https://github.com/imdone/tensorflow/issues/785
     self._num_cores_per_host = num_cores_per_host
-    # TODO(isaprykin): This might have to be per-call.
+    # TODO (isaprykin): This might have to be per-call. id:656
+    # https://github.com/imdone/tensorflow/issues/657
     self._iterations_per_step = iterations_per_step
 
   def distribute_dataset(self, dataset_fn):

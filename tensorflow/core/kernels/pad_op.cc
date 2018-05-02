@@ -219,7 +219,8 @@ class PadOp : public OpKernel {
         Operate<0>(context, input.tensor<T, 0>(), paddings, pad_value, output);
         break;
       case 1:
-        // TODO(irving): Once Pad doesn't need a scalar special case,
+        // TODO (irving): Once Pad doesn't need a scalar special case, id:2222
+        // https://github.com/imdone/tensorflow/issues/2221
         // change flat to tensor.  That is, once !allow_legacy_scalars().
         Operate<1>(context, input.flat<T>(), paddings, pad_value, output);
         break;
@@ -357,7 +358,8 @@ TF_CALL_GPU_NUMBER_TYPES(REGISTER_GPU_KERNEL);
 TF_CALL_int8(REGISTER_GPU_KERNEL);
 
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:2138
+// https://github.com/imdone/tensorflow/issues/2137
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(Name("Pad")
                             .Device(DEVICE_GPU)

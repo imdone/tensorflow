@@ -386,7 +386,8 @@ class Variable(checkpointable.CheckpointableBase):
                 self._initial_value),
             validate_shape=validate_shape).op
 
-        # TODO(vrv): Change this class to not take caching_device, but
+        # TODO (vrv): Change this class to not take caching_device, but id:3969
+        # https://github.com/imdone/tensorflow/issues/3967
         # to take the op to colocate the snapshot with, so we can use
         # colocation rather than devices.
         if caching_device is not None:
@@ -892,7 +893,8 @@ class Variable(checkpointable.CheckpointableBase):
       return op
 
     # Attempt to find the initialized_value of any variable reference / handles.
-    # TODO(b/70206927): Fix handling of ResourceVariables.
+    # TODO (b/70206927): Fix handling of ResourceVariables. id:3656
+    # https://github.com/imdone/tensorflow/issues/3655
     if op_type in ("Variable", "VariableV2", "VarHandleOp"):
       initialized_value = self._find_initialized_value_for_variable(op)
       return op if initialized_value is None else initialized_value.op
@@ -943,11 +945,13 @@ class Variable(checkpointable.CheckpointableBase):
       return None
     return None
 
-  # NOTE(mrry): This enables the Variable's overloaded "right" binary
+  # NOTE (mrry): This enables the Variable's overloaded "right" binary id:3454
+  # https://github.com/imdone/tensorflow/issues/3453
   # operators to run when the left operand is an ndarray, because it
   # accords the Variable class higher priority than an ndarray, or a
   # numpy matrix.
-  # TODO(mrry): Convert this to using numpy's __numpy_ufunc__
+  # TODO (mrry): Convert this to using numpy's __numpy_ufunc__ id:3907
+  # https://github.com/imdone/tensorflow/issues/3905
   # mechanism, which allows more control over how Variables interact
   # with ndarrays.
   __array_priority__ = 100
@@ -1433,7 +1437,8 @@ def _all_saveable_objects(scope=None):
   Returns:
     A list of `Variable` and `SaveableObject` to be checkpointed
   """
-  # TODO(andreasst): make this function public once things are settled.
+  # TODO (andreasst): make this function public once things are settled. id:4316
+  # https://github.com/imdone/tensorflow/issues/4314
   return (ops.get_collection(ops.GraphKeys.GLOBAL_VARIABLES, scope) +
           ops.get_collection(ops.GraphKeys.SAVEABLE_OBJECTS, scope))
 
@@ -1644,7 +1649,8 @@ def assert_variables_initialized(var_list=None):
   """
   if var_list is None:
     var_list = global_variables() + local_variables()
-  # Backwards compatibility for old-style variables. TODO(touts): remove.
+  # Backwards compatibility for old-style variables. TODO (touts): remove. id:3971
+  # https://github.com/imdone/tensorflow/issues/3969
   if not var_list:
     var_list = []
     for op in ops.get_default_graph().get_operations():
@@ -1683,7 +1689,8 @@ def report_uninitialized_variables(var_list=None,
   """
   if var_list is None:
     var_list = global_variables() + local_variables()
-    # Backwards compatibility for old-style variables. TODO(touts): remove.
+    # Backwards compatibility for old-style variables. TODO (touts): remove. id:3659
+    # https://github.com/imdone/tensorflow/issues/3658
     if not var_list:
       var_list = []
       for op in ops.get_default_graph().get_operations():

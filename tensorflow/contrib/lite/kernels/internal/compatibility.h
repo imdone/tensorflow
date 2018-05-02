@@ -47,7 +47,8 @@ limitations under the License.
 #define TFLITE_DCHECK_LT(x, y) ((x) < (y)) ? (void)0 : assert(false)
 #endif
 
-// TODO(ahentz): Clean up: We should stick to the DCHECK versions.
+// TODO (ahentz): Clean up: We should stick to the DCHECK versions. id:1423
+// https://github.com/imdone/tensorflow/issues/1424
 #ifndef TFLITE_CHECK
 #define TFLITE_CHECK(condition) (condition) ? (void)0 : abort()
 #endif
@@ -76,7 +77,8 @@ limitations under the License.
 #define TFLITE_CHECK_LT(x, y) ((x) < (y)) ? (void)0 : abort()
 #endif
 
-// TODO(ahentz): Clean up.
+// TODO (ahentz): Clean up. id:1132
+// https://github.com/imdone/tensorflow/issues/1133
 using int8 = std::int8_t;
 using uint8 = std::uint8_t;
 using int16 = std::int16_t;

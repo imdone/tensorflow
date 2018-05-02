@@ -40,7 +40,8 @@ limitations under the License.
 namespace tensorflow {
 namespace test {
 
-// TODO(hongm): Convert `g` and `init` to using std::unique_ptr.
+// TODO (hongm): Convert `g` and `init` to using std::unique_ptr. id:1833
+// https://github.com/imdone/tensorflow/issues/1833
 Benchmark::Benchmark(const string& device, Graph* g,
                      const SessionOptions* options, Graph* init,
                      Rendezvous* rendez) {

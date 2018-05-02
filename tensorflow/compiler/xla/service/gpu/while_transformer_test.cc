@@ -139,7 +139,8 @@ class WhileTransformerTest : public HloTestBase {
   Shape condition_result_shape_;
 };
 
-// TODO(b/68830972): The while transformer is far too fragile. It patterns
+// TODO (b/68830972): The while transformer is far too fragile. It patterns id:555
+// https://github.com/imdone/tensorflow/issues/556
 // matches the exact expressions of opcodes. Re-enable when transformation is
 // more general
 TEST_F(WhileTransformerTest, DISABLED_InductionVariableAtTupleElement0) {
@@ -159,7 +160,8 @@ TEST_F(WhileTransformerTest, DISABLED_InductionVariableAtTupleElement0) {
               Eq(std::tuple<int64, int64, int64>(0, 10, 1)));
 }
 
-// TODO(b/68830972): The while transformer is far too fragile. It patterns
+// TODO (b/68830972): The while transformer is far too fragile. It patterns id:383
+// https://github.com/imdone/tensorflow/issues/384
 // matches the exact expressions of opcodes. Re-enable when transformation is
 // more general
 TEST_F(WhileTransformerTest, DISABLED_InductionVariableAtTupleElement1) {
@@ -179,7 +181,8 @@ TEST_F(WhileTransformerTest, DISABLED_InductionVariableAtTupleElement1) {
               Eq(std::tuple<int64, int64, int64>(0, 10, 1)));
 }
 
-// TODO(b/68830972): The while transformer is far too fragile. It patterns
+// TODO (b/68830972): The while transformer is far too fragile. It patterns id:382
+// https://github.com/imdone/tensorflow/issues/383
 // matches the exact expressions of opcodes. Re-enable when transformation is
 // more general
 TEST_F(WhileTransformerTest, DISABLED_InvalidLoopLimit) {
@@ -198,7 +201,8 @@ TEST_F(WhileTransformerTest, DISABLED_InvalidLoopLimit) {
               HasSubstr("Loop start must be less than loop limit."));
 }
 
-// TODO(b/68830972): The while transformer is far too fragile. It patterns
+// TODO (b/68830972): The while transformer is far too fragile. It patterns id:785
+// https://github.com/imdone/tensorflow/issues/786
 // matches the exact expressions of opcodes. Re-enable when transformation is
 // more general
 TEST_F(WhileTransformerTest, DISABLED_InvalidLoopIncrement) {

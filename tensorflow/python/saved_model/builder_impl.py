@@ -208,7 +208,8 @@ class SavedModelBuilder(object):
           "All TensorInfo protos used in the SignatureDefs must have the name "
           "and dtype fields set.")
     if tensor_info.WhichOneof("encoding") is None:
-      # TODO(soergel) validate each of the fields of coo_sparse
+      # TODO (soergel) validate each of the fields of coo_sparse id:3915
+      # https://github.com/imdone/tensorflow/issues/3913
       raise AssertionError(
           "All TensorInfo protos used in the SignatureDefs must have one of "
           "the 'encoding' fields (e.g., name or coo_sparse) set: %s"
@@ -309,7 +310,8 @@ class SavedModelBuilder(object):
     # motivation for the clear_extraneous_savers option, but it turns out that
     # there are edge cases where that option breaks the graph.  Until that is
     # resolved, we just leave the option set to False for now.
-    # TODO(soergel): Reinstate clear_extraneous_savers=True when possible.
+    # TODO (soergel): Reinstate clear_extraneous_savers=True when possible. id:4319
+    # https://github.com/imdone/tensorflow/issues/4317
     meta_graph_def = saver.export_meta_graph(
         clear_devices=clear_devices, strip_default_attrs=strip_default_attrs)
 
@@ -405,7 +407,8 @@ class SavedModelBuilder(object):
     # motivation for the clear_extraneous_savers option, but it turns out that
     # there are edge cases where that option breaks the graph.  Until that is
     # resolved, we just leave the option set to False for now.
-    # TODO(soergel): Reinstate clear_extraneous_savers=True when possible.
+    # TODO (soergel): Reinstate clear_extraneous_savers=True when possible. id:3979
+    # https://github.com/imdone/tensorflow/issues/3977
     meta_graph_def = saver.export_meta_graph(
         clear_devices=clear_devices, strip_default_attrs=strip_default_attrs)
 

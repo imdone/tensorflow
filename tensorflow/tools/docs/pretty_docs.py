@@ -173,7 +173,8 @@ def _build_class_page(page_info):
   if page_info.other_members:
     parts.append('## Class Members\n\n')
 
-    # TODO(markdaoust): Document the value of the members,
+    # TODO (markdaoust): Document the value of the members, id:4113
+    # https://github.com/imdone/tensorflow/issues/4111
     #                   at least for basic types.
 
     h3 = '<h3 id="{short_name}"><code>{short_name}</code></h3>\n\n'
@@ -249,9 +250,10 @@ def _build_module_page(page_info):
       parts.append('\n\n')
 
   if page_info.other_members:
-    # TODO(markdaoust): Document the value of the members,
+    # TODO (markdaoust): Document the value of the members, id:4029
+    # https://github.com/imdone/tensorflow/issues/4027
     #                   at least for basic types.
-    parts.append('## Other Members\n\n')
+    #     parts.append('## Other Members\n\n')
 
     for item in page_info.other_members:
       parts.append('`{short_name}`\n\n'.format(**item._asdict()))

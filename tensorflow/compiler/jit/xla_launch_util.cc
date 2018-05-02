@@ -259,7 +259,8 @@ void XlaComputationLaunchContext::PopulateOutputs(
     se::DeviceMemoryBase buffer = output.buffer({output_num});
 
     Var* variable = nullptr;
-    // TODO(b/35625933): tensorflow::Var should contain a PersistentTensor,
+    // TODO (b/35625933): should contain a PersistentTensor, tensorflow::Var id:140
+    // https://github.com/imdone/tensorflow/issues/141
     // not a Tensor.
     OP_REQUIRES_OK(ctx, LookupOrCreateResource<Var>(
                             ctx, HandleFromInput(ctx, write.input_index),

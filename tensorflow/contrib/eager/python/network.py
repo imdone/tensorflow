@@ -139,7 +139,8 @@ class Network(base.Layer):
   which rely on stateful ops being added to the graph but not executed (e.g. via
   custom `Layer`s which manage stateful ops) may break with this change.
   """
-  # TODO(josh11b,ashankar,allenl):
+  # TODO (josh11b,ashankar,allenl): id:678
+  # https://github.com/imdone/tensorflow/issues/679
   # - Should 'trainable' be changeable on the Network object?
   # - Do we allow add_variable in Network?
   # - Detect layers used in __call__ that weren't registered with track_layer.
@@ -451,7 +452,8 @@ class Network(base.Layer):
 
   @property
   def weights(self):
-    # TODO(josh11b): Should this return a set or perform de-duplication of
+    # TODO (josh11b): Should this return a set or perform de-duplication of id:1127
+    # https://github.com/imdone/tensorflow/issues/1128
     # variables in the case of shared layers/variables that appear in
     # multiple places in the Network?
     weights = []
@@ -519,7 +521,8 @@ class Network(base.Layer):
       layer_losses.extend(layer.losses)
     return layer_losses
 
-  # TODO(allenl): Support other Layer methods needed for graph mode, such as for
+  # TODO (allenl): Support other Layer methods needed for graph mode, such as for id:1230
+  # https://github.com/imdone/tensorflow/issues/1231
   # updates
 
 
@@ -557,7 +560,8 @@ class Sequential(Network):
 
   def call(self, inputs, training=None):
     """Call each Layer in the order they were added."""
-    # TODO(josh11b): Support "mode" and maybe other arguments
+    # TODO (josh11b): Support "mode" and maybe other arguments id:817
+    # https://github.com/imdone/tensorflow/issues/818
     if training is None:
       for _, l in self._layers_funcs:
         inputs = l(inputs)

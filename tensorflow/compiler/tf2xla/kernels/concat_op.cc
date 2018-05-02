@@ -51,7 +51,8 @@ class ConcatBaseOp : public XlaOpKernel {
             concat_dim_tensor_shape.DebugString()));
     xla::Literal literal;
     OP_REQUIRES_OK(ctx, ctx->ConstantInput(axis_index_, &literal));
-    // TODO(annarev): add a helper to support int64 input.
+    // TODO (annarev): add a helper to support int64 input. id:336
+    // https://github.com/imdone/tensorflow/issues/337
     const int32 concat_dim = literal.Get<int>({});
 
     std::vector<xla::ComputationDataHandle> values;

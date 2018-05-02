@@ -2742,7 +2742,8 @@ class StreamingSensitivityAtSpecificityTest(test.TestCase):
       self.assertAlmostEqual(0.675, specificity.eval())
 
 
-# TODO(nsilberman): Break this up into two sets of tests.
+# TODO (nsilberman): Break this up into two sets of tests. id:1541
+# https://github.com/imdone/tensorflow/issues/1541
 class StreamingPrecisionRecallThresholdsTest(test.TestCase):
 
   def setUp(self):
@@ -2813,7 +2814,8 @@ class StreamingPrecisionRecallThresholdsTest(test.TestCase):
         self.assertAllClose(initial_prec, prec.eval())
         self.assertAllClose(initial_rec, rec.eval())
 
-  # TODO(nsilberman): fix tests (passing but incorrect).
+  # TODO (nsilberman): fix tests (passing but incorrect). id:1278
+  # https://github.com/imdone/tensorflow/issues/1279
   def testAllCorrect(self):
     inputs = np.random.randint(0, 2, size=(100, 1))
 
@@ -3744,7 +3746,8 @@ class StreamingFNRThresholdsTest(test.TestCase):
       self.assertAlmostEqual(expected_fnr, fnr.eval(), 2)
 
 
-# TODO(ptucker): Remove when we remove `streaming_recall_at_k`.
+# TODO (ptucker): Remove when we remove `streaming_recall_at_k`. id:1072
+# https://github.com/imdone/tensorflow/issues/1073
 # This op will be deprecated soon in favor of `streaming_sparse_recall_at_k`.
 # Until then, this test validates that both ops yield the same results.
 class StreamingRecallAtKTest(test.TestCase):

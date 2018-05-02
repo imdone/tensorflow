@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// TODO(josh11b): Probably not needed for OpKernel authors, so doesn't
+// TODO (josh11b): Probably not needed for OpKernel authors, so doesn't id:1934
+// https://github.com/imdone/tensorflow/issues/1934
 // need to be as publicly accessible as other files in framework/.
 
 #ifndef TENSORFLOW_FRAMEWORK_OP_DEF_UTIL_H_

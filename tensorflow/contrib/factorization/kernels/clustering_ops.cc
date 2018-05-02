@@ -70,7 +70,8 @@ int64 CeilOfRatio(int64 a, int64 b) { return (a + b - 1) / b; }
 
 // Implementation of K-means++ initialization. Samples points iteratively in
 // proportion to the squared distances from selected points.
-// TODO(ands): Add support for other distance metrics.
+// TODO (ands): Add support for other distance metrics. id:688
+// https://github.com/imdone/tensorflow/issues/689
 class KmeansPlusPlusInitializationOp : public OpKernel {
  public:
   explicit KmeansPlusPlusInitializationOp(OpKernelConstruction* context)
@@ -209,7 +210,8 @@ class KmeansPlusPlusInitializationOp : public OpKernel {
   // Returns a column vector with the i-th element set to half the squared
   // euclidean distance between the i-th row of xs, and y. Precomputed norms for
   // each row of xs and y must be provided for efficiency.
-  // TODO(ands): Parallelize this for large xs.
+  // TODO (ands): Parallelize this for large xs. id:1133
+  // https://github.com/imdone/tensorflow/issues/1134
   static Eigen::VectorXf GetHalfSquaredDistancesToY(
       const Eigen::Ref<const MatrixXfRowMajor>& xs,
       const Eigen::Ref<const Eigen::VectorXf>& xs_half_squared_norm,

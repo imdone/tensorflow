@@ -40,7 +40,8 @@ using ::testing::ElementsAreArray;
 
 class BaseConvolutionOpModel : public SingleOpModel {
  public:
-  // TODO(ahentz): Also test different activation types, bias, padding types,
+  // TODO (ahentz): Also test different activation types, bias, padding types, id:1761
+  // https://github.com/imdone/tensorflow/issues/1761
   // stride values.
   BaseConvolutionOpModel(
       TfLiteRegistration* registration, const TensorData& input,
