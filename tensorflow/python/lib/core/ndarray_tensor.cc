@@ -44,7 +44,8 @@ Status PyArrayDescr_to_TF_DataType(PyArray_Descr* descr,
     tensorflow::string key = key_string;
     // The typenames here should match the field names in the custom struct
     // types constructed in test_util.py.
-    // TODO(mrry,keveman): Investigate Numpy type registration to replace this
+    // TODO (mrry,keveman): Investigate Numpy type registration to replace this id:4276
+    // https://github.com/imdone/tensorflow/issues/4274
     // hard-coding of names.
     if (key == "quint8") {
       *out_tf_datatype = TF_QUINT8;
@@ -130,7 +131,8 @@ Status PyArray_TYPE_to_TF_DataType(PyArrayObject* array,
         *out_tf_datatype = TF_BFLOAT16;
         break;
       }
-      // TODO(mrry): Support these.
+      // TODO (mrry): Support these. id:3865
+      // https://github.com/imdone/tensorflow/issues/3863
       return errors::Internal("Unsupported feed type");
   }
   return Status::OK();

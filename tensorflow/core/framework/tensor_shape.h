@@ -72,7 +72,8 @@ class TensorShapeRep {
   string DebugString() const;
   static string DebugString(const TensorShapeProto& proto);
 
-  void DumpRep() const;  // XXX
+  void DumpRep() const;  // XXX id:1956
+                         // https://github.com/imdone/tensorflow/issues/1956
 
  protected:
   // Constructable only via TensorShapeBase
@@ -235,7 +236,8 @@ class TensorShapeBase : public TensorShapeRep {
 
   /// \brief Returns the number of elements in dimension `d`.
   /// REQUIRES: `0 <= d < dims()`
-  // TODO(touts): Rename to `dimension()` to match
+  // TODO (touts): Rename to `dimension()` to match id:1606
+  // https://github.com/imdone/tensorflow/issues/1606
   // `Eigen::Tensor::dimension()`?
   int64 dim_size(int d) const;
 
@@ -244,7 +246,8 @@ class TensorShapeBase : public TensorShapeRep {
   gtl::InlinedVector<int64, 4> dim_sizes() const;
 
   /// Return true iff the rank and all of the dimensions are well defined
-  // TODO(irving): Rename to is_fully_defined now that it's fast.
+  // TODO (irving): Rename to is_fully_defined now that it's fast. id:2244
+  // https://github.com/imdone/tensorflow/issues/2243
   bool IsFullyDefined() const { return !kIsPartial || num_elements() != -1; }
 
   /// Fill `*proto` from `*this`.

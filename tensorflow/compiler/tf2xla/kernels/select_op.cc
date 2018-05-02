@@ -63,7 +63,8 @@ class SelectOp : public XlaOpKernel {
                                           then_shape.dim_size(0), " vs. ",
                                           cond_shape.num_elements()));
 
-      // TODO(phawkins): broadcasting on the right seems pretty awkward in
+      // TODO (phawkins): broadcasting on the right seems pretty awkward in id:339
+      // https://github.com/imdone/tensorflow/issues/340
       // XLA. It seems we have to broadcast on the left and then Reshape
       // to get the dimensions in the right order.
       const auto dim_sizes = then_shape.dim_sizes();

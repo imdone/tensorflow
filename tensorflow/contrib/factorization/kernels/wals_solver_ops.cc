@@ -14,7 +14,8 @@
 // ==============================================================================
 
 // TensorFlow kernels and Ops for constructing WALS normal equations.
-// TODO(agarwal,rmlarsen): Add security checks to the code.
+// TODO (agarwal,rmlarsen): Add security checks to the code. id:685
+// https://github.com/imdone/tensorflow/issues/686
 
 #include <algorithm>
 #include <numeric>
@@ -47,7 +48,8 @@ using tensorflow::errors::InvalidArgument;
 
 namespace tensorflow {
 
-// TODO(ataei): Consider using RowMajor maps.
+// TODO (ataei): Consider using RowMajor maps. id:692
+// https://github.com/imdone/tensorflow/issues/693
 typedef Eigen::Map<
     Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>>
     EigenMatrixFloatMap;
@@ -134,7 +136,8 @@ class WALSComputePartialLhsAndRhsOp : public OpKernel {
       return is_transpose ? indices_mat(0, i) : indices_mat(1, i);
     };
 
-    // TODO(rmlarsen): In principle, we should be using the SparseTensor class
+    // TODO (rmlarsen): In principle, we should be using the SparseTensor class id:1134
+    // https://github.com/imdone/tensorflow/issues/1135
     // and machinery for iterating over groups, but the fact that class
     // SparseTensor makes a complete copy of the matrix makes me reluctant to
     // use it.
@@ -181,7 +184,8 @@ class WALSComputePartialLhsAndRhsOp : public OpKernel {
     // parallelism, and the unordered_map must be protected with a read/write
     // mutex.
     //
-    // TODO(jpoulson): Simplify after the thread rank can be queried
+    // TODO (jpoulson): Simplify after the thread rank can be queried id:1242
+// https://github.com/imdone/tensorflow/issues/1243
     std::unordered_map<size_t, Eigen::MatrixXf> factor_batch_map;
     mutex map_mutex;
 
@@ -194,7 +198,8 @@ class WALSComputePartialLhsAndRhsOp : public OpKernel {
       // batching matrix has not yet been created, then emplace it into the
       // map using the hash of the thread id as the key.
       //
-      // TODO(jpoulson): Switch to try_emplace once C++17 is supported
+      // TODO (jpoulson): Switch to try_emplace once C++17 is supported id:830
+// https://github.com/imdone/tensorflow/issues/831
       map_mutex.lock();
       const auto key_count = factor_batch_map.count(id_hash);
       map_mutex.unlock();

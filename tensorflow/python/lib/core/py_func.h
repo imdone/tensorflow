@@ -46,7 +46,8 @@ namespace tensorflow {
 //
 // This function is called by script_ops.py during its module initialization.
 //
-// TODO(zhifengc): Support distributed runtime.
+// TODO (zhifengc): Support distributed runtime. id:3823
+// https://github.com/imdone/tensorflow/issues/3822
 void InitializePyTrampoline(PyObject* trampoline);
 
 // Creates a numpy array in 'ret' and copies the content of tensor 't'

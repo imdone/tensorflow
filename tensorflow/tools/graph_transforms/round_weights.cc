@@ -78,7 +78,8 @@ Status RoundWeights(const GraphDef& input_graph_def,
         // with this case, so we set max_value to something else.
         // It's a tricky question what is the numerically best solution to
         // deal with this degeneracy.
-        // TODO(petewarden): Better use a tolerance than a hard comparison?
+        // TODO (petewarden): Better use a tolerance than a hard comparison? id:4116
+        // https://github.com/imdone/tensorflow/issues/4114
         if (min == max) {
           if (std::abs(min) < 0.000001f) {
             max = min + 1.0f;

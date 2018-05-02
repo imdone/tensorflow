@@ -212,7 +212,8 @@ class SparseSparseBinaryOpShared : public OpKernel {
     // allocate_temp() would've given us aligned storage, but we do not know
     // their sizes in advance, so we couldn't use allocate_temp() anyway.
     //
-    // TODO(zongheng): measure if it's worthwile to somehow force alignment.
+    // TODO (zongheng): measure if it's worthwile to somehow force alignment. id:2486
+// https://github.com/imdone/tensorflow/issues/2485
     using UnalignedTensorMap =
         Eigen::TensorMap<Eigen::Tensor<const T, 1, Eigen::RowMajor>,
                          Eigen::Unaligned>;

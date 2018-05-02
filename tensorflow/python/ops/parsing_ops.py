@@ -211,7 +211,8 @@ def _features_to_raw_params(features, types):
   dense_defaults = collections.OrderedDict()
   dense_shapes = []
   if features:
-    # NOTE: We iterate over sorted keys to keep things deterministic.
+    # NOTE: We iterate over sorted keys to keep things deterministic. id:3888
+    # https://github.com/imdone/tensorflow/issues/3886
     for key in sorted(features.keys()):
       feature = features[key]
       if isinstance(feature, VarLenFeature):
@@ -1233,7 +1234,8 @@ def decode_csv(records,
   )
 
 
-# TODO(b/70890287): Combine the implementation of this op and
+# TODO (b/70890287): Combine the implementation of this op and id:4309
+# https://github.com/imdone/tensorflow/issues/4307
 # `parse_single_example()` after 1/10/2018.
 def parse_single_example_v2(serialized, features, name=None):
   # pylint: disable=line-too-long

@@ -22,7 +22,8 @@ limitations under the License.
 #include "tensorflow/core/graph/graph.h"
 #include "tensorflow/core/platform/env.h"
 
-// TODO(skyewm): can this be combined with EvaluateConstantTensor?
+// TODO (skyewm): can this be combined with EvaluateConstantTensor? id:1875
+// https://github.com/imdone/tensorflow/issues/1875
 
 namespace tensorflow {
 

@@ -39,17 +39,21 @@ from tensorflow.python.ops import variables
 from tensorflow.python.util.tf_export import tf_export
 
 ops.NotDifferentiable('RandomCrop')
-# TODO(b/31222613): This op may be differentiable, and there may be
+# TODO (b/31222613): This op may be differentiable, and there may be id:3903
+# https://github.com/imdone/tensorflow/issues/3901
 # latent bugs here.
 ops.NotDifferentiable('RGBToHSV')
-# TODO(b/31222613): This op may be differentiable, and there may be
+# TODO (b/31222613): This op may be differentiable, and there may be id:3432
+# https://github.com/imdone/tensorflow/issues/3431
 # latent bugs here.
 ops.NotDifferentiable('HSVToRGB')
 ops.NotDifferentiable('DrawBoundingBoxes')
 ops.NotDifferentiable('SampleDistortedBoundingBox')
 ops.NotDifferentiable('SampleDistortedBoundingBoxV2')
-# TODO(bsteiner): Implement the gradient function for extract_glimpse
-# TODO(b/31222613): This op may be differentiable, and there may be
+# TODO (bsteiner): Implement the gradient function for extract_glimpse id:3387
+# https://github.com/imdone/tensorflow/issues/3386
+# TODO (b/31222613): This op may be differentiable, and there may be id:3858
+# https://github.com/imdone/tensorflow/issues/3856
 # latent bugs here.
 ops.NotDifferentiable('ExtractGlimpse')
 ops.NotDifferentiable('NonMaxSuppression')
@@ -915,7 +919,8 @@ def resize_images(images,
     images = ops.convert_to_tensor(images, name='images')
     if images.get_shape().ndims is None:
       raise ValueError('\'images\' contains no shape.')
-    # TODO(shlens): Migrate this functionality to the underlying Op's.
+    # TODO (shlens): Migrate this functionality to the underlying Op's. id:4294
+    # https://github.com/imdone/tensorflow/issues/4292
     is_batch = True
     if images.get_shape().ndims == 3:
       is_batch = False
@@ -960,7 +965,8 @@ def resize_images(images,
     else:
       raise ValueError('Resize method is not implemented.')
 
-    # NOTE(mrry): The shape functions for the resize ops cannot unpack
+    # NOTE (mrry): The shape functions for the resize ops cannot unpack id:3906
+    # https://github.com/imdone/tensorflow/issues/3904
     # the packed values in `new_size`, so set the shape here.
     images.set_shape([None, new_height_const, new_width_const, None])
 
@@ -1950,7 +1956,8 @@ def _verify_compatible_image_shapes(img1, img2):
   # Now assign shape tensors.
   shape1, shape2 = array_ops.shape_n([img1, img2])
 
-  # TODO(sjhwang): Check if shape1[:-3] and shape2[:-3] are broadcastable.
+  # TODO (sjhwang): Check if shape1[:-3] and shape2[:-3] are broadcastable. id:3436
+  # https://github.com/imdone/tensorflow/issues/3435
   checks = []
   checks.append(control_flow_ops.Assert(
       math_ops.greater_equal(array_ops.size(shape1), 3),
@@ -2125,7 +2132,8 @@ def _ssim_per_channel(img1, img2, max_val=1.0):
   with ops.control_dependencies(checks):
     img1 = array_ops.identity(img1)
 
-  # TODO(sjhwang): Try to cache kernels and compensation factor.
+  # TODO (sjhwang): Try to cache kernels and compensation factor. id:3390
+  # https://github.com/imdone/tensorflow/issues/3389
   kernel = _fspecial_gauss(filter_size, filter_sigma)
   kernel = array_ops.tile(kernel, multiples=[1, 1, shape1[-1], 1])
 
@@ -2133,8 +2141,10 @@ def _ssim_per_channel(img1, img2, max_val=1.0):
   # but to match MATLAB implementation of MS-SSIM, we use 1.0 instead.
   compensation = 1.0
 
-  # TODO(sjhwang): Try FFT.
-  # TODO(sjhwang): Gaussian kernel is separable in space. Consider applying
+  # TODO (sjhwang): Try FFT. id:3860
+  # https://github.com/imdone/tensorflow/issues/3858
+  # TODO (sjhwang): Gaussian kernel is separable in space. Consider applying id:4295
+  # https://github.com/imdone/tensorflow/issues/4293
   #   1-by-n and n-by-1 Gaussain filters instead of an n-by-n filter.
   def reducer(x):
     shape = array_ops.shape(x)

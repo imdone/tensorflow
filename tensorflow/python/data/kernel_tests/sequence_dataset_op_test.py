@@ -70,7 +70,8 @@ class SequenceDatasetTest(test.TestCase):
         sess.run(get_next)
 
       # Test an infinite repetition.
-      # NOTE(mrry): There's not a good way to test that the sequence
+      # NOTE (mrry): There's not a good way to test that the sequence id:3565
+      # https://github.com/imdone/tensorflow/issues/3564
       # actually is infinite.
       sess.run(init_op, feed_dict={count_placeholder: -1})
       for _ in range(17):

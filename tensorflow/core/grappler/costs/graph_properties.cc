@@ -753,7 +753,8 @@ class SymbolicShapeRefiner {
     const bool is_fed = it != fed_ports_.end();
 
     // Propagate shape tensors unless the node is fed.
-    // TODO(bsteiner) We should still propagate the shapes to the ports that
+    // TODO (bsteiner) We should still propagate the shapes to the ports that id:2276
+    // https://github.com/imdone/tensorflow/issues/2275
     // aren't fed in the case of a ShapeN node.
     if (!is_fed) {
       if (IsShape(node)) {
@@ -1116,7 +1117,8 @@ Status GraphProperties::UpdateResource(
     if (!ctx) {
       continue;
     }
-    // TODO(bsteiner): handle EnqueueMany as well.
+    // TODO (bsteiner): handle EnqueueMany as well. id:3036
+    // https://github.com/imdone/tensorflow/issues/3035
     if (node->op().find("Enqueue") != std::string::npos &&
         node->op().find("EnqueueMany") == std::string::npos) {
       std::vector<ShapeAndType> shapes_and_types;

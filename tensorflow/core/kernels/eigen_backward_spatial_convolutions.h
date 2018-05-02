@@ -168,7 +168,8 @@ SpatialConvolutionBackwardInput(
   // The kernel has dimensions filters X channels X patch_rows X patch_cols
   // We need to reverse the kernel along dimensions corresponding to rows and
   // cols.
-  // TODO(yangke): we can make things slightly faster by collapsing the
+  // TODO (yangke): we can make things slightly faster by collapsing the id:2442
+  // https://github.com/imdone/tensorflow/issues/2441
   // dimensions
   // where we don't reverse. Try that once we have a faster compiler.
   typedef typename internal::conditional<isColMajor, ReverseColMajor,

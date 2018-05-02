@@ -69,10 +69,11 @@ struct LaunchGeneric {
       // For 1x1 kernel, the 2D convolution is reduced to matrix
       // multiplication.
       //
-      // TODO(vrv): We should be able to call SpatialConvolution
-      // and it will produce the same result, but doing so
-      // led to NaNs during training.  Using matmul instead for now.
-      int conv_width = 1;  // Width for the convolution step.
+      // TODO (vrv): We should be able to call SpatialConvolution id:1862
+// https://github.com/imdone/tensorflow/issues/1862
+// and it will produce the same result, but doing so
+// led to NaNs during training.  Using matmul instead for now.
+//       int conv_width = 1;  // Width for the convolution step.
       for (int i = 0; i < 3; ++i) {
         conv_width *= output->dim_size(i);
       }
@@ -715,7 +716,8 @@ void LaunchConv2DOp<GPUDevice, T>::operator()(
     ProfileResult best_result;
     ProfileResult best_result_no_scratch;
     for (auto profile_algorithm : algorithms) {
-      // TODO(zhengxq): profile each algorithm multiple times to better
+      // TODO (zhengxq): profile each algorithm multiple times to better id:2355
+      // https://github.com/imdone/tensorflow/issues/2354
       // accuracy.
       CudnnScratchAllocator scratch_allocator(ConvolveScratchSize, ctx);
       ProfileResult profile_result;
@@ -740,7 +742,8 @@ void LaunchConv2DOp<GPUDevice, T>::operator()(
         }
       }
     }
-    // TODO(yangzihao): refactor the profile result checking code into a common
+    // TODO (yangzihao): refactor the profile result checking code into a common id:3121
+    // https://github.com/imdone/tensorflow/issues/3120
     // utility function.
     OP_REQUIRES(ctx,
                 best_result.is_valid() || best_result_no_scratch.is_valid(),

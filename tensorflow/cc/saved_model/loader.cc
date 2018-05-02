@@ -277,7 +277,8 @@ Status LoadSavedModel(const SessionOptions& session_options,
                       const RunOptions& run_options, const string& export_dir,
                       const std::unordered_set<string>& tags,
                       SavedModelBundle* const bundle) {
-  // TODO(robson): Add tests for the counters.
+  // TODO (robson): Add tests for the counters. id:133
+  // https://github.com/imdone/tensorflow/issues/134
   const uint64 start_microseconds = Env::Default()->NowMicros();
   const Status status = LoadSavedModelInternal(session_options, run_options,
                                                export_dir, tags, bundle);

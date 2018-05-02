@@ -66,7 +66,8 @@ def gfile_copy_callback(files_to_copy, export_dir_path):
     if gfile.Exists(new_path):
       # Guard against being restarted while copying assets, and the file
       # existing and being in an unknown state.
-      # TODO(b/28676216): Do some file checks before deleting.
+      # TODO (b/28676216): Do some file checks before deleting. id:1205
+      # https://github.com/imdone/tensorflow/issues/1206
       logging.info("Removing file %s.", new_path)
       gfile.Remove(new_path)
     gfile.Copy(source_filepath, new_path)
@@ -296,7 +297,8 @@ class Exporter(object):
       gfile.MakeDirs(assets_dir)
       self._assets_callback(self._assets_to_copy, assets_dir)
 
-    # TODO(b/27794910): Delete *checkpoint* file before rename.
+    # TODO (b/27794910): Delete *checkpoint* file before rename. id:1731
+    # https://github.com/imdone/tensorflow/issues/1731
     gfile.Rename(tmp_export_dir, export_dir)
 
     if exports_to_keep:

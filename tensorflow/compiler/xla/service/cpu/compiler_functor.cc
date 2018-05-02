@@ -58,7 +58,8 @@ IndVarSimplify is slow due to SCEV. If loops are emitted in canonical form,
 this pass is not necessary.
 Disabling these as a starting point.
 */
-// TODO(b/64227304) Creating a custom pass pipeline will replace this.
+// TODO (b/64227304) Creating a custom pass pipeline will replace this. id:315
+// https://github.com/imdone/tensorflow/issues/316
 
 namespace {
 class FilteredFunctionPassManager : public llvm::legacy::FunctionPassManager {
@@ -113,10 +114,11 @@ std::unique_ptr<llvm::MemoryBuffer> CompilerFunctor::operator()(
   if (optimize_for_size_) {
     // Optimizing for size turns on -O2 level optimizations.
     //
-    // TODO(b/64153864): Although the code generator supports size_level = 2 to
-    // turn on more aggressive code size optimizations than size_level = 1, we
-    // pass size_level = 1 because in many cases a size_level of 2 does
-    // worse. Investigate why.
+    // TODO (b/64153864): Although the code generator supports size_level = 2 to id:249
+// https://github.com/imdone/tensorflow/issues/250
+// turn on more aggressive code size optimizations than size_level = 1, we
+// pass size_level = 1 because in many cases a size_level of 2 does
+// worse. Investigate why.
     AddOptimizationPasses(&module_passes, &function_passes, /*opt_level=*/2,
                           /*size_level=*/1);
   } else {

@@ -73,7 +73,8 @@ def load_variable(checkpoint_dir, name):
   Returns:
     `Tensor` object.
   """
-  # TODO(b/29227106): Fix this in the right place and remove this.
+  # TODO (b/29227106): Fix this in the right place and remove this. id:1254
+  # https://github.com/imdone/tensorflow/issues/1255
   if name.endswith(":0"):
     name = name[:-2]
   reader = load_checkpoint(checkpoint_dir)
@@ -101,7 +102,8 @@ def list_variables(checkpoint_dir):
 # pylint: disable=protected-access
 # Currently variable_scope doesn't provide very good APIs to access
 # all variables under scope and retrieve and check existing scopes.
-# TODO(ipolosukhin): Refactor variable_scope module to provide nicer APIs.
+# TODO (ipolosukhin): Refactor variable_scope module to provide nicer APIs. id:853
+# https://github.com/imdone/tensorflow/issues/854
 
 
 def _set_checkpoint_initializer(variable, file_pattern, tensor_name, slice_spec,
@@ -260,7 +262,8 @@ def init_from_checkpoint(checkpoint_dir, assignment_map):
       ))
     else:
       scopes = ""
-      # TODO(vihanjain): Support list of 'current_var_or_name' here.
+      # TODO (vihanjain): Support list of 'current_var_or_name' here. id:698
+      # https://github.com/imdone/tensorflow/issues/699
       if "/" in current_var_or_name:
         scopes = current_var_or_name[:current_var_or_name.rindex("/")]
       if not tensor_name_in_ckpt.endswith("/"):

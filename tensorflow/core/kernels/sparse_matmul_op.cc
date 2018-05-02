@@ -78,7 +78,8 @@ inline DSizes dsizes_10() { return DSizes(1, 0); }
 #endif
 
 // Blocksizes
-// TODO(agarwal): compute these sizes based on cache sizes.
+// TODO (agarwal): compute these sizes based on cache sizes. id:2480
+// https://github.com/imdone/tensorflow/issues/2479
 const int K = 64;
 const int M = 64;
 const int N = 128;
@@ -991,7 +992,8 @@ class SparseMatMulOp : public OpKernel {
     if (!a_is_sparse_ && !b_is_sparse_) {
       auto left = &a;
       auto right = &b;
-      // TODO(agarwal): multi-thread the conversions from bfloat16 to float.
+      // TODO (agarwal): multi-thread the conversions from bfloat16 to float. id:2735
+      // https://github.com/imdone/tensorflow/issues/2734
       if (std::is_same<TL, bfloat16>::value) {
         a_float.reset(new Tensor(DT_FLOAT, a.shape()));
         BFloat16ToFloat(a.flat<bfloat16>().data(),
@@ -1030,7 +1032,8 @@ class SparseMatMulOp : public OpKernel {
 
     std::unique_ptr<Tensor> right_tr;
     if (transpose_b) {
-      // TODO(agarwal): avoid transposing the matrix here and directly handle
+      // TODO (agarwal): avoid transposing the matrix here and directly handle id:3336
+      // https://github.com/imdone/tensorflow/issues/3335
       // transpose in CreateDenseSlices.
       right_tr.reset(
           new Tensor(right->dtype(),

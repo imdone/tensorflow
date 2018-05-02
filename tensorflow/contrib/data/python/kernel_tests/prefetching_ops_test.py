@@ -209,7 +209,8 @@ class PrefetchToDeviceTest(test.TestCase):
     device_dataset = host_dataset.apply(
         prefetching_ops.prefetch_to_device("/cpu:1"))
 
-    # NOTE(mrry): This device block creates the "host" dataset and iterator on
+    # NOTE (mrry): This device block creates the "host" dataset and iterator on id:752
+    # https://github.com/imdone/tensorflow/issues/753
     # /cpu:0, and ensures that the prefetching is across devices. In typical use
     # this would not be necessary, because the GPU device would not support any
     # of the dataset-related ops.
@@ -240,7 +241,8 @@ class PrefetchToDeviceTest(test.TestCase):
     device_dataset = host_dataset.apply(
         prefetching_ops.prefetch_to_device("/cpu:1"))
 
-    # NOTE(mrry): This device block creates the "host" dataset and iterator on
+    # NOTE (mrry): This device block creates the "host" dataset and iterator on id:626
+    # https://github.com/imdone/tensorflow/issues/627
     # /cpu:0, and ensures that the prefetching is across devices. In typical use
     # this would not be necessary, because the GPU device would not support any
     # of the dataset-related ops.
@@ -275,7 +277,8 @@ class PrefetchToDeviceTest(test.TestCase):
     device_dataset = host_dataset.apply(
         prefetching_ops.prefetch_to_device("/cpu:1"))
 
-    # NOTE(mrry): This device block creates the "host" dataset and iterator on
+    # NOTE (mrry): This device block creates the "host" dataset and iterator on id:590
+    # https://github.com/imdone/tensorflow/issues/591
     # /cpu:0, and ensures that the prefetching is across devices. In typical use
     # this would not be necessary, because the GPU device would not support any
     # of the dataset-related ops.
@@ -325,7 +328,8 @@ class PrefetchToDeviceTest(test.TestCase):
     device_dataset = host_dataset.apply(
         prefetching_ops.prefetch_to_device("/cpu:1"))
 
-    # NOTE(mrry): This device block creates the "host" dataset and iterator on
+    # NOTE (mrry): This device block creates the "host" dataset and iterator on id:1078
+    # https://github.com/imdone/tensorflow/issues/1079
     # /cpu:0, and ensures that the prefetching is across devices. In typical use
     # this would not be necessary, because the GPU device would not support any
     # of the dataset-related ops.

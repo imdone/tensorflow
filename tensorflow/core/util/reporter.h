@@ -83,8 +83,9 @@ class TestReporter {
   // Set property on Benchmark to the given value.
   Status SetProperty(const string& name, const string& value);
 
-  // TODO(b/32704451): Don't just ignore the ::tensorflow::Status object!
-  ~TestReporter() { Close().IgnoreError(); }  // Autoclose in destructor.
+  // TODO (b/32704451): Don't just ignore the :: object! tensorflow::Status id:3541
+  // https://github.com/imdone/tensorflow/issues/3540
+  //   ~TestReporter() { Close().IgnoreError(); }  // Autoclose in destructor.
 
  private:
   static string GetLogEnv() {

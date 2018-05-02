@@ -27,7 +27,8 @@ namespace xla {
 
 namespace {
 
-// TODO(b/69062148) Remove this code when all backends support BatchDot
+// TODO (b/69062148) Remove this code when all backends support BatchDot id:496
+// https://github.com/imdone/tensorflow/issues/497
 // natively.
 Status DecomposeBatchDot(HloInstruction* dot) {
   auto computation = dot->parent();

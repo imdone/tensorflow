@@ -76,9 +76,11 @@ class OpDefBuilder {
   // Note that any attr specifying the length of an input or output will
   // get a default minimum of 1 unless the >= # syntax is used.
   //
-  // TODO(josh11b): Perhaps support restrictions and defaults as optional
-  // extra arguments to Attr() instead of encoding them in the spec string.
-  // TODO(josh11b): Would like to have better dtype handling for tensor attrs:
+  // TODO (josh11b): Perhaps support restrictions and defaults as optional id:1561
+// https://github.com/imdone/tensorflow/issues/1561
+// extra arguments to Attr() instead of encoding them in the spec string.
+  // TODO (josh11b): Would like to have better dtype handling for tensor attrs: id:2217
+  // https://github.com/imdone/tensorflow/issues/2216
   // * Ability to say the type of an input/output matches the type of
   //   the tensor.
   // * Ability to restrict the type of the tensor like the existing
@@ -97,9 +99,11 @@ class OpDefBuilder {
   //                 or the name of an attr (see above) with type "type".
   //   <number> is the name of an attr with type "int".
   //   <type-list> is the name of an attr with type "list(type)".
-  // TODO(josh11b): Indicate Ref() via an optional argument instead of
+  // TODO (josh11b): Indicate Ref() via an optional argument instead of id:2857
+  // https://github.com/imdone/tensorflow/issues/2856
   // in the spec?
-  // TODO(josh11b): SparseInput() and SparseOutput() matching the Python
+  // TODO (josh11b): SparseInput() and SparseOutput() matching the Python id:2743
+  // https://github.com/imdone/tensorflow/issues/2742
   // handling?
   OpDefBuilder& Input(StringPiece spec);
   OpDefBuilder& Output(StringPiece spec);

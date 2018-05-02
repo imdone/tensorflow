@@ -30,7 +30,8 @@ REGISTER3(BinaryOp, GPU, "FloorDiv", functor::floor_div_real, float,
 
 #if GOOGLE_CUDA
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:2367
+// https://github.com/imdone/tensorflow/issues/2366
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(Name("FloorDiv")
                             .Device(DEVICE_GPU)

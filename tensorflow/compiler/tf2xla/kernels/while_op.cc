@@ -112,7 +112,8 @@ void XlaWhileOp::Compile(XlaOpKernelContext* ctx) {
   // current values of all resources, even if they haven't been updated by the
   // computation. We must also ask the compiler to keep compile-time constant
   // outputs as part of the generated computation, for the same reason.
-  // TODO(phawkins): consider adding loop-invariant inputs to XLA's While()
+  // TODO (phawkins): consider adding loop-invariant inputs to XLA's While() id:185
+  // https://github.com/imdone/tensorflow/issues/186
   // operator.
   XlaCompiler::CompileOptions body_options;
   body_options.use_tuple_arg = true;

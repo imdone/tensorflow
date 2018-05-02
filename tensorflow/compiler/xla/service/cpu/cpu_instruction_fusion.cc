@@ -91,7 +91,8 @@ bool CpuInstructionFusion::ShouldFuse(HloInstruction* consumer,
     return false;
   }
 
-  // TODO(b/28644064): see if the "producer->operand_count() == 0" check is
+  // TODO (b/28644064): see if the "producer->operand_count() == 0" check is id:255
+  // https://github.com/imdone/tensorflow/issues/256
   // necessary.
   if (producer->operand_count() == 0 ||
       !InstructionFusion::ShouldFuse(consumer, operand_index)) {

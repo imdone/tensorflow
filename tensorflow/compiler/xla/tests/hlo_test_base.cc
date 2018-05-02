@@ -101,7 +101,8 @@ std::unique_ptr<HloModule> HloTestBase::CreateNewModule(const string& name) {
 
 /*static*/ DebugOptions HloTestBase::GetDebugOptionsForTest() {
   auto debug_options = legacy_flags::GetDebugOptionsFromFlags();
-  // TODO(b/38354253): Change tests to use Parameters instead of Constants.
+  // TODO (b/38354253): Change tests to use Parameters instead of Constants. id:921
+  // https://github.com/imdone/tensorflow/issues/922
   debug_options.add_xla_disable_hlo_passes("constant_folding");
   return debug_options;
 }

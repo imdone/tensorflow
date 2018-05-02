@@ -69,7 +69,8 @@ class BCastArgsOp : public OpKernel {
 // Given shapes of two tensors, computes the reduction indices for the
 // gradient computation.
 //
-// TODO(zhifengc):
+// TODO (zhifengc): id:2325
+// https://github.com/imdone/tensorflow/issues/2324
 //   1. Adds support for n-ary (n >= 2).
 template <typename T>
 class BCastGradArgsOp : public OpKernel {

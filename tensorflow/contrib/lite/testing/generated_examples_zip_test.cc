@@ -33,7 +33,8 @@ namespace testing {
 
 namespace {
 bool FLAGS_ignore_known_bugs = true;
-// TODO(b/71769302) zip_files_dir should have a more accurate default, if
+// TODO (b/71769302) zip_files_dir should have a more accurate default, if id:1601
+// https://github.com/imdone/tensorflow/issues/1601
 // possible
 string* FLAGS_zip_files_dir = new string("./");
 string* FLAGS_unzip_binary_path = new string("/usr/bin/unzip");
@@ -45,7 +46,8 @@ tensorflow::Env* env = tensorflow::Env::Default();
 // List of tests that are expected to fail when
 //   --test_arg=--ignore_known_bugs=false
 // Key is a substring of the test name and value is a bug number.
-// TODO(ahentz): make sure we clean this list up frequently.
+// TODO (ahentz): make sure we clean this list up frequently. id:2030
+// https://github.com/imdone/tensorflow/issues/2030
 std::map<string, string> kBrokenTests = {
     // Add only supports float32. (and "constant" tests use Add)
     {R"(^\/adda.*int32)", "68808744"},

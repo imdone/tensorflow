@@ -68,7 +68,8 @@ inline bool NextIndex(const int num_dims, const int* dims, int* current) {
 // if you have a 3D tensor and you are reducing to 2D by eliminating axis 0,
 // then index (0, 1, 2) and index (1, 1, 2) will map to the same flattened
 // offset.
-// TODO(kanlig): uses Dims to represent dimensions.
+// TODO (kanlig): uses Dims to represent dimensions. id:1872
+// https://github.com/imdone/tensorflow/issues/1872
 inline size_t ReducedOutputOffset(const int num_dims, const int* dims,
                                   const int* index, const int num_axis,
                                   const int* axis) {

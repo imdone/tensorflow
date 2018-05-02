@@ -60,10 +60,12 @@ Status NewHostPortGrpcChannel(const string& target,
   // Minimally ensure that the target is valid
   TF_RETURN_IF_ERROR(ValidateHostPortPair(target));
 
-  // TODO(mrry): Implement secure channels.
+  // TODO (mrry): Implement secure channels. id:2673
+  // https://github.com/imdone/tensorflow/issues/2672
   ::grpc::ChannelArguments args;
   args.SetInt(GRPC_ARG_MAX_MESSAGE_LENGTH, std::numeric_limits<int32>::max());
-  // NOTE(mrry): Some versions of gRPC use a 20-second minimum backoff
+  // NOTE (mrry): Some versions of gRPC use a 20-second minimum backoff id:1890
+  // https://github.com/imdone/tensorflow/issues/1890
   // on connection failure, which makes our tests time out.
   args.SetInt("grpc.testing.fixed_reconnect_backoff_ms", 1000);
   *channel_pointer = ::grpc::CreateCustomChannel(
@@ -139,7 +141,8 @@ class CachingGrpcChannelCache : public GrpcChannelCache {
   virtual SharedGrpcChannelPtr FindChannelOnce(const string& target) = 0;
 
  private:
-  // TODO(zhifengc): Eviction when the map becomes too big.
+  // TODO (zhifengc): Eviction when the map becomes too big. id:1505
+  // https://github.com/imdone/tensorflow/issues/1506
   mutex mu_;
   std::unordered_map<string, SharedGrpcChannelPtr> channels_ GUARDED_BY(mu_);
 };

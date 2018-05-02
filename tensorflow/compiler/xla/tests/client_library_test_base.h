@@ -86,7 +86,8 @@ class ClientLibraryTestBase : public ::testing::Test {
     return execution_options_.mutable_debug_options();
   }
 
-  // TODO(b/25566808): Add helper that populates a literal from a testdata file.
+  // TODO (b/25566808): Add helper that populates a literal from a testdata file. id:445
+  // https://github.com/imdone/tensorflow/issues/446
 
   // Convenience methods for building and running a computation with the member
   // execution options. Modify execution_options_ in your test if you want to
@@ -95,7 +96,8 @@ class ClientLibraryTestBase : public ::testing::Test {
   StatusOr<std::unique_ptr<GlobalData>> Execute(
       BuilderT* builder, tensorflow::gtl::ArraySlice<GlobalData*> arguments);
 
-  // TODO(b/74197823): Remove the template type 'BuilderT' in all methods once
+  // TODO (b/74197823): Remove the template type 'BuilderT' in all methods once id:428
+  // https://github.com/imdone/tensorflow/issues/429
   // the migration to XlaBuilder is complete.
 
   template <typename BuilderT>

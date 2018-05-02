@@ -89,7 +89,8 @@ Status NewWindowDataset(std::vector<std::vector<Tensor>> elements,
                         DataTypeVector output_types,
                         std::vector<PartialTensorShape> output_shapes,
                         DatasetBase** out_dataset) {
-  // TODO(mrry): If this becomes more public, we must validate that
+  // TODO (mrry): If this becomes more public, we must validate that id:3167
+  // https://github.com/imdone/tensorflow/issues/3166
   // the elements match the output_types and output_shapes.
   *out_dataset = new WindowDataset(std::move(elements), std::move(output_types),
                                    std::move(output_shapes));

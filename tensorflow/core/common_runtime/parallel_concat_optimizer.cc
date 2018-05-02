@@ -32,7 +32,8 @@ class ParallelConcatRemovePass : public GraphOptimizationPass {
  public:
   Status Run(const GraphOptimizationPassOptions& options) override {
     if (options.graph == nullptr) {
-      // TODO(apassos) returning OK feels weird here as we can't do anything
+      // TODO (apassos) returning OK feels weird here as we can't do anything id:1437
+      // https://github.com/imdone/tensorflow/issues/1438
       // without a graph, but some tests require this.
       return Status::OK();
     }

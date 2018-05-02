@@ -76,7 +76,8 @@ class GANModel(
   """
 
 
-# TODO(joelshor): Have this class inherit from `GANModel`.
+# TODO (joelshor): Have this class inherit from `GANModel`. id:1291
+# https://github.com/imdone/tensorflow/issues/1292
 class InfoGANModel(
     collections.namedtuple('InfoGANModel', GANModel._fields + (
         'structured_generator_inputs',

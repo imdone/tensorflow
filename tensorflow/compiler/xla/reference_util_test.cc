@@ -32,7 +32,8 @@ namespace xla {
 namespace {
 
 // Tests linear algebra routines implemented in ReferenceUtil class.
-// TODO(b/23829238): Currently missing tests for the convolution routine.
+// TODO (b/23829238): Currently missing tests for the convolution routine. id:311
+// https://github.com/imdone/tensorflow/issues/312
 class ReferenceUtilTest : public ::testing::Test {
  protected:
   ReferenceUtilTest() {

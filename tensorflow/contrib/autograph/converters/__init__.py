@@ -18,5 +18,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-# TODO(mdan): Define a base transformer class that can recognize skip_processing
-# TODO(mdan): All converters are incomplete, especially those that change blocks
+# TODO (mdan): Define a base transformer class that can recognize skip_processing id:586
+# https://github.com/imdone/tensorflow/issues/587
+# TODO (mdan): All converters are incomplete, especially those that change blocks id:640
+# https://github.com/imdone/tensorflow/issues/641

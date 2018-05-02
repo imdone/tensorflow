@@ -95,7 +95,8 @@ class RoutingGradient : public OpKernel {
     const Tensor& tree_biases_tensor = context->input(2);
     const Tensor& routing_tensor = context->input(3);
 
-    // TODO(atwoodj): Add dimension checks.
+    // TODO (atwoodj): Add dimension checks. id:1765
+    // https://github.com/imdone/tensorflow/issues/1765
 
     const int32 num_data = static_cast<int32>(input_data.shape().dim_size(0));
     const int32 num_features =

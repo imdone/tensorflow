@@ -126,7 +126,8 @@ class TestUpgrade(test_util.TensorFlowTestCase):
     _test("tf.concat(0,[\n \tx for x in y])\n",
           "tf.concat(axis=0,values=[\n \tx for x in y])\n")
 
-  # TODO(aselle): Explicitly not testing command line interface and process_tree
+  # TODO (aselle): Explicitly not testing command line interface and process_tree id:4012
+  # https://github.com/imdone/tensorflow/issues/4010
   # for now, since this is a one off utility.
 
 

@@ -50,7 +50,8 @@ REGISTER_OP("RemoteCall")
     .SetIsStateful()
     .SetShapeFn(shape_inference::UnknownShape);
 
-// TODO(drpng): remove this.
+// TODO (drpng): remove this. id:2614
+// https://github.com/imdone/tensorflow/issues/2613
 REGISTER_OP("_If")
     .Input("cond: Tcond")
     .Input("input: Tin")
@@ -88,7 +89,8 @@ REGISTER_OP("If")
     .Attr("else_branch: func")
     .SetShapeFn(shape_inference::UnknownShape);
 
-// TODO(drpng): remove this.
+// TODO (drpng): remove this. id:2839
+// https://github.com/imdone/tensorflow/issues/2838
 REGISTER_OP("_While")
     .Input("input: T")
     .Output("output: T")
@@ -119,7 +121,8 @@ body: A function that takes a list of tensors and returns another
       by T.
 )doc");
 
-// TODO(b/37549631) setting the While Op to always be stateful is too
+// TODO (b/37549631) setting the While Op to always be stateful is too id:3405
+// https://github.com/imdone/tensorflow/issues/3404
 // conservative.
 REGISTER_OP("While")
     .Input("input: T")
@@ -145,7 +148,8 @@ REGISTER_OP("For")
     .Attr("body: func")
     .SetShapeFn(shape_inference::UnknownShape);
 
-// TODO(b/73826847, b/37549631) Mark as stateful.
+// TODO (b/73826847, b/37549631) Mark as stateful. id:4095
+// https://github.com/imdone/tensorflow/issues/4093
 REGISTER_OP("PartitionedCall")
     .Input("args: Tin")
     .Output("output: Tout")

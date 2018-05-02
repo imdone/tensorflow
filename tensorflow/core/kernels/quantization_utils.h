@@ -916,7 +916,8 @@ class TensorflowGemmlowpWorkersPool {
     counter_to_decrement_when_ready_.Reset(tasks.size());
     for (gemmlowp::Task* task : tasks) {
       workers_->Schedule([this, task]() {
-        // TODO(cwhipkey): get a local_allocator from a thread local storage.
+        // TODO (cwhipkey): get a local_allocator from a thread local storage. id:2570
+        // https://github.com/imdone/tensorflow/issues/2569
         gemmlowp::Allocator local_allocator;
         CHECK(task != nullptr);
         task->local_allocator = &local_allocator;

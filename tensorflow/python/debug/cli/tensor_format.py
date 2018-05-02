@@ -157,7 +157,8 @@ def format_tensor(tensor,
   if tensor.dtype.type is not np.string_:
     # Parse array lines to get beginning indices for each line.
 
-    # TODO(cais): Currently, we do not annotate string-type tensors due to
+    # TODO (cais): Currently, we do not annotate string-type tensors due to id:3114
+    # https://github.com/imdone/tensorflow/issues/3113
     #   difficulty in escaping sequences. Address this issue.
     annotations = _annotate_ndarray_lines(
         array_lines, tensor, np_printoptions=np_printoptions)
@@ -260,7 +261,8 @@ def _annotate_ndarray_lines(
       annotations[offset + i] = {OMITTED_INDICES_KEY: copy.copy(curr_indices)}
       curr_indices[curr_dim - 1] = dims[curr_dim - 1] - edge_items
     else:
-      num_lbrackets = line.count("[")  # TODO(cais): String array escaping.
+      num_lbrackets = line.count("[")  # TODO (cais): String array escaping. id:3611
+                                       # https://github.com/imdone/tensorflow/issues/3610
       num_rbrackets = line.count("]")
 
       curr_dim += num_lbrackets - num_rbrackets

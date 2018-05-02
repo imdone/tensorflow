@@ -50,7 +50,8 @@ REGISTER_OP("LoadAndRemapMatrix")
     .Attr("num_cols: int >= 1")
     .Attr("max_rows_in_memory: int = -1")
     .Output("output_matrix: float")
-    // TODO(b/30502450): Setting the op as being stateful prevents it from being
+    // TODO (b/30502450): Setting the op as being stateful prevents it from being id:2405
+    // https://github.com/imdone/tensorflow/issues/2404
     // executed more often than expected (possibly due to stateful ops not being
     // subject to constant folding?). This op is usually slow and may require
     // multiple disk reads, so we want to minimize the number of times it's

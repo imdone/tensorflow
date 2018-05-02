@@ -184,7 +184,8 @@ TEST_F(WhileTest, WhileWithPredicateResult) {
 // while (result.sum() < 15.5f) {
 //   result = result + vector<float>(0);
 // }
-// TODO(b/29185393): does not terminate on CPU.
+// TODO (b/29185393): does not terminate on CPU. id:553
+// https://github.com/imdone/tensorflow/issues/554
 TEST_F(WhileTest, DISABLED_WhileWithEmptyVectorResult) {
   Shape result_shape = ShapeUtil::MakeShape(F32, {0});
 
@@ -766,7 +767,8 @@ TEST_F(WhileTest, TwoWhileLoopsAndSharedBody) {
 }
 
 // Test while nodes that share the while body computation.
-// TODO(b/37245345): Fails on GPU backend.
+// TODO (b/37245345): Fails on GPU backend. id:636
+// https://github.com/imdone/tensorflow/issues/637
 TEST_F(WhileTest, DISABLED_ON_GPU(WhileLoopsWithSharedBodyAndInit)) {
   std::vector<Shape> shape_elements = {ShapeUtil::MakeShape(S32, {}),
                                        ShapeUtil::MakeShape(F32, {10})};
@@ -906,7 +908,8 @@ XLA_TEST_F(WhileTest, WhileWithDynamicUpdateSlice) {
 // Note: this test currently only tests generating random values within a loop.
 // Per backend the values generated can be different as the different backends
 // use different random number generators.
-// TODO(b/32240857): Extend test to verify outputs.
+// TODO (b/32240857): Extend test to verify outputs. id:482
+// https://github.com/imdone/tensorflow/issues/483
 TEST_F(WhileTest, DISABLED_ON_INTERPRETER(WhileWithPrngScalarResult)) {
   auto v6s32 = ShapeUtil::MakeShape(S32, {6});
 

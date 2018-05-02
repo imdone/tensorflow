@@ -256,7 +256,8 @@ TfLiteStatus setInputs(JNIEnv* env, tflite::Interpreter* interpreter,
   return kTfLiteOk;
 }
 
-// TODO(yichengfan): evaluate the benefit to use tflite verifier.
+// TODO (yichengfan): evaluate the benefit to use tflite verifier. id:1100
+// https://github.com/imdone/tensorflow/issues/1101
 bool VerifyModel(const void* buf, size_t len) {
   flatbuffers::Verifier verifier(static_cast<const uint8_t*>(buf), len);
   return tflite::VerifyModelBuffer(verifier);

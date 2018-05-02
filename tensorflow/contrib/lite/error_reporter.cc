@@ -28,7 +28,8 @@ int ErrorReporter::Report(const char* format, ...) {
   return code;
 }
 
-// TODO(aselle): Make the name of ReportError on context the same, so
+// TODO (aselle): Make the name of ReportError on context the same, so id:1343
+// https://github.com/imdone/tensorflow/issues/1344
 // we can use the ensure functions w/o a context and w/ a reporter.
 int ErrorReporter::ReportError(void*, const char* format, ...) {
   va_list args;

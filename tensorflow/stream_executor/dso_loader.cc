@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// TODO(jhen): Replace hardcoded, platform specific path strings in GetXXXPath()
+// TODO (jhen): Replace hardcoded, platform specific path strings in GetXXXPath() id:4014
+// https://github.com/imdone/tensorflow/issues/4012
 // with a function in e.g. cuda.h.
 
 #include "tensorflow/stream_executor/dso_loader.h"

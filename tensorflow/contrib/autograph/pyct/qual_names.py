@@ -56,7 +56,8 @@ class NumberLiteral(collections.namedtuple('NumberLiteral', ['value'])):
     return str(self)
 
 
-# TODO(mdan): Use subclasses to remove the has_attr has_subscript booleans.
+# TODO (mdan): Use subclasses to remove the has_attr has_subscript booleans. id:540
+# https://github.com/imdone/tensorflow/issues/541
 class QN(object):
   """Represents a qualified name."""
 
@@ -74,7 +75,8 @@ class QN(object):
       if not isinstance(attr, str):
         raise ValueError('attr may only be a string; got instead "%s"' % attr)
       self._parent = base
-      # TODO(mdan): Get rid of the tuple - it can only have 1 or 2 elements now.
+      # TODO (mdan): Get rid of the tuple - it can only have 1 or 2 elements now. id:527
+      # https://github.com/imdone/tensorflow/issues/528
       self.qn = (base, attr)
       self._has_attr = True
 
@@ -87,7 +89,8 @@ class QN(object):
 
     else:
       if not isinstance(base, (str, StringLiteral, NumberLiteral)):
-        # TODO(mdan): Require Symbol instead of string.
+        # TODO (mdan): Require Symbol instead of string. id:989
+        # https://github.com/imdone/tensorflow/issues/990
         raise ValueError(
             'For simple QNs, base must be a string or a Literal object.')
       assert '.' not in base and '[' not in base and ']' not in base
@@ -124,7 +127,8 @@ class QN(object):
       'a.b' has only one support symbol, 'a'
       'a[i]' has two roots, 'a' and 'i'
     """
-    # TODO(mdan): This might be the set of Name nodes in the AST. Track those?
+    # TODO (mdan): This might be the set of Name nodes in the AST. Track those? id:725
+    # https://github.com/imdone/tensorflow/issues/726
     roots = set()
     if self.has_attr():
       roots.update(self.parent.support_set)
@@ -208,7 +212,8 @@ class QnResolver(gast.NodeTransformer):
     node = self.generic_visit(node)
     s = node.slice
     if not isinstance(s, gast.Index):
-      # TODO(mdan): Support range and multi-dimensional indices.
+      # TODO (mdan): Support range and multi-dimensional indices. id:693
+      # https://github.com/imdone/tensorflow/issues/694
       # Continuing silently because some demos use these.
       return node
     if isinstance(s.value, gast.Num):

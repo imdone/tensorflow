@@ -272,5 +272,6 @@ class TPUClusterResolver(ClusterResolver):
         address, compat.as_text(self._coordinator_port))
 
   def __deepcopy__(self, memo):
-    # TODO(b/73668574): Remove this once RunConfig avoids performing deepcopy.
+    # TODO (b/73668574): Remove this once RunConfig avoids performing deepcopy. id:561
+    # https://github.com/imdone/tensorflow/issues/562
     return self

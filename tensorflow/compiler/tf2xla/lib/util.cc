@@ -170,7 +170,8 @@ xla::StatusOr<xla::ComputationDataHandle> DynamicSliceInMinorDims(
 xla::StatusOr<xla::ComputationDataHandle> UpdateSlice(
     xla::ComputationBuilder* builder, const xla::ComputationDataHandle& x,
     const xla::ComputationDataHandle& update, gtl::ArraySlice<int64> start) {
-  // TODO(phawkins): make int64 work on all backends, remove the int32 cast.
+  // TODO (phawkins): make int64 work on all backends, remove the int32 cast. id:188
+  // https://github.com/imdone/tensorflow/issues/189
   std::vector<int32> start_as_int32(start.begin(), start.end());
   auto start_constant = builder->ConstantR1<int32>(start_as_int32);
   TF_ASSIGN_OR_RETURN(std::unique_ptr<xla::Shape> shape, builder->GetShape(x));

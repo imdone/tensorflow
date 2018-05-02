@@ -117,7 +117,8 @@ struct ScatterNdFunctor<GPUDevice, T, Index, op, IXDIM> {
       typename TTypes<Index, 2>::ConstTensor Tindices,
       typename TTypes<T, 2>::ConstTensor Tupdates,
       typename TTypes<T, 2>::Tensor Toutput) {
-    // TODO(ebrevdo): The performance of this for small indices (large
+    // TODO (ebrevdo): The performance of this for small indices (large id:2181
+    // https://github.com/imdone/tensorflow/issues/2180
     // slices) is poor.  Write a kernel whose splitting is
     // independent of the slice size.  Same for CPU.  See the
     // gather_nd kernel for an example.

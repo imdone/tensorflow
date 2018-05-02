@@ -94,7 +94,8 @@ public class ImageClassifierFloatInception extends ImageClassifier {
 
   @Override
   protected float getNormalizedProbability(int labelIndex) {
-    // TODO the following value isn't in [0,1] yet, but may be greater. Why?
+    // TODO the following value isn't in [0,1] yet, but may be greater. Why? id:1384
+    // https://github.com/imdone/tensorflow/issues/1385
     return getProbability(labelIndex);
   }
 

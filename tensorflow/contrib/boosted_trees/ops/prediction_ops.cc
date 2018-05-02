@@ -25,7 +25,8 @@ using shape_inference::InferenceContext;
 
 static Status ApplyGradientTreesPredictionShapeFn(InferenceContext* c) {
   string learner_config_str;
-  // TODO(b/32704451): Don't just ignore the ::tensorflow::Status object!
+  // TODO (b/32704451): Don't just ignore the :: object! tensorflow::Status id:1017
+  // https://github.com/imdone/tensorflow/issues/1018
   c->GetAttr("learner_config", &learner_config_str).IgnoreError();
   LearnerConfig learner_config;
   ParseProtoUnlimited(&learner_config, learner_config_str);

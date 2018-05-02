@@ -29,7 +29,8 @@ namespace strided_slice {
 
 enum KernelType {
   kReference,
-  // TODO(soroosh): add kGenericOptimized
+  // TODO (soroosh): add kGenericOptimized id:1196
+  // https://github.com/imdone/tensorflow/issues/1197
 };
 
 constexpr int kInputTensor = 0;
@@ -87,7 +88,8 @@ inline int32_t ClampedIndex(int32_t index, int dim, bool pos_stride) {
                           std::min(std::max(index, -dim), dim - 1), dim));
 }
 
-// TODO(b/77971377) this logic should be removed, as it's a duplication of
+// TODO (b/77971377) this logic should be removed, as it's a duplication of id:985
+// https://github.com/imdone/tensorflow/issues/986
 // StartForAxis() & StopForAxis() in kernels/internal/reference/reference_ops.h
 inline int32_t GetBeginValueAtIndex(StridedSliceContext* op_context, int idx) {
   const int dim = op_context->input->dims->data[idx];
@@ -153,14 +155,16 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
   TF_LITE_ENSURE_EQ(context, NumDimensions(op_context.strides), 1);
   TF_LITE_ENSURE_EQ(context, op_context.input->type, op_context.output->type);
   // Only INT32 begin/end/strides are supported
-  // TODO(soroosh) add support for INT64
+  // TODO (soroosh) add support for INT64 id:1560
+  // https://github.com/imdone/tensorflow/issues/1560
   TF_LITE_ENSURE_EQ(context, op_context.begin->type, kTfLiteInt32);
   TF_LITE_ENSURE_EQ(context, op_context.end->type, kTfLiteInt32);
   TF_LITE_ENSURE_EQ(context, op_context.strides->type, kTfLiteInt32);
   TF_LITE_ENSURE_MSG(context, op_context.dims <= 4,
                      "StridedSlice op only supports 1D-4D input arrays.");
 
-  // TODO(soroosh): add the following missing functionalities
+  // TODO (soroosh): add the following missing functionalities id:2002
+  // https://github.com/imdone/tensorflow/issues/2002
   TF_LITE_ENSURE_MSG(context, op_context.params->ellipsis_mask == 0,
                      "ellipsis_mask is not implemented yet.");
   TF_LITE_ENSURE_MSG(context, op_context.params->new_axis_mask == 0,
@@ -252,7 +256,8 @@ TfLiteRegistration* Register_STRIDED_SLICE_REF() {
   return &r;
 }
 
-// TODO(soroosh): add optimized
+// TODO (soroosh): add optimized id:1456
+// https://github.com/imdone/tensorflow/issues/1457
 TfLiteRegistration* Register_STRIDED_SLICE() {
   return Register_STRIDED_SLICE_REF();
 }

@@ -47,7 +47,8 @@ class DecoratorsTransformer(gast.NodeTransformer):
         dec_func = dec
 
       # Special cases.
-      # TODO(mdan): Is there any way we can treat these more generically?
+      # TODO (mdan): Is there any way we can treat these more generically? id:956
+      # https://github.com/imdone/tensorflow/issues/957
       # We may want to forego using decorators altogether if we can't
       # properly support them.
       if isinstance(dec_func, gast.Name) and dec_func.id in ('classmethod',):

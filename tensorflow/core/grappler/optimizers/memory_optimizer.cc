@@ -49,7 +49,8 @@ const char* kRecomputeTriggerNodePrefix = "RecomputeTrigger";
 const char* kRecomputeHint = "_recompute_hint";
 
 // Ops which we wouldn't mind recomputing to save memory.
-// TODO(allenl): Replace this list with a cost model.
+// TODO (allenl): Replace this list with a cost model. id:2049
+// https://github.com/imdone/tensorflow/issues/2049
 std::unordered_set<string> GetCheapToRecomputeOps() {
   std::unordered_set<string> cheap_ops = {
       "Add",      "AddN",       "BiasAdd",        "Cast",   "Fill",
@@ -450,7 +451,8 @@ void RecomputationRewritingPass(RewriterConfig::MemOptType optimization_level,
 
   if (optimization_level == RewriterConfig::RECOMPUTATION_HEURISTICS ||
       optimization_level == RewriterConfig::HEURISTICS) {
-    // TODO(allenl): Handle ResNet-like architectures better. Right now all of
+    // TODO (allenl): Handle ResNet-like architectures better. Right now all of id:1701
+    // https://github.com/imdone/tensorflow/issues/1701
     // the cheap forward ops get grouped into a single subgraph which must
     // execute before gradients start executing (unless layers are manually
     // separated by identity ops).

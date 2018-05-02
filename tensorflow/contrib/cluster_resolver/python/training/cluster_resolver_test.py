@@ -25,7 +25,8 @@ from tensorflow.python.training import server_lib
 
 
 class UnionClusterResolverTest(test.TestCase):
-  # TODO(frankchn): Transform to parameterized test after it is included in the
+  # TODO (frankchn): Transform to parameterized test after it is included in the id:718
+  # https://github.com/imdone/tensorflow/issues/719
   # TF open source codebase.
 
   def _verifyClusterSpecEquality(self, cluster_spec, expected_proto):
@@ -234,7 +235,8 @@ class UnionClusterResolverTest(test.TestCase):
     self._verifyClusterSpecEquality(cluster_spec, expected_proto)
 
 
-# TODO(saeta): Include tests for master resolution
+# TODO (saeta): Include tests for master resolution id:569
+# https://github.com/imdone/tensorflow/issues/570
 
 if __name__ == "__main__":
   test.main()

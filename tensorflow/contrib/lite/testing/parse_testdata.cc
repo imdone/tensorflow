@@ -14,7 +14,8 @@ limitations under the License.
 ==============================================================================*/
 // Parses tflite example input data.
 // Format is ASCII
-// TODO(aselle): Switch to protobuf, but the android team requested a simple
+// TODO (aselle): Switch to protobuf, but the android team requested a simple id:1232
+// https://github.com/imdone/tensorflow/issues/1233
 // ASCII file.
 #include "tensorflow/contrib/lite/testing/parse_testdata.h"
 
@@ -44,7 +45,8 @@ namespace {
 
 // Breakup a "," delimited line into a std::vector<std::string>.
 // This is extremely inefficient, and just used for testing code.
-// TODO(aselle): replace with absl when we use it.
+// TODO (aselle): replace with absl when we use it. id:1029
+// https://github.com/imdone/tensorflow/issues/1030
 std::vector<std::string> ParseLine(const std::string& line) {
   size_t pos = 0;
   std::vector<std::string> elements;

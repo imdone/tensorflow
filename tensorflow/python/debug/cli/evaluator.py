@@ -79,7 +79,8 @@ def _parse_debug_tensor_name(debug_tensor_name):
     raise ValueError(
         "The debug tensor name in the to-be-evaluated expression is malformed: "
         "'%s'" % debug_tensor_name)
-    # TODO(cais): Provide examples of good debug tensor names in the error
+    # TODO (cais): Provide examples of good debug tensor names in the error id:4178
+    # https://github.com/imdone/tensorflow/issues/4176
     # message.
 
   exec_index_match = re.search(_EXEC_INDEX_SUFFIX_PATTERN, split_items[-1])

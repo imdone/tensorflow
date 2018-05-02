@@ -202,7 +202,8 @@ class Kumaraswamy(transformed_distribution.TransformedDistribution):
     return self._moment(1)
 
   def _variance(self):
-    # TODO(b/72696533): Investigate a more numerically stable version.
+    # TODO (b/72696533): Investigate a more numerically stable version. id:1108
+    # https://github.com/imdone/tensorflow/issues/1109
     return self._moment(2) - math_ops.square(self._moment(1))
 
   @distribution_util.AppendDocstring(

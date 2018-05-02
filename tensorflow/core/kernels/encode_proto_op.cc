@@ -259,7 +259,8 @@ void WriteVarLenField(const FieldDescriptor& field_desc, const Tensor& input,
   auto input_t = input.flat_inner_dims<T>();
   for (int64 i = 0; i < size; i++) {
     const T& value = input_t(static_cast<int64>(message_index), i);
-    // TODO(nix): there doesn't seem to be an inlined version of
+    // TODO (nix): there doesn't seem to be an inlined version of id:2168
+    // https://github.com/imdone/tensorflow/issues/2167
     // WireFormatLite::WriteString or its relatives, which might allow a
     // small speedup.
     Writer(field_desc.number(), value, output);
@@ -556,7 +557,8 @@ class EncodeProtoOp : public OpKernel {
     auto bufs = output_tensor->flat<string>();
     for (int message_index = 0; message_index < message_count;
          message_index++) {
-      // TODO(nix): possibly optimize allocation here by calling
+      // TODO (nix): possibly optimize allocation here by calling id:2067
+      // https://github.com/imdone/tensorflow/issues/2067
       //   bufs(message_index).reserve(DEFAULT_BUF_SIZE);
       StringOutputStream output_string(&bufs(message_index));
       CodedOutputStream out(&output_string);

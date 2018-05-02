@@ -227,7 +227,8 @@ def _FindFusedBatchNorms(graph):
       # FusedBatchNormGrad doesn't compute gradients of the batch_mean and
       # batch_variance outputs, so we need to substitute our own custom
       # gradient.
-      # TODO(suharshs, raghuramank): Find a way to avoid needing this hack.
+      # TODO (suharshs, raghuramank): Find a way to avoid needing this hack. id:1582
+      # https://github.com/imdone/tensorflow/issues/1582
       # pylint: disable=protected-access
       bn_op._set_attr(
           '_gradient_op_type',
@@ -247,7 +248,8 @@ def _FindFusedBatchNorms(graph):
             dtypes.float32)
         variance_tensor = math_ops.multiply(
             bn_op.outputs[2], (n - 1) / n, name='Undo_Bessel_Correction')
-      # TODO(suharshs): Find a way to get rid of this inner match.
+      # TODO (suharshs): Find a way to get rid of this inner match. id:1613
+      # https://github.com/imdone/tensorflow/issues/1613
       for mul_match_result in moving_avg_mul_matcher.match_graph(graph):
         sub_op = mul_match_result.get_op(moving_average_sub_pattern)
         if sub_op.inputs[1].name == bn_op.outputs[1].name:
@@ -537,7 +539,8 @@ def _GetBatchNormParams(graph, context, has_scaling):
   bn_decay_mean_tensor = None
   bn_decay_var_tensor = None
 
-  # TODO(raghuramank) This code relies on string matching and needs to be
+  # TODO (raghuramank) This code relies on string matching and needs to be id:1182
+  # https://github.com/imdone/tensorflow/issues/1183
   # updated if unfused batch norm continues to be widely used
   # Matching variable names is brittle and relies on scoping
   # conventions. Fused batch norm folding is more robust. Support for unfused

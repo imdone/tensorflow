@@ -190,7 +190,8 @@ class PaddingFIFOQueueTest(test.TestCase):
 
       def enqueue():
         # The enqueue_ops should run after the dequeue op has blocked.
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:4259
+        # https://github.com/imdone/tensorflow/issues/4257
         time.sleep(0.1)
         for enqueue_op in enqueue_ops:
           sess.run(enqueue_op)
@@ -803,7 +804,8 @@ class PaddingFIFOQueueTest(test.TestCase):
 
       def enqueue():
         # The enqueue_op should run after the dequeue op has blocked.
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:3832
+        # https://github.com/imdone/tensorflow/issues/3831
         time.sleep(0.1)
         sess.run(enqueue_op)
 
@@ -830,7 +832,8 @@ class PaddingFIFOQueueTest(test.TestCase):
 
       def enqueue():
         # The enqueue_op should run after the dequeue op has blocked.
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:3218
+        # https://github.com/imdone/tensorflow/issues/3217
         time.sleep(0.1)
         sess.run(enqueue_op)
 
@@ -910,7 +913,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3315
+      # https://github.com/imdone/tensorflow/issues/3314
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -932,7 +936,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3780
+      # https://github.com/imdone/tensorflow/issues/3777
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -952,7 +957,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:4260
+      # https://github.com/imdone/tensorflow/issues/4258
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -977,7 +983,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3833
+      # https://github.com/imdone/tensorflow/issues/3832
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -1002,7 +1009,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3222
+      # https://github.com/imdone/tensorflow/issues/3221
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -1034,7 +1042,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3317
+      # https://github.com/imdone/tensorflow/issues/3316
       time.sleep(0.1)
 
       close_thread = self.checkedThread(target=close)
@@ -1064,7 +1073,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3782
+      # https://github.com/imdone/tensorflow/issues/3781
       time.sleep(0.1)
 
       close_op.run()
@@ -1092,7 +1102,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:4261
+      # https://github.com/imdone/tensorflow/issues/4259
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -1112,7 +1123,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3835
+      # https://github.com/imdone/tensorflow/issues/3834
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -1160,7 +1172,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       thread = self.checkedThread(target=blocking_enqueue)
       thread.start()
       # The dequeue ops should run after the blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3225
+      # https://github.com/imdone/tensorflow/issues/3224
       time.sleep(0.1)
       for elem in elems:
         self.assertEqual([elem], dequeued_t.eval())
@@ -1183,7 +1196,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       thread = self.checkedThread(target=blocking_enqueue)
       thread.start()
       # The dequeue ops should run after the blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3321
+      # https://github.com/imdone/tensorflow/issues/3320
       time.sleep(0.1)
       for elem in elems:
         self.assertEqual([elem], dequeued_t.eval())
@@ -1213,7 +1227,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       enqueue_thread.start()
 
       # The close_op should run after the blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3784
+      # https://github.com/imdone/tensorflow/issues/3783
       time.sleep(0.1)
 
       def close():
@@ -1248,7 +1263,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       enqueue_thread.start()
 
       # The close_op should run after the blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:4262
+      # https://github.com/imdone/tensorflow/issues/4260
       time.sleep(0.1)
 
       def close():
@@ -1483,7 +1499,8 @@ class PaddingFIFOQueueTest(test.TestCase):
       thread.start()
       # The dequeue should start and then block.
       for enq in enq_list:
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:3837
+        # https://github.com/imdone/tensorflow/issues/3836
         time.sleep(0.1)
         self.assertEqual(len(results), 0)
         sess.run(enq)

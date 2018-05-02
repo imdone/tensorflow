@@ -23,7 +23,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-# TODO(mdan): Add a container for implementation-specific toggles (throughout).
+# TODO (mdan): Add a container for implementation-specific toggles (throughout). id:627
+# https://github.com/imdone/tensorflow/issues/628
 
 from tensorflow.contrib.autograph.operators.control_flow import for_loop
 from tensorflow.contrib.autograph.operators.control_flow import while_loop

@@ -736,7 +736,8 @@ TEST_F(LayoutOptimizerTest, Sum) {
   LayoutOptimizer optimizer;
   GraphDef output;
   Status status = optimizer.Optimize(virtual_cluster_.get(), item, &output);
-  // TODO(yaozhang): enable SumProcessor with auto-tuning. Currently disabled
+  // TODO (yaozhang): enable SumProcessor with auto-tuning. Currently disabled id:3074
+  // https://github.com/imdone/tensorflow/issues/3073
   // because of the worse performance in some cases.
   /*
   NodeMap node_map(&output);

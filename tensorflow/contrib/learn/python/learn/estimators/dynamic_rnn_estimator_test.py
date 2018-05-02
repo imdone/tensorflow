@@ -499,7 +499,8 @@ class DynamicRnnEstimatorTest(test.TestCase):
             v, pred_step_by_step[k], err_msg='Mismatch on state {}.'.format(k))
 
 
-# TODO(jamieas): move all tests below to a benchmark test.
+# TODO (jamieas): move all tests below to a benchmark test. id:995
+# https://github.com/imdone/tensorflow/issues/995
 class DynamicRNNEstimatorLearningTest(test.TestCase):
   """Learning tests for dynamic RNN Estimators."""
 

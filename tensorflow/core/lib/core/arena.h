@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// TODO(vrv): Switch this to an open-sourced version of Arena.
+// TODO (vrv): Switch this to an open-sourced version of Arena. id:4057
+// https://github.com/imdone/tensorflow/issues/4055
 
 #ifndef TENSORFLOW_LIB_CORE_ARENA_H_
 #define TENSORFLOW_LIB_CORE_ARENA_H_

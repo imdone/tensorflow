@@ -91,7 +91,8 @@ def select(labeled_tensor, selection, name=None):
             (axis_name, axis))
 
       if isinstance(value, slice):
-        # TODO(shoyer): consider deprecating using slices in favor of lists
+        # TODO (shoyer): consider deprecating using slices in favor of lists id:1336
+        # https://github.com/imdone/tensorflow/issues/1336
         if value.start is None:
           start = None
         else:
@@ -187,7 +188,8 @@ def concat(labeled_tensors, axis_name, name=None):
     for labeled_tensor in labeled_tensors[1:]:
       current_shared_axes = labeled_tensor.axes.remove(axis_name)
       if current_shared_axes != shared_axes:
-        # TODO(shoyer): add more specific checks about what went wrong,
+        # TODO (shoyer): add more specific checks about what went wrong, id:930
+        # https://github.com/imdone/tensorflow/issues/931
         # including raising AxisOrderError when appropriate
         raise ValueError('Mismatched shared axes: the first tensor '
                          'had axes %r but this tensor has axes %r.' %
@@ -207,7 +209,8 @@ def concat(labeled_tensors, axis_name, name=None):
     return core.LabeledTensor(concat_tensor, concat_axes)
 
 
-# TODO(shoyer): rename pack/unpack to stack/unstack
+# TODO (shoyer): rename pack/unpack to stack/unstack id:880
+# https://github.com/imdone/tensorflow/issues/881
 
 
 @tc.returns(core.LabeledTensor)
@@ -415,7 +418,8 @@ def _batch_helper(default_name,
     ]
 
     batch_ops = batch_fn([t.tensor for t in labeled_tensors], scope)
-    # TODO(shoyer): Remove this when they sanitize the TF API.
+    # TODO (shoyer): Remove this when they sanitize the TF API. id:798
+    # https://github.com/imdone/tensorflow/issues/799
     if not isinstance(batch_ops, list):
       assert isinstance(batch_ops, ops.Tensor)
       batch_ops = [batch_ops]
@@ -603,7 +607,8 @@ def random_crop(labeled_tensor, shape_map, seed=None, name=None):
     return core.LabeledTensor(crop_op, axes)
 
 
-# TODO(shoyer): Allow the user to select the axis over which to map.
+# TODO (shoyer): Allow the user to select the axis over which to map. id:1318
+# https://github.com/imdone/tensorflow/issues/1319
 @tc.returns(core.LabeledTensor)
 @tc.accepts(collections.Callable, core.LabeledTensorLike,
             tc.Optional(string_types))
@@ -627,7 +632,8 @@ def map_fn(fn, labeled_tensor, name=None):
 
     unpack_lts = unpack(labeled_tensor)
 
-    # TODO(ericmc): Fix this upstream.
+    # TODO (ericmc): Fix this upstream. id:1338
+    # https://github.com/imdone/tensorflow/issues/1339
     if labeled_tensor.dtype == dtypes.string:
       # We must construct the full graph here, because functional_ops.map_fn
       # doesn't work for string-valued tensors.
@@ -639,7 +645,8 @@ def map_fn(fn, labeled_tensor, name=None):
       # construct the graph because it's efficient.
       # It may be slow to construct the full graph, so we infer the labels from
       # the first element.
-      # TODO(ericmc): This builds a subgraph which then gets thrown away.
+      # TODO (ericmc): This builds a subgraph which then gets thrown away. id:932
+      # https://github.com/imdone/tensorflow/issues/933
       # Find a more elegant solution.
       first_map_lt = fn(unpack_lts[0])
       final_axes = list(labeled_tensor.axes.values())[:1] + list(
@@ -1241,7 +1248,8 @@ def boolean_mask(labeled_tensor, mask, name=None):
       raise ValueError('the first axis of the labeled tensor and the mask '
                        'are not equal:\n%r\n%r' % (lt_axis, mask_axis))
     op = array_ops.boolean_mask(labeled_tensor.tensor, mask.tensor, name=scope)
-    # TODO(shoyer): attempt to infer labels for the masked values, by calling
+    # TODO (shoyer): attempt to infer labels for the masked values, by calling id:883
+    # https://github.com/imdone/tensorflow/issues/884
     # tf.contrib.util.constant_value on the mask?
     axes = [lt_axis.name] + list(labeled_tensor.axes.values())[1:]
     return core.LabeledTensor(op, axes)

@@ -15,7 +15,8 @@ limitations under the License.
 // This file is used to provide equivalents of internal util::format::FormatF
 // and util::format::AppendF. Unfortunately, type safety is not as good as a
 // a full C++ example.
-// TODO(aselle): When absl adds support for StrFormat, use that instead.
+// TODO (aselle): When absl adds support for StrFormat, use that instead. id:2036
+// https://github.com/imdone/tensorflow/issues/2036
 #ifndef TENSORFLOW_CONTRIB_LITE_TOCO_FORMAT_PORT_H_
 #define TENSORFLOW_CONTRIB_LITE_TOCO_FORMAT_PORT_H_
 

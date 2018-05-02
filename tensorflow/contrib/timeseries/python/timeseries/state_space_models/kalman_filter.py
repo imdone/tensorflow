@@ -31,7 +31,8 @@ from tensorflow.python.ops import math_ops
 from tensorflow.python.ops import numerics
 
 
-# TODO(allenl): support for always-factored covariance matrices
+# TODO (allenl): support for always-factored covariance matrices id:1826
+# https://github.com/imdone/tensorflow/issues/1827
 class KalmanFilter(object):
   """Inference on linear state models.
 
@@ -239,7 +240,8 @@ class KalmanFilter(object):
     """
     observed_mean, observed_var = predicted_observations
     residual = observation - observed_mean
-    # TODO(allenl): Can more of this be done using matrix_solve_ls?
+    # TODO (allenl): Can more of this be done using matrix_solve_ls? id:2545
+    # https://github.com/imdone/tensorflow/issues/2543
     kalman_solve_rhs = math_ops.matmul(
         observation_model, prior_state_var, adjoint_b=True)
     # This matrix_solve adjoint doesn't make a difference symbolically (since

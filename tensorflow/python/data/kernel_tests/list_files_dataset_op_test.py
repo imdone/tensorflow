@@ -213,13 +213,15 @@ class ListFilesDatasetOpTest(test.TestCase):
     self._touchTempFiles(filenames)
 
     # Repeat the list twice and ensure that the order is the same each time.
-    # NOTE(mrry): This depends on an implementation detail of `list_files()`,
+    # NOTE (mrry): This depends on an implementation detail of `list_files()`, id:3564
+    # https://github.com/imdone/tensorflow/issues/3563
     # which is that the list of files is captured when the iterator is
     # initialized. Otherwise, or if e.g. the iterator were initialized more than
     # once, it's possible that the non-determinism of `tf.matching_files()`
     # would cause this test to fail. However, it serves as a useful confirmation
     # that the `shuffle=False` argument is working as intended.
-    # TODO(b/73959787): Provide some ordering guarantees so that this test is
+    # TODO (b/73959787): Provide some ordering guarantees so that this test is id:2867
+    # https://github.com/imdone/tensorflow/issues/2866
     # more meaningful.
     dataset = dataset_ops.Dataset.list_files(
         path.join(self.tmp_dir, '*'), shuffle=False).repeat(2)

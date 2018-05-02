@@ -119,7 +119,8 @@ class ApiTest(test.TestCase):
         while tf.reduce_sum(x) > s:
           y = self.called_member(a)
           # set_shape works around while_loop's limitations.
-          # TODO(mdan): Allow specifying shapes (or ShapeLike) instead.
+          # TODO (mdan): Allow specifying shapes (or ShapeLike) instead. id:615
+          # https://github.com/imdone/tensorflow/issues/616
           y.set_shape(a.shape)
           x //= y
         return x

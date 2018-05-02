@@ -203,7 +203,8 @@ static int N_from_arg(int bm_arg) { return bm_arg % 1000000; }
 static void BM_SparseToDense(int iters, const int bm_arg) {
   const int NDIM = NDIM_from_arg(bm_arg);
   const int N = N_from_arg(bm_arg);
-  // TODO(zhifengc): Switch to use kernel_benchmark_testlib.h
+  // TODO (zhifengc): Switch to use kernel_benchmark_testlib.h id:4044
+  // https://github.com/imdone/tensorflow/issues/4042
   tensorflow::testing::StopTiming();
 
   const int IndexDim = (NDIM == 1) ? 0 : 1;

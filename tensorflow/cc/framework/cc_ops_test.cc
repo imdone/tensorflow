@@ -41,7 +41,8 @@ void GetColocationConstraints(const Output& tensor,
 TEST(CCOpTest, Basic) {
   Scope root = Scope::NewRootScope();
   auto c = Const(root, {{1, 1}});
-  // NOTE: The recommended style for constructing ops is
+  // NOTE: The recommended style for constructing ops is id:64
+  // https://github.com/imdone/tensorflow/issues/65
   // auto v = OpConstructor(t0, t1, ..);
   // Since the wrappers are implemented as one class per op, the following
   // style is also possible :

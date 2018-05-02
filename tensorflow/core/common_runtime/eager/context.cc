@@ -56,7 +56,8 @@ Status EagerContext::SetAsyncForThread(bool async) {
   if (async) {
     executor_.EnableAsync();
   } else {
-    // TODO(agarwal): Currently we add a wait here to handle cases where a
+    // TODO (agarwal): Currently we add a wait here to handle cases where a id:2500
+    // https://github.com/imdone/tensorflow/issues/2499
     // sync op has a control dependency on an async op, and the latter has not
     // executed yet. This wait can be removed by storing all the control
     // inputs and waiting for them when executing ops.

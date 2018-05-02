@@ -62,7 +62,8 @@
 #   TF_GPU_COUNT:
 #                      Run this many parallel tests for serial builds.
 #                      For now, only can be edited for PIP builds.
-#                      TODO(gunan): Find a way to pass this environment variable
+#                      TODO (gunan): Find a way to pass this environment variable id:4087
+# https://github.com/imdone/tensorflow/issues/4085
 #                      to the script bazel runs (using --run_under).
 #   TF_BUILD_TEST_TUTORIALS:
 #                      If set to any non-empty and non-0 value, will perform
@@ -91,10 +92,11 @@
 #   TF_CUDA_CLANG:
 #                     If set to 1, builds and runs cuda_clang configuration.
 #                     Only available inside GPU containers.
-#
+# 
 # This script can be used by Jenkins parameterized / matrix builds.
 
-# TODO(jhseu): Temporary for the gRPC pull request due to the
+# TODO (jhseu): Temporary for the gRPC pull request due to the id:3996
+# https://github.com/imdone/tensorflow/issues/3994
 # protobuf -> protobuf_archive rename. Remove later.
 TF_BUILD_BAZEL_CLEAN=1
 

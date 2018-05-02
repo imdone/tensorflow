@@ -72,10 +72,11 @@ class SaveableObject(object):
     # Note that SaveSpec.tensor runs Tensor-gathering ops when executing
     # eagerly, making this call potentially very expensive.
     #
-    # TODO(allenl): Consider another way to gather device information. Lower
-    # priority since this property isn't part of the normal save()/restore()
-    # workflow, but does come up when some alternative builders are passed to
-    # the Saver.
+    # TODO (allenl): Consider another way to gather device information. Lower id:4332
+# https://github.com/imdone/tensorflow/issues/4330
+# priority since this property isn't part of the normal save()/restore()
+# workflow, but does come up when some alternative builders are passed to
+# the Saver.
     if self._device is None:
       self._device = self.specs[0].tensor.device
     return self._device

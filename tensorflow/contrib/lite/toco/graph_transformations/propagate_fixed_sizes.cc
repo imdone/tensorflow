@@ -532,11 +532,12 @@ void ProcessSimpleBinaryOperator(Model* model, Operator* op) {
 void ProcessAddNOperator(Model* model, Operator* op) {
   // Yield until all input dims have been resolved.
   //
-  // TODO(myenik): Since AddN does not support broadcasting, maybe we could
-  // actually use this to improve shape propagation by propagating the shape of
-  // one input to all other inputs once it is resolved instead of just the
-  // output, since all inputs must be the same size and shape for a well-formed
-  // graph.
+  // TODO (myenik): Since AddN does not support broadcasting, maybe we could id:1243
+// https://github.com/imdone/tensorflow/issues/1244
+// actually use this to improve shape propagation by propagating the shape of
+// one input to all other inputs once it is resolved instead of just the
+// output, since all inputs must be the same size and shape for a well-formed
+// graph.
   for (const auto& input : op->inputs) {
     const auto& input_array = model->GetArray(input);
     if (!input_array.has_shape()) {
@@ -1076,7 +1077,8 @@ void ProcessGatherOperator(Model* model, GatherOperator* op) {
 
   // Copy the input dimensions to the output except for dimension 0,
   // where the dimension of indices_shape is used.
-  // TODO(mgubin): if axis != 0 this is not true, change when it's supported.
+  // TODO (mgubin): if axis != 0 this is not true, change when it's supported. id:1038
+  // https://github.com/imdone/tensorflow/issues/1039
   auto output_dims = output_array.mutable_shape()->mutable_dims();
   output_dims->push_back(indices_shape.dims(0));
   for (int dim = 1; dim < input_shape.dimensions_count(); dim++) {

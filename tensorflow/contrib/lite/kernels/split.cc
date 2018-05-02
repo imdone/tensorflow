@@ -110,9 +110,11 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
   }
   axis_value = RemapDim(NumDimensions(op_context.input), axis_value);
 
-  // TODO(ahentz): Our usage of VectorOfTensors could be optimized by
+  // TODO (ahentz): Our usage of VectorOfTensors could be optimized by id:1998
+  // https://github.com/imdone/tensorflow/issues/1998
   // calculating it in Prepare, unless we defer shape calculation.
-  // TODO(ahentz): We can improve the optimized_ops version to handle other
+  // TODO (ahentz): We can improve the optimized_ops version to handle other id:1454
+  // https://github.com/imdone/tensorflow/issues/1455
   // cases too.
 #define TF_LITE_SPLIT(scalar)                                                  \
   VectorOfTensors<scalar> all_outputs(*context, *node->outputs);               \

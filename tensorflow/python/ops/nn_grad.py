@@ -240,7 +240,8 @@ def _SoftmaxGrad(op, grad_softmax):
      gradient w.r.t the input to the softmax
 
   """
-  # TODO(ilyasu): assert that the tensor has two dimensions at
+  # TODO (ilyasu): assert that the tensor has two dimensions at id:3431
+  # https://github.com/imdone/tensorflow/issues/3430
   # graph-construction time?  Alternatively: do different things
   # depending on the dimensionality of the input tensors.
   softmax = op.outputs[0]
@@ -463,7 +464,8 @@ def _SoftmaxCrossEntropyWithLogitsGrad(op, grad_loss, grad_grad):
   def IsZero(g):
     # Some introspection to check if the gradient is feeding zeros
     if context.executing_eagerly():
-      # TODO(apassos) add an efficient way to detect eager zeros here.
+      # TODO (apassos) add an efficient way to detect eager zeros here. id:3886
+      # https://github.com/imdone/tensorflow/issues/3884
       return False
     if g.op.type in ("ZerosLike", "Zeros"):
       return True

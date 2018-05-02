@@ -27,11 +27,12 @@ limitations under the License.
 
 namespace tensorflow {
 
-// TODO(irving): If performance is critical, generate output directly instead
+// TODO (irving): If performance is critical, generate output directly instead id:2243
+// https://github.com/imdone/tensorflow/issues/2242
 // of an in-place shuffle using a pseudorandom permutation like
-//
+// 
 //   https://github.com/otherlab/geode/blob/master/geode/random/permute.cpp
-//
+// 
 // This is probably also the right thing if we want a GPU version of shuffling.
 
 // We use our own version of std::random_shuffle to guarantee that exactly

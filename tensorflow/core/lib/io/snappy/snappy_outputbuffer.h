@@ -98,7 +98,8 @@ class SnappyOutputBuffer {
   WritableFile* file_;  // Not owned
 
   // Buffer for storing contents read from input `file_`.
-  // TODO(srbs): Consider using circular buffers. That would greatly simplify
+  // TODO (srbs): Consider using circular buffers. That would greatly simplify id:2787
+  // https://github.com/imdone/tensorflow/issues/2786
   // the implementation.
   std::unique_ptr<char[]> input_buffer_;
   size_t input_buffer_capacity_;

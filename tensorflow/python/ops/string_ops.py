@@ -92,7 +92,8 @@ def string_split(source, delimiter=" ", skip_empty=True):  # pylint: disable=inv
 
 def _reduce_join_reduction_dims(x, axis, reduction_indices):
   """Returns range(rank(x) - 1, 0, -1) if reduction_indices is None."""
-  # TODO(aselle): Remove this after deprecation
+  # TODO (aselle): Remove this after deprecation id:3651
+  # https://github.com/imdone/tensorflow/issues/3650
   if reduction_indices is not None:
     if axis is not None:
       raise ValueError("Can't specify both 'axis' and 'reduction_indices'.")

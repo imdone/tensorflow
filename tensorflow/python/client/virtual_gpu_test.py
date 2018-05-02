@@ -201,7 +201,8 @@ class VirtualGpuTest(test_util.TensorFlowTestCase):
 
   def testStatsContainAllDeviceNames(self):
     with self.test_session(config=self._util.config) as sess:
-      # TODO(laigd): b/70811538. The is_gpu_available() call will invoke
+      # TODO (laigd): b/70811538. The is_gpu_available() call will invoke id:3080
+      # https://github.com/imdone/tensorflow/issues/3079
       # DeviceFactory::AddDevices() with a default SessionOption, which prevents
       # adding virtual devices in the future, thus must be called within a
       # context of a session within which virtual devices are created. Same in

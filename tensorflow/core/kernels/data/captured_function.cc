@@ -102,7 +102,8 @@ class OwnedArgsCallFrame : public CallFrameBase {
   // Callee methods.
   Status GetArg(int index, Tensor* val) const override {
     if (index < args_.size() && args_[index].IsInitialized()) {
-      // TODO(mrry): Consider making `CallFrameInterface::GetArg` non-const in
+      // TODO (mrry): Consider making ` non-const in CallFrameInterface::GetArg` id:1989
+      // https://github.com/imdone/tensorflow/issues/1989
       // order to be able to `std::move(args_[index])` into `*val`.
       *val = args_[index];
       return Status::OK();
@@ -176,7 +177,8 @@ Status CapturedFunction::MaybeInstantiate(
     }
     ret_types_ = fbody->ret_types;
   } else {
-    // TODO(mrry): Consider moving this under a shared lock, as it is
+    // TODO (mrry): Consider moving this under a shared lock, as it is id:2384
+    // https://github.com/imdone/tensorflow/issues/2383
     // the common case.
     if (ctx->lib() != lib_) {
       return errors::Internal(
@@ -200,7 +202,8 @@ Status CapturedFunction::Run(IteratorContext* ctx, std::vector<Tensor>&& args,
   });
   f_opts.step_container = &step_container;
   f_opts.runner = ctx->runner();
-  // TODO(mrry): Add cancellation manager support to IteratorContext
+  // TODO (mrry): Add cancellation manager support to IteratorContext id:3145
+  // https://github.com/imdone/tensorflow/issues/3144
   // so that we can cancel running map functions. The local
   // cancellation manager here is created so that we can run kernels
   // (such as queue kernels) that depend on the non-nullness of
@@ -234,7 +237,8 @@ Status CapturedFunction::RunWithBorrowedArgs(IteratorContext* ctx,
   });
   f_opts.step_container = &step_container;
   f_opts.runner = ctx->runner();
-  // TODO(mrry): Add cancellation manager support to IteratorContext
+  // TODO (mrry): Add cancellation manager support to IteratorContext id:2928
+  // https://github.com/imdone/tensorflow/issues/2927
   // so that we can cancel running map functions. The local
   // cancellation manager here is created so that we can run kernels
   // (such as queue kernels) that depend on the non-nullness of
@@ -290,7 +294,8 @@ Status CapturedFunction::RunInstantiated(const std::vector<Tensor>& args,
   });
   f_opts.step_container = &step_container;
   f_opts.runner = runner;
-  // TODO(mrry): Add cancellation manager support to IteratorContext
+  // TODO (mrry): Add cancellation manager support to IteratorContext id:2127
+  // https://github.com/imdone/tensorflow/issues/2126
   // so that we can cancel running map functions. The local
   // cancellation manager here is created so that we can run kernels
   // (such as queue kernels) that depend on the non-nullness of
@@ -316,7 +321,8 @@ void CapturedFunction::RunAsync(IteratorContext* ctx,
                                 std::vector<Tensor>&& args,
                                 std::vector<Tensor>* rets,
                                 FunctionLibraryRuntime::DoneCallback done) {
-  // NOTE(mrry): This method does not transfer ownership of `ctx`, and it may
+  // NOTE (mrry): This method does not transfer ownership of `ctx`, and it may id:1992
+  // https://github.com/imdone/tensorflow/issues/1992
   // be deleted before `done` is called. Take care not to capture `ctx` in any
   // code that may execute asynchronously in this function.
   FunctionLibraryRuntime::Handle handle;
@@ -337,7 +343,8 @@ void CapturedFunction::RunAsync(IteratorContext* ctx,
       });
   f_opts.step_container = step_container;
   f_opts.runner = ctx->runner();
-  // TODO(mrry): Add cancellation manager support to IteratorContext
+  // TODO (mrry): Add cancellation manager support to IteratorContext id:2386
+  // https://github.com/imdone/tensorflow/issues/2385
   // so that we can cancel running map functions. The local
   // cancellation manager here is created so that we can run kernels
   // (such as queue kernels) that depend on the non-nullness of

@@ -164,7 +164,8 @@ class RandomShuffleQueueTest(test.TestCase):
 
       def enqueue():
         # The enqueue_ops should run after the dequeue op has blocked.
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:4265
+        # https://github.com/imdone/tensorflow/issues/4263
         time.sleep(0.1)
         for enqueue_op in enqueue_ops:
           sess.run(enqueue_op)
@@ -537,7 +538,8 @@ class RandomShuffleQueueTest(test.TestCase):
 
       def enqueue():
         # The enqueue_op should run after the dequeue op has blocked.
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:3843
+        # https://github.com/imdone/tensorflow/issues/3842
         time.sleep(0.1)
         sess.run(enqueue_op)
 
@@ -564,7 +566,8 @@ class RandomShuffleQueueTest(test.TestCase):
 
       def enqueue():
         # The enqueue_op should run after the dequeue op has blocked.
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:3288
+        # https://github.com/imdone/tensorflow/issues/3287
         time.sleep(0.1)
         sess.run(enqueue_op)
 
@@ -707,7 +710,8 @@ class RandomShuffleQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3329
+      # https://github.com/imdone/tensorflow/issues/3328
       time.sleep(0.1)
       self.assertEqual(len(finished), 0)
       close_op.run()
@@ -739,7 +743,8 @@ class RandomShuffleQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3792
+      # https://github.com/imdone/tensorflow/issues/3791
       for _ in range(100):
         time.sleep(0.01)
         if len(progress) == 1:
@@ -771,7 +776,8 @@ class RandomShuffleQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:4266
+      # https://github.com/imdone/tensorflow/issues/4264
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -804,7 +810,8 @@ class RandomShuffleQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3845
+      # https://github.com/imdone/tensorflow/issues/3844
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -838,7 +845,8 @@ class RandomShuffleQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3292
+      # https://github.com/imdone/tensorflow/issues/3291
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -859,7 +867,8 @@ class RandomShuffleQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3331
+      # https://github.com/imdone/tensorflow/issues/3330
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -879,7 +888,8 @@ class RandomShuffleQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3794
+      # https://github.com/imdone/tensorflow/issues/3793
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -927,7 +937,8 @@ class RandomShuffleQueueTest(test.TestCase):
       thread = self.checkedThread(target=blocking_enqueue)
       thread.start()
       # The dequeue ops should run after the blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:4267
+      # https://github.com/imdone/tensorflow/issues/4265
       time.sleep(0.1)
       results = []
       for _ in elems:
@@ -955,7 +966,8 @@ class RandomShuffleQueueTest(test.TestCase):
       thread = self.checkedThread(target=blocking_enqueue)
       thread.start()
       # The dequeue ops should run after the blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3847
+      # https://github.com/imdone/tensorflow/issues/3846
       time.sleep(0.1)
 
       results = []
@@ -997,7 +1009,8 @@ class RandomShuffleQueueTest(test.TestCase):
       thread1.start()
 
       # The close_op should run after the first blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3294
+      # https://github.com/imdone/tensorflow/issues/3293
       time.sleep(0.1)
 
       def blocking_close():
@@ -1007,7 +1020,8 @@ class RandomShuffleQueueTest(test.TestCase):
       thread2.start()
 
       # Wait for the close op to block before unblocking the enqueue.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3333
+      # https://github.com/imdone/tensorflow/issues/3332
       time.sleep(0.1)
 
       results = []
@@ -1432,7 +1446,8 @@ class RandomShuffleQueueTest(test.TestCase):
       thread.start()
       # The dequeue should start and then block.
       for enq in enq_list:
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:3796
+        # https://github.com/imdone/tensorflow/issues/3795
         time.sleep(0.1)
         self.assertEqual(len(results), 0)
         sess.run(enq)

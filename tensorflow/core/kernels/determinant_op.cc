@@ -164,7 +164,8 @@ class DeterminantOpGpu : public AsyncOpKernel {
       return;
     }
 
-    // TODO(rmlarsen): Convert to absl::make_unique when available.
+    // TODO (rmlarsen): Convert to when available. absl::make_unique id:2436
+    // https://github.com/imdone/tensorflow/issues/2435
     std::unique_ptr<CudaSolver> solver(new CudaSolver(context));
 
     // Reuse the input buffer or make a copy for the factorization step,
@@ -192,7 +193,8 @@ class DeterminantOpGpu : public AsyncOpKernel {
     auto pivots_mat = pivots.template matrix<int>();
 
     // Prepare pointer arrays for cuBlas' batch interface.
-    // TODO(rmlarsen): Find a way to encode pointer arrays in pinned host memory
+    // TODO (rmlarsen): Find a way to encode pointer arrays in pinned host memory id:3183
+    // https://github.com/imdone/tensorflow/issues/3182
     // without the ugly casting.
     auto input_copy_ptrs = solver->GetScratchSpace<uint8>(
         sizeof(Scalar*) * batch_size, "input_copy_ptrs",
@@ -309,7 +311,8 @@ class LogDeterminantOpGpu : public AsyncOpKernel {
       return;
     }
 
-    // TODO(rmlarsen): Convert to absl::make_unique when available.
+    // TODO (rmlarsen): Convert to when available. absl::make_unique id:2970
+    // https://github.com/imdone/tensorflow/issues/2969
     std::unique_ptr<CudaSolver> solver(new CudaSolver(context));
 
     // Reuse the input buffer or make a copy for the factorization step,
@@ -337,7 +340,8 @@ class LogDeterminantOpGpu : public AsyncOpKernel {
     auto pivots_mat = pivots.template matrix<int>();
 
     // Prepare pointer arrays for cuBlas' batch interface.
-    // TODO(rmlarsen): Find a way to encode pointer arrays in pinned host memory
+    // TODO (rmlarsen): Find a way to encode pointer arrays in pinned host memory id:2164
+    // https://github.com/imdone/tensorflow/issues/2163
     // without the ugly casting.
     auto input_copy_ptrs = solver->GetScratchSpace<uint8>(
         sizeof(Scalar*) * batch_size, "input_copy_ptrs",

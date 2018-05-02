@@ -1448,7 +1448,8 @@ TF_CALL_GPU_NUMBER_TYPES(REGISTER_GPU_MAX_POOL_KERNELS);
                           MaxPoolingGradGradWithArgmaxOp<GPUDevice, T>);
 TF_CALL_GPU_NUMBER_TYPES(REGISTER_GPU_ONLY_POOL_KERNELS);
 
-// TODO(b/65847473): Re-enable once the underlying build error is fixed.
+// TODO (b/65847473): Re-enable once the underlying build error is fixed. id:2546
+// https://github.com/imdone/tensorflow/issues/2545
 #if !defined(PLATFORM_WINDOWS)
 REGISTER_KERNEL_BUILDER(
     Name("MaxPool").Device(DEVICE_GPU).TypeConstraint<qint8>("T"),

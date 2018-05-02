@@ -312,7 +312,8 @@ class PrependFromQueueAndPaddedBatchDatasetTest(test.TestCase):
         sess.run(padded_value)
 
 
-# TODO(ebrevdo): Figure out how to use run_core_tests to test state
+# TODO (ebrevdo): Figure out how to use run_core_tests to test state id:1362
+# https://github.com/imdone/tensorflow/issues/1364
 # saving of an iterator that's had some tensors enqueued into its queue.
 class PrependFromQueueAndPaddedBatchDatasetSerializationTest(
     dataset_serialization_test_base.DatasetSerializationTestBase):

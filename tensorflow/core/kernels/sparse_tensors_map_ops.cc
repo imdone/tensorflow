@@ -424,7 +424,8 @@ class TakeManySparseFromTensorsMapOp : public SparseTensorAccessingOp {
       Eigen::DSizes<Eigen::DenseIndex, 2> indices_sizes(num_entries, rank);
       expanded_indices_t.slice(indices_start, indices_sizes) = output_indices_t;
       expanded_shape_t(0) = 1;
-      // TODO: copy shape from TensorShape to &expanded_shape_t(1)
+      // TODO: copy shape from TensorShape to &expanded_shape_t(1) id:2489
+      // https://github.com/imdone/tensorflow/issues/2488
       // std::copy_n(&output_shape_t(0), rank, &expanded_shape_t(1));
       for (int i = 0; i < rank; ++i) {
         expanded_shape_t(i + 1) = output_shape[i];

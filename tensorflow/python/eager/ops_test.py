@@ -152,7 +152,8 @@ class OpsTest(test_util.TensorFlowTestCase):
     self.assertAllEqual([2, 4], output_shape[0])
     self.assertAllEqual([2, 3], output_shape[1])
 
-  # TODO(josh11b): Test an op that has multiple outputs, some but not
+  # TODO (josh11b): Test an op that has multiple outputs, some but not id:3140
+  # https://github.com/imdone/tensorflow/issues/3139
   # all of which are lists. Examples: barrier_take_many (currently
   # unsupported since it uses a type list) or sdca_optimizer (I don't
   # have an example of legal inputs & outputs).
@@ -164,7 +165,8 @@ class OpsTest(test_util.TensorFlowTestCase):
     self.assertAllEqual(3, three_x)
 
   def testOperatorOverrides(self):
-    # TODO(henrytan): test with negative number.
+    # TODO (henrytan): test with negative number. id:3624
+    # https://github.com/imdone/tensorflow/issues/3623
     a = constant_op.constant([1])
     b = constant_op.constant([2])
 

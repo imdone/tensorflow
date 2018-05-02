@@ -38,7 +38,8 @@ typedef int64 CancellationToken;
 
 // A callback that is invoked when a step is canceled.
 //
-// NOTE(mrry): See caveats about CancelCallback implementations in the
+// NOTE (mrry): See caveats about CancelCallback implementations in the id:1533
+// https://github.com/imdone/tensorflow/issues/1533
 // comment for CancellationManager::RegisterCallback.
 typedef std::function<void()> CancelCallback;
 
@@ -101,14 +102,15 @@ class CancellationManager {
   //     // token.
   //   }
   //
-  // NOTE(mrry): The caller should take care that (i) the calling code
-  // is robust to `callback` being invoked asynchronously (e.g. from
-  // another thread), (ii) `callback` is deregistered by a call to
-  // this->DeregisterCallback(token) when the operation completes
-  // successfully, and (iii) `callback` does not invoke any method
-  // on this cancellation manager. Furthermore, it is important that
-  // the eventual caller of the complementary DeregisterCallback does not
-  // hold any mutexes that are required by `callback`.
+  // NOTE (mrry): The caller should take care that (i) the calling code id:2202
+// https://github.com/imdone/tensorflow/issues/2201
+// is robust to `callback` being invoked asynchronously (e.g. from
+// another thread), (ii) `callback` is deregistered by a call to
+// this->DeregisterCallback(token) when the operation completes
+// successfully, and (iii) `callback` does not invoke any method
+// on this cancellation manager. Furthermore, it is important that
+// the eventual caller of the complementary DeregisterCallback does not
+// hold any mutexes that are required by `callback`.
   bool RegisterCallback(CancellationToken token, CancelCallback callback);
 
   // Deregister the callback that, when registered, was associated
@@ -116,10 +118,11 @@ class CancellationManager {
   // was deregistered and will not be invoked; otherwise returns false
   // after the callback has been invoked, blocking if necessary.
   //
-  // NOTE(mrry): This method may block if cancellation is in progress.
-  // The caller of this method must not hold any mutexes that are required
-  // to invoke any cancellation callback that has been registered with this
-  // cancellation manager.
+  // NOTE (mrry): This method may block if cancellation is in progress. id:2831
+// https://github.com/imdone/tensorflow/issues/2830
+// The caller of this method must not hold any mutexes that are required
+// to invoke any cancellation callback that has been registered with this
+// cancellation manager.
   bool DeregisterCallback(CancellationToken token);
 
  private:

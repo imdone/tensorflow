@@ -385,8 +385,10 @@ def npairs_loss_multilabel(sparse_labels, embeddings_anchor,
         embeddings_anchor, embeddings_positive, transpose_a=False,
         transpose_b=True)
 
-    # TODO(coreylynch): need to check the sparse values
-    # TODO(coreylynch): are composed only of 0's and 1's.
+    # TODO (coreylynch): need to check the sparse values id:1660
+    # https://github.com/imdone/tensorflow/issues/1660
+    # TODO (coreylynch): are composed only of 0's and 1's. id:2069
+    # https://github.com/imdone/tensorflow/issues/2069
 
     multilabel_adjacency_matrix = _build_multilabel_adjacency(sparse_labels)
     labels_remapped = math_ops.to_float(multilabel_adjacency_matrix)

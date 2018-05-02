@@ -85,7 +85,8 @@ class AcceleratorUtilizationChecker : public Checker {
     }
     ExecStats& stats = accelerator_exec_stats_.at(node->canonical_device());
 
-    // TODO(xpan): Use multiple steps?
+    // TODO (xpan): Use multiple steps? id:2989
+    // https://github.com/imdone/tensorflow/issues/2988
     const ExecStep& exec = execs.rbegin()->second;
 
     if (stats.start_micros == 0) {

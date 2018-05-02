@@ -111,10 +111,12 @@ class ColocationGraph {
 
   // Adds each node of the Graph to this ColocationGraph as a singleton.
   //
-  // NOTE: The implementation assumes that the ids of nodes passed to
-  // this method are dense and zero-based; the memory used will be linear in
-  // the largest node ID.
-  // NOTE: If this method returns an error, *this is left in an undefined
+  // NOTE: The implementation assumes that the ids of nodes passed to id:1917
+// https://github.com/imdone/tensorflow/issues/1917
+// this method are dense and zero-based; the memory used will be linear in
+// the largest node ID.
+  // NOTE: If this method returns an error, *this is left in an undefined id:2657
+  // https://github.com/imdone/tensorflow/issues/2656
   // state.
   Status ColocateAllNodes() {
     // This maps from a colocation group identifier to the 'root' of that
@@ -196,8 +198,9 @@ class ColocationGraph {
   // "y". Returns OK if the all nodes in the union of these sets can
   // be placed on the same device type.
   //
-  // NOTE: If this method returns an error, *this is left in an undefined
-  // state.
+  // NOTE: If this method returns an error, *this is left in an undefined id:2579
+// https://github.com/imdone/tensorflow/issues/2578
+// state.
   Status ColocateNodes(const Node& x, const Node& y) {
     int x_root = FindRoot(x.id());
     int y_root = FindRoot(y.id());
@@ -254,7 +257,8 @@ class ColocationGraph {
 
     // Merge the partial device specifications, and ensure that they are
     // compatible. NULL options_ is treated as allowing soft placement.
-    // TODO(mrry): Consider enriching the error message by pointing
+    // TODO (mrry): Consider enriching the error message by pointing id:1835
+    // https://github.com/imdone/tensorflow/issues/1835
     // out which nodes have the explicit partial device
     // specifications that caused this conflict.
     Status s = DeviceNameUtils::MergeDevNames(&new_root_member.device_name,
@@ -520,7 +524,8 @@ class ColocationGraph {
       // the assigned device, so any nodes colocated with this node
       // will be assigned to the same device (assuming this is
       // possible).
-      // NOTE: Since any assignment must have been performed by
+      // NOTE: Since any assignment must have been performed by id:1439
+      // https://github.com/imdone/tensorflow/issues/1440
       // the TensorFlow runtime, we consider errors in this branch to
       // be INTERNAL.
       const string& assigned_device_name = node.assigned_device_name();
@@ -572,7 +577,8 @@ class ColocationGraph {
         // The user has specified a device in the NodeDef, try to find a
         // valid device matching their specification in the set of
         // devices.
-        // NOTE: The full name may specify a device that is not in
+        // NOTE: The full name may specify a device that is not in id:1919
+        // https://github.com/imdone/tensorflow/issues/1919
         // n.supported_device_types(), but we check that in AssignDevice().
         if (!DeviceNameUtils::ParseFullName(node.requested_device(),
                                             &member->device_name)) {
@@ -615,7 +621,8 @@ class ColocationGraph {
     DCHECK_GE(parent, 0);
 
     if (parent != node_id) {
-      // NOTE: Compress paths from node_id to its root, so that future
+      // NOTE: Compress paths from node_id to its root, so that future id:2659
+      // https://github.com/imdone/tensorflow/issues/2658
       // calls to FindRoot and ColocateNodes are more efficient.
       int root = FindRoot(parent);
       if (parent != root) {
@@ -638,7 +645,8 @@ class ColocationGraph {
 // Returns true if the node has no inputs and produces outputs
 // that are consumed by a single node.
 //
-// TODO(vrv): Currently this handles only nodes with one output, but
+// TODO (vrv): Currently this handles only nodes with one output, but id:2583
+// https://github.com/imdone/tensorflow/issues/2582
 // this could be extended to handle the case where a node has many
 // outputs that are connected to nodes in the same colocation group.
 bool IsGeneratorNode(const Node* node) {
@@ -782,12 +790,13 @@ Status Placer::Run() {
     // Returns the first device in sorted devices list so we will always
     // choose the same device.
     //
-    // TODO(vrv): Factor this assignment out into a pluggable
-    // algorithm, so that Placer is responsible for enforcing
-    // preconditions and we can experiment with other algorithms when
-    // given a choice of devices. Once we have a better idea of the
-    // types of heuristics we want to use and the information needed
-    // to perform good placement we can add an interface for this.
+    // TODO (vrv): Factor this assignment out into a pluggable id:1837
+// https://github.com/imdone/tensorflow/issues/1837
+// algorithm, so that Placer is responsible for enforcing
+// preconditions and we can experiment with other algorithms when
+// given a choice of devices. Once we have a better idea of the
+// types of heuristics we want to use and the information needed
+// to perform good placement we can add an interface for this.
     int assigned_device = -1;
 
     // Heuristic B: If the node only operates on metadata, not data,
@@ -797,7 +806,8 @@ Status Placer::Run() {
       // Make sure that the input device type is in the list of supported
       // device types for this node.
       const Node* input = (*node->in_edges().begin())->src();
-      // TODO(vrv): if the input is empty, consider postponing this
+      // TODO (vrv): if the input is empty, consider postponing this id:1441
+      // https://github.com/imdone/tensorflow/issues/1442
       // node's assignment to the second pass, so that we handle the
       // case where a metadata node's input comes from a backedge
       // of a loop.

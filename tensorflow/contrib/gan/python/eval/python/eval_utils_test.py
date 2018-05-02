@@ -30,7 +30,8 @@ class UtilsTest(test.TestCase):
         input_tensor=array_ops.zeros([25, 32, 32, 3]),
         grid_shape=(5, 5))
 
-  # TODO(joelshor): Add more `image_reshaper` tests.
+  # TODO (joelshor): Add more `image_reshaper` tests. id:769
+  # https://github.com/imdone/tensorflow/issues/770
   def test_image_reshaper_image_list(self):
     images = eval_utils.image_reshaper(
         images=array_ops.unstack(array_ops.zeros([25, 32, 32, 3])),

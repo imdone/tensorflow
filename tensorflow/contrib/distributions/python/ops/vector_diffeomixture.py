@@ -431,7 +431,8 @@ class VectorDiffeomixture(distribution_lib.Distribution):
                                name="endpoint_affine_{}".format(k))
           for k, (loc_, scale_) in enumerate(zip(loc, scale))]
 
-      # TODO(jvdillon): Remove once we support k-mixtures.
+      # TODO (jvdillon): Remove once we support k-mixtures. id:1122
+      # https://github.com/imdone/tensorflow/issues/1123
       # We make this assertion here because otherwise `grid` would need to be a
       # vector not a scalar.
       if len(scale) != 2:
@@ -795,7 +796,8 @@ def maybe_check_quadrature_param(param, name, validate_args):
                    "{}.rank is not at least one.".format(
                        name))))
 
-    # TODO(jvdillon): Remove once we support k-mixtures.
+    # TODO (jvdillon): Remove once we support k-mixtures. id:1114
+    # https://github.com/imdone/tensorflow/issues/1114
     if param.shape.with_rank_at_least(1)[-1] is not None:
       if param.shape[-1].value != 1:
         raise NotImplementedError("Currently only bimixtures are supported; "
@@ -895,7 +897,8 @@ def interpolate_scale(grid, scale):
 def linop_scale(w, op):
   # We assume w > 0. (This assumption only relates to the is_* attributes.)
   with ops.name_scope("linop_scale", values=[w]):
-    # TODO(b/35301104): LinearOperatorComposition doesn't combine operators, so
+    # TODO (b/35301104): LinearOperatorComposition doesn't combine operators, so id:807
+    # https://github.com/imdone/tensorflow/issues/808
     # special case combinations here. Once it does, this function can be
     # replaced by:
     #     return linop_composition_lib.LinearOperatorComposition([

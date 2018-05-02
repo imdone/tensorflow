@@ -212,7 +212,8 @@ class AdjustContrastOpv2<CPUDevice> : public AdjustContrastOpV2Base {
     OP_REQUIRES_OK(context, context->allocate_temp(
                                 DataTypeToEnum<float>::value,
                                 TensorShape({batch, channels}), &mean_values));
-    // TODO(zhengxq): for multiple batches, shard them into different batches.
+    // TODO (zhengxq): for multiple batches, shard them into different batches. id:3082
+    // https://github.com/imdone/tensorflow/issues/3081
     auto input_data = input->shaped<float, 3>({batch, image_size, channels});
     auto mean_data = mean_values.tensor<float, 2>();
     auto output_data = output->shaped<float, 3>({batch, image_size, channels});

@@ -48,7 +48,8 @@ void GcsThrottle::SetConfig(GcsThrottleConfig config) {
 }
 
 void GcsThrottle::UpdateState() {
-  // TODO(b/72643279): Switch to a monotonic clock.
+  // TODO (b/72643279): Switch to a monotonic clock. id:4112
+  // https://github.com/imdone/tensorflow/issues/4110
   int64 now = env_time_->NowSeconds();
   uint64 delta_secs =
       std::max(0LL, now - static_cast<int64>(last_updated_secs_));

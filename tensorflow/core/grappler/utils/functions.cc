@@ -451,7 +451,8 @@ Status MakeGrapplerFunctionItem(const FunctionDef& func,
   GraphDef function_body;
   *function_body.mutable_library() = flib.ToProto();
 
-  // TODO(ezhulenev): support functions with tensor sequence inputs/outputs
+  // TODO (ezhulenev): support functions with tensor sequence inputs/outputs id:1704
+  // https://github.com/imdone/tensorflow/issues/1704
 
   // Make sure that there is no tensor sequences in outputs
   for (const OpDef::ArgDef& output : signature.output_arg()) {

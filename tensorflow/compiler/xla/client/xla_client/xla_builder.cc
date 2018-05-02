@@ -180,24 +180,28 @@ void XlaBuilder::IsConstantVisitor(const int64 op_handle,
       for (const int64 operand_id : instr.operand_ids()) {
         IsConstantVisitor(operand_id, visited, is_constant);
       }
-      // TODO(b/32495713): We aren't checking the called computations.
+      // TODO (b/32495713): We aren't checking the called computations. id:230
+      // https://github.com/imdone/tensorflow/issues/231
       break;
 
     // Non functional ops.
     case HloOpcode::kRng:
     case HloOpcode::kCrossReplicaSum:
-      // TODO(b/33009255): Implmement constant folding for cross replica sum.
+      // TODO (b/33009255): Implmement constant folding for cross replica sum. id:394
+      // https://github.com/imdone/tensorflow/issues/395
     case HloOpcode::kInfeed:
     case HloOpcode::kOutfeed:
     case HloOpcode::kHostCompute:
     case HloOpcode::kCall:
-      // TODO(b/32495713): We aren't checking the to_apply computation itself,
+      // TODO (b/32495713): We aren't checking the to_apply computation itself, id:301
+      // https://github.com/imdone/tensorflow/issues/302
       // so we conservatively say that computations containing the Call op
       // cannot be constant.  We cannot set is_functional=false in other similar
       // cases since we're already relying on IsConstant to return true.
     case HloOpcode::kCustomCall:
     case HloOpcode::kWhile:
-      // TODO(b/32495713): We aren't checking the condition and body
+      // TODO (b/32495713): We aren't checking the condition and body id:296
+      // https://github.com/imdone/tensorflow/issues/297
       // computations themselves.
     case HloOpcode::kSend:
     case HloOpcode::kRecv:
@@ -1128,7 +1132,8 @@ XlaOp XlaBuilder::Or(const XlaOp& lhs, const XlaOp& rhs,
   return BinaryOp(HloOpcode::kOr, lhs, rhs, broadcast_dimensions);
 }
 
-// TODO(b/65209188): Create a dedicated lowering for Xor.
+// TODO (b/65209188): Create a dedicated lowering for Xor. id:214
+// https://github.com/imdone/tensorflow/issues/215
 XlaOp XlaBuilder::Xor(const XlaOp& lhs, const XlaOp& rhs,
                       tensorflow::gtl::ArraySlice<int64> broadcast_dimensions) {
   return Or(And(Not(lhs), rhs, broadcast_dimensions),

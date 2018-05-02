@@ -554,7 +554,8 @@ class TestUtilTest(test_util.TensorFlowTestCase):
   def testRandomSeed(self):
     # Call setUp again for WithCApi case (since it makes a new defeault graph
     # after setup).
-    # TODO(skyewm): remove this when C API is permanently enabled.
+    # TODO (skyewm): remove this when C API is permanently enabled. id:3047
+    # https://github.com/imdone/tensorflow/issues/3046
     self.setUp()
     a = random.randint(1, 1000)
     a_np_rand = np.random.rand(1)

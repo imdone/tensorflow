@@ -373,7 +373,8 @@ TEST(VariantOpCopyTest, CreateCopyCPUToGPUStringFailsSafely) {
       << err.error_message();
 }
 
-// TODO(ebrevdo): Identify a way to create two virtual GPUs within a
+// TODO (ebrevdo): Identify a way to create two virtual GPUs within a id:2248
+// https://github.com/imdone/tensorflow/issues/2247
 // single session, so that we can test the Device <-> Device copy
 // branch.
 

@@ -477,7 +477,8 @@ Status Conv2DShape(shape_inference::InferenceContext* c) {
   return Status::OK();
 }
 
-// TODO(mjanusz): Unify all conv/pooling shape functions.
+// TODO (mjanusz): Unify all conv/pooling shape functions. id:2713
+// https://github.com/imdone/tensorflow/issues/2712
 Status Conv3DShape(shape_inference::InferenceContext* c) {
   ShapeHandle input_shape;
   TF_RETURN_IF_ERROR(c->WithRank(c->input(0), 5, &input_shape));
@@ -620,7 +621,8 @@ Status DepthwiseConv2DNativeShape(shape_inference::InferenceContext* c) {
   Padding padding;
   TF_RETURN_IF_ERROR(c->GetAttr("padding", &padding));
 
-  // TODO(mrry,shlens): Raise an error if the stride would cause
+  // TODO (mrry,shlens): Raise an error if the stride would cause id:1914
+  // https://github.com/imdone/tensorflow/issues/1914
   // information in the input to be ignored. This will require a change
   // in the kernel implementation.
   DimensionHandle output_rows, output_cols;
@@ -693,7 +695,8 @@ Status AvgPoolShape(shape_inference::InferenceContext* c) {
   Padding padding;
   TF_RETURN_IF_ERROR(c->GetAttr("padding", &padding));
 
-  // TODO(mrry,shlens): Raise an error if the stride would cause
+  // TODO (mrry,shlens): Raise an error if the stride would cause id:1535
+  // https://github.com/imdone/tensorflow/issues/1535
   // information in the input to be ignored. This will require a change
   // in the kernel implementation.
 
@@ -1022,7 +1025,8 @@ Status Pool3DShape(shape_inference::InferenceContext* c) {
   Padding padding;
   TF_RETURN_IF_ERROR(c->GetAttr("padding", &padding));
 
-  // TODO(mrry,shlens): Raise an error if the stride would cause
+  // TODO (mrry,shlens): Raise an error if the stride would cause id:2203
+  // https://github.com/imdone/tensorflow/issues/2202
   // information in the input to be ignored. This will require a change
   // in the kernel implementation.
   DimensionHandle output_planes, output_rows, output_cols;
@@ -1257,7 +1261,8 @@ Status BroadcastBinaryOpOutputShapeFn(InferenceContext* c, int output_index) {
       //
       // - If either dimension is greater than 1, we assume that the program is
       // correct, and the other dimension will be broadcast to match it.
-      // TODO(cwhipkey): For shape inference, if we eliminate the shape checks
+      // TODO (cwhipkey): For shape inference, if we eliminate the shape checks id:2833
+      // https://github.com/imdone/tensorflow/issues/2832
       // in C++ op code, we must still assert that the unknown dim is either 1
       // or the same as the known dim.
       // - If either dimension is 1, the other dimension is the output.

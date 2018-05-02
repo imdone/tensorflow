@@ -23,7 +23,8 @@ from tensorflow.python.framework import ops
 from tensorflow.python.ops import array_ops
 from tensorflow.python.ops import math_ops
 
-# TODO(nsilberman): move into metrics/python/ops/
+# TODO (nsilberman): move into metrics/python/ops/ id:1665
+# https://github.com/imdone/tensorflow/issues/1665
 
 
 def accuracy(predictions, labels, weights=None, name=None):

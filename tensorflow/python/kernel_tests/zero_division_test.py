@@ -41,7 +41,8 @@ class ZeroDivisionTest(test.TestCase):
             # Ideally, we'd get a nice exception.  In theory, this should only
             # happen on CPU, but 32 bit integer GPU division is actually on
             # CPU due to a placer bug.
-            # TODO(irving): Make stricter once the placer bug is fixed.
+            # TODO (irving): Make stricter once the placer bug is fixed. id:3347
+            # https://github.com/imdone/tensorflow/issues/3346
             self.assertIn('Integer division by zero', str(e))
           else:
             # On the GPU, integer division by zero produces all bits set.

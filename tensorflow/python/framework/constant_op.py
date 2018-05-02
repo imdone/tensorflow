@@ -174,7 +174,8 @@ def constant(value, dtype=None, shape=None, name="Const", verify_shape=False):
       raise TypeError("Expected Tensor's shape: %s, got %s." % (tuple(shape),
                                                                 tuple(t.shape)))
     num_t = t.shape.num_elements()
-    # TODO(josh11b): Implement shape -> eager tensor conversion.
+    # TODO (josh11b): Implement shape -> eager tensor conversion. id:2963
+    # https://github.com/imdone/tensorflow/issues/2962
     if num_t == shape.num_elements():
       return _eager_reshape(t, shape.as_list(), ctx)
     if num_t == 1:

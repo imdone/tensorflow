@@ -57,7 +57,8 @@ class LocalService : public Service {
   // then the compiler may use it to allocate temp space on the device.  The
   // compiler is responsible for freeing any memory it allocates this way.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:404
+// https://github.com/imdone/tensorflow/issues/405
   StatusOr<std::unique_ptr<Executable>> CompileExecutable(
       const XlaComputation& computation,
       const tensorflow::gtl::ArraySlice<const Shape*> argument_layouts,

@@ -104,7 +104,8 @@ class SmoothHingeLossUpdater : public DualLossUpdater {
 
  private:
   // Smoothness constant of smooth hinge loss
-  // TODO(sibyl-Aix6ihai): expose this parameter
+  // TODO (sibyl-Aix6ihai): expose this parameter id:4036
+  // https://github.com/imdone/tensorflow/issues/4034
   const double gamma = 1;
 };
 

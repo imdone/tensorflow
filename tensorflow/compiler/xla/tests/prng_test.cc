@@ -81,7 +81,8 @@ XLA_TEST_F(PrngTest, ZeroValuesR2) { UniformTest<float>(0, 1, {0, 20}); }
 XLA_TEST_F(PrngTest, LargeU01) { UniformTest<float>(0, 1, {0x100, 0x100}); }
 XLA_TEST_F(PrngTest, TwelveValuesU524) { UniformTest<int32>(5, 24, {12}); }
 
-// TODO(b/71543667): Fix Rng ops on LLVM backends.
+// TODO (b/71543667): Fix Rng ops on LLVM backends. id:534
+// https://github.com/imdone/tensorflow/issues/535
 XLA_TEST_F(PrngTest, DISABLED_ON_GPU(DISABLED_ON_CPU(ScalarBF16Tests))) {
   for (int64 seed = 0; seed < 100; ++seed) {
     // The largest negative number smaller than zero in bf16 that's not
@@ -104,7 +105,8 @@ XLA_TEST_F(PrngTest, DISABLED_ON_GPU(DISABLED_ON_CPU(ScalarBF16Tests))) {
   }
 }
 
-// TODO(b/71543667): Fix Rng ops on LLVM backends.
+// TODO (b/71543667): Fix Rng ops on LLVM backends. id:625
+// https://github.com/imdone/tensorflow/issues/626
 XLA_TEST_F(PrngTest, DISABLED_ON_GPU(DISABLED_ON_CPU(ScalarBF16CountTests))) {
   // There are 3 BF16 values in the range of [32.25, 33): 32.25, 32.5, 32.75,
   // they should get similar counts.
@@ -163,7 +165,8 @@ double PrngTest::UniformChiSquared(int32 range_size, int32 expected_count,
 // These range sizes are arbitrary but include prime numbers, powers of 2, and
 // other composite numbers.
 // The level of significance in all these cases is 1/20.
-// TODO(b/35723038): Use parametrized tests where possible.
+// TODO (b/35723038): Use parametrized tests where possible. id:472
+// https://github.com/imdone/tensorflow/issues/473
 XLA_TEST_F(PrngTest, Uniformity7) {
   EXPECT_LT(UniformChiSquared(7, 256), 12.5916);
 }
@@ -287,7 +290,8 @@ XLA_TEST_F(PrngTest, TenValuesN01) {
 
   SetSeed(42);
   ExecuteAndTransfer(&builder, /*arguments=*/{}).ConsumeValueOrDie();
-  // TODO(b/25995601): Test that resultant values are reasonable
+  // TODO (b/25995601): Test that resultant values are reasonable id:456
+  // https://github.com/imdone/tensorflow/issues/457
 }
 
 XLA_TEST_F(PrngTest, RngUniformCrash) {

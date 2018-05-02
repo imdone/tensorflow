@@ -128,7 +128,8 @@ class AttrSlice {
   Status Find(StringPiece attr_name, const AttrValue** attr_value) const;
 
   // Helper class to avoid allocations in EqualAttrs.
-  // TODO(irving): Will go away once NodeInfo is used.
+  // TODO (irving): Will go away once NodeInfo is used. id:2215
+  // https://github.com/imdone/tensorflow/issues/2214
   struct Scratch {
     string a;
     string b;
@@ -137,12 +138,13 @@ class AttrSlice {
   // Check if all attrs and attr values match.  Does not take defaults into
   // account.
   //
-  // TODO(irving): There is a bug in this routine inherited from its
-  // OptimizerCSE::EqualAttrs precedecessor.  The same tensor attr can be
-  // represented in more than one way as an AttrValue, since TensorProto is
-  // not 1-1.  This bug will go away once I replace everything with NodeInfo,
-  // which stores a Tensor object directly.  The Scratch object will also go
-  // away.
+  // TODO (irving): There is a bug in this routine inherited from its id:2855
+// https://github.com/imdone/tensorflow/issues/2854
+// OptimizerCSE::EqualAttrs precedecessor.  The same tensor attr can be
+// represented in more than one way as an AttrValue, since TensorProto is
+// not 1-1.  This bug will go away once I replace everything with NodeInfo,
+// which stores a Tensor object directly.  The Scratch object will also go
+// away.
   bool EqualAttrs(AttrSlice other, Scratch* scratch) const;
 
   // If this AttrSlice has an attached NodeDef, summarize it.  This is for
@@ -263,7 +265,8 @@ Status ValidateNodeDef(const NodeDef& node_def, const OpDef& op_def);
 // corresponding input/output index range.  For example,
 // input "foo" corresponds to input indices
 //   [ (*inputs)["foo"].first, (*inputs)["foo"].second ).
-// NOTE(mrry): To reduce allocations when the map is used and save
+// NOTE (mrry): To reduce allocations when the map is used and save id:2740
+// https://github.com/imdone/tensorflow/issues/2739
 // space, the returned `NameRangeMap` objects borrow the input/output
 // argument names from `op_def`. The `op_def` must outlive the
 // returned `NameRangeMap` objects.

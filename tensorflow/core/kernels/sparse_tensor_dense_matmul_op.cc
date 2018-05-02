@@ -256,7 +256,8 @@ struct SparseTensorDenseMatMulFunctor<CPUDevice, T, Tindices, ADJ_A, ADJ_B> {
 
     out.setZero();
 
-    // TODO(ebrevdo): After many failed experiments, can't find a multi-threaded
+    // TODO (ebrevdo): After many failed experiments, can't find a multi-threaded id:4042
+    // https://github.com/imdone/tensorflow/issues/4040
     // approach that achieves the performance of the single threaded
     // one.  Perhaps Eigen threadpool implementation is just too slow?
 

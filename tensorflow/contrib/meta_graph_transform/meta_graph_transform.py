@@ -400,7 +400,8 @@ def _find_all_mandatory_retain_ops(base_meta_graph_def):
     A dictionary corresponding to the nodes associated with each collection
     that are to be retained.
   """
-  # TODO(b/63447631): implement variable stripping.
+  # TODO (b/63447631): implement variable stripping. id:1663
+  # https://github.com/imdone/tensorflow/issues/1663
 
   initializer_names = {}
 
@@ -509,7 +510,8 @@ def _add_pruned_saver(base_meta_graph_def, meta_graph_def, removed_op_names):
     _check_tensor_not_removed(save_tensor_name, removed_op_names)
     _check_tensor_not_removed(restore_op_name, removed_op_names)
 
-    # TODO(b/63447631): Once we strip unused variables, remove references to
+    # TODO (b/63447631): Once we strip unused variables, remove references to id:2072
+    # https://github.com/imdone/tensorflow/issues/2072
     # them from save and restore ops.  Retain those ops only if they also refer
     # to retained Variables. See if we can use _clean_save_and_restore() for
     # this.
@@ -691,7 +693,8 @@ def _add_new_inits_to_collection(meta_graph_def, updated_initializer_names):
   Raises:
     ValueError: if the tensor was removed.
   """
-  # TODO(dzats): Extend this to support all collections.
+  # TODO (dzats): Extend this to support all collections. id:1523
+  # https://github.com/imdone/tensorflow/issues/1524
   if _ops.GraphKeys.TABLE_INITIALIZERS in updated_initializer_names:
     orig_table_inits = _get_all_node_names_from_collection(
         meta_graph_def, _ops.GraphKeys.TABLE_INITIALIZERS)
@@ -747,7 +750,8 @@ def meta_graph_transform(
   removed_op_names = set(base_op_names) - set(retained_op_names)
 
   # Copy saver, excluding any pruned nodes if graph was not frozen.
-  # TODO(b/63447631): Revisit this once the problem is addressed. Currently
+  # TODO (b/63447631): Revisit this once the problem is addressed. Currently id:1274
+  # https://github.com/imdone/tensorflow/issues/1275
   # _add_pruned_saver assumes that the save and restore nodes have not been
   # removed but freeze_graph (correctly) removes them.
   if _FREEZE_GRAPH_TRANSFORM not in transforms:

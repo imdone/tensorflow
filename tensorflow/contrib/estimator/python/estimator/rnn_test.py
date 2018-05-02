@@ -562,7 +562,8 @@ class RNNClassifierTrainingTest(test.TestCase):
         wraps=optimizer.Optimizer(use_locking=False, name='my_optimizer'))
     mock_optimizer.minimize = test.mock.MagicMock(wraps=_minimize)
 
-    # NOTE: Estimator.params performs a deepcopy, which wreaks havoc with mocks.
+    # NOTE: Estimator.params performs a deepcopy, which wreaks havoc with mocks. id:1236
+    # https://github.com/imdone/tensorflow/issues/1237
     # So, return mock_optimizer itself for deepcopy.
     mock_optimizer.__deepcopy__ = lambda _: mock_optimizer
     return mock_optimizer
@@ -1042,7 +1043,8 @@ class RNNClassifierIntegrationTest(test.TestCase):
     batch_size = 10
     words = ['dog', 'cat', 'bird', 'the', 'a', 'sat', 'flew', 'slept']
     # Numpy only supports dense input, so all examples will have same length.
-    # TODO(b/73160931): Update test when support for prepadded data exists.
+    # TODO (b/73160931): Update test when support for prepadded data exists. id:824
+    # https://github.com/imdone/tensorflow/issues/825
     sequence_length = 3
 
     features = []

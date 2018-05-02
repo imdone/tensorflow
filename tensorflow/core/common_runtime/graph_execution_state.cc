@@ -59,11 +59,13 @@ GraphExecutionState::GraphExecutionState(
       flib_def_(new FunctionLibraryDefinition(OpRegistry::Global(),
                                               graph_def->library())),
       graph_(nullptr) {
-  // NOTE(mrry): GraphDef does not have a move constructor, so we pass
+  // NOTE (mrry): GraphDef does not have a move constructor, so we pass id:2641
+  // https://github.com/imdone/tensorflow/issues/2640
   // a non-const pointer and use `Swap()` to transfer the contents
   // without copying.
   original_graph_def_.Swap(graph_def);
-  // TODO(mrry): Publish placement visualizations or handle the log
+  // TODO (mrry): Publish placement visualizations or handle the log id:2566
+  // https://github.com/imdone/tensorflow/issues/2565
   // placement option.
 }
 
@@ -84,7 +86,8 @@ GraphExecutionState::~GraphExecutionState() {
 
   TF_RETURN_IF_ERROR(
       AddDefaultAttrsToGraphDef(&ret->original_graph_def_, *ret->flib_def_, 0));
-  // TODO(mrry): Refactor InitBaseGraph() so that we don't have to
+  // TODO (mrry): Refactor InitBaseGraph() so that we don't have to id:1825
+  // https://github.com/imdone/tensorflow/issues/1825
   // pass an empty BuildGraphOptions (that isn't going to be used when
   // place_pruned_graph is false).
   if (!ret->session_options_->config.graph_options().place_pruned_graph()) {
@@ -101,7 +104,8 @@ GraphExecutionState::~GraphExecutionState() {
     std::unique_ptr<GraphExecutionState>* out_state,
     std::unique_ptr<ClientGraph>* out_client_graph) {
   DCHECK(options.session_options->config.graph_options().place_pruned_graph());
-  // NOTE(mrry): This makes a copy of `graph_def`, which is
+  // NOTE (mrry): This makes a copy of `graph_def`, which is id:1426
+  // https://github.com/imdone/tensorflow/issues/1427
   // regrettable. We could make `GraphDef` objects sharable between
   // execution states to optimize pruned graph execution, but since
   // this case is primarily used for interactive sessions, we make the
@@ -197,7 +201,8 @@ Status GraphExecutionState::Extend(
   combined_options.session_options = session_options_;
   combined_options.stateful_placements = stateful_placements_;
 
-  // NOTE(mrry): `gdef` is no longer valid after the constructor
+  // NOTE (mrry): `gdef` is no longer valid after the constructor id:1911
+  // https://github.com/imdone/tensorflow/issues/1911
   // executes.
   std::unique_ptr<GraphExecutionState> new_execution_state(
       new GraphExecutionState(&gdef, combined_options));
@@ -205,14 +210,16 @@ Status GraphExecutionState::Extend(
   TF_RETURN_IF_ERROR(AddDefaultAttrsToGraphDef(
       &new_execution_state->original_graph_def_, *flib_def_, 0));
   if (!session_options_->config.graph_options().place_pruned_graph()) {
-    // TODO(mrry): Refactor InitBaseGraph() so that we don't have to
+    // TODO (mrry): Refactor InitBaseGraph() so that we don't have to id:2644
+    // https://github.com/imdone/tensorflow/issues/2643
     // pass an empty BuildGraphOptions (that isn't going to be used
     // when place_pruned_graph is false).
     TF_RETURN_IF_ERROR(new_execution_state->InitBaseGraph(BuildGraphOptions()));
   }
   *out = std::move(new_execution_state);
 
-  // TODO(mrry): This is likely to be used for non-throughput-sensitive
+  // TODO (mrry): This is likely to be used for non-throughput-sensitive id:2568
+  // https://github.com/imdone/tensorflow/issues/2567
   // interactive workloads, but in future we may want to transfer other
   // parts of the placement and/or cost model.
   return Status::OK();
@@ -386,7 +393,8 @@ Status GraphExecutionState::InitBaseGraph(const BuildGraphOptions& options) {
       OptimizationPassRegistry::PRE_PLACEMENT, optimization_options));
 
   Placer placer(new_graph.get(), device_set_, session_options_);
-  // TODO(mrry): Consider making the Placer cancelable.
+  // TODO (mrry): Consider making the Placer cancelable. id:1829
+  // https://github.com/imdone/tensorflow/issues/1829
   TF_RETURN_IF_ERROR(placer.Run());
 
   TF_RETURN_IF_ERROR(OptimizationPassRegistry::Global()->RunGrouping(
@@ -579,7 +587,8 @@ Status GraphExecutionState::BuildGraph(const BuildGraphOptions& options,
   CHECK_EQ(options.callable_options.fetch_size(),
            rewrite_metadata.fetch_types.size());
 
-  // TODO(andydavis): Clarify optimization pass requirements around CostModel.
+  // TODO (andydavis): Clarify optimization pass requirements around CostModel. id:1428
+  // https://github.com/imdone/tensorflow/issues/1429
   GraphOptimizationPassOptions optimization_options;
   optimization_options.session_options = session_options_;
   optimization_options.graph = &optimized_graph;
@@ -597,7 +606,8 @@ Status GraphExecutionState::BuildGraph(const BuildGraphOptions& options,
                       rewrite_metadata.fetch_types));
   CopyGraph(*optimized_graph, &dense_copy->graph);
 
-  // TODO(vrv): We should check invariants of the graph here.
+  // TODO (vrv): We should check invariants of the graph here. id:1913
+  // https://github.com/imdone/tensorflow/issues/1913
 
   *out = std::move(dense_copy);
   return Status::OK();

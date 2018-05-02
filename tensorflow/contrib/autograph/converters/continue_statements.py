@@ -62,7 +62,8 @@ class ContinueCanonicalizationTransformer(transformer.Base):
     current_dest = reorganized_nodes
     continue_used_in_block = False
     for i, n in enumerate(nodes):
-      # TODO(mdan): This could be optimized if control structures are simple.
+      # TODO (mdan): This could be optimized if control structures are simple. id:495
+      # https://github.com/imdone/tensorflow/issues/496
       self.continuation_uses[-1][0] = False
       n = self.visit(n)
       current_dest.append(n)

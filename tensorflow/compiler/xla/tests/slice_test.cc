@@ -293,7 +293,8 @@ INSTANTIATE_TEST_CASE_P(
     SliceR1TestDataToString
 );
 
-// TODO(b/69425338): This uses too much memory on GPU.
+// TODO (b/69425338): This uses too much memory on GPU. id:944
+// https://github.com/imdone/tensorflow/issues/945
 #ifndef XLA_TEST_BACKEND_GPU
 INSTANTIATE_TEST_CASE_P(
     SliceR1TestBigSlicesInstantiation,

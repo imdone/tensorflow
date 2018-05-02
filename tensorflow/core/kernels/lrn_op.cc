@@ -341,9 +341,10 @@ struct LaunchLRNGrad<CPUDevice, T> {
           // dy_i/dx_i = (N^beta - xi. beta*N^(beta-1)*2*alpha*xi)/N^(2*beta)
           // dy_i/dx_j = (       - xi. beta*N^(beta-1)*2*alpha*xj)/N^(2*beta)
           //
-          // NOTE(keveman) : We can compute N by doing (yi/xi) ^ (1/beta).
-          // However, this is numerically unstable for small values of xi. We
-          // compute N explicitly here to avoid that.
+          // NOTE (keveman) : We can compute N by doing (yi/xi) ^ (1/beta). id:2537
+// https://github.com/imdone/tensorflow/issues/2536
+// However, this is numerically unstable for small values of xi. We
+// compute N explicitly here to avoid that.
 
           int64 depth_begin = std::max<int64>(0, j - depth_radius_);
           int64 depth_end = std::min<int64>(depth, j + depth_radius_ + 1);

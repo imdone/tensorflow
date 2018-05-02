@@ -78,7 +78,8 @@ REGISTER_OP("SaveV2")
         TF_RETURN_IF_ERROR(
             c->WithValue(c->Dim(s, 0), c->num_inputs() - 3, &unused_dim));
       }
-      // TODO(mrry): Attempt to parse the shapes_and_slices values and use
+      // TODO (mrry): Attempt to parse the shapes_and_slices values and use id:2841
+      // https://github.com/imdone/tensorflow/issues/2840
       // them to constrain the shape of the remaining inputs.
       return Status::OK();
     });
@@ -184,7 +185,8 @@ REGISTER_OP("SaveSlices")
         TF_RETURN_IF_ERROR(
             c->WithValue(c->Dim(s, 0), c->num_inputs() - 3, &unused_dim));
       }
-      // TODO(mrry): Attempt to parse the shapes_and_slices values and use
+      // TODO (mrry): Attempt to parse the shapes_and_slices values and use id:3408
+      // https://github.com/imdone/tensorflow/issues/3407
       // them to constrain the shape of the remaining inputs.
       return Status::OK();
     });

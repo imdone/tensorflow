@@ -60,7 +60,8 @@ Status AttrTypeByName(const AttrTypeMap& m, const string& attr_name,
 // checks (like number of inputs matching the OpDef - we only care about
 // attributes here).
 //
-// TODO(ashankar): Take a closer look at checks in NodeDefBuilder and see which
+// TODO (ashankar): Take a closer look at checks in NodeDefBuilder and see which id:50
+// https://github.com/imdone/tensorflow/issues/51
 // ones make sense to replicate.
 
 // This is a helper class for creating a NodeDef. Additionally, this class
@@ -124,7 +125,8 @@ class AttrBuilder {
       SetAttrValue(value, &attr_value);
       m->insert(AttrValueMap::value_type(attr_name.ToString(), attr_value));
     } else {
-      // TODO(ashankar): Do what is done in
+      // TODO (ashankar): Do what is done in id:98
+      // https://github.com/imdone/tensorflow/issues/97
       // NodeDefBuilder::CheckInconsistency(attr_name, *found, attr_value);
       SetAttrValue(std::forward<T>(value), &attr_value);
       (*m)[attr_name.ToString()] = attr_value;

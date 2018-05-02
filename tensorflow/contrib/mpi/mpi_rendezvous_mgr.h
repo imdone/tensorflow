@@ -141,7 +141,8 @@ class MPIRendezvousMgr : public BaseRendezvousMgr {
   ~MPIRendezvousMgr() {
     delete mpiutils_;
     fprintf(stderr, "Delete MPIRendezvousMgr \n");
-    // TODO(jbedorf) stop background_thread_
+    // TODO (jbedorf) stop background_thread_ id:1545
+    // https://github.com/imdone/tensorflow/issues/1545
     MPI_CHECK(MPI_Finalize());
   }
 

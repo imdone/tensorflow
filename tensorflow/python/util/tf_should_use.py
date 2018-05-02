@@ -27,7 +27,8 @@ from tensorflow.python.util import tf_decorator
 # pylint: enable=g-bad-import-order,g-import-not-at-top
 
 
-# TODO(b/65412899): Re-implement to avoid leaking python objects.
+# TODO (b/65412899): Re-implement to avoid leaking python objects. id:4337
+# https://github.com/imdone/tensorflow/issues/4335
 # This function / class remains since the API is public (mark_used()).
 def _add_should_use_warning(x, fatal_error=False):
   """Wraps object x so that if it is never used, a warning is logged.

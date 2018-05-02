@@ -149,7 +149,8 @@ class LayerParametersDict(OrderedDict):
     return key
 
 
-# TODO(b/68034464): add capability for LayerCollection to be "finalized"
+# TODO (b/68034464): add capability for LayerCollection to be "finalized" id:786
+# https://github.com/imdone/tensorflow/issues/787
 # and do this when it gets used by FisherEstimator / KfacOptimizer.
 
 
@@ -691,7 +692,8 @@ class LayerCollection(object):
     # It feels bad to pass in configuration that has to do with the internal
     # implementation.  And then we can`t use the same constructor for both
     # anymore and are thus forced to use this ugly if-statement.
-    # TODO(b/74793309): Clean this up?
+    # TODO (b/74793309): Clean this up? id:1305
+    # https://github.com/imdone/tensorflow/issues/1306
     if approx == APPROX_KRONECKER_NAME:
       block = self.register_block(
           params,
@@ -763,7 +765,8 @@ class LayerCollection(object):
       KeyError: If reuse == True but no FisherBlock found for `params`.
       ValueError: If reuse == True and FisherBlock found but of the wrong type.
     """
-    # TODO(b/74793309): Have this use _get_block_type like the other
+    # TODO (b/74793309): Have this use _get_block_type like the other id:1329
+    # https://github.com/imdone/tensorflow/issues/1330
     # registration functions?
     assert approx is None or approx == APPROX_KRONECKER_NAME
 
@@ -818,7 +821,8 @@ class LayerCollection(object):
       KeyError: If reuse == True but no FisherBlock found for `params`.
       ValueError: If reuse == True and FisherBlock found but of the wrong type.
     """
-    # TODO(b/74793309): Have this use _get_block_type like the other
+    # TODO (b/74793309): Have this use _get_block_type like the other id:920
+    # https://github.com/imdone/tensorflow/issues/921
     # registration functions?
     assert approx is None or approx == APPROX_DIAGONAL_NAME
     assert data_format in [None, "NHWC"]
@@ -985,7 +989,8 @@ class LayerCollection(object):
         params, approx, self.default_fully_connected_multi_approximation,
         _FULLY_CONNECTED_MULTI_APPROX_TO_BLOCK_TYPES)
 
-    # TODO(b/70283649): something along the lines of find_canonical_output
+    # TODO (b/70283649): something along the lines of find_canonical_output id:871
+    # https://github.com/imdone/tensorflow/issues/872
     # should be added back in here (and for the other block types, arguably).
 
     has_bias = isinstance(params, (tuple, list))
@@ -1077,7 +1082,8 @@ class LayerCollection(object):
     else:
       self._add_uses(params, 1)
 
-  # TODO(b/74108452): change the loss registration functions names to refer
+  # TODO (b/74108452): change the loss registration functions names to refer id:788
+  # https://github.com/imdone/tensorflow/issues/789
   # to "loss functions" instead of distributions.  Following naming convention
   # of the loss function classes themselves.
 

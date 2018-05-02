@@ -99,7 +99,8 @@ struct ReluGrad<Device, Eigen::half> {
                   typename TTypes<Eigen::half>::ConstTensor gradient,
                   typename TTypes<Eigen::half>::ConstTensor feature,
                   typename TTypes<Eigen::half>::Tensor backprop) {
-    // NOTE: When the activation is exactly zero, we do not propagate the
+    // NOTE: When the activation is exactly zero, we do not propagate the id:2597
+    // https://github.com/imdone/tensorflow/issues/2596
     // associated gradient value. This allows the output of the Relu to be used,
     // as well as its input.
     int32 count = gradient.size();

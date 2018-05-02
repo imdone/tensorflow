@@ -19,7 +19,8 @@ limitations under the License.
 
 namespace tflite {
 
-// NOTE: this tests only the TfLiteIntArray part of context.
+// NOTE: this tests only the TfLiteIntArray part of context. id:903
+// https://github.com/imdone/tensorflow/issues/904
 // most of context.h is provided in the context of using it with interpreter.h
 // and interpreter.cc, so interpreter_test.cc tests context structures more
 // thoroughly.

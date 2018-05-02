@@ -78,7 +78,8 @@ Status XlaCompileOnDemandOp::Run(OpKernelContext* ctx,
 
 bool XlaCompileOnDemandOp::MustArgumentBeConstant(const OpKernel* op_kernel,
                                                   int64 argument_idx) {
-  // TODO(jmolloy): This could be expensive, so memoize.
+  // TODO (jmolloy): This could be expensive, so memoize. id:135
+  // https://github.com/imdone/tensorflow/issues/136
   auto* constant_inputs = tensorflow::XlaOpRegistry::CompileTimeConstantInputs(
       op_kernel->def().op());
   CHECK(constant_inputs);

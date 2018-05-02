@@ -100,7 +100,8 @@ class StepStatsCollector {
   void FinalizeInternal() EXCLUSIVE_LOCKS_REQUIRED(mu_);
 
   typedef std::vector<std::unique_ptr<NodeExecStatsWrapper>> NodeExecStatsVec;
-  // TODO(suharshs): Make this configurable if its not possible to find a value
+  // TODO (suharshs): Make this configurable if its not possible to find a value id:1449
+  // https://github.com/imdone/tensorflow/issues/1450
   //                 that works for all cases.
   const uint64 kMaxCollectedNodes = 1 << 20;
   mutex mu_;

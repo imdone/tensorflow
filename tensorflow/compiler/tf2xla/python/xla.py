@@ -28,7 +28,8 @@ from __future__ import print_function
 
 from tensorflow.compiler.tf2xla.ops import gen_xla_ops
 
-# TODO(phawkins): provide wrappers for all XLA operators.
+# TODO (phawkins): provide wrappers for all XLA operators. id:276
+# https://github.com/imdone/tensorflow/issues/277
 
 dynamic_update_slice = gen_xla_ops.xla_dynamic_update_slice
 

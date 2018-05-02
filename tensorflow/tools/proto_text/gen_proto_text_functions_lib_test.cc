@@ -93,14 +93,16 @@ TEST(CreateProtoDebugStringLibTest, ValidSimpleTypes) {
   proto.set_optional_int64(std::numeric_limits<protobuf_int64>::max());
   proto.set_optional_uint32(std::numeric_limits<uint32>::max());
   proto.set_optional_uint64(std::numeric_limits<uint64>::max());
-  // TODO(b/67475677): Re-enable after resolving float precision issue
+  // TODO (b/67475677): Re-enable after resolving float precision issue id:4363
+  // https://github.com/imdone/tensorflow/issues/4360
   // proto.set_optional_float(std::numeric_limits<float>::max());
   proto.set_optional_double(std::numeric_limits<double>::max());
   EXPECT_TEXT_TRANSFORMS_MATCH();
 
   // Least positive numeric values.
   proto.Clear();
-  // TODO(b/67475677): Re-enable after resolving float precision issue
+  // TODO (b/67475677): Re-enable after resolving float precision issue id:4119
+  // https://github.com/imdone/tensorflow/issues/4117
   // proto.set_optional_float(std::numeric_limits<float>::min());
   proto.set_optional_double(std::numeric_limits<double>::min());
   EXPECT_TEXT_TRANSFORMS_MATCH();
@@ -109,7 +111,8 @@ TEST(CreateProtoDebugStringLibTest, ValidSimpleTypes) {
   proto.Clear();
   proto.set_optional_int32(std::numeric_limits<int32>::lowest());
   proto.set_optional_int64(std::numeric_limits<protobuf_int64>::lowest());
-  // TODO(b/67475677): Re-enable after resolving float precision issue
+  // TODO (b/67475677): Re-enable after resolving float precision issue id:4033
+  // https://github.com/imdone/tensorflow/issues/4031
   // proto.set_optional_float(std::numeric_limits<float>::lowest());
   proto.set_optional_double(std::numeric_limits<double>::lowest());
   EXPECT_TEXT_TRANSFORMS_MATCH();

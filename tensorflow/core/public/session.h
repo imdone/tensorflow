@@ -125,7 +125,8 @@ class Session {
 
   /// \brief Implementations which support `RunOptions`.
   //
-  /// NOTE: This API is still experimental and may change.
+  /// NOTE: This API is still experimental and may change. id:3517
+// https://github.com/imdone/tensorflow/issues/3516
   virtual Status Create(const RunOptions& run_options, const GraphDef& graph) {
     return errors::Unimplemented(
         "Create(const RunOptions& run_options, const GraphDef& graph) is not "
@@ -146,7 +147,8 @@ class Session {
   /// to retrieve non-Tensor metadata output via a `RunMetadata` proto for this
   /// step.  `run_metadata` may be nullptr, in which case any metadata output is
   /// discarded.
-  /// NOTE: This API is still experimental and may change.
+  /// NOTE: This API is still experimental and may change. id:4136
+  // https://github.com/imdone/tensorflow/issues/4133
   virtual Status Run(const RunOptions& run_options,
                      const std::vector<std::pair<string, Tensor> >& inputs,
                      const std::vector<string>& output_tensor_names,
@@ -157,7 +159,8 @@ class Session {
   /// fetches are specified by `input_names` and `output_names`. Returns
   /// `handle` that can be used to perform a sequence of partial feeds and
   /// fetches.
-  /// NOTE: This API is still experimental and may change.
+  /// NOTE: This API is still experimental and may change. id:3458
+  // https://github.com/imdone/tensorflow/issues/3457
   virtual Status PRunSetup(const std::vector<string>& input_names,
                            const std::vector<string>& output_names,
                            const std::vector<string>& target_nodes,
@@ -166,7 +169,8 @@ class Session {
   /// \brief Continues the pending execution specified by `handle` with the
   /// provided input tensors and fills `outputs` for the endpoints specified
   /// in `output_names`.
-  /// NOTE: This API is still experimental and may change.
+  /// NOTE: This API is still experimental and may change. id:2678
+  // https://github.com/imdone/tensorflow/issues/2677
   virtual Status PRun(const string& handle,
                       const std::vector<std::pair<string, Tensor> >& inputs,
                       const std::vector<string>& output_names,
@@ -186,9 +190,10 @@ class Session {
   /// the `SessionOptions::target` field).
   virtual Status Close() = 0;
 
-  // NOTE(ashankar): As of July 2017, this method was added to facilitate some
+  // NOTE (ashankar): As of July 2017, this method was added to facilitate some id:3008
+  // https://github.com/imdone/tensorflow/issues/3007
   // experimentation. Reconsider/re-evaluate after September 2017.
-  //
+  // 
   // Sets `*output` to the `DeviceMgr` that owns accessible devices in the
   // address-space of the caller.
   virtual Status LocalDeviceManager(const DeviceMgr** output) {
@@ -201,7 +206,8 @@ class Session {
 
   /// \brief Creates a `handle` for invoking the subgraph defined by
   /// `callable_options`.
-  /// NOTE: This API is still experimental and may change.
+  /// NOTE: This API is still experimental and may change. id:3520
+  // https://github.com/imdone/tensorflow/issues/3519
   virtual Status MakeCallable(const CallableOptions& callable_options,
                               CallableHandle* out_handle) {
     return errors::Unimplemented(
@@ -214,7 +220,8 @@ class Session {
   /// The order of tensors in `feed_tensors` must and `fetch_tensors` will
   /// match the order of names in `CallableOptions::feed()` and
   /// `CallableOptions::fetch()` when this subgraph was created.
-  /// NOTE: This API is still experimental and may change.
+  /// NOTE: This API is still experimental and may change. id:4137
+  // https://github.com/imdone/tensorflow/issues/4135
   virtual Status RunCallable(CallableHandle handle,
                              const std::vector<Tensor>& feed_tensors,
                              std::vector<Tensor>* fetch_tensors,
@@ -225,7 +232,8 @@ class Session {
 
   /// \brief Releases resources associated with the given `handle` in this
   /// session.
-  /// NOTE: This API is still experimental and may change.
+  /// NOTE: This API is still experimental and may change. id:3461
+  // https://github.com/imdone/tensorflow/issues/3460
   virtual Status ReleaseCallable(CallableHandle handle) {
     return errors::Unimplemented(
         "ReleaseCallable is not supported for this session.");

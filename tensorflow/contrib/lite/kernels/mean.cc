@@ -263,7 +263,8 @@ TfLiteRegistration* Register_MEAN_REF() {
   return &r;
 }
 
-// TODO(kanlig): add optimized implementation of Mean.
+// TODO (kanlig): add optimized implementation of Mean. id:974
+// https://github.com/imdone/tensorflow/issues/975
 TfLiteRegistration* Register_MEAN() { return Register_MEAN_REF(); }
 
 }  // namespace builtin

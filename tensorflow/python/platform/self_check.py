@@ -97,5 +97,6 @@ def preload_check():
               % (build_info.cudnn_dll_name, build_info.cudnn_version_number))
 
   else:
-    # TODO(mrry): Consider adding checks for the Linux and Mac OS X builds.
+    # TODO (mrry): Consider adding checks for the Linux and Mac OS X builds. id:3910
+    # https://github.com/imdone/tensorflow/issues/3908
     pass

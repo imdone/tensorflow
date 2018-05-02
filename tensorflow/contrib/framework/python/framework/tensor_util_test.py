@@ -342,7 +342,8 @@ class RemoveSqueezableDimensionsTest(test.TestCase):
         labels_have_static_shape=True,
         labels_have_extra_dim=False)
 
-  # TODO(ptucker): Replace this with parameterized test.
+  # TODO (ptucker): Replace this with parameterized test. id:1256
+  # https://github.com/imdone/tensorflow/issues/1257
   def _testRemoveSqueezableDimensions(self, predictions_have_static_shape,
                                       predictions_have_extra_dim,
                                       labels_have_static_shape,

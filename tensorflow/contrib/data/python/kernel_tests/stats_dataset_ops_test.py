@@ -252,7 +252,8 @@ class StatsDatasetSerializationTest(
         None, num_outputs)
 
 
-# TODO(shivaniagrawal): Can not checkpoint input_pipeline with the
+# TODO (shivaniagrawal): Can not checkpoint input_pipeline with the id:990
+# https://github.com/imdone/tensorflow/issues/991
 # transformation `stats_ops.set_stats_aggregator`, since we don't support
 # serializing StatsAggregator yet.
 

@@ -125,11 +125,13 @@ TEST_F(WhileLoopTest, WrongCondOutputType) {
       "float");
 }
 
-// TODO(skyewm): test bad cond output shape
+// TODO (skyewm): test bad cond output shape id:92
+// https://github.com/imdone/tensorflow/issues/93
 
 TEST_F(WhileLoopTest, NullCondOutputNode) {
   Init(1);
-  // TODO(skyewm): improve error message
+  // TODO (skyewm): improve error message id:129
+  // https://github.com/imdone/tensorflow/issues/130
   CreateLoop(
       [](const Scope& s, const std::vector<Output>& inputs, Output* output) {
         *output = {nullptr, 0};
@@ -158,12 +160,15 @@ TEST_F(WhileLoopTest, UnsetCondOutput) {
              AddOneBody, error::INVALID_ARGUMENT, "Node is null");
 }
 
-// TODO(skyewm): test bad body output type
-// TODO(skyewm): test bad body output shape
+// TODO (skyewm): test bad body output type id:229
+// https://github.com/imdone/tensorflow/issues/230
+// TODO (skyewm): test bad body output shape id:113
+// https://github.com/imdone/tensorflow/issues/114
 
 TEST_F(WhileLoopTest, NullBodyOutputNode) {
   Init(1);
-  // TODO(skyewm): improve error message
+  // TODO (skyewm): improve error message id:96
+  // https://github.com/imdone/tensorflow/issues/98
   CreateLoop(LessThanTenCond,
              [](const Scope& s, const std::vector<Output>& inputs,
                 std::vector<Output>* outputs) {

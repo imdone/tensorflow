@@ -114,14 +114,16 @@ class TensorHandle : public core::RefCounted {
 
   tensorflow::Tensor tensor_;
 
-  // TODO(ashankar): device_ == nullptr iff local CPU
+  // TODO (ashankar): device_ == nullptr iff local CPU id:1403
+  // https://github.com/imdone/tensorflow/issues/1404
   // This was expedient, but perhaps worth revisiting ('device_' should always
   // be a valid pointer?)
   // This can be done if TFE_NewOp() and the TFE_TensorHandle constructors are
   // provided with the appropriate TFE_Context.
-  //
-  // TODO(ashankar): Reference count TFE_Context to ensure that 'device_' of a
-  // TFE_TensorHandle does not outlive the TFE_Context from which it came?
+  // 
+  // TODO (ashankar): Reference count TFE_Context to ensure that 'device_' of a id:1889
+// https://github.com/imdone/tensorflow/issues/1889
+// TFE_TensorHandle does not outlive the TFE_Context from which it came?
   tensorflow::Device* device_;
 
   // Device in which the op producing this tensor was executed. Equals to

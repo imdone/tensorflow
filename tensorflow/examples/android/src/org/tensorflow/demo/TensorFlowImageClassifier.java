@@ -85,8 +85,9 @@ public class TensorFlowImageClassifier implements Classifier {
     c.outputName = outputName;
 
     // Read the label names into memory.
-    // TODO(andrewharp): make this handle non-assets.
-    String actualFilename = labelFilename.split("file:///android_asset/")[1];
+    // TODO (andrewharp): make this handle non-assets. id:3060
+    // https://github.com/imdone/tensorflow/issues/3059
+    //     String actualFilename = labelFilename.split("file:///android_asset/")[1];
     Log.i(TAG, "Reading labels from: " + actualFilename);
     BufferedReader br = null;
     try {

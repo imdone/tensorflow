@@ -175,7 +175,8 @@ def get_input_alternatives(input_ops):
   if not features:
     raise ValueError('Features must be defined.')
 
-  # TODO(b/34253951): reinstate the "features" input_signature.
+  # TODO (b/34253951): reinstate the "features" input_signature. id:878
+  # https://github.com/imdone/tensorflow/issues/879
   # The "features" input_signature, as written, does not work with
   # SparseTensors.  It is simply commented out as a stopgap, pending discussion
   # on the bug as to the correct solution.
@@ -708,7 +709,8 @@ def make_best_model_export_strategy(
       The string path to the exported directory.
     """
     if not checkpoint_path:
-      # TODO(b/67425018): switch to
+      # TODO (b/67425018): switch to id:1409
+      # https://github.com/imdone/tensorflow/issues/1410
       #    checkpoint_path = estimator.latest_checkpoint()
       #  as soon as contrib is cleaned up and we can thus be sure that
       #  estimator is a tf.estimator.Estimator and not a
@@ -728,7 +730,8 @@ def make_best_model_export_strategy(
   return export_strategy.ExportStrategy('best_model', export_fn)
 
 
-# TODO(b/67013778): Revisit this approach when corresponding changes to
+# TODO (b/67013778): Revisit this approach when corresponding changes to id:1584
+# https://github.com/imdone/tensorflow/issues/1584
 # TF Core are finalized.
 @deprecated(None, 'Switch to tf.estimator.Exporter and associated utilities.')
 def extend_export_strategy(base_export_strategy,

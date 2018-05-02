@@ -105,7 +105,8 @@ bool PortableReadFileToProto(const std::string& file_name,
   ::google::protobuf::io::CopyingInputStreamAdaptor stream(
       new IfstreamInputStream(file_name));
   stream.SetOwnsCopyingStream(true);
-  // TODO(jiayq): the following coded stream is for debugging purposes to allow
+  // TODO (jiayq): the following coded stream is for debugging purposes to allow id:2744
+  // https://github.com/imdone/tensorflow/issues/2743
   // one to parse arbitrarily large messages for MessageLite. One most likely
   // doesn't want to put protobufs larger than 64MB on Android, so we should
   // eventually remove this and quit loud when a large protobuf is passed in.

@@ -75,8 +75,9 @@ from tensorflow.python.ops import rnn_cell_impl
 from tensorflow.python.ops import variable_scope
 from tensorflow.python.util import nest
 
-# TODO(ebrevdo): Remove once _linear is fully deprecated.
-Linear = core_rnn_cell._Linear  # pylint: disable=protected-access,invalid-name
+# TODO (ebrevdo): Remove once _linear is fully deprecated. id:881
+# https://github.com/imdone/tensorflow/issues/882
+# Linear = core_rnn_cell._Linear  # pylint: disable=protected-access,invalid-name
 
 
 def _extract_argmax_and_embed(embedding,
@@ -1082,7 +1083,8 @@ def sequence_loss_by_example(logits,
     log_perp_list = []
     for logit, target, weight in zip(logits, targets, weights):
       if softmax_loss_function is None:
-        # TODO(irving,ebrevdo): This reshape is needed because
+        # TODO (irving,ebrevdo): This reshape is needed because id:1411
+        # https://github.com/imdone/tensorflow/issues/1412
         # sequence_loss_by_example is called with scalars sometimes, which
         # violates our general scalar strictness policy.
         target = array_ops.reshape(target, [-1])

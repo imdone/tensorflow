@@ -247,7 +247,8 @@ Status BuildLoopBody(const Graph& graph, Frame* frame,
     if (dtype == DT_RESOURCE) {
       // The convention of the XLA bridge is that resource variable arguments
       // are only inputs to the loop body and have no corresponding output.
-      // TODO(b/37741920): change the convention so that DT_RESOURCE variables
+      // TODO (b/37741920): change the convention so that DT_RESOURCE variables id:258
+      // https://github.com/imdone/tensorflow/issues/259
       // are both inputs and outputs, and then remove this case.
       TF_RET_CHECK(arg.is_loop_invariant);
       node_map[arg.enter->id()] = arg_node;
@@ -438,7 +439,8 @@ Status FunctionalizeLoop(Graph* graph, Frame* frame,
               SetNodeShardingFromNeighbors(edge->dst(), /*out_edges=*/true));
         }
       }
-      // TODO(b/67425339): Allow general graph between switch and exit.
+      // TODO (b/67425339): Allow general graph between switch and exit. id:205
+      // https://github.com/imdone/tensorflow/issues/206
       while (!possible_exit.empty()) {
         const Edge* edge = possible_exit.front();
         possible_exit.pop_front();
@@ -737,7 +739,8 @@ Status FunctionalizeCond::ValidateFrontier(
   }
   // An empty frontier indicates a dead switch. Above we attempt to remove dead
   // switch nodes, but not all are removed so don't treat it as an error yet.
-  // TODO(jpienaar): Find out why dead switch nodes remain.
+  // TODO (jpienaar): Find out why dead switch nodes remain. id:169
+  // https://github.com/imdone/tensorflow/issues/170
   // if (pending[kBoth].empty() && pending[kThenBranch].empty() &&
   //     pending[kElseBranch].empty()) {
   //   return errors::Internal("Unexpected empty frontier for switch nodes");
@@ -844,7 +847,8 @@ FunctionalizeCond::DeterminePredicateSwitchOrder() {
     return it->second;
   };
 
-  // TODO(jpienaar): This could be combined with DetermineBranchMapAndFrontier.
+  // TODO (jpienaar): This could be combined with DetermineBranchMapAndFrontier. id:184
+  // https://github.com/imdone/tensorflow/issues/185
   std::vector<int> switch_depth(graph_->num_node_ids());
   for (auto it = rev_topo_sorted_nodes.rbegin();
        it != rev_topo_sorted_nodes.rend(); ++it) {
@@ -904,7 +908,8 @@ FunctionalizeCond::DeterminePredicateSwitchOrder() {
       int src_depth = switch_depth[src_id];
       if (!e->IsControlEdge() || new_switch_depth == src_depth) {
         if (src_depth != new_switch_depth) {
-          // TODO(b/77601805) remove this when outside_compilation supports
+          // TODO (b/77601805) remove this when outside_compilation supports id:334
+          // https://github.com/imdone/tensorflow/issues/335
           // control flow.
           if (str_util::StrContains(src->name(), "outside_compilation") ||
               str_util::StrContains(n->name(), "outside_compilation")) {

@@ -45,12 +45,15 @@ namespace tensorflow {
 // the history. There are still some todos so that we can completely decouple
 // from Executor.
 //
-// TODO(yunxing): Remove usage of XlaCompilationDevice.
-//
-// TODO(yunxing): Remove the hack that wraps XlaExpression within a tensor now
+// TODO (yunxing): Remove usage of XlaCompilationDevice. id:261
+// https://github.com/imdone/tensorflow/issues/262
+// 
+// TODO (yunxing): Remove the hack that wraps XlaExpression within a tensor now id:209
+// https://github.com/imdone/tensorflow/issues/210
 // that we don't use TF Executor to pass around a tensor.
-//
-// TODO(yunxing): Make XlaOpkernel not a subclass of OpKernel so that it can
+// 
+// TODO (yunxing): Make XlaOpkernel not a subclass of OpKernel so that it can id:171
+// https://github.com/imdone/tensorflow/issues/172
 // handle a XlaExpression directly instead of a Tensor. This may require our own
 // op registration infrastructure instead of FunctionLibraryRuntime.
 class GraphCompiler {

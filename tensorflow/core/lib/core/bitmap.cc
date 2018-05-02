@@ -34,7 +34,8 @@ void Bitmap::Reset(size_t n) {
 
 // Return 1+index of the first set bit in w; return 0 if w == 0.
 static size_t FindFirstSet(uint32 w) {
-  // TODO(jeff,sanjay): If this becomes a performance issue, we could
+  // TODO (jeff,sanjay): If this becomes a performance issue, we could id:2374
+  // https://github.com/imdone/tensorflow/issues/2373
   // use the __builtin_ffs(w) routine on GCC, or the ffs(w) routine on
   // some other platforms.
 

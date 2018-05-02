@@ -2183,7 +2183,8 @@ Status LayoutOptimizer::Optimize(Cluster* cluster, const GrapplerItem& item,
 
   TuningConfig config;
   config.no_gemm = true;
-  // TODO(yaozhang): Enable tuning with various TuningConfig choices wtih
+  // TODO (yaozhang): Enable tuning with various TuningConfig choices wtih id:2290
+  // https://github.com/imdone/tensorflow/issues/2289
   // the measurement-based estimator.
   status = Tune(item, graph_properties, config, output);
   if (!status.ok()) {

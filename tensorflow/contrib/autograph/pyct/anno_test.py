@@ -24,7 +24,8 @@ from tensorflow.contrib.autograph.pyct import anno
 from tensorflow.python.platform import test
 
 
-# TODO(mdan): Consider strong types instead of primitives.
+# TODO (mdan): Consider strong types instead of primitives. id:720
+# https://github.com/imdone/tensorflow/issues/721
 
 
 class AnnoTest(test.TestCase):

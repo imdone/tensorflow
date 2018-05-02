@@ -23,7 +23,8 @@ limitations under the License.
 extern "C" {
 #endif  // __cplusplus
 
-// TODO(aselle): Consider using "if this then that" for testing.
+// TODO (aselle): Consider using "if this then that" for testing. id:1714
+// https://github.com/imdone/tensorflow/issues/1714
 
 // Possible padding types (for convolutions)
 typedef enum {
@@ -38,7 +39,8 @@ typedef struct {
 } TfLitePaddingValues;
 
 // Possible fused activation functions.
-// TODO(aselle): rename to TfLiteActivation
+// TODO (aselle): rename to TfLiteActivation id:1197
+// https://github.com/imdone/tensorflow/issues/1198
 typedef enum {
   kTfLiteActNone = 0,
   kTfLiteActRelu,
@@ -162,7 +164,8 @@ typedef struct {
 } TfLitePadParams;
 
 typedef struct {
-  // TODO(ahentz): We can't have dynamic data in this struct, at least not yet.
+  // TODO (ahentz): We can't have dynamic data in this struct, at least not yet. id:1071
+  // https://github.com/imdone/tensorflow/issues/1072
   // For now we will fix the maximum possible number of dimensions.
   int shape[8];
   int num_dimensions;
@@ -209,7 +212,8 @@ typedef struct {
 } TfLiteSplitParams;
 
 typedef struct {
-  // TODO(ahentz): We can't have dynamic data in this struct, at least not yet.
+  // TODO (ahentz): We can't have dynamic data in this struct, at least not yet. id:900
+  // https://github.com/imdone/tensorflow/issues/901
   // For now we will fix the maximum possible number of dimensions.
   int squeeze_dims[8];
   int num_squeeze_dims;

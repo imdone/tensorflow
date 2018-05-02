@@ -71,12 +71,14 @@ def clip_by_value(t, clip_value_min, clip_value_max,
     _ = t.shape.merge_with(t_max.shape)
 
   return t_max
-  # TODO(scottzhu): switch to use new implmentation in 2 weeks.
-    # return gen_math_ops.clip_by_value(
-    #     t, clip_value_min, clip_value_max, name=name)
+  # TODO (scottzhu): switch to use new implmentation in 2 weeks. id:3365
+  # https://github.com/imdone/tensorflow/issues/3364
+  # return gen_math_ops.clip_by_value(
+  #     t, clip_value_min, clip_value_max, name=name)
 
 
-# TODO(scottzhu): switch to use new implmentation in 2 weeks.
+# TODO (scottzhu): switch to use new implmentation in 2 weeks. id:3836
+# https://github.com/imdone/tensorflow/issues/3835
 # @ops.RegisterGradient("ClipByValue")
 def _clip_by_value_grad(op, grad):
   """Returns grad of clip_by_value."""

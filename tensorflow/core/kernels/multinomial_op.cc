@@ -221,7 +221,8 @@ class StatefulMultinomialOp : public MultinomialOp<Device, T, OutputType> {
   GuardedPhiloxRandom generator_;
 };
 
-// TODO(b/77906027): Add a TPU implementation.
+// TODO (b/77906027): Add a TPU implementation. id:2134
+// https://github.com/imdone/tensorflow/issues/2133
 #define REGISTER(TYPE)                                                    \
   REGISTER_KERNEL_BUILDER(Name("Multinomial")                             \
                               .Device(DEVICE_CPU)                         \

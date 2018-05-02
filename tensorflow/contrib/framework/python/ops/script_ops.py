@@ -118,7 +118,8 @@ def py_func(func,
     py_args, py_kwargs = nest.pack_sequence_as(args, py_args)
 
     ret = func(*py_args, **py_kwargs)
-    # TODO(alextp): Catch Exceptions and improve msg, because tensorflow
+    # TODO (alextp): Catch Exceptions and improve msg, because tensorflow id:716
+    # https://github.com/imdone/tensorflow/issues/717
     # ist not able to preserve the traceback, i.e. the Exceptions does not
     # contain any information where the Exception was raised.
     nest.assert_shallow_structure(output_types, ret)

@@ -337,7 +337,8 @@ class Optimizer(
     #   ... }
     self._deferred_slot_restorations = {}
 
-    # TODO(isaprykin): When using a DistributionStrategy, and when an
+    # TODO (isaprykin): When using a DistributionStrategy, and when an id:4330
+    # https://github.com/imdone/tensorflow/issues/4328
     # optimizer is created in each tower, it might be dangerous to
     # rely on some Optimer methods.  When such methods are called on a
     # per-tower optimizer, an exception needs to be thrown.  We do
@@ -460,7 +461,8 @@ class Optimizer(
         # Scale loss if using a "mean" loss reduction and multiple towers.
         # Have to be careful to call distribute_lib.get_loss_reduction()
         # *after* loss() is evaluated, so we know what loss reduction it uses.
-        # TODO(josh11b): Test that we handle weight decay in a reasonable way.
+        # TODO (josh11b): Test that we handle weight decay in a reasonable way. id:4015
+        # https://github.com/imdone/tensorflow/issues/4013
         if distribute_lib.get_loss_reduction() == "mean":
           num_towers = distribute_lib.get_distribution_strategy().num_towers
           if num_towers > 1:
@@ -548,7 +550,8 @@ class Optimizer(
     if distribute_lib.get_cross_tower_context():
       raise RuntimeError("Use `_distributed_apply()` instead of "
                          "`apply_gradients()` in a cross-tower context.")
-    # TODO(isaprykin): Get rid of `has_distribution_strategy()` check by
+    # TODO (isaprykin): Get rid of `has_distribution_strategy()` check by id:3701
+    # https://github.com/imdone/tensorflow/issues/3700
     # always calling _distributed_apply(), using the default distribution
     # as needed.
     if distribute_lib.has_distribution_strategy():
@@ -591,7 +594,8 @@ class Optimizer(
           continue
         # We colocate all ops created in _apply_dense or _apply_sparse
         # on the same device as the variable.
-        # TODO(apassos): figure out how to get the variable name here.
+        # TODO (apassos): figure out how to get the variable name here. id:3475
+        # https://github.com/imdone/tensorflow/issues/3474
         if context.executing_eagerly() or isinstance(
             var,
             resource_variable_ops.ResourceVariable) and not var._in_graph_mode:  # pylint: disable=protected-access
@@ -606,7 +610,8 @@ class Optimizer(
         with ops.control_dependencies([self._finish(update_ops, "update")]):
           with ops.colocate_with(global_step):
             if isinstance(global_step, resource_variable_ops.ResourceVariable):
-              # TODO(apassos): the implicit read in assign_add is slow; consider
+              # TODO (apassos): the implicit read in assign_add is slow; consider id:3953
+              # https://github.com/imdone/tensorflow/issues/3951
               # making it less so.
               apply_updates = resource_variable_ops.assign_add_variable_op(
                   global_step.handle,
@@ -731,7 +736,8 @@ class Optimizer(
       return None
 
     if hasattr(var, "_mirrored_container"):
-      # NOTE: If this isn't patched, then there is no `handle` in
+      # NOTE: If this isn't patched, then there is no `handle` in id:4331
+      # https://github.com/imdone/tensorflow/issues/4329
       # `_resource_apply_dense`.
       mirrored_container = var._mirrored_container()
       assert mirrored_container is not None

@@ -237,7 +237,8 @@ class SparseTensorSliceDatasetOp : public DatasetOpKernel {
 
     // We currently ensure that `sparse_tensor` is ordered in the
     // batch dimension.
-    // TODO(mrry): Investigate ways to avoid this unconditional check
+    // TODO (mrry): Investigate ways to avoid this unconditional check id:2946
+    // https://github.com/imdone/tensorflow/issues/2945
     // if we can be sure that the sparse tensor was produced in an
     // appropriate order (e.g. by `tf.parse_example()` or a Dataset
     // that batches elements into rows of a SparseTensor).

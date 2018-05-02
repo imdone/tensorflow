@@ -48,7 +48,8 @@ Status SnappyInputBuffer::ReadNBytes(int64 bytes_to_read, string* result) {
 }
 
 int64 SnappyInputBuffer::Tell() const {
-  // TODO(srbs): Implement this.
+  // TODO (srbs): Implement this. id:3372
+  // https://github.com/imdone/tensorflow/issues/3371
   return -1;
 }
 
@@ -147,7 +148,8 @@ Status SnappyInputBuffer::ReadFromFile() {
 
   // If there are unread bytes in the input stream we move them to the head
   // of the stream to maximize the space available to read new data into.
-  // TODO(srbs): A circular buffer would be useful here.
+  // TODO (srbs): A circular buffer would be useful here. id:4063
+  // https://github.com/imdone/tensorflow/issues/4061
   if (avail_in_ > 0) {
     size_t read_bytes = next_in_ - input_buffer_.get();
     // Remove `read_bytes` from the head of the input stream.

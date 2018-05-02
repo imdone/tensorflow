@@ -80,7 +80,8 @@ def conv_layer(layer_id, inputs, kernel_size, out_channels):
       Values of the layer immediately after the activation function.
     params: Tuple of (kernel, bias), parameters for this layer.
   """
-  # TODO(b/67004004): Delete this function and rely on tf.layers exclusively.
+  # TODO (b/67004004): Delete this function and rely on tf.layers exclusively. id:1210
+  # https://github.com/imdone/tensorflow/issues/1211
   layer = tf.layers.Conv2D(
       out_channels,
       kernel_size=[kernel_size, kernel_size],
@@ -109,7 +110,8 @@ def max_pool_layer(layer_id, inputs, kernel_size, stride):
     Tensor of shape [num_examples, width/stride, height/stride, out_channels].
     Result of applying max pooling to 'inputs'.
   """
-  # TODO(b/67004004): Delete this function and rely on tf.layers exclusively.
+  # TODO (b/67004004): Delete this function and rely on tf.layers exclusively. id:1317
+  # https://github.com/imdone/tensorflow/issues/1318
   with tf.variable_scope("pool_%d" % layer_id):
     return tf.nn.max_pool(
         inputs, [1, kernel_size, kernel_size, 1], [1, stride, stride, 1],
@@ -131,7 +133,8 @@ def linear_layer(layer_id, inputs, output_size):
       layer immediately after the activation function.
     params: Tuple of (weights, bias), parameters for this layer.
   """
-  # TODO(b/67004004): Delete this function and rely on tf.layers exclusively.
+  # TODO (b/67004004): Delete this function and rely on tf.layers exclusively. id:908
+  # https://github.com/imdone/tensorflow/issues/909
   pre, _, params = mlp.fc_layer(layer_id, inputs, output_size)
   return pre, params
 
@@ -444,7 +447,8 @@ def distributed_grads_and_ops_dedicated_workers(
       elif _is_cov_update_task(task_id, num_worker_tasks):
         learning_op = cov_update_op
       elif _is_inv_update_task(task_id, num_worker_tasks):
-        # TODO(duckworthd): Running this op before cov_update_op has been run a
+        # TODO (duckworthd): Running this op before cov_update_op has been run a id:858
+        # https://github.com/imdone/tensorflow/issues/859
         # few times can result in "InvalidArgumentError: Cholesky decomposition
         # was not successful." Delay running this op until cov_update_op has
         # been run a few times.

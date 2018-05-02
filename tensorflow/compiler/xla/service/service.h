@@ -116,7 +116,8 @@ class Service : public ServiceInterface {
   // immutable arguments. The request contains the whole computation graph.
   // Returns global data output and execution timing.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:499
+// https://github.com/imdone/tensorflow/issues/500
   tensorflow::Status ExecuteGraph(const ExecuteGraphRequest* arg,
                                   ExecuteResponse* result) override;
 
@@ -130,7 +131,8 @@ class Service : public ServiceInterface {
   // passed as immutable arguments. Returns global data output for each
   // computation.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:591
+// https://github.com/imdone/tensorflow/issues/592
   tensorflow::Status ExecuteGraphParallel(
       const ExecuteGraphParallelRequest* arg,
       ExecuteParallelResponse* result) override;
@@ -238,7 +240,8 @@ class Service : public ServiceInterface {
 
   // Retrieves the statistics of a computation.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:426
+// https://github.com/imdone/tensorflow/issues/427
   tensorflow::Status GetComputationGraphStats(
       const ComputationGraphStatsRequest* arg,
       ComputationStatsResponse* result) override;
@@ -333,7 +336,8 @@ class Service : public ServiceInterface {
 
   // Builds an Executable for the given HLO module proto.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:413
+// https://github.com/imdone/tensorflow/issues/414
   StatusOr<std::unique_ptr<Executable>> BuildExecutable(
       const HloModuleProto& module_proto,
       std::unique_ptr<HloModuleConfig> module_config, Backend* backend,

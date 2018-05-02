@@ -103,7 +103,8 @@ class BoostedTreesCalculateBestGainsPerFeatureOp : public OpKernel {
         float total_grad = 0.0;
         float total_hess = 0.0;
         for (int bucket = 0; bucket < num_buckets; ++bucket) {
-          // TODO(nponomareva): Consider multi-dimensional gradients/hessians.
+          // TODO (nponomareva): Consider multi-dimensional gradients/hessians. id:2071
+          // https://github.com/imdone/tensorflow/issues/2071
           total_grad += stats_summary[feature_idx](node_id, bucket, 0);
           total_hess += stats_summary[feature_idx](node_id, bucket, 1);
           cum_grad.push_back(total_grad);
@@ -192,7 +193,8 @@ class BoostedTreesCalculateBestGainsPerFeatureOp : public OpKernel {
         output_gains_vec(i) = output_gains[i] - tree_complexity;
         output_thresholds_vec(i) = output_thresholds[i];
         // Logits are 1-dimensional for now.
-        // TODO(nponomareva): Consider multi-dimensional logits.
+        // TODO (nponomareva): Consider multi-dimensional logits. id:1737
+        // https://github.com/imdone/tensorflow/issues/1737
         output_left_node_contribs_matrix(i, 0) = output_left_node_contribs[i];
         output_right_node_contribs_matrix(i, 0) = output_right_node_contribs[i];
       }

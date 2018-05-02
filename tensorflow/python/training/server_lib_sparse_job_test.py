@@ -27,7 +27,8 @@ from tensorflow.python.training import server_lib
 
 class SparseJobTest(test.TestCase):
 
-  # TODO(b/34465411): Starting multiple servers with different configurations
+  # TODO (b/34465411): Starting multiple servers with different configurations id:3713
+  # https://github.com/imdone/tensorflow/issues/3712
   # in the same test is flaky. Move this test case back into
   # "server_lib_test.py" when this is no longer the case.
   def testSparseJob(self):

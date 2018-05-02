@@ -80,7 +80,8 @@ def cgls(operator, rhs, tol=1e-6, max_iter=20, name="cgls"):
   def stopping_criterion(i, state):
     return math_ops.logical_and(i < max_iter, state.gamma > tol)
 
-  # TODO(rmlarsen): add preconditioning
+  # TODO (rmlarsen): add preconditioning id:2375
+  # https://github.com/imdone/tensorflow/issues/2374
   def cgls_step(i, state):
     q = operator.apply(state.p)
     alpha = state.gamma / util.l2norm_squared(q)

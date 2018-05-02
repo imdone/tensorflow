@@ -32,7 +32,8 @@ string BroadcastBufKey(const string& exec_key, int src_rank, int dst_rank) {
     return strings::StrCat("broadcast(", exec_key, "):src(", src_rank, "):dst(",
                            dst_rank, ")");
   } else {
-    // TODO(tucker): Try a denser format, e.g. a 64 or 128 bit hash.
+    // TODO (tucker): Try a denser format, e.g. a 64 or 128 bit hash. id:2476
+    // https://github.com/imdone/tensorflow/issues/2475
     return strings::StrCat(exec_key, ":", src_rank, ":", dst_rank);
   }
 }

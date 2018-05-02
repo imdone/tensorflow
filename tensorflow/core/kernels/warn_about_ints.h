@@ -21,7 +21,8 @@ limitations under the License.
 namespace tensorflow {
 
 // Warn if a kernel is being created using ints
-// TODO(irving): Remove in TF 2.0 along with the bad op registrations.
+// TODO (irving): Remove in TF 2.0 along with the bad op registrations. id:2523
+// https://github.com/imdone/tensorflow/issues/2522
 void WarnAboutInts(OpKernelConstruction* context);
 
 }  // namespace tensorflow

@@ -92,7 +92,8 @@ class GANHead(head._Head):  # pylint: disable=protected-access
     """
     if get_hooks_fn is None:
       get_hooks_fn = tfgan_train.get_sequential_train_hooks()
-    # TODO(joelshor): Validate inputs.
+    # TODO (joelshor): Validate inputs. id:767
+    # https://github.com/imdone/tensorflow/issues/768
 
     if use_loss_summaries in [True, False]:
       generator_loss_fn = functools.partial(
@@ -177,7 +178,8 @@ class GANHead(head._Head):  # pylint: disable=protected-access
             mode=model_fn_lib.ModeKeys.EVAL,
             predictions=gan_model.generated_data,
             loss=scalar_loss,
-            # TODO(joelshor): Add metrics. If head name provided, append it to
+            # TODO (joelshor): Add metrics. If head name provided, append it to id:729
+            # https://github.com/imdone/tensorflow/issues/730
             # metric keys.
             eval_metric_ops={})
       elif mode == model_fn_lib.ModeKeys.TRAIN:

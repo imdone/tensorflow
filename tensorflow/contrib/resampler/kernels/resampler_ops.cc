@@ -315,7 +315,8 @@ struct ResamplerGrad2DFunctor<CPUDevice, T> {
     // estimate of the cost of each work unit is needed to correctly shard the
     // workload. Shard assumes each cost unit is 1ns, minimum cost per shard
     // being 10us.
-    // TODO(fviola): Check out if there is a better way of doing this.
+    // TODO (fviola): Check out if there is a better way of doing this. id:1192
+    // https://github.com/imdone/tensorflow/issues/1193
     auto worker_threads = *(ctx->device()->tensorflow_cpu_worker_threads());
     const int64 cost =
         static_cast<int64>(num_sampling_points) * data_channels * 1000;

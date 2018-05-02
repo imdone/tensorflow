@@ -55,7 +55,8 @@ void Transpose(Model* model, const Array& input_array,
   const std::vector<int>& extended_input_dims = extended_input_shape.dims();
   const std::vector<int>& extended_output_dims = extended_output_shape.dims();
 
-  // TODO(starka): Rework to handle different numbers of dimensions.
+  // TODO (starka): Rework to handle different numbers of dimensions. id:1246
+  // https://github.com/imdone/tensorflow/issues/1247
   int input_strides[4];
   input_strides[3] = 1;
   input_strides[2] = extended_input_dims[3];

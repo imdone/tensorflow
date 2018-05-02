@@ -334,7 +334,8 @@ Status VirtualScheduler::Init() {
         "Ill formed graph or invalid set of fetch nodes specified");
   }
 
-  // TODO(dyoon): this is a bit inefficient as name_to_node is already built in
+  // TODO (dyoon): this is a bit inefficient as name_to_node is already built in id:1675
+  // https://github.com/imdone/tensorflow/issues/1675
   // ComputeTransitiveFanin().
   // Once ComputeTransitiveFanin is complete, only the nodes that can be reached
   // from the fetch nodes are scheduled. So the scheduled nodes should be
@@ -345,7 +346,8 @@ Status VirtualScheduler::Init() {
     name_to_node[node->name()] = node;
   }
 
-  // TODO(dyoon): Instead of identifying _Send node here manually, add _Send
+  // TODO (dyoon): Instead of identifying _Send node here manually, add _Send id:2279
+  // https://github.com/imdone/tensorflow/issues/2278
   // to _Recv as control dependency when creating GrapplerItem.
   std::unordered_map<string, const NodeDef*> name_to_send;
   for (const auto& node : graph.node()) {

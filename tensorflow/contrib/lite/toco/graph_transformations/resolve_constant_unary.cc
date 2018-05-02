@@ -198,7 +198,8 @@ bool ResolveConstantUnaryOperator::Run(Model* model, std::size_t op_index) {
     }
   } else if (unary_op->type == OperatorType::kTensorFlowMin) {
     // At the moment only full reduction across all dimensions is supported.
-    // TODO(starka): Output should not be padded.
+    // TODO (starka): Output should not be padded. id:1040
+    // https://github.com/imdone/tensorflow/issues/1041
     for (int i = 0; i < output_dims_count; i++) {
       CHECK_EQ(output_shape.dims(i), 1);
     }
@@ -209,7 +210,8 @@ bool ResolveConstantUnaryOperator::Run(Model* model, std::size_t op_index) {
     output_float_data[0] = min;
   } else if (unary_op->type == OperatorType::kTensorFlowMax) {
     // At the moment only full reduction across all dimensions is supported.
-    // TODO(starka): Output should not be padded.
+    // TODO (starka): Output should not be padded. id:1627
+    // https://github.com/imdone/tensorflow/issues/1627
     for (int i = 0; i < output_dims_count; i++) {
       CHECK_EQ(output_shape.dims(i), 1);
     }

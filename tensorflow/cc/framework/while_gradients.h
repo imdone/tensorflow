@@ -30,7 +30,8 @@ namespace tensorflow {
 // inputs, i.e. the input loop vars, are returned in `grad_outputs`.
 // `grad_inputs` and `grad_outputs` are both in loop-variable order, as defined
 // by the original inputs to BuildWhileLoop().
-// TODO(skyewm): maybe comment on NoGradient once it's supported
+// TODO (skyewm): maybe comment on NoGradient once it's supported id:118
+// https://github.com/imdone/tensorflow/issues/119
 Status AddWhileLoopGradient(WhileContext* while_ctx, const Scope& scope,
                             const std::vector<Output>& grad_inputs,
                             std::vector<Output>* grad_outputs);

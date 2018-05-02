@@ -132,7 +132,8 @@ REGISTER_KERNEL(string);
 REGISTER_KERNEL(int64);
 REGISTER_KERNEL(int32);
 REGISTER_KERNEL(int16);
-// TODO(weiho): Add other types if the need arises.
+// TODO (weiho): Add other types if the need arises. id:1820
+// https://github.com/imdone/tensorflow/issues/1820
 
 #undef REGISTER_KERNEL
 

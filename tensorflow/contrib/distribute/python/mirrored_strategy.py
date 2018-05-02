@@ -36,7 +36,8 @@ from tensorflow.python.training import device_util
 from tensorflow.python.training import distribute as distribute_lib
 
 
-# TODO(josh11b): Replace asserts in this file with if ...: raise ...
+# TODO (josh11b): Replace asserts in this file with if ...: raise ... id:1095
+# https://github.com/imdone/tensorflow/issues/1096
 
 
 def _cpu_device(device):
@@ -72,7 +73,8 @@ class MirroredStrategy(distribute_lib.DistributionStrategy):
     assert devices, "Must specify at least one device."
     assert len(set(devices)) == len(devices), (
         "No duplicates allowed in `devices` argument.")
-    # TODO(josh11b): Require at least 2 devices?
+    # TODO (josh11b): Require at least 2 devices? id:1013
+    # https://github.com/imdone/tensorflow/issues/1014
     self._devices = devices
     self._canonical_device_set = set(
         [device_util.canonicalize(d) for d in devices])
@@ -97,7 +99,8 @@ class MirroredStrategy(distribute_lib.DistributionStrategy):
     if tower_local is not None:
       kwargs["trainable"] = False
 
-    # TODO(josh11b,apassos): It would be better if variable initialization
+    # TODO (josh11b,apassos): It would be better if variable initialization id:770
+    # https://github.com/imdone/tensorflow/issues/771
     # was never recorded on the tape instead of having to do this manually
     # here.
     with tape.stop_recording():
@@ -146,7 +149,8 @@ class MirroredStrategy(distribute_lib.DistributionStrategy):
         self._prefetch_on_device)
 
   def _broadcast(self, tensor, destinations):
-    # TODO(josh11b): In eager mode, use one thread per device, or async mode.
+    # TODO (josh11b): In eager mode, use one thread per device, or async mode. id:641
+    # https://github.com/imdone/tensorflow/issues/642
     return self._get_cross_tower_ops().broadcast(tensor, destinations or
                                                  self._devices)
 
@@ -184,7 +188,8 @@ class MirroredStrategy(distribute_lib.DistributionStrategy):
 
     shared_variable_store = {}
 
-    # TODO(isaprykin): Create these threads once instead of during every run()
+    # TODO (isaprykin): Create these threads once instead of during every run() id:612
+    # https://github.com/imdone/tensorflow/issues/613
     # call.
     threads = []
     for index, d in enumerate(self._devices):
@@ -256,7 +261,8 @@ class MirroredStrategy(distribute_lib.DistributionStrategy):
     return values.regroup({t.device: t.main_result for t in threads})
 
   def map(self, map_over, fn, *args, **kwargs):
-    # TODO(josh11b): In eager mode, use one thread per device.
+    # TODO (josh11b): In eager mode, use one thread per device. id:1098
+    # https://github.com/imdone/tensorflow/issues/1099
     index = {}
     i = 0
     for m in map_over:
@@ -267,7 +273,8 @@ class MirroredStrategy(distribute_lib.DistributionStrategy):
                     *values.select_device_mirrored(d, args),
                     **values.select_device_mirrored(d, kwargs)))
         index[d] = l
-    # TODO(josh11b): Need a values.regroup equivalent that handles MapOutput
+    # TODO (josh11b): Need a values.regroup equivalent that handles MapOutput id:1079
+    # https://github.com/imdone/tensorflow/issues/1080
     # in addition to PerDevice data.
     return values.PerDevice({k: values.MapOutput(v) for k, v in index.items()})
 
@@ -295,10 +302,12 @@ class MirroredStrategy(distribute_lib.DistributionStrategy):
                                                     value_destination_pairs)
 
   def _update(self, var, fn, *args, **kwargs):
-    # TODO(josh11b): Also support TowerLocalVariables here? If so, args and
+    # TODO (josh11b): Also support TowerLocalVariables here? If so, args and id:773
+    # https://github.com/imdone/tensorflow/issues/774
     # kwargs don't need to be mirrored.
     assert isinstance(var, values.MirroredVariable)
-    # TODO(josh11b): In eager mode, use one thread per device.
+    # TODO (josh11b): In eager mode, use one thread per device. id:643
+    # https://github.com/imdone/tensorflow/issues/644
     updates = {}
     for d, v in var._index.items():  # pylint: disable=protected-access
       name = "update_%d" % self._device_index.get(d)
@@ -310,7 +319,8 @@ class MirroredStrategy(distribute_lib.DistributionStrategy):
 
   def _update_non_slot(self, colocate_with, fn, *args, **kwargs):
     assert isinstance(colocate_with, list)
-    # TODO(josh11b): In eager mode, use one thread per device.
+    # TODO (josh11b): In eager mode, use one thread per device. id:617
+    # https://github.com/imdone/tensorflow/issues/618
     updates = {}
     for d in colocate_with:
       name = "update_%d" % self._device_index.get(d)

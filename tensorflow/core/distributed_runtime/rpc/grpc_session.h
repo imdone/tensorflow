@@ -81,13 +81,15 @@ class GrpcSession : public Session {
 
   Status Close() override;
 
-  // NOTE: This API is still experimental and may change.
+  // NOTE: This API is still experimental and may change. id:2679
+  // https://github.com/imdone/tensorflow/issues/2678
   Status PRunSetup(const std::vector<string>& input_names,
                    const std::vector<string>& output_names,
                    const std::vector<string>& target_nodes,
                    string* handle) override;
 
-  // NOTE: This API is still experimental and may change.
+  // NOTE: This API is still experimental and may change. id:1894
+  // https://github.com/imdone/tensorflow/issues/1894
   Status PRun(const string& handle,
               const std::vector<std::pair<string, Tensor> >& inputs,
               const std::vector<string>& output_names,

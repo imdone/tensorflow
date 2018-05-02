@@ -185,7 +185,8 @@ typedef struct {
   // tensor based on `type`.
   TfLitePtrUnion data;
   // A pointer to a structure representing the dimensionality interpretation
-  // that the buffer should have. NOTE: the product of elements of `dims`
+  // that the buffer should have. NOTE: the product of elements of `dims` id:1430
+  // https://github.com/imdone/tensorflow/issues/1431
   // and the element datatype size should be equal to `bytes` below.
   TfLiteIntArray* dims;
   // Quantization information.
@@ -302,7 +303,8 @@ typedef struct TfLiteContext {
   void* impl_;
 
   // Request memory pointer be resized. Updates dimensions on the tensor.
-  // NOTE: ResizeTensor takes ownership of newSize.
+  // NOTE: ResizeTensor takes ownership of newSize. id:1719
+  // https://github.com/imdone/tensorflow/issues/1719
   TfLiteStatus (*ResizeTensor)(struct TfLiteContext*, TfLiteTensor* tensor,
                                TfLiteIntArray* new_size);
   // Request that a error be reported with format string msg.
@@ -330,7 +332,8 @@ typedef struct TfLiteContext {
   // eigen.
   int recommended_num_threads;
 
-  // TODO(ahentz): we should create a more general mechanism for this sort of
+  // TODO (ahentz): we should create a more general mechanism for this sort of id:1200
+  // https://github.com/imdone/tensorflow/issues/1201
   // library-global objects.
   void* gemm_context;
   void* eigen_context;
@@ -350,7 +353,8 @@ typedef struct _TfLiteRegistration {
   //
   // The returned pointer will be stored with the node in the `user_data` field,
   // accessible within prepare and invoke functions below.
-  // NOTE: if the data is already in the desired format, simply implement this
+  // NOTE: if the data is already in the desired format, simply implement this id:1073
+  // https://github.com/imdone/tensorflow/issues/1074
   // function to return `nullptr` and implement the free function to be a no-op.
   void* (*init)(TfLiteContext* context, const char* buffer, size_t length);
 

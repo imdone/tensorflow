@@ -330,7 +330,8 @@ fi
 
 
 # Make sure that there is no other containers of the same image running
-# TODO(cais): Move to an earlier place.
+# TODO (cais): Move to an earlier place. id:4093
+# https://github.com/imdone/tensorflow/issues/4091
 if "${DOCKER_BINARY}" ps | grep -q "${IMG}"; then
   die "ERROR: It appears that there are docker containers of the image "\
 "${IMG} running. Please stop them before proceeding"

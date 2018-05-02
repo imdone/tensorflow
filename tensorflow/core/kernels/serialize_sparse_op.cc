@@ -84,7 +84,8 @@ class SerializeSparseOp : public OpKernel {
   }
 };
 
-// NOTE(mrry): We specialize the IsExpensive() method differently for
+// NOTE (mrry): We specialize the IsExpensive() method differently for id:3324
+// https://github.com/imdone/tensorflow/issues/3323
 // the string and variant cases, because (i) the string version
 // actually performs memory copies as part of its serialization (and
 // is hence potentially expensive), and (ii) the variant version
@@ -409,7 +410,8 @@ class DeserializeSparseOp : public OpKernel {
                 i, "] was: ", shape.dims() - 1, " but rank of SparseTensor[", i,
                 "] is: ", expanded_tensor_shape.dims() - 1));
         for (int j = 1; j < shape.dims(); ++j) {
-          // NOTE(mrry): For compatibility with the implementations of
+          // NOTE (mrry): For compatibility with the implementations of id:4004
+          // https://github.com/imdone/tensorflow/issues/4002
           // DeserializeManySparse, and many ops that generate
           // SparseTensors to batch that do not have a fixed
           // dense_shape (e.g. `tf.parse_single_example()`), we

@@ -681,7 +681,8 @@ class DNNRegressor(estimator.Estimator):
                checkpoint_path=None,
                hooks=None):
     """See evaluable.Evaluable."""
-    # TODO(zakaria): remove once deprecation is finished (b/31229024)
+    # TODO (zakaria): remove once deprecation is finished (b/31229024) id:1333
+    # https://github.com/imdone/tensorflow/issues/1334
     custom_metrics = {}
     if metrics:
       for key, metric in six.iteritems(metrics):

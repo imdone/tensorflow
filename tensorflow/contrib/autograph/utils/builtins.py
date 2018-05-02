@@ -69,7 +69,8 @@ def dynamic_range(start_or_stop, stop=None, step=None):
 
 
 def is_tf_print_compatible(value):
-  # TODO(mdan): Enable once we can reliably test this.
+  # TODO (mdan): Enable once we can reliably test this. id:735
+  # https://github.com/imdone/tensorflow/issues/736
   # This is currently disabled because we can't capture the output of
   # op kernels from Python.
   del value

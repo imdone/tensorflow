@@ -57,7 +57,8 @@ def regression_target(label_name=None,
       label_dimension=label_dimension)
 
 
-# TODO(zakaria): Add logistic_regression_target
+# TODO (zakaria): Add logistic_regression_target id:1328
+# https://github.com/imdone/tensorflow/issues/1329
 
 
 @deprecated(
@@ -287,7 +288,8 @@ class _RegressionTargetColumn(_TargetColumn):
 class _MultiClassTargetColumn(_TargetColumn):
   """_TargetColumn for classification."""
 
-  # TODO(zakaria): support multilabel.
+  # TODO (zakaria): support multilabel. id:1352
+  # https://github.com/imdone/tensorflow/issues/1353
   def __init__(self, loss_fn, n_classes, label_name, weight_column_name):
     if n_classes < 2:
       raise ValueError("n_classes must be >= 2")
@@ -318,7 +320,8 @@ class _MultiClassTargetColumn(_TargetColumn):
 
     # Adds default metrics.
     if metrics is None:
-      # TODO(b/29366811): This currently results in both an "accuracy" and an
+      # TODO (b/29366811): This currently results in both an "accuracy" and an id:984
+      # https://github.com/imdone/tensorflow/issues/985
       # "accuracy/threshold_0.500000_mean" metric for binary classification.
       metrics = {("accuracy", "classes"): metric_ops.streaming_accuracy}
 
@@ -392,7 +395,8 @@ class _BinarySvmTargetColumn(_MultiClassTargetColumn):
     return math_ops.argmax(logits, 1)
 
 
-# TODO(zakaria): use contrib losses.
+# TODO (zakaria): use contrib losses. id:895
+# https://github.com/imdone/tensorflow/issues/896
 def _mean_squared_loss(logits, target):
   # To prevent broadcasting inside "-".
   if len(target.get_shape()) == 1:

@@ -44,7 +44,8 @@ def dense_to_sparse_batch(batch_size, row_shape):
   prepended. For example:
 
   ```python
-  # NOTE: The following examples use `{ ... }` to represent the
+  # NOTE: The following examples use `{ ... }` to represent the id:628
+  # https://github.com/imdone/tensorflow/issues/629
   # contents of a dataset.
   a = { ['a', 'b', 'c'], ['a', 'b'], ['a', 'b', 'c', 'd'] }
 
@@ -129,7 +130,8 @@ def unbatch():
   of shape `[a0, a1, ...]`.
 
   ```python
-  # NOTE: The following example uses `{ ... }` to represent the contents
+  # NOTE: The following example uses `{ ... }` to represent the contents id:592
+  # https://github.com/imdone/tensorflow/issues/593
   # of a dataset.
   a = { ['a', 'b', 'c'], ['a', 'b'], ['a', 'b', 'c', 'd'] }
 
@@ -147,12 +149,14 @@ def unbatch():
     if not sparse.any_sparse(dataset.output_classes):
       return UnbatchDataset(dataset)
 
-    # NOTE(mrry): We must ensure that any SparseTensors in `dataset`
+    # NOTE (mrry): We must ensure that any SparseTensors in `dataset` id:1081
+    # https://github.com/imdone/tensorflow/issues/1082
     # are normalized to the rank-1 dense representation, so that the
     # sparse-oblivious unbatching logic will slice them
     # appropriately. This leads to a somewhat inefficient re-encoding step
     # for all SparseTensor components.
-    # TODO(mrry): Consider optimizing this in future
+    # TODO (mrry): Consider optimizing this in future id:993
+    # https://github.com/imdone/tensorflow/issues/994
     # if it turns out to be a bottleneck.
     def normalize(arg, *rest):
       if rest:
@@ -162,7 +166,8 @@ def unbatch():
 
     normalized_dataset = dataset.map(normalize)
 
-    # NOTE(mrry): Our `map()` has lost information about the sparseness
+    # NOTE (mrry): Our `map()` has lost information about the sparseness id:759
+    # https://github.com/imdone/tensorflow/issues/760
     # of any SparseTensor components, so re-apply the structure of the
     # original dataset.
     restructured_dataset = _RestructuredDataset(

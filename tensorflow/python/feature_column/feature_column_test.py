@@ -4462,7 +4462,8 @@ class IndicatorColumnTest(test.TestCase):
       self.assertAllEqual([[0., 0., 1., 0.], [0., 0., 1., 0.]], output.eval())
 
   def test_2D_shape_succeeds(self):
-    # TODO(ispir/cassandrax): Swith to categorical_column_with_keys when ready.
+    # TODO (ispir/cassandrax): Swith to categorical_column_with_keys when ready. id:3720
+    # https://github.com/imdone/tensorflow/issues/3719
     animal = fc.indicator_column(
         fc.categorical_column_with_hash_bucket('animal', 4))
     builder = _LazyBuilder({
@@ -6313,7 +6314,8 @@ class WeightedCategoricalColumnTest(test.TestCase):
         # = 3*1 + 2*.1 = 3+.2 = 3.2
         self.assertAllClose(((.5,), (3.2,)), predictions.eval())
 
-  # TODO(ptucker): Add test with embedding of weighted categorical.
+  # TODO (ptucker): Add test with embedding of weighted categorical. id:2957
+  # https://github.com/imdone/tensorflow/issues/2956
 
 if __name__ == '__main__':
   test.main()

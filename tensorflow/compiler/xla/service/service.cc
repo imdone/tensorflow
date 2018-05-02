@@ -641,15 +641,17 @@ Service::ExecuteParallelAndRegisterResult(
     // Overall execution time (in nanoseconds) from the executor timer.
     profile->set_compute_and_transfer_time_ns(nanoseconds);
 
-    // TODO(b/28123297): On GPU we end up including transfer time in
+    // TODO (b/28123297): On GPU we end up including transfer time in id:407
+    // https://github.com/imdone/tensorflow/issues/408
     // the compute time this way. Instead, we should get the correct
     // value by measuring it. Setting the field here at least lets
     // benchmarks provide *some* value for GPU computations.
-    //
-    // TODO(b/28447609): The value in compute_and_transfer_time_ns is actually
-    // the compute time without the transfer time, so this way we get the
-    // correct compute time. We should instead have the correct value for
-    // compute_and_transfer_time and set compute_time to the compute time.
+    // 
+    // TODO (b/28447609): The value in compute_and_transfer_time_ns is actually id:816
+// https://github.com/imdone/tensorflow/issues/817
+// the compute time without the transfer time, so this way we get the
+// correct compute time. We should instead have the correct value for
+// compute_and_transfer_time and set compute_time to the compute time.
     if (profile->compute_time_ns() == 0) {
       profile->set_compute_time_ns(profile->compute_and_transfer_time_ns());
     }
@@ -702,7 +704,8 @@ StatusOr<GlobalDataHandle> Service::ExecuteAndRegisterResult(
     return allocation_tracker_.Register(std::move(result), result_tag);
   }
 
-  // TODO(b/69985541): Support profiling also on this path.
+  // TODO (b/69985541): Support profiling also on this path. id:494
+  // https://github.com/imdone/tensorflow/issues/495
 
   std::vector<tensorflow::gtl::ArraySlice<const ShapedBuffer*>>
       replicated_arguments;
@@ -844,8 +847,9 @@ tensorflow::Status Service::ExecuteParallel(const ExecuteParallelRequest* arg,
   // Build the user computations into HloModules and compile to generate the
   // executables.
   //
-  // TODO(jlebar): There's currently no way to pass a device allocator to
-  // ExecuteParallel, so we have to pass a null device_allocator below.
+  // TODO (jlebar): There's currently no way to pass a device allocator to id:588
+// https://github.com/imdone/tensorflow/issues/589
+// ExecuteParallel, so we have to pass a null device_allocator below.
   TF_ASSIGN_OR_RETURN(
       std::vector<std::unique_ptr<Executable>> executables,
       BuildExecutables(versioned_handles, std::move(module_configs),
@@ -946,8 +950,9 @@ tensorflow::Status Service::ExecuteGraphParallel(
 
   // Build the HloModules and compile to generate the executables.
   //
-  // TODO(jlebar): There's currently no way to pass a device allocator to
-  // ExecuteGraphParallel, so we have to pass a null device_allocator below.
+  // TODO (jlebar): There's currently no way to pass a device allocator to id:422
+// https://github.com/imdone/tensorflow/issues/423
+// ExecuteGraphParallel, so we have to pass a null device_allocator below.
   TF_ASSIGN_OR_RETURN(std::vector<std::unique_ptr<Executable>> executables,
                       BuildExecutables(module_protos, std::move(module_configs),
                                        execute_backend_.get(), all_executors,
@@ -1534,7 +1539,8 @@ tensorflow::Status Service::ComputeConstant(const ComputeConstantRequest* arg,
   // Since the shape_with_output_layout option in ExecutionOption is
   // non-effective to the Evaluator results, explicit relayout here.
   //
-  // TODO(b/77824332): Make HloEvaluator take care of the re-layout.
+  // TODO (b/77824332): Make HloEvaluator take care of the re-layout. id:409
+// https://github.com/imdone/tensorflow/issues/410
   if (arg->has_output_layout()) {
     result_literal = result_literal->Relayout(arg->output_layout());
   }
@@ -1576,7 +1582,8 @@ tensorflow::Status Service::ComputeConstantGraph(
   // Since the result layout is non-effective to the Evaluator results, explicit
   // relayout here.
   //
-  // TODO(b/77824332): Make HloEvaluator take care of the re-layout.
+  // TODO (b/77824332): Make HloEvaluator take care of the re-layout. id:819
+// https://github.com/imdone/tensorflow/issues/820
   if (arg->has_output_layout()) {
     result_literal = result_literal->Relayout(arg->output_layout());
   }

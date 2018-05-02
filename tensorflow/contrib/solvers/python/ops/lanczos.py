@@ -14,7 +14,8 @@
 # ==============================================================================
 """Lanczos algorithms."""
 
-# TODO(rmlarsen): Add implementation of symmetric Lanczos algorithm.
+# TODO (rmlarsen): Add implementation of symmetric Lanczos algorithm. id:2298
+# https://github.com/imdone/tensorflow/issues/2297
 
 from __future__ import absolute_import
 from __future__ import division
@@ -132,7 +133,8 @@ def lanczos_bidiag(operator,
     return util.l2normalize(v)
 
   # Iterated modified Gram-Schmidt orthogonalization adapted from PROPACK.
-  # TODO(rmlarsen): This is possibly the slowest implementation of
+  # TODO (rmlarsen): This is possibly the slowest implementation of id:1635
+  # https://github.com/imdone/tensorflow/issues/1635
   # iterated Gram-Schmidt orthogonalization since the abacus. Move to C++.
   def orthogonalize_(i, basis, v):
     v_norm = util.l2norm(v)
@@ -146,7 +148,8 @@ def lanczos_bidiag(operator,
                                  lambda: (v_new, v_new_norm))
 
   def stopping_criterion(i, _):
-    # TODO(rmlarsen): Stop if an invariant subspace is detected.
+    # TODO (rmlarsen): Stop if an invariant subspace is detected. id:1211
+    # https://github.com/imdone/tensorflow/issues/1212
     return i < k
 
   def lanczos_bidiag_step(i, ls):
@@ -191,7 +194,8 @@ def lanczos_bidiag(operator,
         ls.alpha.stack(), ls.beta.stack())
 
 
-# TODO(rmlarsen): Implement C++ ops for handling bidiagonal matrices
+# TODO (rmlarsen): Implement C++ ops for handling bidiagonal matrices id:1738
+# https://github.com/imdone/tensorflow/issues/1738
 # efficiently. Such a module should provide
 #    - multiplication,
 #    - linear system solution by back-substitution,

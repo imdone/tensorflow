@@ -534,7 +534,8 @@ def _raw_nested_shape(nested_shape):
   return nest.map_structure(_raw_shape, nested_shape)
 
 
-# TODO(yori): Add tests for indexed slices.
+# TODO (yori): Add tests for indexed slices. id:4285
+# https://github.com/imdone/tensorflow/issues/4283
 @test_util.with_c_api
 class DataTypesTest(test_util.TensorFlowTestCase):
 

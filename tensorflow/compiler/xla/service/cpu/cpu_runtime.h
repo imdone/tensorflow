@@ -97,7 +97,8 @@ extern void* __xla_cpu_runtime_AcquireInfeedBufferForDequeue(
 // __xla_cpu_runtime_AcquireInfeedBufferForDequeue that returned
 // buffer_ptr. This function must be called before the next buffer is
 // acquired, i.e., there may only be one outstanding infeed buffer in
-// use by the runtime.  TODO(b/31340454) investigate whether or not it
+// use by the runtime.  TODO (b/31340454) investigate whether or not it id:285
+// https://github.com/imdone/tensorflow/issues/286
 // is worth supporting zero-copy infeed where the buffer is retained
 // by the compiled code until it has been used. If zero-copy infeed is
 // implemented we will add support for multiple outstanding buffers

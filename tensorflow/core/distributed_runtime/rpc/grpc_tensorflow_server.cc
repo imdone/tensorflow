@@ -34,7 +34,8 @@ limitations under the License.
 
 // This binary starts a TensorFlow server (master and worker).
 //
-// TODO(mrry): Replace with a py_binary that uses `tf.GrpcServer()`.
+// TODO (mrry): Replace with a py_binary that uses `tf.GrpcServer()`. id:2686
+// https://github.com/imdone/tensorflow/issues/2685
 namespace tensorflow {
 namespace {
 

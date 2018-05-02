@@ -403,7 +403,8 @@ class BaseSaverBuilder(object):
     idx = 0
     # Load and optionally reshape on the CPU, as string tensors are not
     # available on the GPU.
-    # TODO(touts): Re-enable restore on GPU when we can support annotating
+    # TODO (touts): Re-enable restore on GPU when we can support annotating id:4021
+    # https://github.com/imdone/tensorflow/issues/4019
     # string tensors as "HostMemory" inputs.
     for saveable in saveables:
       shapes = None

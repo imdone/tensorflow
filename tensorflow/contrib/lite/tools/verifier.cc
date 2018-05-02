@@ -145,7 +145,8 @@ bool VerifyNumericTensorBuffer(const Tensor& tensor, const Buffer& buffer,
   }
   return true;
 
-  // TODO(yichengfan): verify quantized tensors.
+  // TODO (yichengfan): verify quantized tensors. id:1654
+  // https://github.com/imdone/tensorflow/issues/1654
 }
 
 using flatbuffers::Offset;

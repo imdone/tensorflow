@@ -40,10 +40,12 @@ TRTEngineOp::TRTEngineOp(OpKernelConstruction* context) : OpKernel(context) {
   OP_REQUIRES_OK(context, context->GetAttr("input_nodes", &input_nodes_));
   OP_REQUIRES_OK(context, context->GetAttr("output_nodes", &output_nodes_));
 
-  // TODO(samikama) runtime should be taken from a resourcemanager as well.
+  // TODO (samikama) runtime should be taken from a resourcemanager as well. id:1282
+  // https://github.com/imdone/tensorflow/issues/1283
   // Only engine should be in the op and context and runtime should be taken
   // from resourcemanager
-  // TODO(jie): cudaSetDevice make sure trt engine is allocated on the same
+  // TODO (jie): cudaSetDevice make sure trt engine is allocated on the same id:1812
+  // https://github.com/imdone/tensorflow/issues/1812
   // gpu where the input/output is also located.
   int gpu_id = context->device()->tensorflow_gpu_device_info()->gpu_id;
   cudaSetDevice(gpu_id);
@@ -51,7 +53,8 @@ TRTEngineOp::TRTEngineOp(OpKernelConstruction* context) : OpKernel(context) {
   cudaGetDevice(&device);
   if (gpu_id != device) LOG(FATAL) << "set device failed!";
 
-  // TODO(samikama) runtime should be taken from a resourcemanager as well.
+  // TODO (samikama) runtime should be taken from a resourcemanager as well. id:2518
+  // https://github.com/imdone/tensorflow/issues/2517
   // Only engine should be in the op and context and runtime should be taken
   // from resourcemanager
 
@@ -148,7 +151,8 @@ void TRTEngineOp::Compute(OpKernelContext* context) {
                                                 ->implementation()
                                                 ->CudaStreamMemberHack()));
 
-  // TODO(jie): trt enqueue does not return error
+  // TODO (jie): trt enqueue does not return error id:2425
+  // https://github.com/imdone/tensorflow/issues/2424
   auto ret = trt_execution_context_ptr_->enqueue(num_batch, &buffers[0],
                                                  *stream, nullptr);
   VLOG(2) << "enqueue returns: " << ret;

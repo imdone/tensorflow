@@ -158,7 +158,8 @@ TEST_F(ConstantsTest, Small_3x2x1x1) {
   }
 }
 
-// TODO(b/29263943): Support tuple constants.
+// TODO (b/29263943): Support tuple constants. id:433
+// https://github.com/imdone/tensorflow/issues/434
 TEST_F(ConstantsTest, DISABLED_TupleConstant) {
   XlaBuilder builder(TestName());
   builder.ConstantLiteral(

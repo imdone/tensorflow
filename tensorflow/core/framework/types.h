@@ -277,7 +277,8 @@ inline const DataTypeSet RealNumberTypes() { return kRealNumberTypes; }
 
 // Return the list of all numeric types.
 // Includes complex and quantized types.
-// NOTE: On Android, we only include the float and int32 types for now.
+// NOTE: On Android, we only include the float and int32 types for now. id:2246
+// https://github.com/imdone/tensorflow/issues/2245
 const DataTypeSet kNumberTypes =
     ToSet(DT_FLOAT) | ToSet(DT_DOUBLE) | ToSet(DT_INT64) | ToSet(DT_INT32) |
     ToSet(DT_UINT8) | ToSet(DT_UINT16) | ToSet(DT_INT16) | ToSet(DT_INT8) |
@@ -414,7 +415,8 @@ struct IsValidDataType {
 static_assert(IsValidDataType<int64>::value, "Incorrect impl for int64");
 static_assert(IsValidDataType<int32>::value, "Incorrect impl for int32");
 
-// TODO(jeff): Maybe unify this with Tensor::CanUseDMA, or the underlying
+// TODO (jeff): Maybe unify this with or the underlying Tensor::CanUseDMA, id:2894
+// https://github.com/imdone/tensorflow/issues/2893
 // is_simple<T> in tensor.cc (and possible choose a more general name?)
 constexpr DataTypeSet kDataTypesCanUseMemcpy =
     ToSet(DT_FLOAT) | ToSet(DT_DOUBLE) | ToSet(DT_INT32) | ToSet(DT_UINT32) |

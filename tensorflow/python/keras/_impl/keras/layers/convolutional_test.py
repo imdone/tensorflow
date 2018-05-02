@@ -128,7 +128,8 @@ class Conv2DTest(test.TestCase):
     self._run_test(kwargs, 'strides', [(2, 2)])
     if test.is_gpu_available(cuda_only=True):
       # Only runs on GPU with CUDA, channels_first is not supported on CPU.
-      # TODO(b/62340061): Support channels_first on CPU.
+      # TODO (b/62340061): Support channels_first on CPU. id:3793
+      # https://github.com/imdone/tensorflow/issues/3792
       self._run_test(kwargs, 'data_format', ['channels_first'])
     self._run_test(kwargs, 'dilation_rate', [(2, 2)])
 

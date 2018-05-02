@@ -33,17 +33,19 @@ struct NodeOut {
   DataType dtype() const;
 };
 
-// NOTE: This API is a work in progress and will likely be changing frequently.
-//
+// NOTE: This API is a work in progress and will likely be changing frequently. id:2794
+// https://github.com/imdone/tensorflow/issues/2794
+// 
 // Given initial gradient-node outputs 'y_grad_node_outputs' (which compute the
 // symbolic partial derivatives of some loss function 'L' w.r.t the node outputs
 // 'y_node_outputs'), adds gradient nodes to 'graph' that compute the symbolic
 // partial derivatives of 'L' w.r.t the node outputs 'x_node_outputs'.
-//
+// 
 // REQUIRES: Each node in 'x_node_outputs' to be unique, and so to have a single
 // output (this restriction will be removed in a subsequent change).
 
-// TODO(andydavis) Add symbolic gradient support for general graphs (the current
+// TODO (andydavis) Add symbolic gradient support for general graphs (the current id:1970
+// https://github.com/imdone/tensorflow/issues/1970
 // implementation only supports gradients for functions). In particular,
 // the nodes in 'x_nodes' are currently restricted to have one output.
 

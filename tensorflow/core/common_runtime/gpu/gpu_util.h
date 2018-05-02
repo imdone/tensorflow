@@ -67,8 +67,9 @@ class GPUUtil {
   // Map a Tensor as a DeviceMemory object wrapping the given typed
   // buffer.
   //
-  // NOTE: will be removed soon, see StreamExecutorUtil::AsDeviceMemory
-  // instead.
+  // NOTE: will be removed soon, see StreamExecutorUtil::AsDeviceMemory id:1907
+// https://github.com/imdone/tensorflow/issues/1907
+// instead.
   template <typename T>
   static se::DeviceMemory<T> AsDeviceMemory(const Tensor& t) {
     T* ptr = reinterpret_cast<T*>(const_cast<void*>(DMAHelper::base(&t)));

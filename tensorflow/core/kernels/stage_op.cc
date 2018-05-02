@@ -86,7 +86,8 @@ class Buffer : public ResourceBase {
   }
 
   // Get tuple at front of the buffer
-  void Get(Tuple* tuple) {  // TODO(zhifengc): Support cancellation.
+  void Get(Tuple* tuple) {  // TODO (zhifengc): Support cancellation. id:2505
+                            // https://github.com/imdone/tensorflow/issues/2504
     std::unique_lock<std::mutex> lock(mu_);
 
     // Wait for data if the buffer is empty

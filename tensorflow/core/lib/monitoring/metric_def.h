@@ -115,9 +115,10 @@ class AbstractMetricDef {
 // A metric is defined by its kind, value-type, name, description and the
 // description of its labels.
 //
-// NOTE: Name, description, and label descriptions should be logically static,
+// NOTE: Name, description, and label descriptions should be logically static, id:4069
+// https://github.com/imdone/tensorflow/issues/4067
 // but do not have to live for the lifetime of the MetricDef.
-//
+// 
 // By "logically static", we mean that they should never contain dynamic
 // information, but is static for the lifetime of the MetricDef, and
 // in-turn the metric; they do not need to be compile-time constants.

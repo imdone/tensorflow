@@ -20,7 +20,8 @@ from __future__ import print_function
 
 import collections
 
-# TODO(ebrevdo): Re-enable once CriticalSection is in core.
+# TODO (ebrevdo): Re-enable once CriticalSection is in core. id:701
+# https://github.com/imdone/tensorflow/issues/702
 # from tensorflow.core.protobuf import critical_section_pb2
 
 from tensorflow.python.eager import context
@@ -148,7 +149,8 @@ class CriticalSection(object):
 
   def _init_from_proto(self, critical_section_def, import_scope):  # pylint: disable=invalid-name
     raise NotImplementedError("Not yet implemented")
-    # TODO(ebrevdo): Re-enable once CriticalSection is in core.
+    # TODO (ebrevdo): Re-enable once CriticalSection is in core. id:711
+    # https://github.com/imdone/tensorflow/issues/712
     # assert isinstance(
     #     critical_section_def, critical_section_pb2.CriticalSectionDef)
     # # Create from critical_section_def.
@@ -217,13 +219,15 @@ class CriticalSection(object):
       lock = gen_resource_variable_ops.mutex_lock(self._handle)
 
       if not context.executing_eagerly():
-        # NOTE(ebrevdo): This is to ensure we don't pick up spurious
+        # NOTE (ebrevdo): This is to ensure we don't pick up spurious id:1153
+        # https://github.com/imdone/tensorflow/issues/1154
         # Operations created by other threads.
-        with ops.get_default_graph()._lock:  # pylint: disable=protected-access
+        #         with ops.get_default_graph()._lock:  # pylint: disable=protected-access
           existing_ops = ops.get_default_graph().get_operations()
           with ops.control_dependencies([lock]):
             r = fn(*args, **kwargs)
-          # TODO(ebrevdo): If creating critical sections in a python loop, this
+          # TODO (ebrevdo): If creating critical sections in a python loop, this id:1258
+          # https://github.com/imdone/tensorflow/issues/1259
           # makes graph creation time quadratic.  Revisit if this
           # becomes a problem.
           created_ops = (set(ops.get_default_graph().get_operations())
@@ -244,7 +248,8 @@ class CriticalSection(object):
             if input_.dtype == dtypes.resource
         ])
 
-        # NOTE(ebrevdo): The only time self._is_self_handle() is True
+        # NOTE (ebrevdo): The only time self._is_self_handle() is True id:859
+        # https://github.com/imdone/tensorflow/issues/860
         # in this call is if one of the recently created ops, within
         # the execute(), themselves attempt to access the
         # CriticalSection.  This will cause a deadlock.
@@ -368,7 +373,8 @@ class CriticalSection(object):
             (list(resource_intersection), self._handle.name,
              sg.op.name, sg.handle.name))
 
-  # TODO(ebrevdo): Re-enable once CriticalSection is in core.
+  # TODO (ebrevdo): Re-enable once CriticalSection is in core. id:704
+  # https://github.com/imdone/tensorflow/issues/705
 
   # def to_proto(self, export_scope=None):
   #   """Converts a `CriticalSection` to a `CriticalSectoinDef` protocol buffer.
@@ -394,11 +400,13 @@ class CriticalSection(object):
   #       critical_section_def=critical_section_def, import_scope=import_scope)
 
 
-# TODO(ebrevdo): Re-enable once CriticalSection is in core.
+# TODO (ebrevdo): Re-enable once CriticalSection is in core. id:714
+# https://github.com/imdone/tensorflow/issues/715
 
 # def _execution_to_proto_fn(execution_signature, export_scope=None):
 #   """Converts `_ExecutionSignature` to a `CriticalSectionExecutionDef`.
-#   # TODO(ebrevdo): Update for _ExecutionSignature storing resource list.
+#   # TODO (ebrevdo): Update for _ExecutionSignature storing resource list. id:1156
+# https://github.com/imdone/tensorflow/issues/1157
 
 #   Args:
 #     execution_signature: Instance of `_ExecutionSignature`.
@@ -421,7 +429,8 @@ class CriticalSection(object):
 
 # def _execution_from_proto_fn(op_def, import_scope=None):
 #   """Converts a `CriticalSectionExecutionDef` to a `_ExecutionSignature`."""
-#   # TODO(ebrevdo): Update for _ExecutionSignature storing resource list.
+#   # TODO (ebrevdo): Update for _ExecutionSignature storing resource list. id:1259
+# https://github.com/imdone/tensorflow/issues/1260
 #   assert isinstance(
 #       op_def, critical_section_pb2.CriticalSectionExecutionDef)
 

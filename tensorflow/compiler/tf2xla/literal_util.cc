@@ -30,7 +30,8 @@ Status HostTensorToLiteral(const Tensor& host_tensor, xla::Literal* literal) {
   *literal = xla::Literal(literal_shape);
 
   // memcpy over the payload ...
-  // TODO(phawkins): handle string types.
+  // TODO (phawkins): handle string types. id:210
+  // https://github.com/imdone/tensorflow/issues/211
   size_t total_bytes = host_tensor.TotalBytes();
   if (total_bytes > 0) {
     void* dst_ptr = literal->untyped_data();

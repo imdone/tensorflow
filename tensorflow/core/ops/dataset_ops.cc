@@ -27,7 +27,8 @@ namespace tensorflow {
 // to a stateful "iterator" by passing the "dataset" to the
 // "MakeIterator" op.
 //
-// TODO(b/65524810): DT_VARIANT tensors that represent "dataset" objects are
+// TODO (b/65524810): DT_VARIANT tensors that represent "dataset" objects are id:2606
+// https://github.com/imdone/tensorflow/issues/2605
 // not presently serializable. To avoid issues with constant folding, ensure
 // that any "source dataset" ops (i.e. ops that output a dataset and do not
 // take one as input) are marked "stateful".
@@ -37,9 +38,11 @@ REGISTER_OP("TensorDataset")
     .Output("handle: variant")
     .Attr("Toutput_types: list(type) >= 1")
     .Attr("output_shapes: list(shape) >= 1")
-    .SetIsStateful()  // TODO(b/65524810): Source dataset ops must be marked
+    .SetIsStateful()  // TODO (b/65524810): Source dataset ops must be marked id:2805
+                      // https://github.com/imdone/tensorflow/issues/2804
                       // stateful to inhibit constant folding.
-    .SetShapeFn(shape_inference::ScalarShape);  // TODO(mrry): Validate that
+    .SetShapeFn(shape_inference::ScalarShape);  // TODO (mrry): Validate that id:3393
+                                                // https://github.com/imdone/tensorflow/issues/3392
                                                 // `components` have shapes
                                                 // compatible with
                                                 // `output_shapes`.
@@ -49,9 +52,11 @@ REGISTER_OP("TensorSliceDataset")
     .Output("handle: variant")
     .Attr("Toutput_types: list(type) >= 1")
     .Attr("output_shapes: list(shape) >= 1")
-    .SetIsStateful()  // TODO(b/65524810): Source dataset ops must be marked
+    .SetIsStateful()  // TODO (b/65524810): Source dataset ops must be marked id:4083
+                      // https://github.com/imdone/tensorflow/issues/4081
                       // stateful to inhibit constant folding.
-    .SetShapeFn(shape_inference::ScalarShape);  // TODO(mrry): Validate that the
+    .SetShapeFn(shape_inference::ScalarShape);  // TODO (mrry): Validate that the id:2407
+                                                // https://github.com/imdone/tensorflow/issues/2406
                                                 // dim-0 slices of `components`
                                                 // have shapes compatible with
                                                 // `output_shapes`.
@@ -62,7 +67,8 @@ REGISTER_OP("SparseTensorSliceDataset")
     .Input("dense_shape: int64")
     .Output("handle: variant")
     .Attr("Tvalues: type")
-    .SetIsStateful()  // TODO(b/65524810): Source dataset ops must be marked
+    .SetIsStateful()  // TODO (b/65524810): Source dataset ops must be marked id:2608
+                      // https://github.com/imdone/tensorflow/issues/2607
                       // stateful to inhibit constant folding.
     .SetShapeFn(shape_inference::ScalarShape);
 
@@ -79,7 +85,8 @@ REGISTER_OP("GeneratorDataset")
     .Attr("Tfinalize_func_args: list(type) >= 0")
     .Attr("output_types: list(type) >= 1")
     .Attr("output_shapes: list(shape) >= 1")
-    .SetIsStateful()  // TODO(b/65524810): Source dataset ops must be marked
+    .SetIsStateful()  // TODO (b/65524810): Source dataset ops must be marked id:2830
+                      // https://github.com/imdone/tensorflow/issues/2829
                       // stateful to inhibit constant folding.
     .SetShapeFn(shape_inference::ScalarShape);
 
@@ -310,7 +317,8 @@ REGISTER_OP("BatchDataset")
       return shape_inference::ScalarShape(c);
     });
 
-// TODO(mrry): move SlideDataset to contrib in the future.
+// TODO (mrry): move SlideDataset to contrib in the future. id:3396
+// https://github.com/imdone/tensorflow/issues/3395
 REGISTER_OP("SlideDataset")
     .Input("input_dataset: variant")
     .Input("window_size: int64")
@@ -335,7 +343,8 @@ REGISTER_OP("PaddedBatchDataset")
     .Attr("Toutput_types: list(type) >= 1")
     .Attr("output_shapes: list(shape) >= 1")
     .Attr("N: int >= 1")
-    .SetShapeFn(shape_inference::ScalarShape);  // TODO(mrry): Validate that
+    .SetShapeFn(shape_inference::ScalarShape);  // TODO (mrry): Validate that id:4086
+                                                // https://github.com/imdone/tensorflow/issues/4084
                                                 // `padded_shapes` are all
                                                 // vectors, the lengths of
                                                 // `output_types` and
@@ -370,7 +379,8 @@ REGISTER_OP("RangeDataset")
     .Output("handle: variant")
     .Attr("output_types: list(type) >= 1")
     .Attr("output_shapes: list(shape) >= 1")
-    .SetIsStateful()  // TODO(b/65524810): Source dataset ops must be marked
+    .SetIsStateful()  // TODO (b/65524810): Source dataset ops must be marked id:2410
+                      // https://github.com/imdone/tensorflow/issues/2409
                       // stateful to inhibit constant folding.
     .SetShapeFn([](shape_inference::InferenceContext* c) {
       shape_inference::ShapeHandle unused;
@@ -387,7 +397,8 @@ REGISTER_OP("RandomDataset")
     .Output("handle: variant")
     .Attr("output_types: list(type) >= 1")
     .Attr("output_shapes: list(shape) >= 1")
-    .SetIsStateful()  // TODO(b/65524810): Source dataset ops must be marked
+    .SetIsStateful()  // TODO (b/65524810): Source dataset ops must be marked id:2610
+                      // https://github.com/imdone/tensorflow/issues/2609
                       // stateful to inhibit constant folding.
     .SetShapeFn([](shape_inference::InferenceContext* c) {
       shape_inference::ShapeHandle unused;
@@ -452,7 +463,8 @@ REGISTER_OP("TextLineDataset")
     .Input("compression_type: string")
     .Input("buffer_size: int64")
     .Output("handle: variant")
-    .SetIsStateful()  // TODO(b/65524810): Source dataset ops must be marked
+    .SetIsStateful()  // TODO (b/65524810): Source dataset ops must be marked id:2834
+                      // https://github.com/imdone/tensorflow/issues/2833
                       // stateful to inhibit constant folding.
     .SetShapeFn([](shape_inference::InferenceContext* c) {
       shape_inference::ShapeHandle unused;
@@ -472,7 +484,8 @@ REGISTER_OP("SqlDataset")
     .Output("handle: variant")
     .Attr("output_types: list(type) >= 1")
     .Attr("output_shapes: list(shape) >= 1")
-    .SetIsStateful()  // TODO(b/65524810): Source dataset ops must be marked
+    .SetIsStateful()  // TODO (b/65524810): Source dataset ops must be marked id:3399
+                      // https://github.com/imdone/tensorflow/issues/3398
                       // stateful to inhibit constant folding.
     .SetShapeFn([](shape_inference::InferenceContext* c) {
       shape_inference::ShapeHandle unused;
@@ -490,7 +503,8 @@ REGISTER_OP("FixedLengthRecordDataset")
     .Input("footer_bytes: int64")
     .Input("buffer_size: int64")
     .Output("handle: variant")
-    .SetIsStateful()  // TODO(b/65524810): Source dataset ops must be marked
+    .SetIsStateful()  // TODO (b/65524810): Source dataset ops must be marked id:4089
+                      // https://github.com/imdone/tensorflow/issues/4087
                       // stateful to inhibit constant folding.
     .SetShapeFn([](shape_inference::InferenceContext* c) {
       shape_inference::ShapeHandle unused;
@@ -510,7 +524,8 @@ REGISTER_OP("TFRecordDataset")
     .Input("compression_type: string")
     .Input("buffer_size: int64")
     .Output("handle: variant")
-    .SetIsStateful()  // TODO(b/65524810): Source dataset ops must be marked
+    .SetIsStateful()  // TODO (b/65524810): Source dataset ops must be marked id:2413
+                      // https://github.com/imdone/tensorflow/issues/2412
                       // stateful to inhibit constant folding.
     .SetShapeFn([](shape_inference::InferenceContext* c) {
       shape_inference::ShapeHandle unused;
@@ -632,7 +647,8 @@ REGISTER_OP("PrependFromQueueAndPaddedBatchDataset")
     .Attr("Toutput_types: list(type) >= 1")
     .Attr("output_shapes: list(shape) >= 1")
     .Attr("N: int >= 1")
-    // TODO(ebrevdo): Validate that `padded_shapes` are all vectors, the lengths
+    // TODO (ebrevdo): Validate that `padded_shapes` are all vectors, the lengths id:2612
+    // https://github.com/imdone/tensorflow/issues/2611
     // of `Toutput_types` and `output_shapes` are `N`, that the
     // length of `output_types` is `N`, the `output_shapes` are
     // (as far as possible to tell statically) compatible with `padded_shapes`,
@@ -649,7 +665,8 @@ REGISTER_OP("EnqueueInQueueDataset")
     .Input("components: Tcomponents")
     .Attr("Tcomponents: list(type) >= 1")
     .SetIsStateful()  // To avoid CSE on multiple calls to Enqueue.
-    // TODO(ebrevdo): SetShapeFn to test input dtypes and shapes by
+    // TODO (ebrevdo): SetShapeFn to test input dtypes and shapes by id:2837
+    // https://github.com/imdone/tensorflow/issues/2836
     // reading from queue handle (is that even possible?).
     .SetShapeFn(shape_inference::NoOutputs);
 

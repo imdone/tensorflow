@@ -66,7 +66,8 @@ class Client {
   // * If execution_profile is not nullptr then the pointed-to ExecutionProfile
   //   will be filled with profile data from the execution.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:346
+// https://github.com/imdone/tensorflow/issues/347
   StatusOr<std::unique_ptr<GlobalData>> Execute(
       const XlaComputation& computation,
       tensorflow::gtl::ArraySlice<GlobalData*> arguments,
@@ -105,7 +106,8 @@ class Client {
   //   computation based on the attached sharding attributes. Otherwise, a
   //   device is chosen by the service.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:291
+// https://github.com/imdone/tensorflow/issues/292
   struct XlaComputationInstance {
     const XlaComputation& computation;
     std::vector<GlobalData*> arguments;
@@ -125,7 +127,8 @@ class Client {
   // Executes a list XlaComputationInstances and returns global data produced
   // from each computation.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:286
+// https://github.com/imdone/tensorflow/issues/287
   StatusOr<std::vector<std::unique_ptr<GlobalData>>> ExecuteParallel(
       tensorflow::gtl::ArraySlice<XlaComputationInstance> computations);
 
@@ -187,7 +190,8 @@ class Client {
   // to the client as a literal. Parameters are defined the same as for
   // Execute() and Transfer().
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:198
+// https://github.com/imdone/tensorflow/issues/199
   StatusOr<std::unique_ptr<Literal>> ExecuteAndTransfer(
       const XlaComputation& computation,
       tensorflow::gtl::ArraySlice<GlobalData*> arguments,
@@ -210,7 +214,8 @@ class Client {
   // If output_layout is non-null, then the output of the computation will be
   // stored using that layout.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:220
+// https://github.com/imdone/tensorflow/issues/221
   StatusOr<std::unique_ptr<Literal>> ComputeConstant(
       const XlaComputation& computation,
       const Layout* output_layout = nullptr) const;
@@ -228,7 +233,8 @@ class Client {
 
   // Retrieves the statistics of the given computation.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:347
+// https://github.com/imdone/tensorflow/issues/348
   StatusOr<ComputationStats> GetComputationStats(
       const XlaComputation& computation,
       const DebugOptions& debug_options) const;
@@ -245,7 +251,8 @@ class Client {
   // As above, but returns the shape of the provided computation (parameter
   // types/names and return type).
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:293
+// https://github.com/imdone/tensorflow/issues/294
   StatusOr<std::unique_ptr<ProgramShape>> GetComputationShape(
       const XlaComputation& computation);
 
@@ -255,7 +262,8 @@ class Client {
 
   StatusOr<Computation> LoadSnapshot(const SessionModule& module);
 
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:288
+  // https://github.com/imdone/tensorflow/issues/289
   StatusOr<XlaComputation> LoadSnapshot(const HloSnapshot& module);
 
   ServiceInterface* stub() { return stub_; }

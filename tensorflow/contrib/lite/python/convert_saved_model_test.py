@@ -380,7 +380,8 @@ class ConvertSavedModelTestTrainGraph(test_util.TensorFlowTestCase):
     saved_model_name = os.listdir(saved_model_dir)[0]
     saved_model_final_dir = os.path.join(saved_model_dir, saved_model_name)
     output_file = os.path.join(saved_model_dir, saved_model_final_dir + ".lite")
-    # TODO(zhixianyan): no need to limit output_arrays to `Softmax'
+    # TODO (zhixianyan): no need to limit output_arrays to `Softmax' id:2017
+    # https://github.com/imdone/tensorflow/issues/2017
     # once b/74205001 fixed and argmax implemented in tflite.
     result = convert_saved_model.tflite_from_saved_model(
         saved_model_dir=saved_model_final_dir,

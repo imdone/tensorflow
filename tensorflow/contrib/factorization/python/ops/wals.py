@@ -518,10 +518,14 @@ class WALSMatrixFactorization(estimator.Estimator):
       ValueError: If config.num_worker_replicas is strictly greater than one.
         The current implementation only supports running on a single worker.
     """
-    # TODO(walidk): Support power-law based weight computation.
-    # TODO(walidk): Add factor lookup by indices, with caching.
-    # TODO(walidk): Support caching during prediction.
-    # TODO(walidk): Provide input pipelines that handle missing rows.
+    # TODO (walidk): Support power-law based weight computation. id:705
+    # https://github.com/imdone/tensorflow/issues/706
+    # TODO (walidk): Add factor lookup by indices, with caching. id:1145
+    # https://github.com/imdone/tensorflow/issues/1146
+    # TODO (walidk): Support caching during prediction. id:1253
+    # https://github.com/imdone/tensorflow/issues/1254
+    # TODO (walidk): Provide input pipelines that handle missing rows. id:851
+    # https://github.com/imdone/tensorflow/issues/852
 
     params = {
         "num_rows":

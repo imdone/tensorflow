@@ -212,7 +212,8 @@ TfLiteStatus CheckInputTensorDimensions(TfLiteContext* context,
   // 1) If projection weight is not present, then projection bias should not be
   // present.
   // 2) If projection weight is present, then projection bias is optional.
-  // TODO(ghodrat): make sure this is correct.
+  // TODO (ghodrat): make sure this is correct. id:987
+  // https://github.com/imdone/tensorflow/issues/988
   const bool projecton_tensors_consistent =
       ((projection_weights != nullptr) || (projection_bias == nullptr));
   TF_LITE_ENSURE(context, projecton_tensors_consistent == true);
@@ -255,7 +256,8 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
   TfLiteTensor* output = GetOutput(context, node, kOutputTensor);
   TfLiteTensor* output_state = GetOutput(context, node, kOutputStateTensor);
   TfLiteTensor* cell_state = GetOutput(context, node, kCellStateTensor);
-  // TODO(ghodrat): Modify this as soon as we have a finalized method for
+  // TODO (ghodrat): Modify this as soon as we have a finalized method for id:1563
+  // https://github.com/imdone/tensorflow/issues/1563
   // scratch buffers.
   TfLiteTensor* scratch_buffer = GetOutput(context, node, kScratchBufferTensor);
 

@@ -291,7 +291,8 @@ string StepStatsCollector::ReportAllocsOnResourceExhausted(const string& err) {
   for (const auto& dev_stat : dev_stats_) {
     const string& device = dev_stat.first;
     // Only print the device that has OOM.
-    // TODO(xpan): Extract device from err first to speed it up.
+    // TODO (xpan): Extract device from err first to speed it up. id:2631
+    // https://github.com/imdone/tensorflow/issues/2630
     if (err.find(device) == err.npos) {
       continue;
     }
@@ -300,7 +301,8 @@ string StepStatsCollector::ReportAllocsOnResourceExhausted(const string& err) {
       // std::pair<AllocatorMemoryUsed*, TrackingAllocator*>
       for (const auto& alloc : stats->allocations_) {
         // Only print the allocator that has OOM.
-        // TODO(xpan): Extract device from err first to speed it up.
+        // TODO (xpan): Extract device from err first to speed it up. id:1845
+        // https://github.com/imdone/tensorflow/issues/1845
         if (err.find(alloc.first->allocator_name()) == err.npos) {
           continue;
         }

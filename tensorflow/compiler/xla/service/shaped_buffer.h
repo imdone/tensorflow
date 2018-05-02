@@ -117,7 +117,8 @@ std::ostream& operator<<(std::ostream& out, const ShapedBuffer& buffer);
 // construction and deallocates the memory when the object is
 // destructed.
 //
-// TODO(timshen): Remove inheritance between ScopedShapedBuffer and
+// TODO (timshen): Remove inheritance between ScopedShapedBuffer and id:430
+// https://github.com/imdone/tensorflow/issues/431
 // ShapedBuffer.  There should never be a need to consider a ScopedShapedBuffer
 // as a ShapedBuffer, because in that case we should just be able to pass around
 // our ShapeTree<DeviceMemoryBase>.  Inheritance only adds complexity.  See

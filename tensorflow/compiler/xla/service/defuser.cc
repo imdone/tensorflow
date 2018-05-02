@@ -59,7 +59,8 @@ Status Defuse(HloInstruction* fusion_instruction) {
 
   // Create a clone of each instruction of the fused computation in the same
   // computation as the fusion instruction itself.
-  // TODO(b/68227302): Moving instruction to new computation rather than
+  // TODO (b/68227302): Moving instruction to new computation rather than id:436
+  // https://github.com/imdone/tensorflow/issues/437
   // cloning and deleting.
   for (HloInstruction* fused_instruction :
        fused_computation->MakeInstructionPostOrder()) {

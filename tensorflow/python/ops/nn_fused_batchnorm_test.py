@@ -36,7 +36,8 @@ class BatchNormalizationTest(test.TestCase):
   def _batch_norm(self, x, mean, var, offset, scale, epsilon):
     # We compute the batch norm manually in this function because
     # nn_impl.batch_normalization does not support float16 yet.
-    # TODO(reedwm): Add float16 support to nn_impl.batch_normalization.
+    # TODO (reedwm): Add float16 support to nn_impl.batch_normalization. id:3943
+    # https://github.com/imdone/tensorflow/issues/3941
     inv = math_ops.rsqrt(var + epsilon) * scale
     y = math_ops.cast(x, scale.dtype) * inv + (offset - mean * inv)
     return math_ops.cast(y, x.dtype)
@@ -165,7 +166,8 @@ class BatchNormalizationTest(test.TestCase):
     x_init_val = np.random.random_sample(x_shape).astype(np.float16)
     x32_init_val = x_init_val.astype(np.float32)
 
-    # TODO(reedwm): Do not perform the unnecessary computations in
+    # TODO (reedwm): Do not perform the unnecessary computations in id:3635
+    # https://github.com/imdone/tensorflow/issues/3634
     # compute_gradient, since they double the computation time of this function.
     theoretical_grad, _ = gradient_checker.compute_gradient(
         x, x_shape, y, y_shape, delta=1e-3, x_init_value=x_init_val)

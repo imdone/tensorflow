@@ -41,7 +41,8 @@ from tensorflow.python.ops.array_ops import *
 from tensorflow.python.ops.check_ops import *
 from tensorflow.python.ops.clip_ops import *
 from tensorflow.python.ops.special_math_ops import *
-# TODO(vrv): Switch to import * once we're okay with exposing the module.
+# TODO (vrv): Switch to import * once we're okay with exposing the module. id:3649
+# https://github.com/imdone/tensorflow/issues/3648
 from tensorflow.python.ops.confusion_matrix import confusion_matrix
 from tensorflow.python.ops.control_flow_ops import Assert
 from tensorflow.python.ops.control_flow_ops import case
@@ -85,7 +86,8 @@ from tensorflow.python.ops.state_ops import scatter_max
 from tensorflow.python.ops.state_ops import scatter_update
 from tensorflow.python.ops.state_ops import scatter_nd_add
 from tensorflow.python.ops.state_ops import scatter_nd_sub
-# TODO(simister): Re-enable once binary size increase due to scatter_nd
+# TODO (simister): Re-enable once binary size increase due to scatter_nd id:3446
+# https://github.com/imdone/tensorflow/issues/3445
 # ops is under control.
 # from tensorflow.python.ops.state_ops import scatter_nd_mul
 # from tensorflow.python.ops.state_ops import scatter_nd_div

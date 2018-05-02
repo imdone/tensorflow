@@ -304,7 +304,8 @@ class ActivityAnalyzerTest(test.TestCase):
     self.assertScopeIsRmc(
         anno.getanno(if_node, NodeAnno.BODY_SCOPE), ('x', 'y'), ('x', 'y', 'z'),
         ('y', 'z'))
-    # TODO(mdan): Double check: is it ok to not mark a local symbol as not read?
+    # TODO (mdan): Double check: is it ok to not mark a local symbol as not read? id:547
+    # https://github.com/imdone/tensorflow/issues/548
     self.assertScopeIsRmc(
         anno.getanno(if_node, NodeAnno.BODY_SCOPE).parent, ('x', 'z', 'u'),
         ('x', 'y', 'z', 'u'), ('x', 'y', 'z', 'u'))
@@ -366,7 +367,8 @@ class ActivityAnalyzerTest(test.TestCase):
         ('a', 'a[b]', 'd'),
         ('d',),
     )
-    # TODO(mdan): Should subscript writes (a[0] = 1) be considered to read "a"?
+    # TODO (mdan): Should subscript writes (a[0] = 1) be considered to read "a"? id:533
+    # https://github.com/imdone/tensorflow/issues/534
     self.assertScopeIsRmc(
         anno.getanno(if_node, NodeAnno.ORELSE_SCOPE),
         ('a', 'e'),

@@ -408,8 +408,9 @@ class HloInstruction {
   // returned as a unique_ptr for API consistency with other factory methods in
   // this interface.
   //
-  // TODO(b/72173833) Ideally HloComputations would always be present, and so
-  // the adder being passed by the caller would not be necessary.
+  // TODO (b/72173833) Ideally HloComputations would always be present, and so id:795
+// https://github.com/imdone/tensorflow/issues/796
+// the adder being passed by the caller would not be necessary.
   static std::unique_ptr<HloInstruction> CreateBroadcastSequence(
       const Shape& output_shape, HloInstruction* operand,
       const std::function<HloInstruction*(std::unique_ptr<HloInstruction>)>&
@@ -794,9 +795,10 @@ class HloInstruction {
   // (We express the default options using an overload rather than a default
   // param because gdb ignores default params, but does resolve overloads.)
   //
-  // TODO(b/73348663): Make ToString() adaptive to the size of the string by
-  // default, backing off on providing full information for very large strings,
-  // or provide a different name for a ToString-like function that does that.
+  // TODO (b/73348663): Make ToString() adaptive to the size of the string by id:470
+// https://github.com/imdone/tensorflow/issues/471
+// default, backing off on providing full information for very large strings,
+// or provide a different name for a ToString-like function that does that.
   string ToString() const { return ToString(HloPrintOptions()); }
   string ToString(const HloPrintOptions& options) const;
 
@@ -1283,7 +1285,8 @@ class HloInstruction {
   // Get/Set the number of partitions per outer dimension (in order, starting
   // with outer-most dimension first). Currently used by the parallel cpu
   // backend to partition HLOs into parallel tasks.
-  // TODO(b/62783254) Replace these methods with a more general way to
+  // TODO (b/62783254) Replace these methods with a more general way to id:570
+  // https://github.com/imdone/tensorflow/issues/571
   // annotate HLOs with backend-specific information.
   const std::vector<int64>& outer_dimension_partitions() const {
     return outer_dimension_partitions_;

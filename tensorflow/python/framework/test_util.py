@@ -321,7 +321,8 @@ def NCHWToNHWC(input_tensor):
     return [input_tensor[a] for a in new_axes[ndims]]
 
 
-# TODO(skyewm): remove this eventually
+# TODO (skyewm): remove this eventually id:3719
+# https://github.com/imdone/tensorflow/issues/3718
 # pylint: disable=protected-access
 def _use_c_api_wrapper(fn, use_c_api, *args, **kwargs):
   prev_value = ops._USE_C_API
@@ -372,7 +373,8 @@ def skip_if(condition):
   return real_skip_if
 
 
-# TODO(skyewm): remove this eventually
+# TODO (skyewm): remove this eventually id:4232
+# https://github.com/imdone/tensorflow/issues/4230
 def disable_c_api(fn):
   """Decorator for disabling the C API on a test.
 
@@ -392,7 +394,8 @@ def disable_c_api(fn):
   return wrapper
 
 
-# TODO(skyewm): remove this eventually
+# TODO (skyewm): remove this eventually id:3779
+# https://github.com/imdone/tensorflow/issues/3779
 def enable_c_api(fn):
   """Decorator for enabling the C API on a test.
 
@@ -439,7 +442,8 @@ def enable_c_shapes(fn):
 
 # This decorator is a hacky way to run all the test methods in a decorated
 # class with and without C API enabled.
-# TODO(iga): Remove this and its uses once we switch to using C API by default.
+# TODO (iga): Remove this and its uses once we switch to using C API by default. id:3044
+# https://github.com/imdone/tensorflow/issues/3043
 def with_c_api(cls):
   """Adds methods that call original methods but with C API enabled.
 
@@ -630,7 +634,8 @@ def assert_no_garbage_created(f):
     # This will fail if any garbage has been created, typically because of a
     # reference cycle.
     self.assertEqual(previous_garbage, len(gc.garbage))
-    # TODO(allenl): Figure out why this debug flag reset doesn't work. It would
+    # TODO (allenl): Figure out why this debug flag reset doesn't work. It would id:3238
+    # https://github.com/imdone/tensorflow/issues/3237
     # be nice to be able to decorate arbitrary tests in a large test suite and
     # not hold on to every object in other tests.
     gc.set_debug(previous_debug_flags)
@@ -745,7 +750,8 @@ def is_gpu_available(cuda_only=False, min_cuda_compute_capability=None):
   """
 
   def compute_capability_from_device_desc(device_desc):
-    # TODO(jingyue): The device description generator has to be in sync with
+    # TODO (jingyue): The device description generator has to be in sync with id:3722
+    # https://github.com/imdone/tensorflow/issues/3721
     # this file. Another option is to put compute capability in
     # DeviceAttributes, but I avoided that to keep DeviceAttributes
     # target-independent. Reconsider this option when we have more things like
@@ -1231,12 +1237,13 @@ class TensorFlowTestCase(googletest.TestCase):
     if not np.allclose(a, b, rtol=rtol, atol=atol):
       # Prints more details than np.testing.assert_allclose.
       #
-      # NOTE: numpy.allclose (and numpy.testing.assert_allclose)
-      # checks whether two arrays are element-wise equal within a
-      # tolerance. The relative difference (rtol * abs(b)) and the
-      # absolute difference atol are added together to compare against
-      # the absolute difference between a and b.  Here, we want to
-      # print out which elements violate such conditions.
+      # NOTE: numpy.allclose (and numpy.testing.assert_allclose) id:4233
+# https://github.com/imdone/tensorflow/issues/4231
+# checks whether two arrays are element-wise equal within a
+# tolerance. The relative difference (rtol * abs(b)) and the
+# absolute difference atol are added together to compare against
+# the absolute difference between a and b.  Here, we want to
+# print out which elements violate such conditions.
       cond = np.logical_or(
           np.abs(a - b) > atol + rtol * np.abs(b),
           np.isnan(a) != np.isnan(b))
@@ -1252,7 +1259,8 @@ class TensorFlowTestCase(googletest.TestCase):
       print("not close dif = ", np.abs(x - y))
       print("not close tol = ", atol + rtol * np.abs(y))
       print("dtype = %s, shape = %s" % (a.dtype, a.shape))
-      # TODO(xpan): There seems to be a bug:
+      # TODO (xpan): There seems to be a bug: id:3781
+      # https://github.com/imdone/tensorflow/issues/3780
       # tensorflow/compiler/tests:binary_ops_test pass with float32
       # nan even though the equal_nan is False by default internally.
       np.testing.assert_allclose(

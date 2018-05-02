@@ -29,9 +29,12 @@ class Monitor(object):
   Note that this class is particularly preliminary, experimental, and
   expected to change.
   """
-  # TODO(isaprykin): Support step functions that need multiple session calls.
-  # TODO(isaprykin): Support extra arguments to the step function.
-  # TODO(isaprykin): Support recovery, checkpointing and summaries.
+  # TODO (isaprykin): Support step functions that need multiple session calls. id:1083
+  # https://github.com/imdone/tensorflow/issues/1084
+  # TODO (isaprykin): Support extra arguments to the step function. id:775
+  # https://github.com/imdone/tensorflow/issues/776
+  # TODO (isaprykin): Support recovery, checkpointing and summaries. id:646
+  # https://github.com/imdone/tensorflow/issues/647
 
   def __init__(self, step_callable, session=None):
     """Initialize the Monitor with components for executing training steps.

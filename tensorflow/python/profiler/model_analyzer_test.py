@@ -169,7 +169,8 @@ class PrintModelAnalysisTest(test.TestCase):
   def testSimpleCodeView(self):
     ops.reset_default_graph()
     outfile = os.path.join(test.get_temp_dir(), 'dump')
-    # TODO(xpan): Test 'micros'. Since the execution time changes each run,
+    # TODO (xpan): Test 'micros'. Since the execution time changes each run, id:3459
+    # https://github.com/imdone/tensorflow/issues/3458
     # it's a bit difficult to test it now.
     opts = (builder(builder.trainable_variables_parameter())
             .with_file_output(outfile)
@@ -313,7 +314,8 @@ class PrintModelAnalysisTest(test.TestCase):
 
       with gfile.Open(outfile + '_0', 'r') as f:
         # Test that a json file is created.
-        # TODO(xpan): tfprof Timeline isn't quite correct on Windows.
+        # TODO (xpan): tfprof Timeline isn't quite correct on Windows. id:3913
+        # https://github.com/imdone/tensorflow/issues/3911
         # Investigate why.
         if os.name != 'nt':
           self.assertLess(1000, len(f.read()))
@@ -615,7 +617,8 @@ class PrintModelAnalysisTest(test.TestCase):
     time_dir = os.path.join(test.get_temp_dir(), 'time')
     memory_dir = os.path.join(test.get_temp_dir(), 'memory')
     profile_dir = os.path.join(test.get_temp_dir(), 'dir/dir2/profile')
-    # TODO(xpan): Should we create parent directory for them?
+    # TODO (xpan): Should we create parent directory for them? id:4318
+    # https://github.com/imdone/tensorflow/issues/4316
     gfile.MkDir(time_dir)
     gfile.MkDir(memory_dir)
 

@@ -55,7 +55,8 @@ REGISTER_GPU_KERNELS(float);
 REGISTER_GPU_KERNELS(double);
 
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:3291
+// https://github.com/imdone/tensorflow/issues/3290
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(
     Name("Min")

@@ -174,7 +174,8 @@ def _validate_dct_arguments(dct_type, n, axis, norm):
         "Unknown normalization. Expected None or 'ortho', got: %s" % norm)
 
 
-# TODO(rjryan): Implement `type`, `n` and `axis` parameters.
+# TODO (rjryan): Implement `type`, `n` and `axis` parameters. id:4312
+# https://github.com/imdone/tensorflow/issues/4310
 @tf_export("spectral.dct")
 def dct(input, type=2, n=None, axis=-1, norm=None, name=None):  # pylint: disable=redefined-builtin
   """Computes the 1D [Discrete Cosine Transform (DCT)][dct] of `input`.
@@ -218,7 +219,8 @@ def dct(input, type=2, n=None, axis=-1, norm=None, name=None):  # pylint: disabl
         0.0, -_math.pi * _math_ops.range(axis_dim_float) /
         (2.0 * axis_dim_float)))
 
-    # TODO(rjryan): Benchmark performance and memory usage of the various
+    # TODO (rjryan): Benchmark performance and memory usage of the various id:3961
+    # https://github.com/imdone/tensorflow/issues/3959
     # approaches to computing a DCT via the RFFT.
     dct2 = _math_ops.real(
         rfft(input, fft_length=[2 * axis_dim])[..., :axis_dim] * scale)

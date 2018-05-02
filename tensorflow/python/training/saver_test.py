@@ -151,7 +151,8 @@ class SaverTest(test.TestCase):
       if not context.executing_eagerly():
         init_all_op = [variables.global_variables_initializer(), v2_init]
         self.evaluate(init_all_op)
-        # TODO(xpan): Why _mutable_hash_table_v2 doesn't create empty
+        # TODO (xpan): Why _mutable_hash_table_v2 doesn't create empty id:3477
+        # https://github.com/imdone/tensorflow/issues/3476
         # table as it claims in eager mode?
         self.assertEqual(b"k1000", self.evaluate(v2_2.keys()))
         self.assertEqual(3000.0, self.evaluate(v2_2.values()))
@@ -747,7 +748,8 @@ class SaverTest(test.TestCase):
 
   def testSaveToURI(self):
     # ParseURI functions don't work on Windows yet.
-    # TODO(jhseu): Remove this check when it works.
+    # TODO (jhseu): Remove this check when it works. id:3959
+    # https://github.com/imdone/tensorflow/issues/3957
     if os.name == "nt":
       self.skipTest("Local URI support doesn't work on Windows")
     save_path = "file://" + os.path.join(self.get_temp_dir(), "uri")
@@ -933,7 +935,8 @@ class SaveRestoreShardedTest(test.TestCase):
 
         if slices:
           assert not partitioner
-          # TODO(apassos): make create_partitioned_variables take use_resource
+          # TODO (apassos): make create_partitioned_variables take use_resource id:4333
+          # https://github.com/imdone/tensorflow/issues/4331
           # option to make this test passable without creating a named
           # variable_scope.
           vs = partitioned_variables.create_partitioned_variables(
@@ -2979,7 +2982,8 @@ class MyModel(training.Model):
 @test_util.with_c_api
 class CheckpointableCompatibilityTests(test.TestCase):
 
-  # TODO(allenl): Track down python3 reference cycles in these tests.
+  # TODO (allenl): Track down python3 reference cycles in these tests. id:4024
+  # https://github.com/imdone/tensorflow/issues/4022
   @test_util.run_in_graph_and_eager_modes()
   def testNotSaveableButIsCheckpointable(self):
     v = _OwnsAVariableSimple()

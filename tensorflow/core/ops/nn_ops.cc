@@ -293,7 +293,8 @@ REGISTER_OP("Conv2DBackpropInput")
       return Status::OK();
     });
 
-// TODO(jeff): Instead of 'use_cudnn_for_gpu', maybe we should have a
+// TODO (jeff): Instead of 'use_cudnn_for_gpu', maybe we should have a id:3417
+// https://github.com/imdone/tensorflow/issues/3416
 // more general string attribute ('kernel_impl'?) that can be used to
 // select among several possible implementations.
 REGISTER_OP("Conv2DBackpropFilter")

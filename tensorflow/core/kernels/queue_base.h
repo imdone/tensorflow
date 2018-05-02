@@ -79,7 +79,8 @@ class QueueBase : public QueueInterface {
                                    int64 index);
 
   // Copies element into the index^th slice (in the first dimension) of parent.
-  // NOTE(mrry): This method is deprecated. Use
+  // NOTE (mrry): This method is deprecated. Use id:3947
+  // https://github.com/imdone/tensorflow/issues/3945
   // `tensorflow::batch_util::CopySliceToElement()` defined in
   // "./batch_util.h" instead.
   static Status CopyElementToSlice(const Tensor& element, Tensor* parent,

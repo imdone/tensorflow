@@ -149,8 +149,10 @@ class MultiPlatformManager {
 
   static mutex platforms_mutex_;
 
-  // TODO(b/22689637): Clean up these two maps; make sure they coexist nicely.
-  // TODO(b/22689637): Move this (whatever the final/"official" map is) to
+  // TODO (b/22689637): Clean up these two maps; make sure they coexist nicely. id:3954
+  // https://github.com/imdone/tensorflow/issues/3952
+  // TODO (b/22689637): Move this (whatever the final/"official" map is) to id:3500
+  // https://github.com/imdone/tensorflow/issues/3499
   // plugin_regstry.h, along with the associated functionality.
   // Platform-name-to-object mapping. These platforms are registered via module
   // initializers, and linkage determines which platforms are available to a

@@ -189,7 +189,8 @@ def numpy_text(tensor, is_repr=False):
   return text
 
 
-# NOTE(ebrevdo): Do not subclass this.  If you do, I will break you on purpose.
+# NOTE (ebrevdo): Do not subclass this. If you do, I will break you on purpose. id:4219
+# https://github.com/imdone/tensorflow/issues/4217
 class _TensorLike(object):
   """Internal cls for grouping Tensor, SparseTensor, ..., for is_instance."""
   pass
@@ -298,7 +299,8 @@ class Tensor(_TensorLike):
       # The Python code requires all tensors start with a shape to support shape
       # inference on imported while loops. This isn't necessary with the C API
       # enabled because the C API provides the shapes for imported nodes.
-      # TODO(skyewm): remove when _USE_C_API is removed.
+      # TODO (skyewm): remove when _USE_C_API is removed. id:3752
+      # https://github.com/imdone/tensorflow/issues/3751
       self._shape_val = tensor_shape.unknown_shape()
 
     # List of operations that use this Tensor as input.  We maintain this list
@@ -623,7 +625,8 @@ class Tensor(_TensorLike):
 
   def __copy__(self):
     # Make sure _shape_val is computed before we copy.
-    # TODO(b/77597810): get rid of Tensor copies.
+    # TODO (b/77597810): get rid of Tensor copies. id:2999
+    # https://github.com/imdone/tensorflow/issues/2998
     if self._shape_val is None:
       set_shape_and_handle_data_for_outputs(self.op)
     cls = self.__class__
@@ -631,11 +634,13 @@ class Tensor(_TensorLike):
     result.__dict__.update(self.__dict__)
     return result
 
-  # NOTE(mrry): This enables the Tensor's overloaded "right" binary
+  # NOTE (mrry): This enables the Tensor's overloaded "right" binary id:3197
+  # https://github.com/imdone/tensorflow/issues/3196
   # operators to run when the left operand is an ndarray, because it
   # accords the Tensor class higher priority than an ndarray, or a
   # numpy matrix.
-  # TODO(mrry): Convert this to using numpy's __numpy_ufunc__
+  # TODO (mrry): Convert this to using numpy's __numpy_ufunc__ id:3683
+  # https://github.com/imdone/tensorflow/issues/3682
   # mechanism, which allows more control over how Tensors interact
   # with ndarrays.
   __array_priority__ = 100
@@ -710,7 +715,8 @@ class Tensor(_TensorLike):
     return _eval_using_default_session(self, feed_dict, self.graph, session)
 
 
-# TODO(agarwal): consider getting rid of this.
+# TODO (agarwal): consider getting rid of this. id:4220
+# https://github.com/imdone/tensorflow/issues/4218
 class _EagerTensorBase(Tensor):
   """Base class for EagerTensor."""
 
@@ -1332,7 +1338,8 @@ def convert_n_to_tensor_or_indexed_slices(values, dtype=None, name=None):
       values=values, dtype=dtype, name=name, as_ref=False)
 
 
-# TODO(josh11b): Add ctx argument to conversion_func() signature.
+# TODO (josh11b): Add ctx argument to conversion_func() signature. id:3754
+# https://github.com/imdone/tensorflow/issues/3753
 @tf_export("register_tensor_conversion_function")
 def register_tensor_conversion_function(base_type,
                                         conversion_func,
@@ -1395,7 +1402,8 @@ def register_tensor_conversion_function(base_type,
         float,
         np.ndarray,
     )):
-      # TODO(nareshmodi): consider setting a context variable which disables the
+      # TODO (nareshmodi): consider setting a context variable which disables the id:3002
+      # https://github.com/imdone/tensorflow/issues/3001
       # fastpath instead.
       raise TypeError(
           "Cannot register conversions for numpy arrays, python number types "
@@ -1536,7 +1544,8 @@ def _NodeDef(op_type, name, device=None, attrs=None):  # pylint: disable=redefin
 
 
 # Copied from core/framework/node_def_util.cc
-# TODO(mrry,josh11b): Consolidate this validation in C++ code.
+# TODO (mrry,josh11b): Consolidate this validation in C++ code. id:3201
+# https://github.com/imdone/tensorflow/issues/3200
 _VALID_OP_NAME_REGEX = re.compile("^[A-Za-z0-9.][A-Za-z0-9_.\\-/]*$")
 _VALID_SCOPE_NAME_REGEX = re.compile("^[A-Za-z0-9_.\\-/]*$")
 
@@ -1575,7 +1584,8 @@ def _create_c_op(graph, node_def, inputs, control_inputs):
   # Add attrs
   for name, attr_value in node_def.attr.items():
     serialized = attr_value.SerializeToString()
-    # TODO(skyewm): this creates and deletes a new TF_Status for every attr.
+    # TODO (skyewm): this creates and deletes a new TF_Status for every attr. id:3686
+    # https://github.com/imdone/tensorflow/issues/3685
     # It might be worth creating a convenient way to re-use the same status.
     c_api.TF_SetAttrValueProto(op_desc, compat.as_str(name), serialized)
 
@@ -1718,7 +1728,8 @@ class Operation(object):
 
     # Don't set private fields with C API enabled to catch users who need to
     # switch to public API.
-    # TODO(skyewm): delete these fields once we remove _USE_C_API
+    # TODO (skyewm): delete these fields once we remove _USE_C_API id:4221
+    # https://github.com/imdone/tensorflow/issues/4219
     if not self._graph._c_graph:
       self._inputs_val = list(inputs)  # Defensive copy.
       self._input_types_val = input_types
@@ -1736,13 +1747,15 @@ class Operation(object):
 
     # Initialize self._c_op.
     if c_op:
-      # TODO(skyewm): remove this assert when we remove USE_C_API
-      assert self._graph._c_graph  # pylint: disable=protected-access
+      # TODO (skyewm): remove this assert when we remove USE_C_API id:3756
+      # https://github.com/imdone/tensorflow/issues/3755
+      #       assert self._graph._c_graph  # pylint: disable=protected-access
       self._c_op = c_op
     elif self._graph._c_graph:  # pylint: disable=protected-access
       if op_def is None:
         op_def = self._graph._get_op_def(node_def.op)
-      # TODO(skyewm): op_def_library.apply_op() flattens the incoming inputs.
+      # TODO (skyewm): op_def_library.apply_op() flattens the incoming inputs. id:3007
+      # https://github.com/imdone/tensorflow/issues/3006
       # Refactor so we don't have to do this here.
       grouped_inputs = self._reconstruct_sequence_inputs(
           op_def, inputs, node_def.attr)
@@ -1907,7 +1920,8 @@ class Operation(object):
           c_api.TF_OperationOutputType(self._tf_output(i))
           for i in xrange(num_outputs)
       ]
-      # TODO(iga): Remove this assert after converting to C API by default.
+      # TODO (iga): Remove this assert after converting to C API by default. id:3205
+      # https://github.com/imdone/tensorflow/issues/3204
       # Just being a bit paranoid here.
       assert self._output_types_val == output_types
       # In all the tests we have output_types that are passed into
@@ -1981,7 +1995,8 @@ class Operation(object):
     tensor._add_consumer(self)  # pylint: disable=protected-access
     self._recompute_node_def()
 
-  # TODO(skyewm): Remove `update_dtype` when we enable the C API.
+  # TODO (skyewm): Remove `update_dtype` when we enable the C API. id:3690
+  # https://github.com/imdone/tensorflow/issues/3690
   def _update_input(self, index, tensor, update_dtype=True):
     """Update the input to this operation at the given index.
 
@@ -2072,7 +2087,8 @@ class Operation(object):
 
   # Methods below are used when building the NodeDef and Graph proto.
   def _recompute_node_def(self):
-    # TODO(skyewm): remove this function when we switch to C API
+    # TODO (skyewm): remove this function when we switch to C API id:4222
+    # https://github.com/imdone/tensorflow/issues/4220
     if self._c_op: return
 
     del self._node_def_val.input[:]
@@ -2208,7 +2224,8 @@ class Operation(object):
       ]
       # pylint: enable=protected-access
     else:
-      # TODO(apassos) this should be less inefficient.
+      # TODO (apassos) this should be less inefficient. id:3758
+      # https://github.com/imdone/tensorflow/issues/3757
       return [o for o in self._graph.get_operations()
               if self in o.control_inputs]
 
@@ -2549,7 +2566,8 @@ class RegisterShape(object):
     return f
 
 
-# TODO(b/74620627): remove when _USE_C_SHAPES is removed
+# TODO (b/74620627): remove when _USE_C_SHAPES is removed id:3010
+# https://github.com/imdone/tensorflow/issues/3009
 def _set_shape_and_handle_data_for_outputs_c_api(op):
   """Set shapes and resource handle data using info from the C API."""
   assert not _USE_C_SHAPES
@@ -2567,7 +2585,8 @@ def _set_shape_and_handle_data_for_outputs_c_api(op):
       output._handle_data = None
 
 
-# TODO(b/74620627): remove when _USE_C_SHAPES is removed
+# TODO (b/74620627): remove when _USE_C_SHAPES is removed id:3209
+# https://github.com/imdone/tensorflow/issues/3208
 def set_shape_and_handle_data_for_outputs(op):
   """Set the shapes and resource handle data for op's outputs.
 
@@ -2826,8 +2845,9 @@ class Graph(object):
     # to control flow. Without a reentrant lock, many methods would also need a
     # "locked" version or parameter (including generated code).
     #
-    # NOTE(mrry): This does not protect the various stacks. A warning will
-    # be reported if these are used from multiple threads
+    # NOTE (mrry): This does not protect the various stacks. A warning will id:3692
+# https://github.com/imdone/tensorflow/issues/3691
+# be reported if these are used from multiple threads
     self._lock = threading.RLock()
     self._nodes_by_id = dict()  # GUARDED_BY(self._lock)
     self._next_id_counter = 0  # GUARDED_BY(self._lock)
@@ -2897,7 +2917,8 @@ class Graph(object):
     self._container = ""
     self._registered_ops = op_def_registry.get_registered_ops()
 
-    # TODO(skyewm): fold as much of the above as possible into the C
+    # TODO (skyewm): fold as much of the above as possible into the C id:4223
+    # https://github.com/imdone/tensorflow/issues/4221
     # implementation
     if self._use_c_api_hack():
       self._scoped_c_graph = c_api_util.ScopedTFGraph()
@@ -2908,7 +2929,8 @@ class Graph(object):
     else:
       self._scoped_c_graph = None
 
-  # TODO(apassos) remove once the C API is used by default.
+  # TODO (apassos) remove once the C API is used by default. id:3761
+  # https://github.com/imdone/tensorflow/issues/3760
   def _use_c_api_hack(self):
     """Temporary hack; can be overridden to force C API usage."""
     return _USE_C_API
@@ -3409,10 +3431,11 @@ class Graph(object):
 
       # Note: shapes are lazily computed with the C API enabled.
       #
-      # TODO(skyewm): unlike in the original Python implementation, the C API
-      # always computes shape information (even for function calls, which the
-      # original Python shape inference code doesn't handle). Deprecate the
-      # compute_shapes argument.
+      # TODO (skyewm): unlike in the original Python implementation, the C API id:3013
+# https://github.com/imdone/tensorflow/issues/3012
+# always computes shape information (even for function calls, which the
+# original Python shape inference code doesn't handle). Deprecate the
+# compute_shapes argument.
       if not _USE_C_API and compute_shapes:
         set_shape_and_handle_data_for_outputs(ret)
 
@@ -3445,7 +3468,8 @@ class Graph(object):
     # If a name_scope was created with ret.name but no nodes were created in it,
     # the name will still appear in _names_in_use even though the name hasn't
     # been used. This is ok, just leave _names_in_use as-is in this case.
-    # TODO(skyewm): make the C API guarantee no name conflicts.
+    # TODO (skyewm): make the C API guarantee no name conflicts. id:3217
+    # https://github.com/imdone/tensorflow/issues/3216
     if ret.name not in self._names_in_use:
       self._names_in_use[ret.name] = 1
     self._create_op_helper(ret, compute_device=compute_device)
@@ -3453,7 +3477,8 @@ class Graph(object):
 
   def _create_op_helper(self, op, compute_shapes=True, compute_device=True):
     """Common logic for creating an op in this graph."""
-    # TODO(b/XXXX): move to Operation.__init__ once _USE_C_API flag is removed.
+    # TODO (b/XXXX): move to Operation.__init__ once _USE_C_API flag is removed. id:3695
+    # https://github.com/imdone/tensorflow/issues/3694
     self._add_op(op)
 
     # Apply any additional attributes requested. Do not overwrite any existing
@@ -3522,7 +3547,8 @@ class Graph(object):
     # (2) "is_stateful" is set in OpDef
     # (3) "container" attribute is in OpDef
     # (4) "container" attribute is None
-    # TODO(skyewm): remove op.op_def check when _USE_C_API is removed.
+    # TODO (skyewm): remove op.op_def check when _USE_C_API is removed. id:4224
+    # https://github.com/imdone/tensorflow/issues/4222
     if self._container and op.op_def and op.op_def.is_stateful:
       try:
         container_attr = op.get_attr("container")
@@ -4530,7 +4556,8 @@ class Graph(object):
           break
       if not dominated:
         # Don't add a control input if we already have a data dependency on i.
-        # NOTE(mrry): We do not currently track transitive data dependencies,
+        # NOTE (mrry): We do not currently track transitive data dependencies, id:3763
+        # https://github.com/imdone/tensorflow/issues/3762
         #   so we may add redundant control inputs.
         ret.extend([c for c in controller.control_inputs if c not in input_ops])
     return ret
@@ -4636,7 +4663,8 @@ class Graph(object):
     if control_inputs is None:
       return self._ControlDependenciesController(self, None)
     # First convert the inputs to ops, and deduplicate them.
-    # NOTE(mrry): Other than deduplication, we do not currently track direct
+    # NOTE (mrry): Other than deduplication, we do not currently track direct id:3016
+    # https://github.com/imdone/tensorflow/issues/3014
     #   or indirect dependencies between control_inputs, which may result in
     #   redundant control inputs.
     control_ops = []
@@ -4940,7 +4968,8 @@ class Graph(object):
       self._graph_control_dependencies_stack = control_dependencies
 
 
-# TODO(agarwal): currently device directives in an outer eager scope will not
+# TODO (agarwal): currently device directives in an outer eager scope will not id:3219
+# https://github.com/imdone/tensorflow/issues/3218
 # apply to inner graph mode code. Fix that.
 
 
@@ -4964,7 +4993,8 @@ def device(device_name_or_function):
     RuntimeError: If eager execution is enabled and a function is passed in.
   """
   if context.executing_eagerly():
-    # TODO(agarwal): support device functions in EAGER mode.
+    # TODO (agarwal): support device functions in EAGER mode. id:3699
+    # https://github.com/imdone/tensorflow/issues/3698
     if callable(device_name_or_function):
       raise RuntimeError(
           "tf.device does not support functions when eager execution "
@@ -5247,7 +5277,8 @@ class _DefaultGraphStack(_DefaultStack):  # pylint: disable=protected-access
 
   def _GetGlobalDefaultGraph(self):
     if self._global_default_graph is None:
-      # TODO(mrry): Perhaps log that the default graph is being used, or set
+      # TODO (mrry): Perhaps log that the default graph is being used, or set id:4225
+      # https://github.com/imdone/tensorflow/issues/4223
       #   provide some other feedback to prevent confusion when a mixture of
       #   the global default graph and an explicit graph are combined in the
       #   same process.
@@ -5636,7 +5667,8 @@ def _get_graph_from_inputs(op_input_list, graph=None):
   original_graph_element = None
   for op_input in op_input_list:
     # Determine if this is a valid graph_element.
-    # TODO(josh11b): Note that we exclude subclasses of Tensor. Need to clean this
+    # TODO (josh11b): Note that we exclude subclasses of Tensor. Need to clean this id:3765
+    # https://github.com/imdone/tensorflow/issues/3764
     # up.
     graph_element = None
     if (isinstance(op_input, (Operation, _TensorLike)) and
@@ -5795,7 +5827,8 @@ class GraphKeys(object):
   ]
 
   # Key for streaming model ports.
-  # NOTE(yuanbyu): internal and experimental.
+  # NOTE (yuanbyu): internal and experimental. id:3020
+  # https://github.com/imdone/tensorflow/issues/3019
   _STREAMING_MODEL_PORTS = "streaming_model_ports"
 
   @decorator_utils.classproperty

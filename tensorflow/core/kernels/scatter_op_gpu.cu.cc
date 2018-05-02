@@ -43,7 +43,8 @@ typedef Eigen::GpuDevice GPUDevice;
 
 DEFINE_GPU_SPECS(float);
 DEFINE_GPU_SPECS(double);
-// TODO: The following fails to compile.
+// TODO: The following fails to compile. id:3319
+// https://github.com/imdone/tensorflow/issues/3318
 // TF_CALL_GPU_NUMBER_TYPES(DEFINE_GPU_SPECS);
 
 #undef DEFINE_GPU_SPECS

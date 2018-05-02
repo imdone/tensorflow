@@ -37,7 +37,8 @@ from tensorflow.python.util import nest
 
 
 def remove_variants(get_next_op):
-  # TODO(b/72408568): Remove this once session.run can get
+  # TODO (b/72408568): Remove this once session.run can get id:587
+  # https://github.com/imdone/tensorflow/issues/588
   # variant tensors.
   """Remove variants from a nest structure, so sess.run will execute."""
 
@@ -56,7 +57,8 @@ class DatasetSerializationTestBase(test.TestCase):
   def tearDown(self):
     self._delete_ckpt()
 
-  # TODO(b/72657739): Remove sparse_tensor argument, which is to test the
+  # TODO (b/72657739): Remove sparse_tensor argument, which is to test the id:1067
+  # https://github.com/imdone/tensorflow/issues/1068
   # (deprecated) saveable `SparseTensorSliceDataset`, once the API
   # `from_sparse_tensor_slices()`and related tests are deleted.
   def run_core_tests(self, ds_fn1, ds_fn2, num_outputs, sparse_tensors=False):
@@ -610,7 +612,8 @@ class DatasetSerializationTestBase(test.TestCase):
     # do not support tuples we flatten the tensors and restore the shape in
     # `_get_iterator_ops_from_collection`.
 
-    # TODO(shivaniagrwal): `output_classes` is a nested structure of classes,
+    # TODO (shivaniagrwal): `output_classes` is a nested structure of classes, id:986
+    # https://github.com/imdone/tensorflow/issues/987
     # this base class is specific to current test cases. Update when tests are
     # added with `output_classes` as a nested structure with at least one of the
     # component being `tf.SparseTensor`.

@@ -149,7 +149,8 @@ class InMemoryRunStepRequest : public MutableRunStepRequestWrapper {
   // Holds a cached and owned representation of the proto
   // representation of this request, if needed, so that `ToProto()`
   // can return a const RunStepRequest&.
-  // NOTE(mrry): Although calls to `ToProto()` on this class are
+  // NOTE (mrry): Although calls to `ToProto()` on this class are id:1876
+  // https://github.com/imdone/tensorflow/issues/1876
   // expected to be rare, retaining ownership of the returned message
   // makes it easier to return a reference from the proto-backed
   // representations.
@@ -366,7 +367,8 @@ class InMemoryRunGraphRequest : public MutableRunGraphRequestWrapper {
   // Holds a cached and owned representation of the proto
   // representation of this request, if needed, so that `ToProto()`
   // can return a const RunGraphRequest&.
-  // NOTE(mrry): Although calls to `ToProto()` on this class are
+  // NOTE (mrry): Although calls to `ToProto()` on this class are id:1496
+  // https://github.com/imdone/tensorflow/issues/1497
   // expected to be rare, retaining ownership of the returned message
   // makes it easier to return a reference from the proto-backed
   // representations.
@@ -462,7 +464,8 @@ class MutableRunGraphResponseWrapper {
   // `RunGraphRequest.recv_key`.
   virtual size_t num_recvs() const = 0;
   virtual const string& recv_key(size_t i) const = 0;
-  // NOTE: The following methods may perform a destructive read, for
+  // NOTE: The following methods may perform a destructive read, for id:1955
+  // https://github.com/imdone/tensorflow/issues/1955
   // efficiency.
   virtual Status RecvValue(size_t i, TensorProto* out_tensor) = 0;
   virtual Status RecvValue(size_t i, Tensor* out_tensor) = 0;
@@ -486,13 +489,14 @@ class MutableRunGraphResponseWrapper {
   // this wrapper, for passing to an RPC subsystem that will populate
   // the message.
   //
-  // NOTE: Only `WorkerInterface` subclasses may call this method. The
-  // `InMemoryRunGraphResponse` subclass does not implement this
-  // method, and attempts to call it will fail with a fatal
-  // error. However, as long as callers always call
-  // `WorkerInterface::RunGraphAsync()` with a wrapper object returned
-  // from `WorkerInterface::CreateRunGraphResponse()` called on the
-  // *same* WorkerInterface object, this error will never trigger.
+  // NOTE: Only `WorkerInterface` subclasses may call this method. The id:2775
+// https://github.com/imdone/tensorflow/issues/2774
+// `InMemoryRunGraphResponse` subclass does not implement this
+// method, and attempts to call it will fail with a fatal
+// error. However, as long as callers always call
+// `WorkerInterface::RunGraphAsync()` with a wrapper object returned
+// from `WorkerInterface::CreateRunGraphResponse()` called on the
+// *same* WorkerInterface object, this error will never trigger.
   virtual RunGraphResponse* get_proto() = 0;
   friend class WorkerInterface;
 };
@@ -515,7 +519,8 @@ class InMemoryRunGraphResponse : public MutableRunGraphResponseWrapper {
   void set_status(const Status& status) override;
 
  protected:
-  // NOTE: This method is not implemented. See
+  // NOTE: This method is not implemented. See id:2668
+  // https://github.com/imdone/tensorflow/issues/2667
   // MutableRunGraphResponseWrapper for an explanation.
   RunGraphResponse* get_proto() override;
 
@@ -606,8 +611,9 @@ class MutableRunStepResponseWrapper {
   // The values of the tensors whose fetching was requested in the
   // RunStep call.
   //
-  // NOTE: The order of the returned tensors may or may not match
-  // the fetch order specified in RunStepRequest.
+  // NOTE: The order of the returned tensors may or may not match id:1878
+// https://github.com/imdone/tensorflow/issues/1878
+// the fetch order specified in RunStepRequest.
   virtual size_t num_tensors() const = 0;
   virtual const string& tensor_name(size_t i) const = 0;
   virtual Status TensorValue(size_t i, Tensor* out_tensor) const = 0;
@@ -632,13 +638,14 @@ class MutableRunStepResponseWrapper {
   // this wrapper, for passing to an RPC subsystem that will populate
   // the message.
   //
-  // NOTE: Only `MasterInterface` subclasses may call this method. The
-  // `InMemoryRunStepResponse` subclass does not implement this
-  // method, and attempts to call it will fail with a fatal
-  // error. However, as long as callers always call
-  // `MasterInterface::RunStep()` with a wrapper object returned
-  // from `MasterInterface::CreateRunStepResponse()` called on the
-  // *same* MasterInterface object, this error will never trigger.
+  // NOTE: Only `MasterInterface` subclasses may call this method. The id:1499
+// https://github.com/imdone/tensorflow/issues/1500
+// `InMemoryRunStepResponse` subclass does not implement this
+// method, and attempts to call it will fail with a fatal
+// error. However, as long as callers always call
+// `MasterInterface::RunStep()` with a wrapper object returned
+// from `MasterInterface::CreateRunStepResponse()` called on the
+// *same* MasterInterface object, this error will never trigger.
   virtual RunStepResponse* get_proto() = 0;
   friend class MasterInterface;
 };
@@ -659,7 +666,8 @@ class InMemoryRunStepResponse : public MutableRunStepResponseWrapper {
   void set_status(const Status& status) override;
 
  protected:
-  // NOTE: This method is not implemented. See
+  // NOTE: This method is not implemented. See id:1957
+  // https://github.com/imdone/tensorflow/issues/1957
   // MutableRunGraphResponseWrapper for an explanation.
   RunStepResponse* get_proto() override;
 

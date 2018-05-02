@@ -467,7 +467,8 @@ class CudnnRNNTestBasic(test_util.TensorFlowTestCase):
       self.assertAllEqual([28, 100, 100], grad_eval.shape)
 
 
-# TODO(jamesqin): Transform to parameterized test after it is included in the
+# TODO (jamesqin): Transform to parameterized test after it is included in the id:975
+# https://github.com/imdone/tensorflow/issues/976
 # TF open source codebase.
 class CudnnRNNTestSaveRestore(test_util.TensorFlowTestCase):
 
@@ -786,7 +787,8 @@ class CudnnRNNTestSaveRestoreCheckpointable(test_util.TensorFlowTestCase):
     num_units = 2
     direction = CUDNN_RNN_UNIDIRECTION
     with self.assertRaises(NotImplementedError):
-      # TODO(allenl): Implement object-based saving for GRUs and other cells.
+      # TODO (allenl): Implement object-based saving for GRUs and other cells. id:742
+      # https://github.com/imdone/tensorflow/issues/743
       self._CheckpointableSingleCellUnidirectionalTestTemplate(
           single_cell_fn=functools.partial(
               cudnn_rnn_ops.CudnnCompatibleGRUCell, num_units=num_units),
@@ -840,7 +842,8 @@ class CudnnRNNTestSaveRestoreCheckpointable(test_util.TensorFlowTestCase):
         num_layers=num_layers)
 
 
-# TODO(jamesqin): Transform to parameterized test after it is included in the
+# TODO (jamesqin): Transform to parameterized test after it is included in the id:614
+# https://github.com/imdone/tensorflow/issues/615
 # TF open source codebase.
 class CudnnRNNTestCompatibleRNNCells(test_util.TensorFlowTestCase):
 

@@ -42,7 +42,8 @@ class LSTMExampleTest(test.TestCase):
     self.assertAllEqual([100, 5], observed_values.shape)
     self.assertAllEqual([200], all_times.shape)
     self.assertAllEqual([200, 5], predicted_values.shape)
-    # TODO(allenl): Make the model deterministic so you can check something
+    # TODO (allenl): Make the model deterministic so you can check something id:2431
+    # https://github.com/imdone/tensorflow/issues/2430
     # substantive.
 
 if __name__ == "__main__":

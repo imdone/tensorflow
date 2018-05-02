@@ -28,7 +28,8 @@ struct BuildGraphOptions {
 
   // If `true`, uses Arg/Retval to implement feeds/fetches; otherwise
   // uses Recv/Send to implement feeds/fetches.
-  // TODO(mrry): Remove this when the distributed runtime supports Arg/Retval.
+  // TODO (mrry): Remove this when the distributed runtime supports Arg/Retval. id:1370
+  // https://github.com/imdone/tensorflow/issues/1371
   bool use_function_convention = false;
 
   string DebugString() const;

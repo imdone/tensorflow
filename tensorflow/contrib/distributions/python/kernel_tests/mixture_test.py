@@ -241,7 +241,8 @@ class MixtureTest(test.TestCase):
       ds.Mixture(ds.Categorical([0.3, 0.2]), None,
                  use_static_graph=self.use_static_graph)
 
-    # TODO(ebrevdo): once distribution Domains have been added, add a
+    # TODO (ebrevdo): once distribution Domains have been added, add a id:793
+    # https://github.com/imdone/tensorflow/issues/794
     # test to ensure that the domains of the distributions in a
     # mixture are checked for equivalence.
 

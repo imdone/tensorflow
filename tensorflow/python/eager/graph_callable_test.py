@@ -166,7 +166,8 @@ class GraphCallableTest(test.TestCase):
 
     self.assertAllEqual(3, add_one(constant_op.constant(2)))
 
-  # TODO(ashankar): Make this work.
+  # TODO (ashankar): Make this work. id:2929
+  # https://github.com/imdone/tensorflow/issues/2928
   # The problem is that the two graph_callables (for add_one and add_two)
   # are both trying to register the FunctionDef corresponding to "add".
   def DISABLED_testRepeatedUseOfSubFunction(self):

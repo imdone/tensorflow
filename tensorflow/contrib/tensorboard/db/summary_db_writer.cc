@@ -24,9 +24,12 @@ limitations under the License.
 #include "tensorflow/core/lib/random/random.h"
 #include "tensorflow/core/util/event.pb.h"
 
-// TODO(jart): Break this up into multiple files with excellent unit tests.
-// TODO(jart): Make decision to write in separate op.
-// TODO(jart): Add really good busy handling.
+// TODO (jart): Break this up into multiple files with excellent unit tests. id:2466
+// https://github.com/imdone/tensorflow/issues/2465
+// TODO (jart): Make decision to write in separate op. id:2319
+// https://github.com/imdone/tensorflow/issues/2318
+// TODO (jart): Add really good busy handling. id:1664
+// https://github.com/imdone/tensorflow/issues/1664
 
 // clang-format off
 #define CALL_SUPPORTED_TYPES(m) \
@@ -83,8 +86,10 @@ const double kReserveMultiplier = 1.5;
 const uint64 kFlushBytes = 1024 * 1024;
 
 double DoubleTime(uint64 micros) {
-  // TODO(@jart): Follow precise definitions for time laid out in schema.
-  // TODO(@jart): Use monotonic clock from gRPC codebase.
+  // TODO (@jart): Follow precise definitions for time laid out in schema. id:1247
+  // https://github.com/imdone/tensorflow/issues/1248
+  // TODO (@jart): Use monotonic clock from gRPC codebase. id:1788
+  // https://github.com/imdone/tensorflow/issues/1788
   return static_cast<double>(micros) / 1.0e6;
 }
 
@@ -783,7 +788,8 @@ class SeriesWriter {
 
   Status Update(Sqlite* db, int64 step, double computed_time, const Tensor& t,
                 const StringPiece& data, int64 rowid) {
-    // TODO(jart): How can we ensure reservoir fills on replace?
+    // TODO (jart): How can we ensure reservoir fills on replace? id:2469
+    // https://github.com/imdone/tensorflow/issues/2468
     const char* sql = R"sql(
       UPDATE OR REPLACE
         Tensors
@@ -875,7 +881,8 @@ class SeriesWriter {
     )sql";
     SqliteStatement insert;
     TF_RETURN_IF_ERROR(db->Prepare(sql, &insert));
-    // TODO(jart): Maybe preallocate index pages by setting step. This
+    // TODO (jart): Maybe preallocate index pages by setting step. This id:2321
+    // https://github.com/imdone/tensorflow/issues/2320
     //             is tricky because UPDATE OR REPLACE can have a side
     //             effect of deleting preallocated rows.
     for (int64 i = 0; i < slots_; ++i) {
@@ -989,7 +996,8 @@ class SummaryDbWriter : public SummaryWriterInterface {
     core::ScopedUnref unref(db_);
     Status s = run_.Finish(db_);
     if (!s.ok()) {
-      // TODO(jart): Retry on transient errors here.
+      // TODO (jart): Retry on transient errors here. id:1667
+      // https://github.com/imdone/tensorflow/issues/1667
       LOG(ERROR) << s.ToString();
     }
     int64 run_id = meta_.run_id();
@@ -1110,7 +1118,8 @@ class SummaryDbWriter : public SummaryWriterInterface {
             e->step());
         break;
       default:
-        // TODO(@jart): Handle other stuff.
+        // TODO (@jart): Handle other stuff. id:1250
+        // https://github.com/imdone/tensorflow/issues/1251
         break;
     }
     return Status::OK();
@@ -1159,7 +1168,8 @@ class SummaryDbWriter : public SummaryWriterInterface {
                        GetSlots(t, s->metadata()));
   }
 
-  // TODO(jart): Refactor Summary -> Tensor logic into separate file.
+  // TODO (jart): Refactor Summary -> Tensor logic into separate file. id:1790
+  // https://github.com/imdone/tensorflow/issues/1790
 
   Status MigrateScalar(const Event* e, Summary::Value* s, uint64 now) {
     // See tensorboard/plugins/scalar/summary.py and data_compat.py

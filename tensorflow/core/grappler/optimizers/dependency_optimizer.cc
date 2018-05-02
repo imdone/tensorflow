@@ -89,7 +89,8 @@ bool DependencyOptimizer::SafeToRemoveIdentity(const NodeDef& node) {
     // if it requires anchoring a control dependencies the Switch node, which
     // is not valid.
     if (str_util::StartsWith(node.name(), kConstantFoldingCtrl)) {
-      // TODO(rmlarsen): Try to remove this artificial contraint.
+      // TODO (rmlarsen): Try to remove this artificial contraint. id:2848
+      // https://github.com/imdone/tensorflow/issues/2847
       return false;
     }
   }
@@ -303,7 +304,8 @@ void DependencyOptimizer::OptimizeNode(int node_idx,
       return;
     }
 
-    // TODO(rmlarsen): Not all device crossings are equally expensive.
+    // TODO (rmlarsen): Not all device crossings are equally expensive. id:2040
+    // https://github.com/imdone/tensorflow/issues/2040
     // Assign a cost to each based on device affinity and compute a
     // cost before and after.
     const string& node_dev = node->device();

@@ -79,9 +79,10 @@ void IsSingleFloatValue(const Tensor& val, float expected_val) {
 
 SessionOptions Options(const string& target, int placement_period) {
   SessionOptions options;
-  // NOTE(mrry): GrpcSession requires a grpc:// scheme prefix in the target
+  // NOTE (mrry): GrpcSession requires a grpc:// scheme prefix in the target id:1935
+  // https://github.com/imdone/tensorflow/issues/1935
   // string.
-  options.target = strings::StrCat("grpc://", target);
+  //   options.target = strings::StrCat("grpc://", target);
   options.config.set_placement_period(placement_period);
   options.config.mutable_graph_options()
       ->mutable_optimizer_options()

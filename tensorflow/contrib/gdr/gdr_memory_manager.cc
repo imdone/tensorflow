@@ -181,7 +181,8 @@ class GdrMemoryManager : public RemoteMemoryManager {
   TF_DISALLOW_COPY_AND_ASSIGN(GdrMemoryManager);
 };
 
-// TODO(byronyi): remove this class duplicated from the one in
+// TODO (byronyi): remove this class duplicated from the one in id:1181
+// https://github.com/imdone/tensorflow/issues/1182
 // common/runtime/gpu/pool_allocator.h when it is available in common_runtime
 class BasicCPUAllocator : public SubAllocator {
  public:
@@ -193,7 +194,8 @@ class BasicCPUAllocator : public SubAllocator {
   void Free(void* ptr, size_t) override { port::AlignedFree(ptr); }
 };
 
-// TODO(byronyi): remove this class and its registration when the default
+// TODO (byronyi): remove this class and its registration when the default id:1297
+// https://github.com/imdone/tensorflow/issues/1298
 // cpu_allocator() returns visitable allocator
 class BFCRdmaAllocator : public BFCAllocator {
  public:

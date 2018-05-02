@@ -88,7 +88,8 @@ class DatasetConstructorTest(test.TestCase):
     self._testFromGenerator(generator, elem_sequence, 5)
 
   def testFromGeneratorUsingGeneratorExpression(self):
-    # NOTE(mrry): Generator *expressions* are not repeatable (or in
+    # NOTE (mrry): Generator *expressions* are not repeatable (or in id:3597
+    # https://github.com/imdone/tensorflow/issues/3596
     # general reusable), because they eagerly evaluate the `for`
     # expression as `iter(range(1, 100))` and discard the means of
     # reconstructing `range(1, 100)`. Wrapping the generator
@@ -138,7 +139,8 @@ class DatasetConstructorTest(test.TestCase):
       with self.assertRaises(errors.OutOfRangeError):
         sess.run(get_next)
 
-  # TODO(b/67868766): Reenable this when the source of flakiness is discovered.
+  # TODO (b/67868766): Reenable this when the source of flakiness is discovered. id:4166
+  # https://github.com/imdone/tensorflow/issues/4164
   def _testFromGeneratorsRunningInParallel(self):
     num_parallel_iterators = 3
 
@@ -149,7 +151,8 @@ class DatasetConstructorTest(test.TestCase):
     next_ticket = [0]  # GUARDED_BY(lock)
 
     def generator():
-      # NOTE(mrry): We yield one element before the barrier, because
+      # NOTE (mrry): We yield one element before the barrier, because id:3563
+      # https://github.com/imdone/tensorflow/issues/3562
       # the current implementation of `Dataset.interleave()` must
       # fetch one element from each incoming dataset to start the
       # prefetching.
@@ -256,7 +259,8 @@ class DatasetConstructorTest(test.TestCase):
       sess.run(init_op)
       self.assertAllEqual([1, 2, 3], sess.run(get_next))
       self.assertAllEqual([4, 5, 6], sess.run(get_next))
-      # NOTE(mrry): Type name in message differs between Python 2 (`long`) and
+      # NOTE (mrry): Type name in message differs between Python 2 (`long`) and id:2863
+      # https://github.com/imdone/tensorflow/issues/2862
       # 3 (`int`).
       with self.assertRaisesOpError(r"invalid literal for"):
         sess.run(get_next)
@@ -358,7 +362,8 @@ class DatasetConstructorTest(test.TestCase):
       self.assertTrue(event.is_set())
 
   def testGeneratorDatasetFinalizeFunctionCalled(self):
-    # NOTE(mrry): This test tests the internal `_GeneratorDataset`,
+    # NOTE (mrry): This test tests the internal `_GeneratorDataset`, id:3083
+    # https://github.com/imdone/tensorflow/issues/3082
     # which affords more control over what the finalize function can do than
     # the `Dataset.from_generator()` wrapper.
 

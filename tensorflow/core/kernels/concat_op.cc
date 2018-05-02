@@ -137,12 +137,14 @@ class ConcatBaseOp : public OpKernel {
         inputs_flat.emplace_back(new typename TTypes<T, 2>::ConstMatrix(
             in.shaped<T, 2>({inputs_flat_dim0, inputs_flat_dim1})));
       }
-      // TODO(irving): Remove check once !allow_legacy_scalars().
+      // TODO (irving): Remove check once !allow_legacy_scalars(). id:2080
+      // https://github.com/imdone/tensorflow/issues/2079
       output_concat_dim += in.dims() > 0 ? in.dim_size(axis) : 1;
     }
 
     TensorShape output_shape(input_shape);
-    // TODO(irving): Remove rank 0 case once !allow_legacy_scalars().
+    // TODO (irving): Remove rank 0 case once !allow_legacy_scalars(). id:1771
+    // https://github.com/imdone/tensorflow/issues/1771
     if (output_shape.dims() == 0) {
       output_shape.AddDim(output_concat_dim);
     } else {
@@ -220,7 +222,8 @@ REGISTER_GPU(bool);
 #undef REGISTER_GPU
 
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:2336
+// https://github.com/imdone/tensorflow/issues/2335
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(Name("Concat")
                             .Device(DEVICE_GPU)

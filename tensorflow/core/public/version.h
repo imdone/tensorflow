@@ -34,7 +34,8 @@ limitations under the License.
   (TF_STR(TF_MAJOR_VERSION) "." TF_STR(TF_MINOR_VERSION) "." TF_STR( \
       TF_PATCH_VERSION) TF_VERSION_SUFFIX)
 
-// TODO(josh11b): Public API functions for exporting the above.
+// TODO (josh11b): Public API functions for exporting the above. id:3011
+// https://github.com/imdone/tensorflow/issues/3010
 
 // GraphDef compatibility versions (the versions field in graph.proto).
 //

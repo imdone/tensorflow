@@ -572,7 +572,8 @@ class WholeDatasetInputFn(TimeSeriesInputFn):
   `RandomWindowInputFn` is better suited to training and quantitative
   evaluation.
   """
-  # TODO(allenl): A SequentialWindowInputFn for getting model end state without
+  # TODO (allenl): A SequentialWindowInputFn for getting model end state without id:1722
+  # https://github.com/imdone/tensorflow/issues/1722
   # loading the whole dataset into memory (or for quantitative evaluation of
   # sequential models). Note that an Estimator using such a TimeSeriesInputFn
   # won't return in-sample predictions for the whole dataset, which means it
@@ -690,14 +691,16 @@ class RandomWindowInputFn(TimeSeriesInputFn):
     """
     features = self._reader.read()
     if self._jitter:
-      # TODO(agarwal, allenl): Figure out if more jitter is needed here.
+      # TODO (agarwal, allenl): Figure out if more jitter is needed here. id:1296
+      # https://github.com/imdone/tensorflow/issues/1297
       jitter = random_ops.random_uniform(shape=[], maxval=2, dtype=dtypes.int32)
     else:
       jitter = 0
     # To keep things efficient, we pass from the windowing batcher to the
     # batch-of-windows batcher in batches. This avoids the need for huge numbers
     # of threads, but does mean that jitter is only applied occasionally.
-    # TODO(allenl): Experiment with different internal passing sizes.
+    # TODO (allenl): Experiment with different internal passing sizes. id:1822
+    # https://github.com/imdone/tensorflow/issues/1822
     internal_passing_size = self._batch_size
     features_windowed = input_lib.batch(
         features,
@@ -739,7 +742,8 @@ class RandomWindowInputFn(TimeSeriesInputFn):
       # discarded contiguously (resetting the count when we find a single clean
       # window). This prevents infinite looping when the dataset is smaller than
       # the window size.
-      # TODO(allenl): Figure out a way to return informative errors from
+      # TODO (allenl): Figure out a way to return informative errors from id:2534
+      # https://github.com/imdone/tensorflow/issues/2533
       # count_up_to.
       discarded_windows_limiter = variable_scope.variable(
           initial_value=constant_op.constant(0, dtype=dtypes.int64),

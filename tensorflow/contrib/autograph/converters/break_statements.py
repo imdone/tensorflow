@@ -43,7 +43,8 @@ class BreakStatementTransformer(transformer.Base):
   def visit_Break(self, node):
     self.set_local(BREAK_USED, True)
     var_name = self.get_local(CONTROL_VAR_NAME)
-    # TODO(mdan): This will fail when expanded inside a top-level else block.
+    # TODO (mdan): This will fail when expanded inside a top-level else block. id:487
+    # https://github.com/imdone/tensorflow/issues/488
     template = """
       var_name = True
       continue

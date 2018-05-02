@@ -301,7 +301,8 @@ class SpectralOpsTest(test.TestCase):
         self.test_session(use_gpu=True)):
       # Tuples of (signal_length, frame_length, frame_step, fft_length,
       # stft_bound, inverse_stft_bound).
-      # TODO(rjryan): Investigate why STFT gradient error is so high.
+      # TODO (rjryan): Investigate why STFT gradient error is so high. id:1633
+      # https://github.com/imdone/tensorflow/issues/1633
       test_configs = [
           (64, 16, 8, 16),
           (64, 16, 16, 16),

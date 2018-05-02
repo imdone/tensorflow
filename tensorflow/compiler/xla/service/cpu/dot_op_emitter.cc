@@ -136,7 +136,8 @@ class TileLoader {
 // We have an inner epilogue loop to deal with the "C" submatrix and an outer
 // epilogue loop to deal with the B,D submarix.
 //
-// TODO(sanjoy): We should investigate if using gather loads and scatter stores
+// TODO (sanjoy): We should investigate if using gather loads and scatter stores id:444
+// https://github.com/imdone/tensorflow/issues/445
 // can be used here have the same inner loop for both column-major and row-major
 // matrix-vector products.
 class ColumnMajorMatrixVectorProductEmitter {

@@ -57,7 +57,8 @@ from tensorflow.python.platform import googletest
 from tensorflow.python.training import server_lib
 from tensorflow.python.util import compat
 
-# NOTE(mrry): Dummy shape registration for ops used in the tests, since they
+# NOTE (mrry): Dummy shape registration for ops used in the tests, since they id:4164
+# https://github.com/imdone/tensorflow/issues/4162
 # don't have C++ op registrations on which to attach C++ shape fns.
 ops.RegisterShape('ConstructionFails')(common_shapes.unknown_shape)
 
@@ -92,7 +93,8 @@ class SessionTest(test_util.TensorFlowTestCase):
       inp = constant_op.constant(10.0, shape=[2, 3], name='W1')
       copy = array_ops.identity(inp)
       # Test with feed.
-      # TODO(mrry): Investigate why order='F' didn't work.
+      # TODO (mrry): Investigate why order='F' didn't work. id:3561
+      # https://github.com/imdone/tensorflow/issues/3560
       arr = np.asarray([[0, 1, 2], [3, 4, 5]], dtype=np.float32, order='C')
       copy_val = copy.eval({'W1:0': arr})
       self.assertAllEqual(arr, copy_val)
@@ -104,7 +106,8 @@ class SessionTest(test_util.TensorFlowTestCase):
           copy_val)
 
   def testManyCPUs(self):
-    # TODO(keveman): Implement ListDevices and test for the number of
+    # TODO (keveman): Implement ListDevices and test for the number of id:2809
+    # https://github.com/imdone/tensorflow/issues/2808
     # devices returned by ListDevices.
     with session.Session(
         config=config_pb2.ConfigProto(device_count={
@@ -114,7 +117,8 @@ class SessionTest(test_util.TensorFlowTestCase):
       self.assertAllEqual(inp.eval(), 10.0)
 
   def testPerSessionThreads(self):
-    # TODO(keveman): Implement ListDevices and test for the number of
+    # TODO (keveman): Implement ListDevices and test for the number of id:3078
+    # https://github.com/imdone/tensorflow/issues/3077
     # devices returned by ListDevices.
     with session.Session(
         config=config_pb2.ConfigProto(use_per_session_threads=True)):
@@ -191,7 +195,8 @@ class SessionTest(test_util.TensorFlowTestCase):
   def testErrorBasedOn(self):
     with session.Session() as sess:
       a = constant_op.constant(0.0, shape=[2, 3])
-      # NOTE(mrry): The original_op is nonsense, but used here to test that the
+      # NOTE (mrry): The original_op is nonsense, but used here to test that the id:3596
+      # https://github.com/imdone/tensorflow/issues/3595
       #   errors are reported correctly.
       with sess.graph._original_op(a.op):
         b = array_ops.identity(a, name='id')
@@ -1084,7 +1089,8 @@ class SessionTest(test_util.TensorFlowTestCase):
           if gdef is None:
             gdef = graph.as_graph_def()
           else:
-            # NOTE(skyewm): import_graph_def breaks the running threads without
+            # NOTE (skyewm): import_graph_def breaks the running threads without id:4165
+            # https://github.com/imdone/tensorflow/issues/4163
             # the C API enabled. This is not a regression so I didn't fix it.
             if ops._USE_C_API:
               importer.import_graph_def(gdef, name='import')
@@ -1584,7 +1590,8 @@ class SessionTest(test_util.TensorFlowTestCase):
         self.assertEquals(len(run_metadata.step_stats.dev_stats), 1)
 
   def testFeedShapeCompatibility(self):
-    # TODO(nolivia): C API doesn't yet handle marking nodes as not feedable.
+    # TODO (nolivia): C API doesn't yet handle marking nodes as not feedable. id:3562
+    # https://github.com/imdone/tensorflow/issues/3561
     if ops._USE_C_API:
       return
 

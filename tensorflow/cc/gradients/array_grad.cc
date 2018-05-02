@@ -373,7 +373,8 @@ Status MirrorPadGrad(const Scope& scope, const Operation& op,
 }
 REGISTER_GRADIENT_OP("MirrorPad", MirrorPadGrad);
 
-// TODO(suharshs): b/34770860. This gradient was within 1e-3 but not 1e-4.
+// TODO (suharshs): b/34770860. This gradient was within 1e-3 but not 1e-4. id:216
+// https://github.com/imdone/tensorflow/issues/217
 Status MirrorPadGradGrad(const Scope& scope, const Operation& op,
                          const std::vector<Output>& grad_inputs,
                          std::vector<Output>* grad_outputs) {

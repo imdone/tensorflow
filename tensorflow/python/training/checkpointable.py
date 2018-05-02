@@ -452,7 +452,8 @@ class CheckpointableBase(object):
       return self._track_checkpointable(new_variable, name=name,
                                         overwrite=overwrite)
     else:
-      # TODO(allenl): Some variable types are not yet supported. Remove this
+      # TODO (allenl): Some variable types are not yet supported. Remove this id:4321
+      # https://github.com/imdone/tensorflow/issues/4319
       # fallback once all get_variable() return types are Checkpointable.
       return new_variable
 
@@ -604,7 +605,8 @@ class CheckpointableBase(object):
     # restoration on to our dependencies.
     if checkpoint.restore_uid > self._update_uid:
       restore_ops = checkpoint_position.restore_ops()
-      # TODO(allenl): Get a list of feeds for saving Python state
+      # TODO (allenl): Get a list of feeds for saving Python state id:3984
+      # https://github.com/imdone/tensorflow/issues/3982
       self._update_uid = checkpoint.restore_uid
     else:
       restore_ops = ()
@@ -698,6 +700,7 @@ class Checkpointable(CheckpointableBase):
           # Allow the user to switch the Checkpointable which is tracked by this
           # name, since assigning a new variable to an attribute has
           # historically been fine (e.g. Adam did this).
-          # TODO(allenl): Should this be a warning once Checkpointable save/load
+          # TODO (allenl): Should this be a warning once Checkpointable save/load id:3673
+          # https://github.com/imdone/tensorflow/issues/3672
           # is usable?
           overwrite=True)

@@ -35,7 +35,8 @@ class EntityContext(object):
     owner_type: The surrounding class type of the function, if present.
   """
 
-  # TODO(mdan): Remove the default and update tests.
+  # TODO (mdan): Remove the default and update tests. id:525
+  # https://github.com/imdone/tensorflow/issues/526
   def __init__(self, namer, source_code, source_file, namespace, arg_values,
                arg_types, owner_type, recursive, type_annotation_func=None):
     self.namer = namer

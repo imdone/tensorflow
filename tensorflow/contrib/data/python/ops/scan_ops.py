@@ -44,7 +44,8 @@ class _ScanDataset(dataset_ops.Dataset):
     # Compute initial values for the state shapes and types based on
     # the initial state. These will be refined by running
     # `tf_scan_func` one or more times below.
-    # TODO(b/68937811): Allow the initial state to be a tf.SparseTensor.
+    # TODO (b/68937811): Allow the initial state to be a tf.SparseTensor. id:1000
+    # https://github.com/imdone/tensorflow/issues/1001
     self._state_shapes = nest.pack_sequence_as(
         self._initial_state,
         [t.shape for t in nest.flatten(self._initial_state)])
@@ -74,7 +75,8 @@ class _ScanDataset(dataset_ops.Dataset):
       def tf_scan_func(*args):
         """A wrapper for Defun that facilitates shape inference."""
         # Pass in shape information from the state and input_dataset.
-        # TODO(b/69424092): Check that neither inputs nor outputs are sparse.
+        # TODO (b/69424092): Check that neither inputs nor outputs are sparse. id:763
+        # https://github.com/imdone/tensorflow/issues/764
         dense_shapes = sparse.as_dense_shapes(input_dataset.output_shapes,
                                               input_dataset.output_classes)
         for arg, shape in zip(args,
@@ -138,7 +140,8 @@ class _ScanDataset(dataset_ops.Dataset):
           break
 
       if need_to_rerun:
-        # NOTE(mrry): `self._output_shapes` will be overwritten when we rerun
+        # NOTE (mrry): `self._output_shapes` will be overwritten when we rerun id:635
+        # https://github.com/imdone/tensorflow/issues/636
         # `tf_scan_func`.
         self._state_shapes = nest.pack_sequence_as(self._state_shapes,
                                                    weakened_state_shapes)

@@ -133,7 +133,8 @@ function run_configure_for_gpu_build {
   export TF_NEED_HDFS=0
   export TF_NEED_OPENCL_SYCL=0
 
-  # TODO(pcloudy): Remove this after TensorFlow uses its own CRSOOTOOL
+  # TODO (pcloudy): Remove this after TensorFlow uses its own CRSOOTOOL id:4354
+  # https://github.com/imdone/tensorflow/issues/4351
   # for GPU build on Windows
   export USE_MSVC_WRAPPER=1
 

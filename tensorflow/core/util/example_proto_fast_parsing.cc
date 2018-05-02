@@ -226,7 +226,8 @@ class Feature {
   StringPiece GetSerialized() const { return serialized_; }
 
  private:
-  // TODO(lew): Pair of uint8* would be more natural.
+  // TODO (lew): Pair of uint8* would be more natural. id:4139
+  // https://github.com/imdone/tensorflow/issues/4137
   StringPiece serialized_;
 };
 
@@ -526,7 +527,8 @@ Status FastParseSerializedExample(
 
     {
       // Testing for PresizedCuckooMap collision.
-      // TODO(lew): Use dense_hash_map and avoid this and hasher creation.
+      // TODO (lew): Use dense_hash_map and avoid this and hasher creation. id:3486
+      // https://github.com/imdone/tensorflow/issues/3485
       const string& config_feature_name = is_dense
                                               ? config.dense[d].feature_name
                                               : config.sparse[d].feature_name;
@@ -944,7 +946,8 @@ Status FastParseExample(const Config& config,
     return (serialized.size() * minibatch) / num_minibatches;
   };
 
-  // TODO(lew): A big performance low-hanging fruit here is to improve
+  // TODO (lew): A big performance low-hanging fruit here is to improve id:2687
+  // https://github.com/imdone/tensorflow/issues/2686
   //   num_minibatches calculation to take into account actual amount of work
   //   needed, as the size in bytes is not perfect. Linear combination of
   //   size in bytes and average number of features per example is promising.
@@ -1138,7 +1141,8 @@ Status FastParseSingleExample(const Config& config, const string& serialized,
     TF_RETURN_IF_ERROR(CheckConfigDataType(c.dtype));
   }
 
-  // TODO(mrry): Cache the construction of this map at Op construction time.
+  // TODO (mrry): Cache the construction of this map at Op construction time. id:3017
+  // https://github.com/imdone/tensorflow/issues/3016
   size_t config_size = config.dense.size() + config.sparse.size();
   SeededHasher hasher;
   // Build config index.
@@ -1216,7 +1220,8 @@ Status FastParseSingleExample(const Config& config, const string& serialized,
 
     {
       // Testing for PresizedCuckooMap collision.
-      // TODO(lew): Use dense_hash_map and avoid this and hasher creation.
+      // TODO (lew): Use dense_hash_map and avoid this and hasher creation. id:3530
+      // https://github.com/imdone/tensorflow/issues/3529
       const string& config_feature_name = is_dense
                                               ? config.dense[d].feature_name
                                               : config.sparse[d].feature_name;
@@ -1328,7 +1333,8 @@ Status FastParseSingleExample(const Config& config, const string& serialized,
 
       switch (example_dtype) {
         case DT_INT64: {
-          // TODO(mrry): Use the fact that the `int64_list` is packed to read
+          // TODO (mrry): Use the fact that the `int64_list` is packed to read id:4140
+          // https://github.com/imdone/tensorflow/issues/4138
           // out the length and pre-allocate the output tensor.
           if (!feature.ParseInt64List(&out_temp.int64_list))
             return parse_error();
@@ -1336,7 +1342,8 @@ Status FastParseSingleExample(const Config& config, const string& serialized,
           break;
         }
         case DT_FLOAT: {
-          // TODO(mrry): Use the fact that the `float_list` is packed to read
+          // TODO (mrry): Use the fact that the `float_list` is packed to read id:3489
+          // https://github.com/imdone/tensorflow/issues/3488
           // out the length and pre-allocate the output tensor.
           if (!feature.ParseFloatList(&out_temp.float_list))
             return parse_error();
@@ -1378,7 +1385,8 @@ Status FastParseSingleExample(const Config& config, const string& serialized,
         Tensor* out_dense_shape = &result->sparse_shapes[d];
         out = &result->sparse_values[d];
 
-        // TODO(mrry): Investigate the possibility of not materializing
+        // TODO (mrry): Investigate the possibility of not materializing id:2689
+        // https://github.com/imdone/tensorflow/issues/2688
         // the indices (and perhaps dense_shape) until they are needed.
         *out_indices = Tensor(
             DT_INT64, TensorShape({static_cast<int64>(num_elements), 1}));

@@ -285,7 +285,8 @@ class ArithmeticOptimizerStage : public GraphOptimizerStage<string> {
     ctx_ext_.nodes_to_simplify->PushBack(node);
   }
 
-  // TODO(ezhulenev): remove this method from ArithmeticOptimizer when all
+  // TODO (ezhulenev): remove this method from ArithmeticOptimizer when all id:2835
+  // https://github.com/imdone/tensorflow/issues/2834
   // optimizations will be migrated to stages
   void ForwardControlDependencies(
       NodeDef* target_node, const std::vector<const NodeDef*>& src_nodes) {
@@ -383,7 +384,8 @@ class ArithmeticNodesGroupOptimizerStage : public ArithmeticOptimizerStage {
         group->optimized_nodes.push_back(input_node);
         for (int i = input_node->input_size() - 1; i >= 0; --i) {
           const string& absorbed_node_input = input_node->input(i);
-          // TODO(ezhulenev): support control inputs
+          // TODO (ezhulenev): support control inputs id:2021
+          // https://github.com/imdone/tensorflow/issues/2021
           if (IsControlInput(absorbed_node_input)) continue;
           input_tensors.push_front(&absorbed_node_input);
         }
@@ -410,7 +412,8 @@ class ArithmeticNodesGroupOptimizerStage : public ArithmeticOptimizerStage {
     group->optimized_nodes.reserve(root_node->input_size());
     for (int i = 0; i < root_node->input_size(); ++i) {
       const string& input_i = root_node->input(i);
-      // TODO(ezhulenev): add support for control inputs
+      // TODO (ezhulenev): add support for control inputs id:1681
+      // https://github.com/imdone/tensorflow/issues/1681
       if (IsControlInput(input_i)) continue;
       TF_RETURN_IF_ERROR(AbsorbInputByOptimizedNodesGroup(input_i, group));
     }
@@ -419,7 +422,8 @@ class ArithmeticNodesGroupOptimizerStage : public ArithmeticOptimizerStage {
   }
 
   // Check if all inputs can be broadcasted to the same shape
-  // TODO(ezhulenev): move to GraphOptimizerStage?
+  // TODO (ezhulenev): move to GraphOptimizerStage? id:2281
+  // https://github.com/imdone/tensorflow/issues/2280
   bool HasAllInputsBroadcastableToShape(
       const NodeDef& node, const OpInfo::TensorProperties& properties) const {
     auto is_broadcastable = [this, &properties](const string& input) {
@@ -432,13 +436,15 @@ class ArithmeticNodesGroupOptimizerStage : public ArithmeticOptimizerStage {
                        is_broadcastable);
   }
 
-  // TODO(ezhulenev): move to GraphOptimizerStage?
+  // TODO (ezhulenev): move to GraphOptimizerStage? id:3052
+  // https://github.com/imdone/tensorflow/issues/3051
   bool IsDrivenByControlDependency(const NodeDef& node) const {
     return std::any_of(node.input().begin(), node.input().end(),
                        IsControlInput);
   }
 
-  // TODO(ezhulenev): move to GraphOptimizerStage?
+  // TODO (ezhulenev): move to GraphOptimizerStage? id:2838
+  // https://github.com/imdone/tensorflow/issues/2837
   bool DrivesControlDependency(const NodeDef& node) const {
     int position;
     for (const NodeDef* output : ctx().node_map->GetOutputs(node.name())) {
@@ -557,14 +563,16 @@ class AddOpsRewriteStage : public ArithmeticNodesGroupOptimizerStage {
 
   // Node requirements both for a root node and an absorbed node
   bool CanOptimize(const NodeDef& node) const {
-    // TODO(ezhulenev): check if AccumulateNV2 can be supported too
+    // TODO (ezhulenev): check if AccumulateNV2 can be supported too id:2025
+    // https://github.com/imdone/tensorflow/issues/2025
     if (!IsAdd(node) && !IsAddN(node)) {
       return false;
     }
     if (IsInPreserveSet(node) || IsAlreadyOptimized(node)) {
       return false;
     }
-    // TODO(ezhulenev): relax this condition for root node
+    // TODO (ezhulenev): relax this condition for root node id:1683
+    // https://github.com/imdone/tensorflow/issues/1683
     return !(IsDrivenByControlDependency(node) ||
              DrivesControlDependency(node));
   }
@@ -1147,7 +1155,8 @@ class RemoveIdentityTranspose : public ArithmeticOptimizerStage {
     return IsTranspose(*node) || IsConjugateTranspose(*node);
   }
 
-  // TODO(rmlarsen): Forward control dependencies on the bypassed
+  // TODO (rmlarsen): Forward control dependencies on the bypassed id:2282
+  // https://github.com/imdone/tensorflow/issues/2281
   // transpose nodes.
   Status TrySimplify(NodeDef* node, string* simplified_node_name) override {
     TF_RETURN_IF_ERROR(EnsureNodeIsSupported(node));
@@ -1343,7 +1352,8 @@ class RemoveNegationStage : public ArithmeticOptimizerStage {
 // concat out of the concat.
 // For example: Concat([Exp(Sin(x)), Exp(Sin(y)), Exp(Sin(z))]) ->
 // Exp(Sin(Concat([x, y, z]))).
-// TODO(rmlarsen): Support casting. We would have to change the type attribute
+// TODO (rmlarsen): Support casting. We would have to change the type attribute id:3056
+// https://github.com/imdone/tensorflow/issues/3055
 // on the concat node.
 class HoistCWiseUnaryFromConcatStage : public ArithmeticOptimizerStage {
  public:
@@ -1436,7 +1446,8 @@ class HoistCWiseUnaryFromConcatStage : public ArithmeticOptimizerStage {
       const NodeDef* tail0 = tail[0];
       if (!IsUnaryElementWise(*tail0)) break;
       for (int chain = 0; chain < n; ++chain) {
-        // TODO(rmlarsen): Allow and hoist outgoing control edges.
+        // TODO (rmlarsen): Allow and hoist outgoing control edges. id:2842
+        // https://github.com/imdone/tensorflow/issues/2841
         if (tail[chain]->op() != tail0->op() ||
             ctx().node_map->GetOutputs(tail[chain]->name()).size() > 1) {
           stop = true;
@@ -1517,7 +1528,8 @@ class HoistCWiseUnaryFromConcatStage : public ArithmeticOptimizerStage {
 
 // Performs the conversion:
 // Div(x, Sqrt(y)) => Mul(x, Rsqrt(y))
-// TODO(srjoglekar): Generalize to optimize cases like (x / pow(y, z)).
+// TODO (srjoglekar): Generalize to optimize cases like (x / pow(y, z)). id:2029
+// https://github.com/imdone/tensorflow/issues/2029
 class SqrtDivToRsqrtMulStage : public ArithmeticOptimizerStage {
  public:
   explicit SqrtDivToRsqrtMulStage(const GraphOptimizerContext& ctx,
@@ -1800,7 +1812,8 @@ void ArithmeticOptimizer::ForwardControlDependencies(
   }
 }
 
-// TODO(ezhulenev): extract each individual simplify rewrite into separate
+// TODO (ezhulenev): extract each individual simplify rewrite into separate id:1686
+// https://github.com/imdone/tensorflow/issues/1686
 // ArithmeticOptimizerStage
 string ArithmeticOptimizer::TrySimplifyAndReplaceUses(
     const NodeDef* node, SetVector<NodeDef*>* nodes_to_simplify) {
@@ -1878,9 +1891,10 @@ string ArithmeticOptimizer::TrySimplifyAndReplaceUses(
     //   Cast(Transpose(image, perm), dst_type)
     // when sizeof(image.type) < sizeof(dst_type).
     //
-    // TODO(jingyue): This optimization can be generalized to a cast followed by
-    // a chain of ops that merely reorder elements (e.g. Reshape and
-    // DepthToSpace).
+    // TODO (jingyue): This optimization can be generalized to a cast followed by id:2283
+// https://github.com/imdone/tensorflow/issues/2282
+// a chain of ops that merely reorder elements (e.g. Reshape and
+// DepthToSpace).
     const NodeDef* transpose = node;
     string dontcare;
     string device;
@@ -1947,13 +1961,15 @@ string ArithmeticOptimizer::TrySimplifyAndReplaceUses(
   // when `weights` are constant. `Mul` in the optimized graph can be
   // constant-folded.
   //
-  // TODO(jingyue): Fold scalar multiplies to Conv?DBackpropFilter and
-  // Conv?DBackpropInput.
+  // TODO (jingyue): Fold scalar multiplies to Conv?DBackpropFilter and id:3059
+// https://github.com/imdone/tensorflow/issues/3058
+// Conv?DBackpropInput.
   if (node->op() == "Conv2D" || node->op() == "Conv3D") {
     NodeDef* conv = const_cast<NodeDef*>(node);
     const NodeDef* weights = node_map_->GetNode(NodeName(conv->input(1)));
     // Fold the multiply to conv only when the weights are constant, so the
-    // multiply can be constant-folded. TODO(jingyue): When the weights aren't
+    // multiply can be constant-folded. TODO (jingyue): When the weights aren't id:2844
+    // https://github.com/imdone/tensorflow/issues/2843
     // constant, this should also help performance a bit and memory usage a lot,
     // since the weights tend to be smaller than the activations.
     if (weights->op() == "Const" &&
@@ -1965,7 +1981,8 @@ string ArithmeticOptimizer::TrySimplifyAndReplaceUses(
           node_map_->GetOutputs(source->name()).size() == 1) {
         const NodeDef* mul = source;
         // `scale` is the scalar multiplier, and `other` is the other operand.
-        // TODO(jingyue): handle the case where `scale` is 0-th operand.
+        // TODO (jingyue): handle the case where `scale` is 0-th operand. id:2033
+        // https://github.com/imdone/tensorflow/issues/2033
         const NodeDef* scale = node_map_->GetNode(mul->input(1));
         const NodeDef* other = node_map_->GetNode(mul->input(0));
         if (scale->op() == "Const" && scale->attr().at("dtype").type() ==
@@ -2211,7 +2228,8 @@ Status ArithmeticOptimizer::SimplifyArithmeticOps(bool can_use_shapes) {
   while (!nodes_to_simplify.Empty()) {
     NodeDef* node = nodes_to_simplify.PopBack();
 
-    // TODO(ezhulenev): move all rewrites into separate stages
+    // TODO (ezhulenev): move all rewrites into separate stages id:1689
+    // https://github.com/imdone/tensorflow/issues/1689
     string simplified_tensor = "";
     if (options_.enable_try_simplify_and_replace) {
       simplified_tensor = TrySimplifyAndReplaceUses(node, &nodes_to_simplify);

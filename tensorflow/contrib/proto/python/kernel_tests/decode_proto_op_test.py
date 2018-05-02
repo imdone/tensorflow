@@ -51,7 +51,8 @@ class DecodeProtoOpTest(test_case.ProtoOpTestCase):
     for i, ev in enumerate(evs):
       # Special case fuzzy match for float32. TensorFlow seems to mess with
       # MAX_FLT slightly and the test doesn't work otherwise.
-      # TODO(nix): ask on TF list about why MAX_FLT doesn't pass through.
+      # TODO (nix): ask on TF list about why MAX_FLT doesn't pass through. id:2344
+      # https://github.com/imdone/tensorflow/issues/2343
       if fd.cpp_type == fd.CPPTYPE_FLOAT:
         # Numpy isclose() is better than assertIsClose() which uses an absolute
         # value comparison.

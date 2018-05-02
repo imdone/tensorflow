@@ -348,7 +348,8 @@ class TextLineReader(ReaderBase):
   use `tf.data` to get data into your model.
   @end_compatibility
   """
-  # TODO(josh11b): Support serializing and restoring state.
+  # TODO (josh11b): Support serializing and restoring state. id:3444
+  # https://github.com/imdone/tensorflow/issues/3443
 
   def __init__(self, skip_header_lines=None, name=None):
     """Create a TextLineReader.
@@ -377,7 +378,8 @@ class FixedLengthRecordReader(ReaderBase):
   use `tf.data` to get data into your model.
   @end_compatibility
   """
-  # TODO(josh11b): Support serializing and restoring state.
+  # TODO (josh11b): Support serializing and restoring state. id:3394
+  # https://github.com/imdone/tensorflow/issues/3393
 
   def __init__(self,
                record_bytes,
@@ -420,7 +422,8 @@ class TFRecordReader(ReaderBase):
   use `tf.data` to get data into your model.
   @end_compatibility
   """
-  # TODO(josh11b): Support serializing and restoring state.
+  # TODO (josh11b): Support serializing and restoring state. id:3864
+  # https://github.com/imdone/tensorflow/issues/3862
 
   def __init__(self, name=None, options=None):
     """Create a TFRecordReader.

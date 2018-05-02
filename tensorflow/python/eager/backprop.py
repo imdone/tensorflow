@@ -122,7 +122,8 @@ _gradient_functions_lock = threading.Lock()
 _tracing = False
 
 
-# TODO(agarwal): use an automatic mechanism for handling None arguments to
+# TODO (agarwal): use an automatic mechanism for handling None arguments to id:3616
+# https://github.com/imdone/tensorflow/issues/3615
 # gradient functions.
 # Some gradient functions can accept None arguments for gradients. The following
 # maps the operation name to the indices at which the corresponding gradient
@@ -209,7 +210,8 @@ def implicit_val_and_grad(f):
   Raises:
     ValueError: if `f` returns None.
   """
-  # TODO(cais): Remove calls to tf.constant() once the gradients functions
+  # TODO (cais): Remove calls to tf.constant() once the gradients functions id:4185
+  # https://github.com/imdone/tensorflow/issues/4183
   # accept lists and np.ndarrays.
 
   def grad_fn(*args):
@@ -225,7 +227,8 @@ def implicit_val_and_grad(f):
       tape.pop_tape(this_tape)
     # Sorting variables by id, which is monotonically increasing in construction
     # order. This ensures unique order across executions.
-    # TODO(josh11b): Move the sort to the C++ implementation in pywrap_tfe_src.cc.
+    # TODO (josh11b): Move the sort to the C++ implementation in pywrap_tfe_src.cc. id:3650
+    # https://github.com/imdone/tensorflow/issues/3649
     variables = list(sorted(this_tape.watched_variables(),
                             key=lambda v: v.handle._id))  # pylint: disable=protected-access
     sources = [x.handle for x in variables]
@@ -281,7 +284,8 @@ def implicit_grad(f):
   Returns:
     A function which, when called, returns a list of (gradient, variable) pairs.
   """
-  # TODO(cais): Remove calls to tf.constant() once the gradients functions
+  # TODO (cais): Remove calls to tf.constant() once the gradients functions id:2915
+  # https://github.com/imdone/tensorflow/issues/2914
   # accept lists and np.ndarrays.
 
   def grad_fn(*args, **kwds):
@@ -579,7 +583,8 @@ def _aggregate_grads(gradients):
                 for g in gradients])
     indexed_slices_list = []
     for grad in gradients:
-      # TODO(xpan): Support nested IndexedSlices and core IndexedSlices
+      # TODO (xpan): Support nested IndexedSlices and core IndexedSlices id:3126
+      # https://github.com/imdone/tensorflow/issues/3125
       if isinstance(grad, ops.Tensor):
         indexed_slices = ops.IndexedSlices(
             grad,
@@ -618,7 +623,8 @@ def _zeros(shape, dtype):
   """Wraps array_ops.zeros to cache last zero for a given shape and dtype."""
   device = context.context().device_name
   if dtype == dtypes.variant:
-    # TODO(apassos): need to save enough information about variant tensors to do
+    # TODO (apassos): need to save enough information about variant tensors to do id:3617
+    # https://github.com/imdone/tensorflow/issues/3616
     # a zeros
     return None
   cache_key = shape, dtype, device
@@ -732,7 +738,8 @@ class GradientTape(object):
   def watched_variables(self):
     # Sorting variables by id, which is monotonically increasing in construction
     # order. This ensures unique order across executions.
-    # TODO(josh11b): Move the sort to the C++ implementation in pywrap_tfe_src.cc.
+    # TODO (josh11b): Move the sort to the C++ implementation in pywrap_tfe_src.cc. id:4186
+    # https://github.com/imdone/tensorflow/issues/4185
     return list(sorted(self._tape.watched_variables(),
                        key=lambda v: v.handle._id))  # pylint: disable=protected-access
 

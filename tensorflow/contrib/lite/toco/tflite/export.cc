@@ -323,7 +323,8 @@ void Export(const Model& model, bool allow_custom_ops,
   auto ops =
       ExportOperators(model, ops_by_type, operators_map, tensors_map, &builder);
 
-  // TODO(aselle): add support to toco for multiple subgraphs.
+  // TODO (aselle): add support to toco for multiple subgraphs. id:1504
+  // https://github.com/imdone/tensorflow/issues/1505
   auto subgraph = CreateSubGraph(builder, tensors, inputs, outputs, ops);
   std::vector<flatbuffers::Offset<SubGraph>> subgraphs = {subgraph};
 

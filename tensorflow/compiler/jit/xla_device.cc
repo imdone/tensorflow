@@ -196,7 +196,8 @@ xla::LocalClient* XlaDevice::client() const {
   // don't want to do it until we get a chance to hook the platform up
   // to a simulator.
 
-  // TODO(b/78468222): This can fail, at least when the backend is GPU and
+  // TODO (b/78468222): This can fail, at least when the backend is GPU and id:119
+  // https://github.com/imdone/tensorflow/issues/120
   // there is no GPU on the host.
   return xla::ClientLibrary::GetOrCreateLocalClient(platform_).ValueOrDie();
 }

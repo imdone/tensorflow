@@ -848,7 +848,8 @@ ComputationDataHandle ComputationBuilder::Or(
   return BinaryOp(BINOP_OR, lhs, rhs, broadcast_dimensions);
 }
 
-// TODO(b/65209188): Create a dedicated lowering for Xor
+// TODO (b/65209188): Create a dedicated lowering for Xor id:295
+// https://github.com/imdone/tensorflow/issues/296
 ComputationDataHandle ComputationBuilder::Xor(
     const ComputationDataHandle& lhs, const ComputationDataHandle& rhs,
     tensorflow::gtl::ArraySlice<int64> broadcast_dimensions) {

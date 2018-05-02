@@ -239,7 +239,8 @@ XLA_TEST_F(HloProfileTest, ProfileSingleComputation) {
   EXPECT_TRUE(HasTrops(tanh_profile));
 }
 
-// TODO(b/71544591): The GPU backend does not record cycles spent in on Hlo
+// TODO (b/71544591): The GPU backend does not record cycles spent in on Hlo id:471
+// https://github.com/imdone/tensorflow/issues/472
 // instructions "interior" to while nodes.
 XLA_TEST_F(HloProfileTest, DISABLED_ON_GPU(ProfileWhileComputation)) {
   const int64 size = 256;

@@ -41,7 +41,8 @@ class AssignOpT : public AssignOp {
   }
 };
 
-// TODO(jeff): Get rid of use_exclusive_lock_ option
+// TODO (jeff): Get rid of use_exclusive_lock_ option id:3177
+// https://github.com/imdone/tensorflow/issues/3176
 template <typename Device, typename T, DenseUpdateType OP>
 class DenseUpdateOp : public OpKernel {
  public:

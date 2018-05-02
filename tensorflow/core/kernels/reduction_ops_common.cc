@@ -115,12 +115,13 @@ Status ReductionHelper::Simplify(const Tensor& data, const Tensor& axis,
     // alternates between runs that need to be reduced and runs that
     // don't.
     //
-    // NOTE: If a dimension has size 1, we group it as the current
-    // run so that we can minimize the number of runs.
-    //
-    // E.g., when we want to reduce a tensor of shape [2, 1, 3, 1,
-    // 5] by axes = [1, 4], we should treat the tensor as a [6, 5]
-    // and reduce by axes = [1] (i.e., the output is shape [6]).
+    // NOTE: If a dimension has size 1, we group it as the current id:2588
+// https://github.com/imdone/tensorflow/issues/2587
+// run so that we can minimize the number of runs.
+// 
+// E.g., when we want to reduce a tensor of shape [2, 1, 3, 1,
+// 5] by axes = [1, 4], we should treat the tensor as a [6, 5]
+// and reduce by axes = [1] (i.e., the output is shape [6]).
     reduce_first_axis_ = bitmap[dim_index];
     data_reshape_.push_back(data.dim_size(dim_index));
     ++dim_index;

@@ -37,14 +37,16 @@ using AttrValueMap = std::unordered_map<string, AttrValue>;
 // InputArgExpansion keeps track of the placeholders that were added to the
 // function body in place of function inputs and a resolved input data type.
 struct InputArgExpansion {
-  // TODO(ezhulenev): Add support for functions with tensor sequence inputs of
+  // TODO (ezhulenev): Add support for functions with tensor sequence inputs of id:2294
+  // https://github.com/imdone/tensorflow/issues/2293
   // different data types.
-  // TODO(ezhulenev): Support type parametrized inputs?
-  string input_name;                 // name of the function input argument
-  DataType data_type;                // input data type
-  bool is_ref;                       // if true, inputs are required to be refs
-  std::vector<string> placeholders;  // names of placeholder nodes in the
-                                     // function body
+  // TODO (ezhulenev): Support type parametrized inputs? id:3079
+  // https://github.com/imdone/tensorflow/issues/3078
+  //   string input_name;                 // name of the function input argument
+  //   DataType data_type;                // input data type
+  //   bool is_ref;                       // if true, inputs are required to be refs
+  //   std::vector<string> placeholders;  // names of placeholder nodes in the
+  // function body
 };
 
 // Depending on the function instantiation attributes, output argument is mapped
@@ -53,14 +55,16 @@ struct InputArgExpansion {
 // OutputArgExpansion keeps mapping from a function output arg to the output
 // tensors of a function body nodes and a resolved output data type
 struct OutputArgExpansion {
-  // TODO(ezhulenev): Add support for functions with tensor sequence outputs of
+  // TODO (ezhulenev): Add support for functions with tensor sequence outputs of id:2856
+  // https://github.com/imdone/tensorflow/issues/2855
   // different data types.
-  // TODO(ezhulenev): Support type parametrized outputs?
-  string output_name;                  // name of the function output argument
-  DataType data_type;                  // output data type
-  bool is_ref;                         // if true, outputs are refs
-  std::vector<string> output_tensors;  // names of output tensor from the
-                                       // function body nodes
+  // TODO (ezhulenev): Support type parametrized outputs? id:2055
+  // https://github.com/imdone/tensorflow/issues/2055
+  //   string output_name;                  // name of the function output argument
+  //   DataType data_type;                  // output data type
+  //   bool is_ref;                         // if true, outputs are refs
+  //   std::vector<string> output_tensors;  // names of output tensor from the
+  // function body nodes
 };
 
 // FunctionDef uses different connectivity encoding for the function body nodes,
@@ -212,7 +216,8 @@ Status MakeGrapplerFunctionItem(
 
 // Make a GrapplerFunction item from the function definition. Function must be
 // fully defined (no type or body parametrization).
-// TODO(ezhulenev): Support parametrized functions without fully defined
+// TODO (ezhulenev): Support parametrized functions without fully defined id:1709
+// https://github.com/imdone/tensorflow/issues/1709
 // instantiation attributes? Do we ever want to optimize parametrized function
 // without specializing it to it's instantiation attributes (at least types)?
 Status MakeGrapplerFunctionItem(const FunctionDef& func,

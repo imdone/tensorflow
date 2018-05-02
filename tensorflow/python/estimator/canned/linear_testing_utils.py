@@ -228,7 +228,8 @@ class BaseLinearRegressorPartitionerTest(object):
       linear_regressor.train(input_fn=_input_fn, steps=1, hooks=[hook])
 
 
-# TODO(b/36813849): Add tests with dynamic shape inputs using placeholders.
+# TODO (b/36813849): Add tests with dynamic shape inputs using placeholders. id:4200
+# https://github.com/imdone/tensorflow/issues/4199
 class BaseLinearRegressorEvaluationTest(object):
 
   def __init__(self, linear_regressor_fn):
@@ -698,7 +699,8 @@ class BaseLinearRegressorTrainingTest(object):
         wraps=optimizer_lib.Optimizer(use_locking=False, name='my_optimizer'))
     mock_optimizer.minimize = test.mock.MagicMock(wraps=_minimize)
 
-    # NOTE: Estimator.params performs a deepcopy, which wreaks havoc with mocks.
+    # NOTE: Estimator.params performs a deepcopy, which wreaks havoc with mocks. id:3700
+    # https://github.com/imdone/tensorflow/issues/3699
     # So, return mock_optimizer itself for deepcopy.
     mock_optimizer.__deepcopy__ = lambda _: mock_optimizer
     return mock_optimizer
@@ -918,7 +920,8 @@ class BaseLinearClassifierTrainingTest(object):
         wraps=optimizer_lib.Optimizer(use_locking=False, name='my_optimizer'))
     mock_optimizer.minimize = test.mock.MagicMock(wraps=_minimize)
 
-    # NOTE: Estimator.params performs a deepcopy, which wreaks havoc with mocks.
+    # NOTE: Estimator.params performs a deepcopy, which wreaks havoc with mocks. id:2945
+    # https://github.com/imdone/tensorflow/issues/2944
     # So, return mock_optimizer itself for deepcopy.
     mock_optimizer.__deepcopy__ = lambda _: mock_optimizer
     return mock_optimizer

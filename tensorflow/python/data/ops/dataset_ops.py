@@ -140,7 +140,8 @@ class Dataset(object):
     """
     if context.executing_eagerly():
       return iterator_ops.EagerIterator(self)
-    # NOTE(mrry): We capture by value here to ensure that `_make_dataset()` is
+    # NOTE (mrry): We capture by value here to ensure that `_make_dataset()` is id:2872
+    # https://github.com/imdone/tensorflow/issues/2871
     # a 0-argument function.
     @function.Defun(capture_by_value=True)
     def _make_dataset():
@@ -265,7 +266,8 @@ class Dataset(object):
       with self._lock:
         ret = self._next_id
         self._next_id += 1
-      # NOTE(mrry): Explicitly create an array of `np.int64` because implicit
+      # NOTE (mrry): Explicitly create an array of `np.int64` because implicit id:3089
+      # https://github.com/imdone/tensorflow/issues/3088
       # casting in `py_func()` will create an array of `np.int32` on Windows,
       # leading to a runtime error.
       return np.array(ret, dtype=np.int64)
@@ -427,7 +429,8 @@ class Dataset(object):
         generator_state.iterator_completed(iterator_id)
         # We return a dummy value so that the `finalize_fn` has a valid
         # signature.
-        # NOTE(mrry): Explicitly create an array of `np.int64` because implicit
+        # NOTE (mrry): Explicitly create an array of `np.int64` because implicit id:3600
+        # https://github.com/imdone/tensorflow/issues/3599
         # casting in `py_func()` will create an array of `np.int32` on Windows,
         # leading to a runtime error.
         return np.array(0, dtype=np.int64)
@@ -501,7 +504,8 @@ class Dataset(object):
     For example:
 
     ```python
-    # NOTE: The following examples use `{ ... }` to represent the
+    # NOTE: The following examples use `{ ... }` to represent the id:4169
+    # https://github.com/imdone/tensorflow/issues/4167
     # contents of a dataset.
     a = { 1, 2, 3 }
     b = { 4, 5, 6 }
@@ -536,7 +540,8 @@ class Dataset(object):
     """Creates a `Dataset` by concatenating given dataset with this dataset.
 
     ```python
-    # NOTE: The following examples use `{ ... }` to represent the
+    # NOTE: The following examples use `{ ... }` to represent the id:3566
+    # https://github.com/imdone/tensorflow/issues/3565
     # contents of a dataset.
     a = { 1, 2, 3 }
     b = { 4, 5, 6, 7 }
@@ -605,7 +610,8 @@ class Dataset(object):
     matching_files = gen_io_ops.matching_files(file_pattern)
     dataset = Dataset.from_tensor_slices(matching_files)
     if shuffle:
-      # NOTE(mrry): The shuffle buffer size must be greater than zero, but the
+      # NOTE (mrry): The shuffle buffer size must be greater than zero, but the id:2875
+      # https://github.com/imdone/tensorflow/issues/2874
       # list of files might be empty.
       buffer_size = math_ops.maximum(
           array_ops.shape(matching_files, out_type=dtypes.int64)[0], 1)
@@ -897,11 +903,13 @@ class Dataset(object):
     For example:
 
     ```python
-    # NOTE: The following examples use `{ ... }` to represent the
+    # NOTE: The following examples use `{ ... }` to represent the id:3092
+    # https://github.com/imdone/tensorflow/issues/3091
     # contents of a dataset.
     a = { 1, 2, 3, 4, 5 }
 
-    # NOTE: New lines indicate "block" boundaries.
+    # NOTE: New lines indicate "block" boundaries. id:3601
+    # https://github.com/imdone/tensorflow/issues/3600
     a.interleave(lambda x: Dataset.from_tensors(x).repeat(6),
                  cycle_length=2, block_length=4) == {
         1, 1, 1, 1,
@@ -1723,7 +1731,8 @@ class PaddedBatchDataset(Dataset):
     """See `Dataset.batch()` for details."""
     super(PaddedBatchDataset, self).__init__()
     if sparse.any_sparse(input_dataset.output_classes):
-      # TODO(b/63669786): support batching of sparse tensors
+      # TODO (b/63669786): support batching of sparse tensors id:4170
+      # https://github.com/imdone/tensorflow/issues/4168
       raise TypeError(
           "Batching of padded sparse tensors is not currently supported")
     self._input_dataset = input_dataset

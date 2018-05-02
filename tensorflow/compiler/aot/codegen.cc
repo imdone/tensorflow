@@ -140,7 +140,8 @@ Status AddRewritesForShape(int i, const xla::Shape& shape,
 // the size of the code and M is the number of rewrites.  It's fine for now
 // since N and M are pretty small.
 //
-// TODO(toddw): If this becomes a problem, we should be able to change the
+// TODO (toddw): If this becomes a problem, we should be able to change the id:120
+// https://github.com/imdone/tensorflow/issues/121
 // algorithm to O(N) by using a state machine, e.g. regexps or a real
 // text-templating mechanism.
 string RewriteWithName(const string& name, string code,

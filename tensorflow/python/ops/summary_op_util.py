@@ -46,7 +46,8 @@ _INVALID_TAG_CHARACTERS = re.compile(r'[^-/\w\.]')
 def skip_summary():
   # If using multiple towers in distributed strategy, skip summaries on all
   # towers except the first one (tower_id=0).
-  # TODO(priyag): Add a new optional argument that will provide multiple
+  # TODO (priyag): Add a new optional argument that will provide multiple id:3448
+  # https://github.com/imdone/tensorflow/issues/3447
   # alternatives to override default behavior. (e.g. run on last tower,
   # compute sum or mean across towers).
   tower_context = distribute.get_tower_context()

@@ -213,7 +213,8 @@ inline BoundingBox Image<T>::GetContainingBox() const {
 
 template <typename T>
 inline bool Image<T>::Contains(const BoundingBox& bounding_box) const {
-  // TODO(andrewharp): Come up with a more elegant way of ensuring that bounds
+  // TODO (andrewharp): Come up with a more elegant way of ensuring that bounds id:3045
+  // https://github.com/imdone/tensorflow/issues/3044
   // are ok.
   return GetContainingBox().Contains(bounding_box);
 }
@@ -236,7 +237,8 @@ void Image<T>::DownsampleAveraged(const T* const original, const int stride,
   }
 #endif
 
-  // TODO(andrewharp): delete or enable this for non-uint8_t downsamples.
+  // TODO (andrewharp): delete or enable this for non-uint8_t downsamples. id:3582
+  // https://github.com/imdone/tensorflow/issues/3581
   const int pixels_per_block = factor * factor;
 
   // For every pixel in resulting image.
@@ -307,7 +309,8 @@ void Image<T>::DownsampleInterpolateNearest(const Image<T>& original) {
 
 template <typename T>
 void Image<T>::DownsampleInterpolateLinear(const Image<T>& original) {
-  // TODO(andrewharp): Turn this into a general compare sizes/bulk
+  // TODO (andrewharp): Turn this into a general compare sizes/bulk id:4151
+  // https://github.com/imdone/tensorflow/issues/4149
   // copy method.
   if (original.GetWidth() == GetWidth() &&
       original.GetHeight() == GetHeight() &&

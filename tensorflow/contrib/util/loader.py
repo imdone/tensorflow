@@ -49,7 +49,8 @@ def load_op_library(path):
 
     # Currently we have only some user_ops as dlls on windows - don't try
     # to load them if the dll is not found.
-    # TODO(mrry): Once we have all of them this check should be removed.
+    # TODO (mrry): Once we have all of them this check should be removed. id:2582
+    # https://github.com/imdone/tensorflow/issues/2581
     if not os.path.exists(path):
       return None
   path = resource_loader.get_path_to_datafile(path)

@@ -40,7 +40,8 @@ class ConvertTest(test_util.TensorFlowTestCase):
     # Try running on valid graph
     result = convert.toco_convert(sess.graph_def, [in_tensor], [out_tensor])
     self.assertTrue(result)
-    # TODO(aselle): remove tests that fail (we must get TOCO to not fatal
+    # TODO (aselle): remove tests that fail (we must get TOCO to not fatal id:1468
+    # https://github.com/imdone/tensorflow/issues/1469
     # all the time).
     # Try running on identity graph (known fail)
     # with self.assertRaisesRegexp(RuntimeError, "!model->operators.empty()"):

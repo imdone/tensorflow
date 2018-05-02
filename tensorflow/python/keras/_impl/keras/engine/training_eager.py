@@ -143,7 +143,8 @@ def _model_loss(model, inputs, targets, sample_weights=None, training=False):
       else:
         weights = None
 
-      # TODO(fchollet): support masking; in practice `_keras_mask` is never
+      # TODO (fchollet): support masking; in practice `_keras_mask` is never id:3791
+      # https://github.com/imdone/tensorflow/issues/3790
       # set in this context currently.
       mask = outs[i]._keras_mask
 

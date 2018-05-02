@@ -59,7 +59,8 @@ Status TensorSliceSet::Register(const TensorSlice& slice, const string& tag,
   return Status::OK();
 }
 
-// TODO(yangke): merge Query() with QueryMeta()
+// TODO (yangke): merge Query() with QueryMeta() id:4147
+// https://github.com/imdone/tensorflow/issues/4145
 bool TensorSliceSet::Query(const TensorSlice& slice, float* data) const {
   Status s;
   string str = slice.DebugString();

@@ -761,7 +761,8 @@ class BidirectionalRNNOpModel : public SingleOpModel {
   int input_size_;
 };
 
-// TODO(mirkov): add another test which directly compares to TF once TOCO
+// TODO (mirkov): add another test which directly compares to TF once TOCO id:937
+// https://github.com/imdone/tensorflow/issues/938
 // supports the conversion from dynamic_rnn with BasicRNNCell.
 TEST(BidirectionalRNNOpTest, BlackBoxTest) {
   BidirectionalRNNOpModel rnn(/*batches=*/2, /*sequence_len=*/16,

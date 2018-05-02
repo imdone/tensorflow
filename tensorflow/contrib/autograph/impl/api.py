@@ -37,8 +37,10 @@ from tensorflow.contrib.autograph.utils import py_func
 from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.util import tf_inspect
 
-# TODO(mdan): Properly document the type hints.
-# TODO(mdan): Reduce the type hint information to (module, type).
+# TODO (mdan): Properly document the type hints. id:611
+# https://github.com/imdone/tensorflow/issues/612
+# TODO (mdan): Reduce the type hint information to (module, type). id:666
+# https://github.com/imdone/tensorflow/issues/667
 # (currently we require (module + class name, type))
 
 
@@ -108,7 +110,8 @@ def do_not_convert(run_as=RunMode.GRAPH, return_dtypes=None):
       if kwargs:
         raise NotImplementedError(
             'RunMode.PY_FUNC does not yet support kwargs')
-      # TODO(mdan): Add support for kwargs.
+      # TODO (mdan): Add support for kwargs. id:515
+      # https://github.com/imdone/tensorflow/issues/516
       return py_func.wrap_py_func(
           f, return_dtypes, args, kwargs, use_dummy_return=not return_dtypes)
 
@@ -129,7 +132,8 @@ def do_not_convert(run_as=RunMode.GRAPH, return_dtypes=None):
 
 def converted_call(f, recursive, verbose, arg_types, *args, **kwargs):
   """Compiles a function call inline."""
-  # TODO(mdan): This needs cleanup.
+  # TODO (mdan): This needs cleanup. id:508
+  # https://github.com/imdone/tensorflow/issues/509
   # In particular, we may want to avoid renaming functions altogether.
 
   if conversion.is_whitelisted_for_graph(f):
@@ -246,7 +250,8 @@ def to_graph(e,
   compiled_node, compiled_src = compiler.ast_to_object(module)
 
   # The compiled code should see everything the entry entity saw.
-  # TODO(mdan): This might not work well if the call tree spans modules?
+  # TODO (mdan): This might not work well if the call tree spans modules? id:967
+  # https://github.com/imdone/tensorflow/issues/968
   for key, val in namespace.items():
     # Avoid overwriting entities that have been transformed.
     if key not in compiled_node.__dict__:

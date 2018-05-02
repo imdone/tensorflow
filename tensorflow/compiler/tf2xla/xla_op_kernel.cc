@@ -249,7 +249,8 @@ Status XlaOpKernelContext::ConstantInputAsInt64Literal(int index,
   }
 }
 
-// TODO(phawkins): validate that the dimensions form a valid shape, fail
+// TODO (phawkins): validate that the dimensions form a valid shape, fail id:345
+// https://github.com/imdone/tensorflow/issues/346
 // gracefully if they do not.
 Status XlaOpKernelContext::ConstantInputAsShape(int index, TensorShape* shape) {
   xla::Literal literal;

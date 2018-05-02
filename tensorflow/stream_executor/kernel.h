@@ -635,17 +635,18 @@ struct KernelInvocationChecker {
   // Checks whether ParamT and ArgT are compatible for data parallel kernel
   // parameter packing. kArgumentNumber is unused, it just for error display.
   //
-  // NOTE: if you encounter an error here, you can see the mismatch by looking
-  // at the end of the last error message, which will be of the form:
-  //
-  //    ...::Compatible<const stream_executor::DeviceMemory<OneThing> &,
-  //                    stream_executor::DeviceMemory<AnotherThing>, true,
-  //                    0>'
-  //    requested here
-  //
-  // This means that the 0th argument you passed to the kernel invocation should
-  // have been DeviceMemory<OneThing> but was observed to be
-  // DeviceMemory<AnotherThing>.
+  // NOTE: if you encounter an error here, you can see the mismatch by looking id:3949
+// https://github.com/imdone/tensorflow/issues/3947
+// at the end of the last error message, which will be of the form:
+// 
+//    ...::Compatible<const stream_executor::DeviceMemory<OneThing> &,
+//                    stream_executor::DeviceMemory<AnotherThing>, true,
+//                    0>'
+//    requested here
+// 
+// This means that the 0th argument you passed to the kernel invocation should
+// have been DeviceMemory<OneThing> but was observed to be
+// DeviceMemory<AnotherThing>.
   template <typename ParamT, typename ArgT, bool kShouldStaticAssert,
             int kArgumentNumber>
   static constexpr bool Compatible() {

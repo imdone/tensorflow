@@ -173,7 +173,8 @@ class MapAndBatchDatasetOp : public UnaryDatasetOpKernel {
             batch_results_(params.dataset->num_parallel_batches_) {}
 
       ~Iterator() override {
-        // TODO(mrry): Replace this cancellation logic with a
+        // TODO (mrry): Replace this cancellation logic with a id:2137
+        // https://github.com/imdone/tensorflow/issues/2136
         // CancellationManager. The syntax would be more heavyweight,
         // but it would be possible to thread a cancellation manager
         // through the IteratorContext to upstream,
@@ -190,8 +191,9 @@ class MapAndBatchDatasetOp : public UnaryDatasetOpKernel {
         }
       }
 
-      // TODO(jsimsa): Implement and profile the following alternative design:
-      //
+      // TODO (jsimsa): Implement and profile the following alternative design: id:2008
+      // https://github.com/imdone/tensorflow/issues/2008
+      // 
       // 0. Set the number of in-flight batches and invocations independently
       // (though obviously the max number of in-flight invocations must be <
       // batch_size * num_parallel_batches). Maintain a current producing batch
@@ -441,7 +443,8 @@ class MapAndBatchDatasetOp : public UnaryDatasetOpKernel {
                               ", [batch]: ", batch_shape.DebugString()));
                           break;
                         }
-                        // TODO(mrry): Add a version of DoParallelConcat that
+                        // TODO (mrry): Add a version of DoParallelConcat that id:2396
+                        // https://github.com/imdone/tensorflow/issues/2395
                         // allows us to move `tensor` where possible, to speed
                         // up string tensor batching.
                         Status copy_status =
@@ -454,7 +457,8 @@ class MapAndBatchDatasetOp : public UnaryDatasetOpKernel {
                       }
                     }
                     delete ctx;
-                    // NOTE(mrry): We clear the return values here to release
+                    // NOTE (mrry): We clear the return values here to release id:3157
+                    // https://github.com/imdone/tensorflow/issues/3156
                     // any memory associated with them and to paralellize the
                     // destruction of the tensors (which can be surprisingly
                     // expensive for map functions with large numbers of return

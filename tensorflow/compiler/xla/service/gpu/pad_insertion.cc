@@ -49,11 +49,12 @@ HloInstruction* MaybePaddedAndSlicedInput(
     // If padding is uneven or has dilation, we insert a kPad instruction that
     // applies positive padding and dilation.
     //
-    // TODO(phawkins): If conv_window has asymmetric padding, perhaps instead of
-    // moving all the padding into an explicit pad op, we should keep as much
-    // padding inside of cudnn as possible, on the assumption that padding
-    // within cudnn is basically free, whereas a kPad's cost increases as the
-    // amount of padding increases.
+    // TODO (phawkins): If conv_window has asymmetric padding, perhaps instead of id:381
+// https://github.com/imdone/tensorflow/issues/382
+// moving all the padding into an explicit pad op, we should keep as much
+// padding inside of cudnn as possible, on the assumption that padding
+// within cudnn is basically free, whereas a kPad's cost increases as the
+// amount of padding increases.
     PaddingConfig padding_config =
         MakeNoPaddingConfig(input->shape().dimensions_size());
     for (size_t i = 0; i < conv_dnums.input_spatial_dimensions().size(); ++i) {
@@ -210,7 +211,8 @@ bool PadInsertion::CanonicalizeBackwardFilterConvolution(
     int64 padding_low = backward_conv->window().dimensions(i).padding_low();
     int64 padding_high = backward_conv->window().dimensions(i).padding_high();
     if (padding_low < 0 || padding_high < 0) {
-      // TODO(b/32744257): The following canonicalization wouldn't remove
+      // TODO (b/32744257): The following canonicalization wouldn't remove id:380
+      // https://github.com/imdone/tensorflow/issues/381
       // negative padding in a backward convolution, and would therefore cause
       // cuDNN convolution (which doesn't support negative padding) to fail.
       return false;
@@ -275,7 +277,8 @@ bool PadInsertion::CanonicalizeBackwardInputConvolution(
     int64 padding_low = backward_conv->window().dimensions(i).padding_low();
     int64 padding_high = backward_conv->window().dimensions(i).padding_high();
     if (padding_low < 0 || padding_high < 0) {
-      // TODO(b/32744257): The following canonicalization wouldn't remove
+      // TODO (b/32744257): The following canonicalization wouldn't remove id:781
+      // https://github.com/imdone/tensorflow/issues/782
       // negative padding in a backward convolution, and would therefore cause
       // cuDNN convolution (which doesn't support negative padding) to fail.
       return false;

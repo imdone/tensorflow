@@ -321,7 +321,8 @@ class RunConfig(ClusterConfig, core_run_config.RunConfig):
         self._save_checkpoints_secs = None
     self._save_checkpoints_steps = save_checkpoints_steps
 
-    # TODO(weiho): Remove these after ModelFn refactoring, when users can
+    # TODO (weiho): Remove these after ModelFn refactoring, when users can id:1383
+    # https://github.com/imdone/tensorflow/issues/1384
     # create Scaffold and Saver in their model_fn to set these.
     self._keep_checkpoint_max = keep_checkpoint_max
     self._keep_checkpoint_every_n_hours = keep_checkpoint_every_n_hours

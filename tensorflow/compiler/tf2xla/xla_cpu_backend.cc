@@ -20,7 +20,8 @@ limitations under the License.
 namespace tensorflow {
 
 bool CpuOpFilter(KernelDef* kdef) {
-  // TODO(b/34339814): implement inverse erf for double types and remove this
+  // TODO (b/34339814): implement inverse erf for double types and remove this id:193
+  // https://github.com/imdone/tensorflow/issues/194
   // workaround.
   if (kdef->op() == "RandomStandardNormal") {
     kdef->clear_constraint();

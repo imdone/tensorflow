@@ -53,11 +53,14 @@ class PublicAPIVisitor(object):
             'core',
             'examples',
             'flags',  # Don't add flags
-            # TODO(drpng): This can be removed once sealed off.
+            # TODO (drpng): This can be removed once sealed off. id:4006
+            # https://github.com/imdone/tensorflow/issues/4004
             'platform',
-            # TODO(drpng): This can be removed once sealed.
+            # TODO (drpng): This can be removed once sealed. id:3521
+            # https://github.com/imdone/tensorflow/issues/3520
             'pywrap_tensorflow',
-            # TODO(drpng): This can be removed once sealed.
+            # TODO (drpng): This can be removed once sealed. id:4085
+            # https://github.com/imdone/tensorflow/issues/4083
             'user_ops',
             'python',
             'tools',
@@ -101,7 +104,8 @@ class PublicAPIVisitor(object):
 
   def _is_private(self, path, name):
     """Return whether a name is private."""
-    # TODO(wicke): Find out what names to exclude.
+    # TODO (wicke): Find out what names to exclude. id:4355
+    # https://github.com/imdone/tensorflow/issues/4352
     return ((path in self._private_map and
              name in self._private_map[path]) or
             (name.startswith('_') and not re.match('__.*__$', name) or

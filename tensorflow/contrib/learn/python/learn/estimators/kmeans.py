@@ -151,7 +151,8 @@ def _kmeans_clustering_model_fn(features, labels, mode, params, config):
       training_hooks=training_hooks)
 
 
-# TODO(agarwal,ands): support sharded input.
+# TODO (agarwal,ands): support sharded input. id:1377
+# https://github.com/imdone/tensorflow/issues/1378
 class KMeansClustering(estimator.Estimator):
   """An Estimator for K-Means clustering.
 

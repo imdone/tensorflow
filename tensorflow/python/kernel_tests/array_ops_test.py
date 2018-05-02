@@ -331,8 +331,9 @@ class ReverseV2Test(test_util.TensorFlowTestCase):
 
   # This is the version of reverse that uses axis indices rather than
   # bool tensors
-  # TODO(b/32254538): Change this test to use array_ops.reverse
-  #
+  # TODO (b/32254538): Change this test to use array_ops.reverse id:3743
+  # https://github.com/imdone/tensorflow/issues/3742
+  # 
   # Note: this test passes placeholder as constant axis is validated
   # in shape function (see testInvalidAxis)
   def testInvalid(self):
@@ -1202,7 +1203,8 @@ class InvertPermutationTest(test_util.TensorFlowTestCase):
 
 class UnravelIndexTest(test_util.TensorFlowTestCase):
 
-  # TODO(b/73086570): Reenable test.
+  # TODO (b/73086570): Reenable test. id:4242
+  # https://github.com/imdone/tensorflow/issues/4240
   @unittest.skip("Test does not pass internally.")
   def testUnravelIndex(self):
     with self.test_session():

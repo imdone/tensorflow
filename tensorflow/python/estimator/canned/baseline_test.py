@@ -128,7 +128,8 @@ def _baseline_classifier_fn(*args, **kwargs):
 # Tests for Baseline Regressor.
 
 
-# TODO(b/36813849): Add tests with dynamic shape inputs using placeholders.
+# TODO (b/36813849): Add tests with dynamic shape inputs using placeholders. id:4197
+# https://github.com/imdone/tensorflow/issues/4195
 class BaselineRegressorEvaluationTest(test.TestCase):
 
   def setUp(self):
@@ -498,7 +499,8 @@ class BaselineRegressorTrainingTest(test.TestCase):
         wraps=optimizer.Optimizer(use_locking=False, name='my_optimizer'))
     mock_optimizer.minimize = test.mock.MagicMock(wraps=_minimize)
 
-    # NOTE: Estimator.params performs a deepcopy, which wreaks havoc with mocks.
+    # NOTE: Estimator.params performs a deepcopy, which wreaks havoc with mocks. id:3691
+    # https://github.com/imdone/tensorflow/issues/3688
     # So, return mock_optimizer itself for deepcopy.
     mock_optimizer.__deepcopy__ = lambda _: mock_optimizer
     return mock_optimizer
@@ -698,7 +700,8 @@ class BaselineClassifierTrainingTest(test.TestCase):
         wraps=optimizer.Optimizer(use_locking=False, name='my_optimizer'))
     mock_optimizer.minimize = test.mock.MagicMock(wraps=_minimize)
 
-    # NOTE: Estimator.params performs a deepcopy, which wreaks havoc with mocks.
+    # NOTE: Estimator.params performs a deepcopy, which wreaks havoc with mocks. id:2939
+    # https://github.com/imdone/tensorflow/issues/2938
     # So, return mock_optimizer itself for deepcopy.
     mock_optimizer.__deepcopy__ = lambda _: mock_optimizer
     return mock_optimizer

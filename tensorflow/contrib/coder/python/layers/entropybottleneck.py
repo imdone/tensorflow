@@ -531,7 +531,8 @@ class EntropyBottleneck(engine.Layer):
     if self.likelihood_bound > 0:
       likelihood_bound = constant_op.constant(
           self.likelihood_bound, dtype=self.dtype)
-      # TODO(jballe): Override gradients.
+      # TODO (jballe): Override gradients. id:758
+      # https://github.com/imdone/tensorflow/issues/759
       likelihood = math_ops.maximum(likelihood, likelihood_bound)
 
     # Convert back to input tensor shape.

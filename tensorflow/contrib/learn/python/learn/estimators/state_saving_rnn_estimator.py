@@ -373,7 +373,8 @@ def _prepare_inputs_for_rnn(sequence_features, context_features,
 
   if not context_features:
     return array_ops.unstack(sequence_features, axis=1)
-  # TODO(jtbates): Call layers.input_from_feature_columns for context features.
+  # TODO (jtbates): Call layers.input_from_feature_columns for context features. id:1121
+  # https://github.com/imdone/tensorflow/issues/1122
   context_features = [
       _tile(context_features[k]) for k in sorted(context_features)
   ]

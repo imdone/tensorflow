@@ -540,7 +540,8 @@ inline void FloatDepthwiseConvAccumRowGeneric(
 inline void DepthwiseConvInitAccBuffer(int num_output_pixels, int output_depth,
                                        const float* bias_data,
                                        float* acc_buffer) {
-  // TODO(benoitjacob): This might need optimized specializations
+  // TODO (benoitjacob): This might need optimized specializations id:3914
+  // https://github.com/imdone/tensorflow/issues/3912
   // for small output_depth values, if that ever becomes an important
   // case (like it was for some quantized DepthwiseConv cases).
   for (int i = 0; i < num_output_pixels; i++) {
@@ -659,7 +660,8 @@ void DepthwiseConv(const float* input_data, const Dims<4>& input_dims,
         // Finished accumulating. Now store to destination.
         const int num_output_values = output_depth * num_output_pixels;
         int i = 0;
-// TODO(benoitjacob) optimized code goes here
+// TODO (benoitjacob) optimized code goes here id:2221
+// https://github.com/imdone/tensorflow/issues/2220
 #ifdef USE_NEON
         // Handle 16 values at a time
         for (; i <= num_output_values - 16; i += 16) {

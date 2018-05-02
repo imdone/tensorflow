@@ -55,11 +55,12 @@ VirtualPlacer::VirtualPlacer(const Cluster* cluster) {
   } else {
     // Default device is set from the devices in the cluster in the following
     // priority: /gpu:0, /cpu:0, or any device.
-    // TODO(dyoon): This logic assumes single machine with CPU and GPU devices.
+    // TODO (dyoon): This logic assumes single machine with CPU and GPU devices. id:2829
+    // https://github.com/imdone/tensorflow/issues/2828
     // Make it more general to support multiple machines, job types, and devices
     // other than CPU and GPU.
-    std::map<int, string> cpu_devices;  // CPU device map: id -> device name.
-    std::map<int, string> gpu_devices;  // GPU device map: id -> device name.
+    //     std::map<int, string> cpu_devices;  // CPU device map: id -> device name.
+    //     std::map<int, string> gpu_devices;  // GPU device map: id -> device name.
     for (const auto& kv : lfqn_map_) {
       const auto& lfqn = kv.first;
       const auto& cluster_device_name = kv.second;
@@ -104,7 +105,8 @@ VirtualPlacer::VirtualPlacer(const Cluster* cluster) {
   }
   // If there is only  type of job name in all the devices in the cluster, use
   // that one as default job name; otherwise, use localhost.
-  // TODO(dyoon): this should be improved, especially when the cluster is
+  // TODO (dyoon): this should be improved, especially when the cluster is id:2015
+  // https://github.com/imdone/tensorflow/issues/2015
   // composed of multiple worker, PS, and other types of jobs.
   if (job_names_from_cluster.size() == 1) {
     auto it = job_names_from_cluster.begin();

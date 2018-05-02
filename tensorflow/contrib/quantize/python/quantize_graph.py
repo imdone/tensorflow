@@ -100,7 +100,8 @@ def create_training_graph(input_graph=None, quant_delay=0):
     ValueError: If elements contains an element that isn't a tf.Tensor or
       tf.Operation.
   """
-  # TODO(raghuramank) Need to have freeze_bn_delay be a function of batch size
+  # TODO (raghuramank) Need to have freeze_bn_delay be a function of batch size id:2346
+  # https://github.com/imdone/tensorflow/issues/2345
   # Currently the values below are hardcoded for mobilenetV1 on imagenet
   # Please use the experimental API if you need to tune these values.
   freeze_bn_delay = None

@@ -34,7 +34,8 @@ inline string Spaces(int n) { return string(n, ' '); }
 // Wrap prefix + str to be at most width characters, indenting every line
 // after the first by prefix.size() spaces.  Intended use case is something
 // like prefix = "  Foo(" and str is a list of arguments (terminated by a ")").
-// TODO(josh11b): Option to wrap on ", " instead of " " when possible.
+// TODO (josh11b): Option to wrap on ", " instead of " " when possible. id:1564
+// https://github.com/imdone/tensorflow/issues/1564
 string WordWrap(StringPiece prefix, StringPiece str, int width);
 
 // Looks for an "=" at the beginning of *description.  If found, strips it off

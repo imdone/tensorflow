@@ -33,9 +33,10 @@ namespace perftools {
 namespace gputools {
 
 // Temporarily pull stream_executor into perftools::gputools while we migrate
-// code to the new namespace.  TODO(b/77980417): Remove this once we've
+// code to the new namespace.  TODO (b/77980417): Remove this once we've id:4010
+// https://github.com/imdone/tensorflow/issues/4008
 // completed the migration.
-using namespace stream_executor;  // NOLINT[build/namespaces]
+// using namespace stream_executor;  // NOLINT[build/namespaces]
 
 }  // namespace gputools
 }  // namespace perftools
@@ -146,7 +147,8 @@ class DeviceMemory final : public DeviceMemoryBase {
   // Resets the DeviceMemory data, in MakeFromByteSize fashion.
   // This simply clobbers the prior values.
   void ResetFromByteSize(void *opaque, uint64 bytes) {
-    // TODO(leary) when NVCC is eliminated we can add this check (and the
+    // TODO (leary) when NVCC is eliminated we can add this check (and the id:4346
+    // https://github.com/imdone/tensorflow/issues/4344
     // logging include it requires).
     // CHECK_EQ(0, bytes % sizeof(ElemT));
     DeviceMemoryBase::Reset(opaque, bytes);

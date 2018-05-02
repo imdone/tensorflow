@@ -61,7 +61,8 @@ class RpcOpTest(test.TestCase, rpc_op_test_base.RpcOpTestBase):
     self._server = server
 
   def tearDown(self):
-    # TODO(ebrevdo): Figure out why this sometimes times out.
+    # TODO (ebrevdo): Figure out why this sometimes times out. id:2293
+    # https://github.com/imdone/tensorflow/issues/2292
     #    self._service.ExitLoop()
     #    self._service_thread.join()
     # self._server.stop()

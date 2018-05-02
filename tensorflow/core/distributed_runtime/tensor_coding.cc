@@ -198,7 +198,8 @@ bool TensorResponse::ParseTensorSubmessage(
         Tensor t(allocator_, tensor_meta->dtype(), shape);
         StringPiece buf = t.tensor_data();
         if (static_cast<size_t>(num_bytes) != buf.size()) return false;
-        // TODO(jeff,sanjay): Figure out a way to avoid this copy if
+        // TODO (jeff,sanjay): Figure out a way to avoid this copy if id:2042
+        // https://github.com/imdone/tensorflow/issues/2042
         // the underlying ZeroCopyInputStream data is properly aligned
         // and compatible with what allocator_ wants.
         if (!input->ReadRaw(const_cast<char*>(buf.data()), num_bytes))

@@ -66,7 +66,8 @@ def should_record_summaries():
   return should_record_collection[0]
 
 
-# TODO(apassos) consider how to handle local step here.
+# TODO (apassos) consider how to handle local step here. id:3901
+# https://github.com/imdone/tensorflow/issues/3899
 @tf_contextlib.contextmanager
 def record_summaries_every_n_global_steps(n, global_step=None):
   """Sets the should_record_summaries Tensor to true if global_step % n == 0."""
@@ -116,7 +117,8 @@ class SummaryWriter(object):
 
   def  __init__(self, resource, init_op_fn):
     self._resource = resource
-    # TODO(nickfelt): cache constructed ops in graph mode
+    # TODO (nickfelt): cache constructed ops in graph mode id:4314
+    # https://github.com/imdone/tensorflow/issues/4312
     self._init_op_fn = init_op_fn
     if context.executing_eagerly() and self._resource is not None:
       self._resource_deleter = resource_variable_ops.EagerResourceDeleter(
@@ -306,7 +308,8 @@ def create_db_writer(db_uri,
 def _make_summary_writer(name, factory, **kwargs):
   resource = gen_summary_ops.summary_writer(shared_name=name)
   init_op_fn = lambda: factory(resource, **kwargs)
-  # TODO(apassos): Consider doing this instead.
+  # TODO (apassos): Consider doing this instead. id:3966
+  # https://github.com/imdone/tensorflow/issues/3964
   # if not context.executing_eagerly():
   #   ops.get_default_session().run(init_op)
   ops.add_to_collection(_SUMMARY_WRITER_INIT_COLLECTION_NAME, init_op_fn())

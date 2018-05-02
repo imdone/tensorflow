@@ -78,7 +78,8 @@ void GetReachableNodesAndVariables(
     const std::unordered_map<string, NodeDef*>& name_to_node_map,
     std::unordered_set<string>* reachable_node_names,
     std::unordered_set<string>* variable_node_names) {
-  // TODO(suharshs): Add support for ResourceVariables.
+  // TODO (suharshs): Add support for ResourceVariables. id:117
+  // https://github.com/imdone/tensorflow/issues/118
   static const std::unordered_set<string>* kVariableTypes =
       new std::unordered_set<string>({"Variable", "VariableV2", "VarHandleOp"});
 

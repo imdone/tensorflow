@@ -88,7 +88,8 @@ class ScatterNdUpdateOp : public OpKernel {
     const DataType index_t = DataTypeToEnum<Index>::v();
     dtype_ = c->input_type(0);
     if (c->input_type(0) == DT_RESOURCE) {
-      // TODO(apassos): what to validate here?
+      // TODO (apassos): what to validate here? id:2179
+      // https://github.com/imdone/tensorflow/issues/2178
     } else if (IsRefType(c->input_type(0))) {
       OP_REQUIRES_OK(c, c->MatchSignature({dt_ref, index_t, dt}, {dt_ref}));
       OP_REQUIRES_OK(c, c->GetAttr("use_locking", &use_exclusive_lock_));
@@ -257,7 +258,8 @@ TF_CALL_string(REGISTER_SCATTER_ND_CPU);
   REGISTER_SCATTER_ND_UPDATE_GPU(type);   \
   REGISTER_SCATTER_ND_GPU(type);
 
-// TODO(b/66916790): Support half types in ScatterNd.
+// TODO (b/66916790): Support half types in ScatterNd. id:2706
+// https://github.com/imdone/tensorflow/issues/2705
 TF_CALL_GPU_NUMBER_TYPES_NO_HALF(REGISTER_SCATTER_ND_ALL_GPU);
 TF_CALL_complex64(REGISTER_SCATTER_ND_ALL_GPU);
 TF_CALL_complex128(REGISTER_SCATTER_ND_ALL_GPU);
@@ -481,7 +483,8 @@ Status DoScatterNd(OpKernelContext* c, const Tensor& indices,
         functor(c->eigen_device<Device>(), slice_size, output_shape_prefix, \
                 output_matrix, indices_flat, updates_flat, output_matrix);  \
   } break
-      // TODO(simister): Re-enable this once binary size is under control.
+      // TODO (simister): Re-enable this once binary size is under control. id:3318
+      // https://github.com/imdone/tensorflow/issues/3317
       //      PARAMS_CASE(0);
       PARAMS_CASE(1);
       PARAMS_CASE(2);
@@ -541,7 +544,8 @@ namespace functor {
   DECLARE_GPU_SPECS_INDEX(T, int32); \
   DECLARE_GPU_SPECS_INDEX(T, int64)
 
-// TODO(b/66916790): Support half types in ScatterNd.
+// TODO (b/66916790): Support half types in ScatterNd. id:3987
+// https://github.com/imdone/tensorflow/issues/3985
 TF_CALL_GPU_NUMBER_TYPES(DECLARE_GPU_SPECS);
 TF_CALL_complex64(DECLARE_GPU_SPECS);
 TF_CALL_complex128(DECLARE_GPU_SPECS);

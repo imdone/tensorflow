@@ -20,8 +20,10 @@ from __future__ import print_function
 
 from tensorflow.python.ops import tensor_array_ops
 
-# TODO(mdan): Add support for TensorList once functional.
-# TODO(mdan): Add primitives for empty list, list with elements.
+# TODO (mdan): Add support for TensorList once functional. id:532
+# https://github.com/imdone/tensorflow/issues/533
+# TODO (mdan): Add primitives for empty list, list with elements. id:522
+# https://github.com/imdone/tensorflow/issues/523
 
 
 def append(target, element):

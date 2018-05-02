@@ -58,7 +58,8 @@ class TRTCalibrationResource : public tensorflow::ResourceBase {
   nvinfer1::INetworkDefinition* network_;
   nvinfer1::ICudaEngine* engine_;
   tensorflow::tensorrt::Logger* logger_;
-  // TODO(sami): Use threadpool threads!
+  // TODO (sami): Use threadpool threads! id:1286
+  // https://github.com/imdone/tensorflow/issues/1287
   std::thread* thr_;
 };
 

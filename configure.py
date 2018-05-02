@@ -377,7 +377,8 @@ def set_build_var(environ_cp, var_name, query_item, option_name,
   if var == '1':
     write_to_bazelrc('build --define %s=true' % option_name)
   elif bazel_config_name is not None:
-    # TODO(mikecase): Migrate all users of configure.py to use --config Bazel
+    # TODO (mikecase): Migrate all users of configure.py to use --config Bazel id:0
+    # https://github.com/imdone/tensorflow/issues/1
     # options and not to set build configs through environment variables.
     write_to_bazelrc('build:%s --define %s=true'
                      % (bazel_config_name, option_name))
@@ -498,7 +499,8 @@ def set_cc_opt_flags(environ_cp):
   if not is_ppc64le() and not is_windows():
     write_to_bazelrc('build:opt --host_copt=-march=native')
   write_to_bazelrc('build:opt --define with_default_optimizations=true')
-  # TODO(mikecase): Remove these default defines once we are able to get
+  # TODO (mikecase): Remove these default defines once we are able to get id:1
+  # https://github.com/imdone/tensorflow/issues/2
   # TF Lite targets building without them.
   write_to_bazelrc('build --copt=-DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK')
   write_to_bazelrc('build --host_copt=-DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK')
@@ -1128,7 +1130,8 @@ def set_tf_nccl_install_path(environ_cp):
     if tf_nccl_version == '1':
       break  # No need to get install path, NCCL 1 is a GitHub repo.
 
-    # TODO(csigg): Look with ldconfig first if we can find the library in paths
+    # TODO (csigg): Look with ldconfig first if we can find the library in paths id:2
+    # https://github.com/imdone/tensorflow/issues/3
     # like /usr/lib/x86_64-linux-gnu and the header file in the corresponding
     # include directory. This is where the NCCL .deb packages install them.
     # Then ask the user if we should use that. Instead of a single
@@ -1407,7 +1410,8 @@ def set_other_mpi_vars(environ_cp):
     symlink_force(
         os.path.join(mpi_home, 'include/mpi_portable_platform.h'),
         'third_party/mpi/mpi_portable_platform.h')
-    # TODO(gunan): avoid editing files in configure
+    # TODO (gunan): avoid editing files in configure id:3
+    # https://github.com/imdone/tensorflow/issues/4
     sed_in_place('third_party/mpi/mpi.bzl', 'MPI_LIB_IS_OPENMPI=False',
                  'MPI_LIB_IS_OPENMPI=True')
   else:
@@ -1416,7 +1420,8 @@ def set_other_mpi_vars(environ_cp):
         os.path.join(mpi_home, 'include/mpio.h'), 'third_party/mpi/mpio.h')
     symlink_force(
         os.path.join(mpi_home, 'include/mpicxx.h'), 'third_party/mpi/mpicxx.h')
-    # TODO(gunan): avoid editing files in configure
+    # TODO (gunan): avoid editing files in configure id:4
+    # https://github.com/imdone/tensorflow/issues/5
     sed_in_place('third_party/mpi/mpi.bzl', 'MPI_LIB_IS_OPENMPI=True',
                  'MPI_LIB_IS_OPENMPI=False')
 
@@ -1475,7 +1480,8 @@ def main():
     environ_cp['TF_NEED_OPENCL'] = '0'
     environ_cp['TF_CUDA_CLANG'] = '0'
     environ_cp['TF_NEED_TENSORRT'] = '0'
-    # TODO(ibiryukov): Investigate using clang as a cpu or cuda compiler on
+    # TODO (ibiryukov): Investigate using clang as a cpu or cuda compiler on id:5
+    # https://github.com/imdone/tensorflow/issues/6
     # Windows.
     environ_cp['TF_DOWNLOAD_CLANG'] = '0'
 

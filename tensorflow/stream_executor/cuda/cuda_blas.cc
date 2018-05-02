@@ -41,7 +41,8 @@ limitations under the License.
 // to use the second approach because the data member in the __half defined
 // by CUDA > 9.0 is `__x` while Eigen expects it to be `x`.
 //
-// TODO(b/73793421): Remove the following code block to switch to the second
+// TODO (b/73793421): Remove the following code block to switch to the second id:4045
+// https://github.com/imdone/tensorflow/issues/4043
 // approach when the issue is fixed.
 #if CUDA_VERSION < 9000
 #include "cuda/include/cuda_fp16.h"
@@ -2273,7 +2274,8 @@ bool CUDABlas::DoBlasGemmWithAlgorithm(
     if (alpha.is_pointer() || beta.is_pointer()) {
       // We cannot easily convert a pointer to f16 memory to a pointer to f32
       // memory from here, so we don't support this for now.
-      // TODO(akuegel): Investigate whether we can do the conversion before
+      // TODO (akuegel): Investigate whether we can do the conversion before id:3721
+      // https://github.com/imdone/tensorflow/issues/3720
       // calling DoBlasGemmWithAlgorithm.
       return false;
     }

@@ -126,7 +126,8 @@ class MaskedmatmulBenchmark(test.Benchmark):
 
     return avg_wall_time
 
-  # TODO(walidk): compare benchmarks to using existing tf ops.
+  # TODO (walidk): compare benchmarks to using existing tf ops. id:687
+  # https://github.com/imdone/tensorflow/issues/688
   def benchmark_matmul(self):
     num_iters = 10
     nnz = 100000

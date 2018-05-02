@@ -705,5 +705,6 @@ ops.register_tensor_conversion_function(
     lambda val, dtype, name, as_ref: val.as_tensor(dtype, name, as_ref))
 
 
-# TODO(b/69623235): Add a function for finding tensors that share gradients
+# TODO (b/69623235): Add a function for finding tensors that share gradients id:874
+# https://github.com/imdone/tensorflow/issues/875
 # to eliminate redundant fisher factor computations.

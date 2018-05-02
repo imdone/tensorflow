@@ -48,8 +48,10 @@ class BuiltinFunctionTransformer(transformer.Base):
 
   def visit_Call(self, node):
     self.generic_visit(node)
-    # TODO(mdan): This won't work if the function was hidden.
-    # TODO(mdan): Rely on the live_val and use inspect_utils.is_builtin instead.
+    # TODO (mdan): This won't work if the function was hidden. id:476
+    # https://github.com/imdone/tensorflow/issues/477
+    # TODO (mdan): Rely on the live_val and use inspect_utils.is_builtin instead. id:950
+    # https://github.com/imdone/tensorflow/issues/951
     if (isinstance(node.func, gast.Name) and
         node.func.id in ('len', 'range', 'xrange')):
       return self._convert_builtin(node)

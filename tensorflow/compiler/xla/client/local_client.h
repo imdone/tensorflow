@@ -126,7 +126,8 @@ class LocalClient : public Client {
   // Build and return a LocalExecutable object. The executable is compiled using
   // the given XlaComputation, argument layouts and options.
   //
-  // TODO(b/74197823): This is a part of a NOT YET ready refactor.
+  // TODO (b/74197823): This is a part of a NOT YET ready refactor. id:299
+// https://github.com/imdone/tensorflow/issues/300
   StatusOr<std::unique_ptr<LocalExecutable>> Compile(
       const XlaComputation& computation,
       const tensorflow::gtl::ArraySlice<const Shape*> argument_layouts,
@@ -146,14 +147,16 @@ class LocalClient : public Client {
       const ShapedBuffer& shaped_buffer);
 
   // Transfer the given literal to the infeed queue of the given device.
-  // TODO(b/69670845): Remove the 'Local' from the name when LocalClient does
+  // TODO (b/69670845): Remove the 'Local' from the name when LocalClient does id:294
+  // https://github.com/imdone/tensorflow/issues/295
   // not inherit from Client and there is no possibility of confusion with
   // Client::TransferToInfeed.
   Status TransferToInfeedLocal(const Literal& literal, int device_ordinal);
 
   // Transfer and return a value of the given shape from the outfeed of the
   // given device.
-  // TODO(b/69670845): Remove the 'Local' from the name when LocalClient does
+  // TODO (b/69670845): Remove the 'Local' from the name when LocalClient does id:211
+  // https://github.com/imdone/tensorflow/issues/212
   // not inherit from Client and there is no possibility of confusion with
   // Client::TransferFromOutfeed.
   StatusOr<std::unique_ptr<Literal>> TransferFromOutfeedLocal(

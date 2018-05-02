@@ -326,7 +326,8 @@ TF_CAPI_EXPORT extern void TF_SetConfig(TF_SessionOptions* options,
 // Destroy an options object.
 TF_CAPI_EXPORT extern void TF_DeleteSessionOptions(TF_SessionOptions*);
 
-// TODO(jeff,sanjay):
+// TODO (jeff,sanjay): id:19
+// https://github.com/imdone/tensorflow/issues/20
 // - export functions to set Config fields
 
 // --------------------------------------------------------------------------
@@ -368,7 +369,8 @@ typedef struct TF_Output {
 // operation whose operation type matches the function name.
 typedef struct TF_Function TF_Function;
 
-// Function definition options. TODO(iga): Define and implement
+// Function definition options. TODO (iga): Define and implement id:20
+// https://github.com/imdone/tensorflow/issues/21
 typedef struct TF_FunctionOptions TF_FunctionOptions;
 
 // Sets the shape of the Tensor referenced by `output` in `graph` to
@@ -1288,7 +1290,8 @@ TF_CAPI_EXPORT extern unsigned char TF_TryEvaluateConstant(TF_Graph* graph,
                                                            TF_Tensor** result,
                                                            TF_Status* status);
 
-// TODO(josh11b): Register OpDef, available to all operations added
+// TODO (josh11b): Register OpDef, available to all operations added id:35
+// https://github.com/imdone/tensorflow/issues/36
 // to this graph.
 
 // --------------------------------------------------------------------------

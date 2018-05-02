@@ -169,7 +169,8 @@ class Stream {
   // execution. See also Stream::ThenStartTimer.
   Stream &ThenStopTimer(Timer *t);
 
-  // TODO(leary) If work is added to the stream that is being depended upon,
+  // TODO (leary) If work is added to the stream that is being depended upon, id:4025
+  // https://github.com/imdone/tensorflow/issues/4023
   //              then what? Have to describe what happens.
   template <typename... Params>
   Stream &ThenWaitFor(Stream *other, Params... more_streams) {
@@ -262,7 +263,8 @@ class Stream {
       DeviceMemory<float> *scale_backprop,
       DeviceMemory<float> *offset_backprop);
 
-  // TODO(leary) add double-precision version of this interface.
+  // TODO (leary) add double-precision version of this interface. id:4351
+  // https://github.com/imdone/tensorflow/issues/4349
   Stream &ThenFusedConvolve(
       const dnn::BatchDescriptor &conv_input_descriptor,
       const DeviceMemory<int8> &conv_input_data, float conv_input_scale,
@@ -1715,8 +1717,9 @@ class Stream {
   Stream &ThenSetRngSeed(const uint8 *seed, uint64 seed_bytes);
 
   // Populates the memory indicated by values with uniform-random-distribution
-  // values. TODO(leary) seeding API/description
-  //
+  // values. TODO (leary) seeding API/description id:4084
+  // https://github.com/imdone/tensorflow/issues/4082
+  // 
   // Uses the type and size of the DeviceMemory to infer what data should be
   // populated.
   Stream &ThenPopulateRandUniform(DeviceMemory<float> *values);

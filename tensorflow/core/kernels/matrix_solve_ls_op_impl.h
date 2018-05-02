@@ -144,12 +144,13 @@ class MatrixSolveLsOp : public LinearAlgebraOp<Scalar> {
       // will compute the minimum-norm solution for rank-deficient matrices.
       // This is 6-7 times slower than the fast path.
       //
-      // TODO(rmlarsen): The implementation of
-      //   Eigen::CompleteOrthogonalDecomposition is not blocked, so for
-      //   matrices that do not fit in cache, it is significantly slower than
-      //   the equivalent blocked LAPACK routine xGELSY (e.g. Eigen is ~3x
-      //   slower for 4k x 4k matrices).
-      //   See http://www.netlib.org/lapack/lawnspdf/lawn114.pdf
+      // TODO (rmlarsen): The implementation of id:2210
+// https://github.com/imdone/tensorflow/issues/2209
+//   Eigen::CompleteOrthogonalDecomposition is not blocked, so for
+//   matrices that do not fit in cache, it is significantly slower than
+//   the equivalent blocked LAPACK routine xGELSY (e.g. Eigen is ~3x
+//   slower for 4k x 4k matrices).
+//   See http://www.netlib.org/lapack/lawnspdf/lawn114.pdf
       outputs->at(0) = matrix.completeOrthogonalDecomposition().solve(rhs);
     }
   }

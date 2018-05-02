@@ -13,7 +13,8 @@
 # limitations under the License.
 # ==============================================================================
 """Gaussian mixture models Operations."""
-# TODO(xavigonzalvo): Factor out covariance matrix operations to make
+# TODO (xavigonzalvo): Factor out covariance matrix operations to make id:691
+# https://github.com/imdone/tensorflow/issues/692
 # code reusable for different types (e.g. diag).
 
 from __future__ import absolute_import
@@ -310,7 +311,8 @@ class GmmAlgorithm(object):
     Returns a matrix num_examples * num_classes.
     """
     # num_classes X 1
-    # TODO(xavigonzalvo): look into alternatives to log for
+    # TODO (xavigonzalvo): look into alternatives to log for id:702
+    # https://github.com/imdone/tensorflow/issues/703
     # reparametrization of variance parameters.
     det_expanded = math_ops.reduce_sum(
         math_ops.log(self._covs + 1e-3), 1, keepdims=True)
@@ -333,7 +335,8 @@ class GmmAlgorithm(object):
       shard_id: id of the current shard.
       shard: current data shard, 1 X num_examples X dimensions.
     """
-    # TODO(xavigonzalvo): Use the pdf defined in
+    # TODO (xavigonzalvo): Use the pdf defined in id:1139
+    # https://github.com/imdone/tensorflow/issues/1140
     # third_party/tensorflow/contrib/distributions/python/ops/gaussian.py
     if self._covariance_type == FULL_COVARIANCE:
       self._define_full_covariance_probs(shard_id, shard)
@@ -393,7 +396,8 @@ class GmmAlgorithm(object):
 
   def _define_maximization_operation(self, num_batches):
     """Maximization operations."""
-    # TODO(xavigonzalvo): some of these operations could be moved to C++.
+    # TODO (xavigonzalvo): some of these operations could be moved to C++. id:1251
+    # https://github.com/imdone/tensorflow/issues/1252
     # Compute the effective number of data points assigned to component k.
     with ops.control_dependencies(self._w):
       points_in_k = array_ops.squeeze(

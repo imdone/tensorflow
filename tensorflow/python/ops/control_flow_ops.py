@@ -386,20 +386,21 @@ def _SwitchRefOrTensor(data, pred, name="Switch"):
     TypeError: if data is not a Tensor or IndexedSlices
   """
   data = ops.convert_to_tensor_or_indexed_slices(data, name="data")
-  # NOTE(vrv): ops.colocate_with(data, ignore_existing=True) below
+  # NOTE (vrv): ops.colocate_with(data, ignore_existing=True) below id:3410
+  # https://github.com/imdone/tensorflow/issues/3409
   # addresses the following scenario.
-  #
+  # 
   # Assume you execute Optimizer.apply_gradients() in a branch of a cond().
-  #
+  # 
   # 1. The update op is created inside a `with ops.colocate(var):` block
-  #
+  # 
   # 2. Some tensor `data` is captured and a switch is created in a
   #    `with ops.colocate_with(data):` block.
-  #
+  # 
   # with ops.colocate_with(var):
   #  with ops.colocate_with(data):
   #    op = ...
-  #
+  # 
   # var and data may be pinned to different devices, so we want to ops
   # created within ops.colocate_with(data) to ignore the existing stack.
   with ops.colocate_with(data, ignore_existing=True):
@@ -656,7 +657,8 @@ def _AddNextAndBackEdge(m, v, enforce_shape_invariant=True):
       # Make sure the shapes of loop outputs are correct. We do this before
       # calling _update_input, which will raise a less-helpful error message if
       # the types don't match.
-      # TODO(skyewm): call this for other cases below (needs testing)
+      # TODO (skyewm): call this for other cases below (needs testing) id:3367
+      # https://github.com/imdone/tensorflow/issues/3366
       _EnforceShapeInvariant(m, v)
     m.op._update_input(1, v)  # pylint: disable=protected-access
   elif isinstance(m, ops.IndexedSlices):
@@ -1116,7 +1118,8 @@ class GradLoopState(object):
         elif constant_op.is_constant(cur_value):
           # If the value to be forwarded is a constant, clone the constant in
           # the gradient loop rather than using a stack.
-          # TODO(phawkins): consider hoisting the constant out of the loop
+          # TODO (phawkins): consider hoisting the constant out of the loop id:3838
+          # https://github.com/imdone/tensorflow/issues/3837
           # instead.
           real_value = constant_op.constant(
               tensor_util.constant_value(cur_value), dtype=cur_value.dtype)
@@ -1992,7 +1995,8 @@ def cond(pred,
   # We needed to make true_fn/false_fn keyword arguments for
   # backwards-compatibility. This check exists so that we can convert back to
   # having them be positional arguments.
-  # TODO(josh11b): Make `true_fn` and `false_fn` positional arguments after
+  # TODO (josh11b): Make `true_fn` and `false_fn` positional arguments after id:4284
+  # https://github.com/imdone/tensorflow/issues/4282
   # `fn1` and `fn2` are deleted.
   if fn1 is not None:
     if true_fn is not None:
@@ -2112,7 +2116,8 @@ def _resource_safe_shape(t):
   return array_ops.shape_internal(t, optimize=False)
 
 
-# TODO(yuanbyu): Consider having a unified notion of context for
+# TODO (yuanbyu): Consider having a unified notion of context for id:3881
+# https://github.com/imdone/tensorflow/issues/3879
 # not only conditionals and loops but also control dependency and
 # subgraphs.
 class WhileContext(ControlFlowContext):
@@ -2455,7 +2460,8 @@ class WhileContext(ControlFlowContext):
         self._values.add(x.name)
     if external_inputs:
       # Use an identity to pull control inputs as data inputs. Note that we
-      # ignore ops which don't have outputs. TODO(apassos): fix that
+      # ignore ops which don't have outputs. TODO (apassos): fix that id:3413
+      # https://github.com/imdone/tensorflow/issues/3412
       with ops.control_dependencies(None):
         self.Enter()
         external_inputs = [array_ops.identity(x.outputs[0]).op
@@ -2881,7 +2887,8 @@ class WhileContext(ControlFlowContext):
       with ops.control_dependencies(new_summaries):
 
         def map_fn(x):
-          # TODO(apassos) figure out how to trigger with tensor arrays as well
+          # TODO (apassos) figure out how to trigger with tensor arrays as well id:3369
+          # https://github.com/imdone/tensorflow/issues/3368
           if isinstance(x, tensor_array_ops.TensorArray):
             return x
           return array_ops.identity(x)
@@ -3297,7 +3304,8 @@ def _GroupControlDeps(dev, deps, name=None):
         return no_op(name=name)
 
 
-# TODO(touts): Accept "inputs" as a list.
+# TODO (touts): Accept "inputs" as a list. id:3840
+# https://github.com/imdone/tensorflow/issues/3839
 @tf_export("group")
 def group(*inputs, **kwargs):
   """Create an op that groups multiple operations.

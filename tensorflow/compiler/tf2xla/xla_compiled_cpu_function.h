@@ -121,9 +121,10 @@ class XlaCompiledCpuFunction {
 
   // Returns the error message from the previous failed Run call.
   //
-  // TODO(fschneider): For now this always returns an empty string because there
-  // is no support for error reporting in XLA. Remove this once all callers are
-  // updated.
+  // TODO (fschneider): For now this always returns an empty string because there id:344
+// https://github.com/imdone/tensorflow/issues/345
+// is no support for error reporting in XLA. Remove this once all callers are
+// updated.
   string error_msg() const { return {}; }
 
   // ------------------------------

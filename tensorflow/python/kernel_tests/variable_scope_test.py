@@ -227,7 +227,8 @@ class VariableScopeTest(test.TestCase):
       self.evaluate(variables_lib.global_variables_initializer())
       self.assertAllEqual(self.evaluate(x.value()), self.evaluate(y.value()))
 
-  # TODO(alive): support variable partitioning/caching in eager mode.
+  # TODO (alive): support variable partitioning/caching in eager mode. id:3349
+  # https://github.com/imdone/tensorflow/issues/3348
   def testVarScopeCachingDevice(self):
     with self.test_session():
       caching_device = "/job:moo"

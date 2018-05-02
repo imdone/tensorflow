@@ -31,9 +31,10 @@ namespace perftools {
 namespace gputools {
 
 // Temporarily pull stream_executor into perftools::gputools while we migrate
-// code to the new namespace.  TODO(b/77980417): Remove this once we've
+// code to the new namespace.  TODO (b/77980417): Remove this once we've id:3498
+// https://github.com/imdone/tensorflow/issues/3497
 // completed the migration.
-using namespace stream_executor;  // NOLINT[build/namespaces]
+// using namespace stream_executor;  // NOLINT[build/namespaces]
 
 }  // namespace gputools
 }  // namespace perftools

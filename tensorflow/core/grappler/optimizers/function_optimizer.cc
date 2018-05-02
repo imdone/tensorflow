@@ -223,7 +223,8 @@ Status SpecializeFunction(const NodeDef& func_node, const FunctionDef& func,
   GrapplerFunctionItem item;
   TF_RETURN_IF_ERROR(MakeGrapplerFunctionItem(func, func_attr, flib, &item));
 
-  // TODO(ezhulenev): Push down const inputs and known input shapes.
+  // TODO (ezhulenev): Push down const inputs and known input shapes. id:2288
+  // https://github.com/imdone/tensorflow/issues/2287
   FunctionDef specialized_func;
   TF_RETURN_IF_ERROR(MakeFunctionDef(item, flib, &specialized_func));
 
@@ -583,7 +584,8 @@ Status FunctionOptimizer::Optimize(Cluster* cluster, const GrapplerItem& item,
       const string grad_func = ctx.function_library().FindGradient(func_name);
 
       if (specialize_func && grad_func.empty() && IsParametrized(*func)) {
-        // TODO(ezhulenev): Specialize function call if input is a Const or has
+        // TODO (ezhulenev): Specialize function call if input is a Const or has id:3070
+        // https://github.com/imdone/tensorflow/issues/3069
         // a known shape. Const input tensors can be pushed into the function
         // body and removed from function inputs.
 

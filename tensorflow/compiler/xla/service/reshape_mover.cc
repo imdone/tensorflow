@@ -56,17 +56,18 @@ bool IsReshapeOrTranspose(const HloInstruction* instruction) {
 // Returns true if `instruction` can change its shape simply by adjusting
 // metadata or if `instruction` is a broadcast of a scalar value.
 bool CanTriviallyChangeShape(const HloInstruction* instruction) {
-  // NOTE: Technically a sequence of reshape(reshape(constant)) is also
+  // NOTE: Technically a sequence of reshape(reshape(constant)) is also id:585
+  // https://github.com/imdone/tensorflow/issues/586
   // trivially reshapable, so we might be tempted to simply recurse if
   // IsReshapeOrTranspose(instruction)==true.
-  //
+  // 
   // But it's not that simple. E.g. reshape(reshape(rng)) is only trivially
   // reshapable if *all* instructions in the chain have user_count == 1. And
   // reshape(scalar) isn't trivial at all if the reshape itself isn't scalar; we
   // rely on implicit scalar broadcast for scalars to be trivial. In addition,
   // these cases make it harder to maintain correctness of the UpdateOperand
   // logic below.
-  //
+  // 
   // So don't handle these chains, unless you update the tests and code to deal
   // with these properly. One idea is to add a pass immediately beforehand that
   // collapses trivial runs of reshapes / transposes.
@@ -329,7 +330,8 @@ bool IsReshapeMoveCandidate(HloInstruction* instruction) {
           << "Operand is an equivalent reshape of the first reshape operand "
           << operand->ToString(print_no_metadata);
     } else {
-      // TODO(someone): Look into supporting general ops for the operands as
+      // TODO (someone): Look into supporting general ops for the operands as id:420
+      // https://github.com/imdone/tensorflow/issues/421
       // well.
       VLOG(5) << "Operand is a reshape but is not equivalent to the first "
                  "Reshape operand"

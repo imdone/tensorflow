@@ -64,7 +64,8 @@ class GradientDescentOptimizerTest(test.TestCase):
         grads1 = constant_op.constant([0.01, 0.01], dtype=dtype)
         sgd_op = gradient_descent.GradientDescentOptimizer(3.0).apply_gradients(
             zip([grads0, grads1], [var0, var1]))
-        # TODO(apassos) calling initialize_resources on all resources here
+        # TODO (apassos) calling initialize_resources on all resources here id:1571
+        # https://github.com/imdone/tensorflow/issues/1571
         # doesn't work because the sessions and graph are reused across unit
         # tests and this would mean trying to reinitialize variables. Figure out
         # a long-term solution for this.
@@ -89,7 +90,8 @@ class GradientDescentOptimizerTest(test.TestCase):
         pred = math_ops.matmul(var0, x) + var1
         loss = pred * pred
         sgd_op = gradient_descent.GradientDescentOptimizer(1.0).minimize(loss)
-        # TODO(apassos) calling initialize_resources on all resources here
+        # TODO (apassos) calling initialize_resources on all resources here id:1603
+        # https://github.com/imdone/tensorflow/issues/1603
         # doesn't work because the sessions and graph are reused across unit
         # tests and this would mean trying to reinitialize variables. Figure out
         # a long-term solution for this.
@@ -116,7 +118,8 @@ class GradientDescentOptimizerTest(test.TestCase):
         pred += var1
         loss = pred * pred
         sgd_op = gradient_descent.GradientDescentOptimizer(1.0).minimize(loss)
-        # TODO(apassos) calling initialize_resources on all resources here
+        # TODO (apassos) calling initialize_resources on all resources here id:1170
+        # https://github.com/imdone/tensorflow/issues/1171
         # doesn't work because the sessions and graph are reused across unit
         # tests and this would mean trying to reinitialize variables. Figure out
         # a long-term solution for this.

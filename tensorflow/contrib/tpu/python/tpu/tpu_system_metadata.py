@@ -77,7 +77,8 @@ def _query_tpu_system_metadata(master_address, run_config,
              'is incorrect: got (%s).' %
              (master_address))
 
-      # TODO(xiejw): For local or grpc master we might not need retry logic
+      # TODO (xiejw): For local or grpc master we might not need retry logic id:2464
+      # https://github.com/imdone/tensorflow/issues/2463
       # here.
       if retry_count <= _RETRY_TIMES:
         logging.warning('%s', msg)

@@ -86,7 +86,8 @@ class VARMA(state_space_model.StateSpaceModel):
 
   def _define_parameters(self, observation_transition_tradeoff_log=None):
     with variable_scope.variable_scope(self._variable_scope):
-      # TODO(allenl): Evaluate parameter transformations for AR/MA coefficients
+      # TODO (allenl): Evaluate parameter transformations for AR/MA coefficients id:2549
+      # https://github.com/imdone/tensorflow/issues/2548
       # which improve interpretability/stability.
       self.ar_coefs = variable_scope.get_variable(
           name="ar_coefs",

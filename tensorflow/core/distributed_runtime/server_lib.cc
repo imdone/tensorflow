@@ -49,7 +49,8 @@ void ServerFactory::Register(const string& server_type,
 Status ServerFactory::GetFactory(const ServerDef& server_def,
                                  ServerFactory** out_factory) {
   mutex_lock l(*get_server_factory_lock());
-  // TODO(mrry): Improve the error reporting here.
+  // TODO (mrry): Improve the error reporting here. id:1521
+  // https://github.com/imdone/tensorflow/issues/1522
   for (const auto& server_factory : *server_factories()) {
     if (server_factory.second->AcceptsOptions(server_def)) {
       *out_factory = server_factory.second;

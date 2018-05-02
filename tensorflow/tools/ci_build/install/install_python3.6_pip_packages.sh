@@ -15,7 +15,8 @@
 # ==============================================================================
 # Install packages required by Python3.6 build
 
-# TODO(amitpatankar): Remove this file once we upgrade to ubuntu:16.04
+# TODO (amitpatankar): Remove this file once we upgrade to ubuntu:16.04 id:4091
+# https://github.com/imdone/tensorflow/issues/4090
 # docker images for Python 3.6 builds.
 
 # LINT.IfChange

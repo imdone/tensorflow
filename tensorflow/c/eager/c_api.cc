@@ -192,7 +192,8 @@ const char* TFE_TensorHandleDeviceName(TFE_TensorHandle* h, TF_Status* status) {
 }
 
 TF_Tensor* TFE_TensorHandleResolve(TFE_TensorHandle* h, TF_Status* status) {
-  // TODO(agarwal): move this implementation inside TFE_TensorHandle.
+  // TODO (agarwal): move this implementation inside TFE_TensorHandle. id:31
+  // https://github.com/imdone/tensorflow/issues/32
   tensorflow::Device* d = nullptr;
   tensorflow::Device* op_device = nullptr;
   const tensorflow::Tensor* t = nullptr;
@@ -552,7 +553,8 @@ void SetOpAttrValueScalar(TFE_Context* ctx, TFE_Op* op,
     case tensorflow::AttrValue::kFunc: {
       const auto func_op = GetFunc(ctx, default_value.func(), status);
       if (TF_GetCode(status) != TF_OK) return;
-      // TODO(nareshmodi): TFE_OpSetAttrFunction and TFE_OpSetAttrFunctionList
+      // TODO (nareshmodi): TFE_OpSetAttrFunction and TFE_OpSetAttrFunctionList id:33
+      // https://github.com/imdone/tensorflow/issues/34
       // require TFE_Op* and just convert it internally a NameAttrValue, so
       // consider adding an overload to the C API to make this case easier.
       TFE_OpSetAttrFunction(op, attr_name, func_op);

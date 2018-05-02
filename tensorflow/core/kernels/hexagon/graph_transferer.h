@@ -39,13 +39,16 @@ class GraphTransferNodeInputInfo;
 // GraphTransferer transfers graph definitions into SoC memory.
 // This functionality is effective if SoC is capable to run
 // the graph on that chip.
-// TODO(satok): support transferring subgraphs to be able to split graphs
+// TODO (satok): support transferring subgraphs to be able to split graphs id:2484
+// https://github.com/imdone/tensorflow/issues/2483
 // to avoid unsupported ops in SoC.
 class GraphTransferer {
  public:
-  // TODO(satok): Remove. Use proto definition instead.
+  // TODO (satok): Remove. Use proto definition instead. id:3212
+  // https://github.com/imdone/tensorflow/issues/3211
   static constexpr int MAX_SUPPORTED_RANK = 4;
-  // TODO(satok): Remove. Use proto definition instead.
+  // TODO (satok): Remove. Use proto definition instead. id:3269
+  // https://github.com/imdone/tensorflow/issues/3268
   static constexpr int SHAPE_ARRAY_SIZE = MAX_SUPPORTED_RANK;
   using TensorShapeMap = RemoteFusedGraphExecuteUtils::TensorShapeMap;
 
@@ -54,7 +57,8 @@ class GraphTransferer {
   ~GraphTransferer();
 
   // Load graph structure into GraphTransferer
-  // TODO(satok): Pass a pair of TensorShape and DataType instead of
+  // TODO (satok): Pass a pair of TensorShape and DataType instead of id:2190
+  // https://github.com/imdone/tensorflow/issues/2189
   // Tensor as input_node_info_list.
   Status LoadGraphFromProto(
       const IRemoteFusedGraphOpsDefinitions& ops_definitions,
@@ -64,7 +68,8 @@ class GraphTransferer {
       const bool shape_inference_for_unknown_shape);
 
   // Load graph structure into GraphTransferer from protobuf file
-  // TODO(satok): Pass a pair of TensorShape and DataType instead of
+  // TODO (satok): Pass a pair of TensorShape and DataType instead of id:2100
+  // https://github.com/imdone/tensorflow/issues/2099
   // Tensor as input_node_info_list.
   Status LoadGraphFromProtoFile(
       const IRemoteFusedGraphOpsDefinitions& ops_definitions,
@@ -138,7 +143,8 @@ class GraphTransferer {
   bool IsPadNode(const Node& node);
 
   // Return true if the node is a reshape op which just flattens input
-  // TODO(satok): Remove this method once generic reshape op is implemented in
+  // TODO (satok): Remove this method once generic reshape op is implemented in id:2490
+  // https://github.com/imdone/tensorflow/issues/2489
   // SOC
   bool IsNodeFlattenReshape(const Node& node,
                             const ShapeRefiner& shape_refiner);

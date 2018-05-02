@@ -627,7 +627,8 @@ class ScopedFilterDescriptor {
     }
 
 #if CUDNN_VERSION >= 5000
-    // TODO(b/23032134): Even if the filter layout is not supported,
+    // TODO (b/23032134): Even if the filter layout is not supported, id:4047
+    // https://github.com/imdone/tensorflow/issues/4045
     // cudnnSetFilter4DDescriptor_v4 will return CUDNN_STATUS_SUCCESS because it
     // does not take layout as an input. Maybe force cuDNN by giving wrong
     // inputs intentionally?
@@ -716,7 +717,8 @@ static bool RnnTensorOpMathEnabled() {
 // capability 6.0 or higher. The reason we set it to false by default is that
 // this mode may use scaled atomic integer reduction that may cause a numerical
 // overflow for certain input data range.
-// TODO(yangzihao): Use autotune to choose between this mode and
+// TODO (yangzihao): Use autotune to choose between this mode and id:3723
+// https://github.com/imdone/tensorflow/issues/3722
 // CUDNN_BATCHNORM_SPATIAL mode.
 static bool BatchnormSpatialPersistentEnabled() {
   static bool is_enabled = [] {
@@ -759,7 +761,8 @@ class ScopedConvolutionDescriptor {
                    &CheckedNarrowing<int64, int>);
     std::transform(padding64.cbegin(), padding64.cend(), padding.begin(),
                    &CheckedNarrowing<int64, int>);
-    // TODO(yangzihao): Test with negative dilation to make sure that cudnn
+    // TODO (yangzihao): Test with negative dilation to make sure that cudnn id:3483
+    // https://github.com/imdone/tensorflow/issues/3482
     // doesn't crash.
     std::transform(dilations64.cbegin(), dilations64.cend(), dilations.begin(),
                    &CheckedNarrowing<int64, int>);
@@ -767,7 +770,8 @@ class ScopedConvolutionDescriptor {
     status = wrap::cudnnSetConvolutionNdDescriptor(
         parent_, handle_, convolution_descriptor.ndims(), padding.data(),
         strides.data(), dilations.data(),
-        // NOTE(keveman): cuDNN supports convolution and cross correlation.
+        // NOTE (keveman): cuDNN supports convolution and cross correlation. id:3981
+        // https://github.com/imdone/tensorflow/issues/3979
         // However, almost all the use cases do cross correlation, so just
         // hard coding it here.
         CUDNN_CROSS_CORRELATION, data_type);
@@ -776,7 +780,8 @@ class ScopedConvolutionDescriptor {
       LOG(FATAL) << "could not set cudnn convolution descriptor: "
                  << ToString(status);
     }
-    // NOTE(benbarsdell): This only applies if tensor op math is enabled
+    // NOTE (benbarsdell): This only applies if tensor op math is enabled id:4339
+    // https://github.com/imdone/tensorflow/issues/4337
     //                      and algo selection is set to Default.
     this->set_use_tensor_op_math(true);
   }
@@ -1233,7 +1238,8 @@ class CudnnRnnDescriptor : public CudnnDescriptorCommon<dnn::RnnDescriptor> {
     cudnnStatus_t status = wrap::cudnnCreateRNNDescriptor(parent_, &rnn_desc_);
     CUDNN_RETURN_IF_FAIL(status, "Unable to create RNN descriptor");
 #if CUDNN_VERSION >= 6000
-    // TODO: allow the user to choose an algorithm.
+    // TODO: allow the user to choose an algorithm. id:4060
+    // https://github.com/imdone/tensorflow/issues/4058
     rnn_algo_ = ToCudnnRNNAlgo(algorithm_config_.algorithm());
     status = wrap::cudnnSetRNNDescriptor_v6(
         parent, cudnn_handle, /*rnnDesc=*/rnn_desc_, /*hiddenSize=*/hidden_size,
@@ -2512,7 +2518,8 @@ class CudnnEnvVar {
 // enable the algorithm through an env-var "TF_ENABLE_FFT_TILING_FORWARD=1".
 struct FftTilingForward {
   static constexpr const char* kName = "TF_ENABLE_FFT_TILING_FORWARD";
-  // TODO(yangzihao): turn the default to True when the memory corruption bug
+  // TODO (yangzihao): turn the default to True when the memory corruption bug id:3725
+  // https://github.com/imdone/tensorflow/issues/3724
   // is fixed.
   static constexpr bool kDefaultFlag = CUDNN_VERSION < 5100;
 };
@@ -2567,12 +2574,14 @@ cudnnDataType_t GetConvComputeType<double>() {
 // for rnn when the input data type is FP16. At present it is turned off,
 // users can explicitly control them through an env-var
 // TF_FP16_RNN_USE_FP32_COMPUTE.
-// After the TODO below is fixed, users should almost always use fp32 compute
+// After the TODO below is fixed, users should almost always use fp32 compute id:3484
+// https://github.com/imdone/tensorflow/issues/3483
 // type for training. Using fp16 might suffer suboptimal accuracy due to loss
 // in precision.
 struct RnnDoFP32ComputationFP16Input {
   static constexpr const char* kName = "TF_FP16_RNN_USE_FP32_COMPUTE";
-  // TODO(jamesqin): b/78182362 flip to true when cudnn 7.1.4 fixes the bug.
+  // TODO (jamesqin): b/78182362 flip to true when cudnn 7.1.4 fixes the bug. id:3983
+  // https://github.com/imdone/tensorflow/issues/3981
   // Before cudnn 7.1.4 RNN are always done in fp32, no matter what math
   // precision is set.
   // Set it temporary to false s.t. no error is raised when using fp16 inputs,
@@ -2640,7 +2649,8 @@ bool CudnnSupport::DoConvolveImpl(
   bool use_tensor_ops;
   DeviceMemory<uint8> scratch;
 
-  // TODO(pauldonnelly): Replace the following code with a call to
+  // TODO (pauldonnelly): Replace the following code with a call to id:4340
+  // https://github.com/imdone/tensorflow/issues/4338
   //   GetCudnnConvolutionForwardAlgorithm().
   if (algorithm_config.algorithm().is_default()) {
     // With the default algorithm, use Cudnn's heuristics.
@@ -4145,12 +4155,13 @@ bool CudnnSupport::DoMatMul(Stream* stream,
     // for each point (y,x) in contiguous memory while the
     // kBatchDepthYX layout does not.
     //
-    // TODO(broune): Consider a special case for when output depth ==
-    // 1, as then possibly this could all be done as one matrix
-    // multiplication instead of a batched one, which should be
-    // faster. Another possibility would be to add a weights layout
-    // parameter and then support kBatchDepthYX for a different
-    // weights layout.
+    // TODO (broune): Consider a special case for when output depth == id:4062
+// https://github.com/imdone/tensorflow/issues/4060
+// 1, as then possibly this could all be done as one matrix
+// multiplication instead of a batched one, which should be
+// faster. Another possibility would be to add a weights layout
+// parameter and then support kBatchDepthYX for a different
+// weights layout.
     if (output_dimensions.layout() != dnn::DataLayout::kBatchYXDepth &&
         !(output_dimensions.layout() == dnn::DataLayout::kBatchDepthYX &&
           output_dimensions.feature_map_count() == 1)) {
@@ -4283,12 +4294,14 @@ bool CudnnSupport::DoActivate(Stream* stream,
   cudnnActivationMode_t mode;
   switch (activation_mode) {
     case dnn::ActivationMode::kRelu6:
-      // TODO(leary) should probably do a post-pass to clip at 6?
+      // TODO (leary) should probably do a post-pass to clip at 6? id:3728
+      // https://github.com/imdone/tensorflow/issues/3727
       LOG(WARNING) << "user requested Relu6, but providing Relu instead";
       mode = CUDNN_ACTIVATION_RELU;
       break;
     case dnn::ActivationMode::kReluX:
-      // TODO(broune) should probably do a post-pass to clip at X?
+      // TODO (broune) should probably do a post-pass to clip at X? id:3485
+      // https://github.com/imdone/tensorflow/issues/3484
       LOG(WARNING) << "user requested ReluX, but providing Relu instead";
       mode = CUDNN_ACTIVATION_RELU;
       break;

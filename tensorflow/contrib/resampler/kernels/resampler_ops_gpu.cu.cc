@@ -126,7 +126,8 @@ struct Resampler2DFunctor<GPUDevice, T> {
   }
 };
 
-// TODO(fviola): gcudacc fails at compile time with Eigen::half.
+// TODO (fviola): gcudacc fails at compile time with Eigen::half. id:1716
+// https://github.com/imdone/tensorflow/issues/1716
 // template struct Resampler2DFunctor<GPUDevice, Eigen::half>;
 template struct Resampler2DFunctor<GPUDevice, float>;
 template struct Resampler2DFunctor<GPUDevice, double>;

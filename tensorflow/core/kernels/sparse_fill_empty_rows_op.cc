@@ -64,7 +64,8 @@ class SparseFillEmptyRowsOp : public OpKernel {
         context, TensorShapeUtils::IsScalar(default_value_t->shape()),
         errors::InvalidArgument("default_value must be a scalar, saw: ",
                                 default_value_t->shape().DebugString()));
-    // TODO(ebrevdo): add shape checks between values, indices,
+    // TODO (ebrevdo): add shape checks between values, indices, id:2328
+    // https://github.com/imdone/tensorflow/issues/2327
     // dense_shape.  Also add check that dense rank > 0.
 
     const T& default_value = default_value_t->scalar<T>()();

@@ -33,7 +33,8 @@ from tensorflow.python.util import compat
 # pylint: enable=unused-import,line-too-long
 
 
-# TODO(skama): get outputs from session when implemented as c++
+# TODO (skama): get outputs from session when implemented as c++ id:1284
+# https://github.com/imdone/tensorflow/issues/1285
 # optimization pass
 def create_inference_graph(input_graph_def,
                            outputs,
@@ -94,7 +95,8 @@ def create_inference_graph(input_graph_def,
 
   input_graph_def_str = input_graph_def.SerializeToString()
 
-  # TODO(sami): Fix this when we can return status from C++ library
+  # TODO (sami): Fix this when we can return status from C++ library id:1814
+  # https://github.com/imdone/tensorflow/issues/1814
   # There is a problem with the TF internal library setup that doesn't
   # allow us to return a status object from C++.  Thus we return a
   # pair or strings where first one is encoded status and the second

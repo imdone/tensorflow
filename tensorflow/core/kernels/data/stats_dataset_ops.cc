@@ -26,7 +26,8 @@ namespace {
 // records the latency of producing each element in the context's
 // `StatsAggregator`.
 //
-// TODO(mrry): It is likely that many *StatsDatasetOp kernels will have the
+// TODO (mrry): It is likely that many *StatsDatasetOp kernels will have the id:3165
+// https://github.com/imdone/tensorflow/issues/3164
 // same or similar structure. We should abstract the common boilerplate into
 // a base case and/or investigate how to make general-purpose *StatsDatasetOp
 // kernels that use TensorFlow functions to represent their logic. For example,

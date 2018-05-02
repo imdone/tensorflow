@@ -105,7 +105,8 @@ class _CudnnRNN(base_layer.Layer):
   with tf.Graph().as_default():
     single_cell = lambda: tf.contrib.cudnn_rnn.CudnnCompatibleLSTM(num_units)
 
-    # NOTE: Even if there's only one layer, the cell needs to be wrapped in
+    # NOTE: Even if there's only one layer, the cell needs to be wrapped in id:581
+    # https://github.com/imdone/tensorflow/issues/582
     # MultiRNNCell.
     cell = tf.nn.rnn_cell.MultiRNNCell(
       [single_cell() for _ in range(num_layers)])
@@ -142,7 +143,8 @@ class _CudnnRNN(base_layer.Layer):
   """
   # pylint:enable=line-too-long
 
-  # TODO(allenl): Document object-based saving and checkpoint compatibility once
+  # TODO (allenl): Document object-based saving and checkpoint compatibility once id:1063
+  # https://github.com/imdone/tensorflow/issues/1064
   # it's implemented for more cuDNN Layers.
 
   # The following are constants defined by subclasses.

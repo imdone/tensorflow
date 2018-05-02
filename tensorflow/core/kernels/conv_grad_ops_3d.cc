@@ -43,7 +43,8 @@ namespace tensorflow {
 typedef Eigen::ThreadPoolDevice CPUDevice;
 typedef Eigen::GpuDevice GPUDevice;
 
-// TODO(mjanusz): Get rid of the macro and return shapes directly.
+// TODO (mjanusz): Get rid of the macro and return shapes directly. id:1859
+// https://github.com/imdone/tensorflow/issues/1859
 #define EXTRACT_AND_VERIFY_DIMENSIONS(label)                                   \
   const Tensor& out_backprop = context->input(2);                              \
   OP_REQUIRES(                                                                 \
@@ -167,7 +168,8 @@ class Conv3DBackpropInputOp : public OpKernel {
                     "Current implementation does not yet support "
                     "dilation rates in the batch and depth dimensions."));
 
-    // TODO(yangzihao): Add CPU version of dilated conv 3D.
+    // TODO (yangzihao): Add CPU version of dilated conv 3D. id:2353
+    // https://github.com/imdone/tensorflow/issues/2352
     OP_REQUIRES(context,
                 (GetTensorDim(dilation_, data_format_, '0') == 1 &&
                  GetTensorDim(dilation_, data_format_, '1') == 1 &&
@@ -298,7 +300,8 @@ class Conv3DBackpropFilterOp : public OpKernel {
                     "Current implementation does not yet support "
                     "dilation rates in the batch and depth dimensions."));
 
-    // TODO(yangzihao): Add CPU version of dilated conv 3D.
+    // TODO (yangzihao): Add CPU version of dilated conv 3D. id:3119
+    // https://github.com/imdone/tensorflow/issues/3118
     OP_REQUIRES(context,
                 (GetTensorDim(dilation_, data_format_, '0') == 1 &&
                  GetTensorDim(dilation_, data_format_, '1') == 1 &&
@@ -739,7 +742,8 @@ class Conv3DBackpropInputOp<GPUDevice, T> : public OpKernel {
       ProfileResult best_result;
       ProfileResult best_result_no_scratch;
       for (auto profile_algorithm : algorithms) {
-        // TODO(zhengxq): profile each algorithm multiple times to better
+        // TODO (zhengxq): profile each algorithm multiple times to better id:2901
+        // https://github.com/imdone/tensorflow/issues/2900
         // accuracy.
         CudnnScratchAllocator scratch_allocator(ConvolveBackwardDataScratchSize,
                                                 context);
@@ -1135,7 +1139,8 @@ class Conv3DBackpropFilterOp<GPUDevice, T> : public OpKernel {
       ProfileResult best_result;
       ProfileResult best_result_no_scratch;
       for (auto profile_algorithm : algorithms) {
-        // TODO(zhengxq): profile each algorithm multiple times to better
+        // TODO (zhengxq): profile each algorithm multiple times to better id:2103
+        // https://github.com/imdone/tensorflow/issues/2102
         // accuracy.
         CudnnScratchAllocator scratch_allocator(
             ConvolveBackwardFilterScratchSize, context);

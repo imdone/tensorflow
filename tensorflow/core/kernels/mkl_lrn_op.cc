@@ -279,7 +279,8 @@ class MklLRNOp : public OpKernel {
     }
 
     // Fallback implementation - Taken from lrn_op.cc
-    // TODO(inteltf) Check if we can use EigenLRNOp directly instead of making a
+    // TODO (inteltf) Check if we can use EigenLRNOp directly instead of making a id:2219
+    // https://github.com/imdone/tensorflow/issues/2218
     // copy.
     void MklDefaultToEigen(OpKernelContext* context, int depth_radius_,
                            float bias_, float alpha_, float beta_,
@@ -622,7 +623,8 @@ class MklLRNGradOp : public OpKernel {
     }
 
     // Fallback implementation - Taken from lrn_op.cc
-    // TODO(intelft) Check if we can use EigenLRNOp directly instead of making a
+    // TODO (intelft) Check if we can use EigenLRNOp directly instead of making a id:2132
+    // https://github.com/imdone/tensorflow/issues/2131
     // copy.
     void MklDefaultToEigen(OpKernelContext* context) {
       Tensor in_grads;
@@ -888,7 +890,8 @@ class MklLRNOp : public OpKernel {
   }
 
   // Fallback implementation - Taken from lrn_op.cc
-  // TODO(inteltf) Check if we can use EigenLRNOp directly instead of making a
+  // TODO (inteltf) Check if we can use EigenLRNOp directly instead of making a id:2554
+  // https://github.com/imdone/tensorflow/issues/2553
   // copy.
   void MklDefaultToEigen(OpKernelContext* context, const Tensor& input) {
     const int batch = static_cast<int>(input.dim_size(0));
@@ -1189,7 +1192,8 @@ class MklLRNGradOp : public OpKernel {
   }
 
   // Fallback implementation - Taken from lrn_op.cc
-  // TODO(intelft) Check if we can use EigenLRNOp directly instead of making a
+  // TODO (intelft) Check if we can use EigenLRNOp directly instead of making a id:3256
+  // https://github.com/imdone/tensorflow/issues/3255
   // copy.
   void MklDefaultToEigen(OpKernelContext* context) {
     Tensor input_gradient_tensor;

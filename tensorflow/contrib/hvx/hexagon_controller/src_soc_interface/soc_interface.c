@@ -123,7 +123,8 @@ bool soc_interface_FillInputNodeFloat(int x, int y, int z, int d,
       /*port=*/0, x, y, z, d, buf, buf_byte_size);
 }
 
-// TODO(satok): Remove and use runtime version
+// TODO (satok): Remove and use runtime version id:1306
+// https://github.com/imdone/tensorflow/issues/1307
 bool soc_interface_ReadOutputNodeWithPort(int port, uint8_t** buf,
                                           uint64_t* buf_byte_size) {
   TFMLOGD("ReadOutputNodeWithPort");

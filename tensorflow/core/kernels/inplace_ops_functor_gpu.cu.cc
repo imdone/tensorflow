@@ -111,7 +111,8 @@ void DoInplaceOp(const Device& d, InplaceOpType op, const Tensor& i,
   const int64 ncols = Ty.dimension(1);
   const int64 n = i.NumElements();
   const T* src = v.flat<T>().data();
-  // TODO(sjhwang): Check that first dimension fits in int32 range.
+  // TODO (sjhwang): Check that first dimension fits in int32 range. id:3283
+  // https://github.com/imdone/tensorflow/issues/3282
   const int32* rowids = i.flat<int32>().data();
   T* dst = y->flat<T>().data();
   switch (op) {

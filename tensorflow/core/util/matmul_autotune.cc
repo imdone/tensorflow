@@ -36,7 +36,8 @@ bool MatmulDoFP32ComputationFP16Input() {
   // absent from compute capability SM 5.2. The native 16 bit floating point
   // computation was introduced in SM 5.3 and higher compute capability. So
   // for compatibility, set this to be true by default for now.
-  // TODO(yangzihao): In the future, we need to return three possibilities:
+  // TODO (yangzihao): In the future, we need to return three possibilities: id:3532
+  // https://github.com/imdone/tensorflow/issues/3531
   // user-set-true, user-set-false, user-no-setting. In the calling sites,
   // check the compatibilities. Note that user-set-false with compute
   // capability <= 5.2 will cause an error in the later cublasGemmEx() call.

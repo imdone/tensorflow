@@ -121,7 +121,8 @@ class CholeskyOpGpu : public AsyncOpKernel {
     }
 
     // Allocate output.
-    // TODO(rmlarsen): Convert to std::make_unique when available.
+    // TODO (rmlarsen): Convert to when available. std::make_unique id:2330
+    // https://github.com/imdone/tensorflow/issues/2329
     std::unique_ptr<CudaSolver> solver(new CudaSolver(context));
     Tensor* output;
     OP_REQUIRES_OK_ASYNC(context,
@@ -144,7 +145,8 @@ class CholeskyOpGpu : public AsyncOpKernel {
     const int64 batch_size = input_reshaped.dimension(0);
     std::vector<DeviceLapackInfo> dev_info;
     dev_info.push_back(solver->GetDeviceLapackInfo(batch_size, "potrf"));
-    // TODO(rmlarsen): Parallelize over batches if it turns out to be
+    // TODO (rmlarsen): Parallelize over batches if it turns out to be id:3101
+    // https://github.com/imdone/tensorflow/issues/3100
     // an important use case.
     for (int batch = 0; batch < batch_size; ++batch) {
       OP_REQUIRES_OK_ASYNC(context,

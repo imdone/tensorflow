@@ -1198,7 +1198,8 @@ void ToStringHelper(const Literal& literal, const ShapeIndex& shape_index,
     }
   };
 
-  // TODO(b/32894291): refactor this code to reduce code duplication.
+  // TODO (b/32894291): refactor this code to reduce code duplication. id:300
+  // https://github.com/imdone/tensorflow/issues/301
   if (ShapeUtil::IsTuple(subshape)) {
     pieces->push_back(shape_to_string(subshape));
     pieces->push_back(" (\n");

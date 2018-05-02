@@ -534,23 +534,24 @@ void PerformCollectiveOp(TensorTable& tensor_table, MPIResponse response) {
 //      cannot explicitly synchronize memcpys or kernels with it. As a result,
 //      MPIAllreduce and MPIAllgather must be AsyncOpKernels to ensure proper
 //      ordering of memcpys and kernels with respect to TF streams.
-//      4. NOTE: We cannot guarantee that all the MPI processes reduce their
+//      4. NOTE: We cannot guarantee that all the MPI processes reduce their id:1084
+// https://github.com/imdone/tensorflow/issues/1085
 //      tensors in the same order. Thus, there must be a way to ensure the
 //      reduction memcpys and kernels occur for correct tensors across all
 //      ranks at the same time. We choose to use a coordinator (rank ID 0) to
 //      gather and trigger the reduction operations that are ready to execute.
-//
+// 
 // The coordinator currently follows a master-worker paradigm. Rank zero acts
 // as the master (the "coordinator"), whereas all other ranks are simply
 // workers. Each rank runs its own background thread which progresses in ticks.
 // In each tick, the following actions happen:
-//
+// 
 //      a) The workers send any available MPIRequests to the coordinator. These
 //      MPIRequests indicate what the worker would like to do (i.e. which
 //      tensor they would like to gather or reduce, as well as their shape and
 //      type). They repeat this for every tensor that they would like to
 //      operate on after that tensor's collective op has executed ComputeAsync.
-//
+// 
 //      b) The workers send an empty "DONE" message to the coordinator to
 //      indicate that there are no more tensors they wish to operate on.
 //
@@ -570,12 +571,14 @@ void PerformCollectiveOp(TensorTable& tensor_table, MPIResponse response) {
 //      response from the coordinator. At that point, the tick ends.
 //      If instead of "DONE" they receive "SHUTDOWN", they exit their
 //      background loop.
-// TODO: Use the global mpi_global state variable instead of a local one
+// TODO: Use the global mpi_global state variable instead of a local one id:1684
+// https://github.com/imdone/tensorflow/issues/1684
 void BackgroundThreadLoop() {
 #if GOOGLE_CUDA
   // Set the device, so that this thread uses the same GPU context as the
   // calling thread.
-  // TODO: Ensure that this is operating correctly. The background thread
+  // TODO: Ensure that this is operating correctly. The background thread id:2093
+  // https://github.com/imdone/tensorflow/issues/2092
   // needs to be able to control all GPUs that the rank has access to, and
   // might be more than 1 GPU. Tensors could be resident in any of the
   // GPUs, so the background thread's accumulate and copy kernels might need
@@ -622,7 +625,8 @@ void BackgroundThreadLoop() {
   // Notify calling thread that initialization is complete
   mpi_global.cv.notify_all();
 
-  // TODO: MOVE MESSAGE TABLE INITIALIZATION TO LIBRARY LOAD!
+  // TODO: MOVE MESSAGE TABLE INITIALIZATION TO LIBRARY LOAD! id:1559
+  // https://github.com/imdone/tensorflow/issues/1559
   // Initialize the tensor count table. No tensors are available yet.
   if (is_coordinator) {
     mpi_global.message_table =
@@ -632,7 +636,8 @@ void BackgroundThreadLoop() {
   // The coordinator sends a SHUTDOWN message to trigger shutdown.
   bool should_shut_down = false;
   do {
-    // TODO: Eliminate the need for thread sleep by making all activity
+    // TODO: Eliminate the need for thread sleep by making all activity id:1299
+    // https://github.com/imdone/tensorflow/issues/1300
     // depend on other activity (e.g. condition or MPI waits).
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
@@ -675,9 +680,11 @@ void BackgroundThreadLoop() {
     // Rank zero has put all its own tensors in the tensor count table.
     // Now, it should count all the tensors that are coming from other
     // ranks at this tick. It should keep getting tensors until it gets a
-    // DONE message from all the other ranks.
+    // DONE message from all the other ranks. id:1089
+    // https://github.com/imdone/tensorflow/issues/1090
     if (is_coordinator) {
-      // Count of DONE messages. Keep receiving messages until the number
+      // Count of DONE messages. Keep receiving messages until the number id:1687
+      // https://github.com/imdone/tensorflow/issues/1687
       // of messages is equal to the number of processes. Initialize to
       // one since the coordinator is effectively done.
       int completed_ranks = 1;
@@ -690,7 +697,8 @@ void BackgroundThreadLoop() {
         int msg_length;
         MPI_Get_count(&status, MPI_BYTE, &msg_length);
 
-        // If the length is zero, this is a DONE message.
+        // If the length is zero, this is a DONE message. id:2096
+        // https://github.com/imdone/tensorflow/issues/2095
         if (msg_length == 0) {
           completed_ranks++;
           MPI_Recv(NULL, 0, MPI_BYTE, source_rank, TAG_NOTIFY, MPI_COMM_WORLD,
@@ -754,11 +762,13 @@ void BackgroundThreadLoop() {
       }
     } else {
       // Notify the coordinator that this node is done sending messages.
-      // A DONE message is encoded as a zero-length message.
+      // A DONE message is encoded as a zero-length message. id:1562
+      // https://github.com/imdone/tensorflow/issues/1562
       MPI_Send(NULL, 0, MPI_BYTE, RANK_ZERO, TAG_NOTIFY, MPI_COMM_WORLD);
 
       // Receive names for tensors to reduce from rank zero. Once we
-      // receive a empty DONE message, stop waiting for more names.
+      // receive a empty DONE message, stop waiting for more names. id:1302
+      // https://github.com/imdone/tensorflow/issues/1303
       while (true) {
         MPI_Status status;
         MPI_Probe(0, TAG_NOTIFY, MPI_COMM_WORLD, &status);
@@ -809,7 +819,8 @@ Status InitializeMPIOnce(bool gpu) {
 #endif
 
   // Start the MPI background thread, which assumes MPI is initialized
-  // TODO: Change this to a Tensorflow thread
+  // TODO: Change this to a Tensorflow thread id:1092
+  // https://github.com/imdone/tensorflow/issues/1093
   mpi_global.background_thread = std::thread(BackgroundThreadLoop);
 
   // Wait to ensure that the background thread has finished initializing MPI
@@ -1140,7 +1151,8 @@ class MPIAllgatherOp : public AsyncOpKernel {
       }
     } else {
       // Collect the total output tensor sizing from the sizing tensor
-      // NOTE: The sizing tensor is forced to be placed on the CPU by
+      // NOTE: The sizing tensor is forced to be placed on the CPU by id:1690
+      // https://github.com/imdone/tensorflow/issues/1690
       // declaring the input as HostMemory, so it is valid to read it here.
       const int64* sizing_array =
           (const int64*)sizing_tensor->tensor_data().data();

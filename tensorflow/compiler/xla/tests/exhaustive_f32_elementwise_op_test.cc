@@ -70,7 +70,8 @@ class ExhaustiveF32ElementwiseOpTest
 
 XLA_TEST_P(ExhaustiveF32ElementwiseOpTest, LogF32) {
 #ifdef XLA_TEST_BACKEND_CPU
-  // TODO(b/73141998): The vectorized Log implementation gives results outside
+  // TODO (b/73141998): The vectorized Log implementation gives results outside id:842
+  // https://github.com/imdone/tensorflow/issues/843
   // our error spec in this range (these numbers are bitwise representations of
   // floats expressed as a zero extended int64).
   std::pair<int64, int64> known_incorrect_range = {1, 8388608};
@@ -85,7 +86,8 @@ XLA_TEST_P(ExhaustiveF32ElementwiseOpTest, LogF32) {
 
 XLA_TEST_P(ExhaustiveF32ElementwiseOpTest, ExpF32) {
 #ifdef XLA_TEST_BACKEND_CPU
-  // TODO(b/73142289): The vectorized Exp implementation gives results outside
+  // TODO (b/73142289): The vectorized Exp implementation gives results outside id:523
+  // https://github.com/imdone/tensorflow/issues/524
   // our error spec in this range (these numbers are bitwise representations of
   // floats expressed as a zero extended int64):
   std::pair<int64, int64> known_incorrect_range = {1107296256 + 11583654,

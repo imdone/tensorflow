@@ -62,7 +62,8 @@ def concatenate_unique(la, lb):
   return la
 
 
-# TODO(fkp): very generic code, it should be moved in a more generic place.
+# TODO (fkp): very generic code, it should be moved in a more generic place. id:893
+# https://github.com/imdone/tensorflow/issues/894
 class ListView(object):
   """Immutable list wrapper.
 
@@ -95,7 +96,8 @@ class ListView(object):
     return list(self) + other
 
 
-# TODO(fkp): very generic code, it should be moved in a more generic place.
+# TODO (fkp): very generic code, it should be moved in a more generic place. id:839
+# https://github.com/imdone/tensorflow/issues/840
 def is_iterable(obj):
   """Return true if the object is iterable."""
   if isinstance(obj, tf_ops.Tensor):
@@ -253,7 +255,8 @@ def make_list_of_op(ops, check_graph=True, allow_graph=True, ignore_ts=False):
     return [op for op in ops if isinstance(op, tf_ops.Operation)]
 
 
-# TODO(fkp): move this function in tf.Graph?
+# TODO (fkp): move this function in tf.Graph? id:747
+# https://github.com/imdone/tensorflow/issues/746
 def get_tensors(graph):
   """get all the tensors which are input or output of an op in the graph.
 

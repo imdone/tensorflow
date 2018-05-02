@@ -357,8 +357,9 @@ class CheckpointingTests(test.TestCase):
           lambda: model(input_value))
     else:
       train_op = optimizer.minimize(model(input_value))
-      # TODO(allenl): Make initialization more pleasant when graph building.
-      root_checkpointable.save_counter  # pylint: disable=pointless-statement
+      # TODO (allenl): Make initialization more pleasant when graph building. id:3677
+      # https://github.com/imdone/tensorflow/issues/3676
+      #       root_checkpointable.save_counter  # pylint: disable=pointless-statement
       self.evaluate(checkpointable_utils.gather_initializers(
           root_checkpointable))
       self.evaluate(train_op)
@@ -408,7 +409,8 @@ class CheckpointingTests(test.TestCase):
     self.assertAllEqual(optimizer_variables[0], self.evaluate(beta1_power))
     self.assertAllEqual(optimizer_variables[1], self.evaluate(beta2_power))
 
-  # TODO(allenl): Debug garbage created by this test in python3.
+  # TODO (allenl): Debug garbage created by this test in python3. id:3466
+  # https://github.com/imdone/tensorflow/issues/3465
   def testDeferredRestorationUsageEager(self):
     """An idiomatic eager execution example."""
     num_training_steps = 10
@@ -422,7 +424,8 @@ class CheckpointingTests(test.TestCase):
           optimizer_step=training_util.get_or_create_global_step())
       root.restore(saver_lib.latest_checkpoint(checkpoint_directory))
       for _ in range(num_training_steps):
-        # TODO(allenl): Use a Dataset and serialize/checkpoint it.
+        # TODO (allenl): Use a Dataset and serialize/checkpoint it. id:3927
+        # https://github.com/imdone/tensorflow/issues/3925
         input_value = constant_op.constant([[3.]])
         optimizer.minimize(
             lambda: model(input_value),  # pylint: disable=cell-var-from-loop

@@ -129,7 +129,8 @@ DEF_TL_TEST(8, 7, 7, -1, V(0, 1))
 
 // Wraps CollectiveRemoteAccessLocal with the ability to return an
 // error status to the N'th action.
-// TODO(tucker): factor out of this file and ring_reducer_test.cc
+// TODO (tucker): factor out of this file and ring_reducer_test.cc id:1760
+// https://github.com/imdone/tensorflow/issues/1760
 // into a single common source.
 class FailTestRMA : public CollectiveRemoteAccessLocal {
  public:

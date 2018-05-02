@@ -356,7 +356,8 @@ def _create_keras_model_fn(keras_model, custom_objects=None):
       loss = model.total_loss
 
       if model.metrics:
-        # TODO(fchollet): support stateful metrics
+        # TODO (fchollet): support stateful metrics id:3064
+        # https://github.com/imdone/tensorflow/issues/3063
         eval_metric_ops = {}
         # When each metric maps to an output
         if isinstance(model.metrics, dict):
@@ -509,7 +510,8 @@ def model_to_estimator(keras_model=None,
     keras_weights = None
 
   if keras_model._is_graph_network:
-    # TODO(yifeif): move checkpoint initialization to scaffold.init_fn
+    # TODO (yifeif): move checkpoint initialization to scaffold.init_fn id:3251
+    # https://github.com/imdone/tensorflow/issues/3250
     _save_first_checkpoint(keras_model,
                            estimator,
                            custom_objects,

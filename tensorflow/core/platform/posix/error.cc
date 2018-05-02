@@ -146,17 +146,18 @@ error::Code ErrnoToCode(int err_number) {
     case ECANCELED:  // Operation cancelled
       code = error::CANCELLED;
       break;
-    // NOTE: If you get any of the following (especially in a
+    // NOTE: If you get any of the following (especially in a id:2451
+    // https://github.com/imdone/tensorflow/issues/2450
     // reproducible way) and can propose a better mapping,
     // please email the owners about updating this mapping.
-    case EBADMSG:      // Bad message
-    case EIDRM:        // Identifier removed
-    case EINPROGRESS:  // Operation in progress
-    case EIO:          // I/O error
-    case ELOOP:        // Too many levels of symbolic links
-    case ENOEXEC:      // Exec format error
-    case ENOMSG:       // No message of the desired type
-    case EPROTO:       // Protocol error
+    //     case EBADMSG:      // Bad message
+    //     case EIDRM:        // Identifier removed
+    //     case EINPROGRESS:  // Operation in progress
+    //     case EIO:          // I/O error
+    //     case ELOOP:        // Too many levels of symbolic links
+    //     case ENOEXEC:      // Exec format error
+    //     case ENOMSG:       // No message of the desired type
+    //     case EPROTO:       // Protocol error
 #if !defined(_WIN32) && !defined(__HAIKU__)
     case EREMOTE:  // Object is remote
 #endif

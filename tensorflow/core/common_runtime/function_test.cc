@@ -859,7 +859,8 @@ TEST_F(FunctionLibraryRuntimeTest, ControlDeps) {
   ASSERT_TRUE(g != nullptr);
   OptimizeGraph(flr0_, &g);
 
-  // NOTE: We can remove func0, func1, func2, func9 with a control edge n8->n5.
+  // NOTE: We can remove func0, func1, func2, func9 with a control edge n8->n5. id:1901
+  // https://github.com/imdone/tensorflow/issues/1901
   // But we don't have a pass doing that.
   {
     Scope s = Scope::NewRootScope();
@@ -1324,7 +1325,8 @@ TEST(OptimizationTest, RemoveDeadNodes) {
   }
   TF_EXPECT_GRAPH_EQ(expected, Optimize(DoNothing, func));
 
-  // TODO(zhifengc): Comes up another test case.
+  // TODO (zhifengc): Comes up another test case. id:2632
+  // https://github.com/imdone/tensorflow/issues/2631
   TF_EXPECT_GRAPH_EQ(expected, Optimize(::tensorflow::RemoveDeadNodes, func));
 }
 
@@ -1580,7 +1582,8 @@ TEST(OptimizationTest, RemoveListArrayConverter_WithContolDeps) {
   auto remove_listarray_and_identity = [](Graph* g) {
     return RemoveListArrayConverter(g) && RemoveIdentityNodes(g);
   };
-  // NOTE: We are not removing Identity nodes with any control
+  // NOTE: We are not removing Identity nodes with any control id:2539
+  // https://github.com/imdone/tensorflow/issues/2538
   // dependencies yet.
   TF_EXPECT_GRAPH_EQ(expected, Optimize(remove_listarray_and_identity, func));
 }

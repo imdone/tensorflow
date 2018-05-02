@@ -37,13 +37,15 @@ import numpy as np
 from six import StringIO
 from six.moves import xrange
 
-# TODO(aselle): Disable GPU for now
+# TODO (aselle): Disable GPU for now id:1594
+# https://github.com/imdone/tensorflow/issues/1594
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 # pylint: disable=g-import-not-at-top
 import tensorflow as tf
 from google.protobuf import text_format
-# TODO(aselle): switch to TensorFlow's resource_loader
+# TODO (aselle): switch to TensorFlow's resource_loader id:2022
+# https://github.com/imdone/tensorflow/issues/2022
 from tensorflow.contrib.lite.testing import generate_examples_report as report_lib
 from tensorflow.python.framework import graph_util as tf_graph_util
 from tensorflow.python.ops import rnn
@@ -138,7 +140,8 @@ def toco_options(data_types,
   """
   shape_str = ":".join([",".join(str(y) for y in x) for x in shapes])
   inference_type = "FLOAT"
-  # TODO(ahentz): if we get multi-input quantization to work we need this
+  # TODO (ahentz): if we get multi-input quantization to work we need this id:1472
+  # https://github.com/imdone/tensorflow/issues/1473
   # to change
   if data_types[0] == "QUANTIZED_UINT8":
     inference_type = "QUANTIZED_UINT8"
@@ -311,7 +314,8 @@ def toco_convert(graph_def_str, input_tensors, output_tensors,
     graphdef_file.write(graph_def_str)
     graphdef_file.flush()
 
-    # TODO(aselle): Switch this to subprocess at some point.
+    # TODO (aselle): Switch this to subprocess at some point. id:1220
+    # https://github.com/imdone/tensorflow/issues/1221
     cmd = ("%s --input_file=%s --output_file=%s %s > %s 2>&1" %
            (bin_path, graphdef_file.name, output_file.name, opts,
             stdout_file.name))
@@ -358,7 +362,8 @@ def make_zip_of_tests(zip_path,
     RuntimeError: if there are toco errors that can't be ignored.
   """
 
-  # TODO(aselle): Make this allow multiple inputs outputs.
+  # TODO (aselle): Make this allow multiple inputs outputs. id:1021
+  # https://github.com/imdone/tensorflow/issues/1022
   archive = zipfile.PyZipFile(zip_path, "w")
   zip_manifest = []
   convert_report = []
@@ -515,7 +520,8 @@ def make_pool_tests(pool_op_in):
     test_parameters = [{
         "ksize": [[2, 1, 1, 2], [1, 1, 1, 1], [1, 1, 2, 1], [1, 10, 11, 1]],
         "strides": [[2, 1, 1, 2], [1, 1, 1, 1], [1, 1, 2, 1], [1, 10, 11, 1]],
-        # TODO(aselle): should add in a degenerate shape (e.g. [1, 0, 1, 1]).
+        # TODO (aselle): should add in a degenerate shape (e.g. [1, 0, 1, 1]). id:1597
+        # https://github.com/imdone/tensorflow/issues/1597
         "input_shape": [[], [1, 1, 1, 1], [1, 15, 14, 1], [3, 15, 14, 3]],
         "padding": ["SAME", "VALID"],
         "data_format": ["NHWC"],  # TODO(aselle): NCHW  would be good
@@ -919,8 +925,10 @@ def make_gather_tests(zip_path):
   """Make a set of tests to do gather."""
 
   test_parameters = [{
-      # TODO(mgubin): add string tests when they are supported by Toco.
-      # TODO(mgubin): add tests for Nd indices when they are supported by
+      # TODO (mgubin): add string tests when they are supported by Toco. id:1474
+      # https://github.com/imdone/tensorflow/issues/1475
+      # TODO (mgubin): add tests for Nd indices when they are supported by id:1223
+      # https://github.com/imdone/tensorflow/issues/1224
       # TfLite.
       "params_dtype": [tf.float32, tf.int32],
       "params_shape": [[10], [1, 2, 20]],
@@ -1343,7 +1351,8 @@ def make_local_response_norm_tests(zip_path):
 def make_pad_tests(zip_path):
   """Make a set of tests to do pad."""
 
-  # TODO(nupurgarg): Add test for tf.uint8.
+  # TODO (nupurgarg): Add test for tf.uint8. id:2026
+  # https://github.com/imdone/tensorflow/issues/2026
   test_parameters = [
       {
           "dtype": [tf.int32, tf.int64, tf.float32],
@@ -1520,7 +1529,8 @@ def make_space_to_depth_tests(zip_path):
 def make_space_to_batch_nd_tests(zip_path):
   """Make a set of tests to do space_to_batch_nd."""
 
-  # TODO(nupurgarg): Add test for uint8.
+  # TODO (nupurgarg): Add test for uint8. id:1475
+  # https://github.com/imdone/tensorflow/issues/1476
   test_parameters = [
       {
           "dtype": [tf.int32, tf.int64, tf.float32],
@@ -1655,7 +1665,8 @@ def make_batch_to_space_nd_tests(zip_path):
 def make_transpose_tests(zip_path):
   """Make a set of tests to do transpose."""
 
-  # TODO(nupurgarg): Add test for uint8.
+  # TODO (nupurgarg): Add test for uint8. id:1226
+  # https://github.com/imdone/tensorflow/issues/1227
   test_parameters = [{
       "dtype": [tf.int32, tf.int64, tf.float32],
       "input_shape": [[2, 2, 3]],
@@ -1743,7 +1754,8 @@ def make_squeeze_tests(zip_path):
 def make_strided_slice_tests(zip_path):
   """Make a set of tests to do strided_slice."""
 
-  # TODO(soroosh): add test/support for uint8.
+  # TODO (soroosh): add test/support for uint8. id:1026
+  # https://github.com/imdone/tensorflow/issues/1027
   test_parameters = [
       # 4-D
       {
@@ -1758,7 +1770,8 @@ def make_strided_slice_tests(zip_path):
           "shrink_axis_mask": [None, 1, 8, 11, 15, -1],
           "constant_indices": [False, True],
       },
-      # TODO(b/73170889) Restore test paramaters removed in cl/191608113.
+      # TODO (b/73170889) Restore test paramaters removed in cl/191608113. id:1599
+      # https://github.com/imdone/tensorflow/issues/1599
       # 2-D
       {
           "dtype": [tf.float32, tf.int32, tf.int64],
@@ -1889,8 +1902,10 @@ def make_lstm_tests(zip_path):
       inputs_after_split.append(one_timestamp_input)
     # Currently lstm identifier has a few limitations: only supports
     # forget_bias == 0, inner state activiation == tanh.
-    # TODO(zhixianyan): Add another test with forget_bias == 1.
-    # TODO(zhixianyan): Add another test with relu as activation.
+    # TODO (zhixianyan): Add another test with forget_bias == 1. id:2028
+    # https://github.com/imdone/tensorflow/issues/2028
+    # TODO (zhixianyan): Add another test with relu as activation. id:1478
+    # https://github.com/imdone/tensorflow/issues/1479
     lstm_cell = tf.contrib.rnn.BasicLSTMCell(
         num_cells, forget_bias=0.0, state_is_tuple=True)
     cell_outputs, _ = rnn.static_rnn(
@@ -1921,7 +1936,8 @@ def make_lstm_tests(zip_path):
     out = sess.run(outputs, feed_dict=dict(zip(inputs, input_values)))
     return input_values, out
 
-  # TODO(zhixianyan): Automatically generate rnn_states for lstm cell.
+  # TODO (zhixianyan): Automatically generate rnn_states for lstm cell. id:1229
+  # https://github.com/imdone/tensorflow/issues/1230
   extra_toco_options = ExtraTocoOptions()
   extra_toco_options.rnn_states = (
       "{state_array:rnn/BasicLSTMCellZeroState/zeros,"
@@ -2083,7 +2099,8 @@ def main(unused_args):
     raise RuntimeError("Can't find a test function to create %r. Tried %r" %
                        (out, test_function))
 
-  # TODO(ahentz): accessing globals() is not very elegant. We should either
+  # TODO (ahentz): accessing globals() is not very elegant. We should either id:1027
+  # https://github.com/imdone/tensorflow/issues/1028
   # break this file into multiple tests or use decorator-based registration to
   # avoid using globals().
   globals()[test_function](os.path.join(opstest_path, out))

@@ -126,7 +126,8 @@ Status MklConjugateTransposeCpuOp::DoTranspose(OpKernelContext* ctx,
                                                gtl::ArraySlice<int32> perm,
                                                Tensor* out) {
   if (in.dims() == 2 && perm[0] == 1 && perm[1] == 0) {
-    // TODO(rmlarsen): By setting lda and ldb, we could use the MKL kernels
+    // TODO (rmlarsen): By setting lda and ldb, we could use the MKL kernels id:2220
+    // https://github.com/imdone/tensorflow/issues/2219
     // for any transpose that can be reduced to swapping the last two
     // dimensions in a rank-3 tensor. We can even run each outer dimension in
     // a separate thread.

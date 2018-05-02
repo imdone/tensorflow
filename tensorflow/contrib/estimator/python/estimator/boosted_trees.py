@@ -197,7 +197,8 @@ def boosted_trees_classifier_train_in_memory(
        are requested.
   """
   # pylint: disable=protected-access
-  # TODO(nponomareva): Support multi-class cases.
+  # TODO (nponomareva): Support multi-class cases. id:821
+  # https://github.com/imdone/tensorflow/issues/822
   if n_classes == canned_boosted_trees._HOLD_FOR_MULTI_CLASS_SUPPORT:
     n_classes = 2
   head, closed_form = (
@@ -323,7 +324,8 @@ def boosted_trees_regressor_train_in_memory(
        are requested.
   """
   # pylint: disable=protected-access
-  # TODO(nponomareva): Extend it to multi-dimension cases.
+  # TODO (nponomareva): Extend it to multi-dimension cases. id:680
+  # https://github.com/imdone/tensorflow/issues/681
   if label_dimension == canned_boosted_trees._HOLD_FOR_MULTI_DIM_SUPPORT:
     label_dimension = 1
   head = canned_boosted_trees._create_regression_head(label_dimension,

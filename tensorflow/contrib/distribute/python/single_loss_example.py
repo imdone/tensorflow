@@ -56,7 +56,8 @@ def minimize_loss_example(optimizer_fn,
 
   def dataset_fn():
     dataset = dataset_ops.Dataset.from_tensors([[1.]]).repeat()
-    # TODO(isaprykin): map_and_batch with drop_remainder causes shapes to be
+    # TODO (isaprykin): map_and_batch with drop_remainder causes shapes to be id:1091
+    # https://github.com/imdone/tensorflow/issues/1092
     # fully defined for TPU.  Remove this when XLA supports dynamic shapes.
     return dataset.apply(
         batching.map_and_batch(lambda x: x, batch_size=2, drop_remainder=True))

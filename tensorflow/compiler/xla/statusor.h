@@ -132,27 +132,30 @@ class StatusOr : private internal_statusor::StatusOrData<T>,
   // constructor, calls to ValueOrDie() will succeed, and calls to status() will
   // return OK.
   //
-  // NOTE: Not explicit - we want to use StatusOr<T> as a return type
-  // so it is convenient and sensible to be able to do 'return T()'
-  // when the return type is StatusOr<T>.
-  //
-  // REQUIRES: T is copy constructible.
+  // NOTE: Not explicit - we want to use StatusOr<T> as a return type id:440
+// https://github.com/imdone/tensorflow/issues/441
+// so it is convenient and sensible to be able to do 'return T()'
+// when the return type is StatusOr<T>.
+// 
+// REQUIRES: T is copy constructible.
   StatusOr(const T& value);
 
   // Constructs a new StatusOr with the given non-ok status. After calling
   // this constructor, calls to ValueOrDie() will CHECK-fail.
   //
-  // NOTE: Not explicit - we want to use StatusOr<T> as a return
-  // value, so it is convenient and sensible to be able to do 'return
-  // Status()' when the return type is StatusOr<T>.
-  //
-  // REQUIRES: !status.ok(). This requirement is DCHECKed.
-  // In optimized builds, passing Status::OK() here will have the effect
-  // of passing tensorflow::error::INTERNAL as a fallback.
+  // NOTE: Not explicit - we want to use StatusOr<T> as a return id:424
+// https://github.com/imdone/tensorflow/issues/425
+// value, so it is convenient and sensible to be able to do 'return
+// Status()' when the return type is StatusOr<T>.
+// 
+// REQUIRES: !status.ok(). This requirement is DCHECKed.
+// In optimized builds, passing Status::OK() here will have the effect
+// of passing tensorflow::error::INTERNAL as a fallback.
   StatusOr(const Status& status);
   StatusOr& operator=(const Status& status);
 
-  // TODO(b/62186997): Add operator=(T) overloads.
+  // TODO (b/62186997): Add operator=(T) overloads. id:831
+  // https://github.com/imdone/tensorflow/issues/832
 
   // Similar to the `const T&` overload.
   //

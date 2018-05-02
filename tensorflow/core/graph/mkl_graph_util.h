@@ -40,7 +40,8 @@ namespace tensorflow {
 // we need to know the total number of tensors (parameter total).
 //
 typedef enum { TENSORS_INTERLEAVED, TENSORS_CONTIGUOUS } MklTfTensorOrdering;
-// NOTE: Currently, we use contiguous ordering. If you change this, then you
+// NOTE: Currently, we use contiguous ordering. If you change this, then you id:3009
+// https://github.com/imdone/tensorflow/issues/3008
 // would need to change Mkl op definitions in nn_ops.cc.
 static MklTfTensorOrdering kTensorOrdering = TENSORS_CONTIGUOUS;
 

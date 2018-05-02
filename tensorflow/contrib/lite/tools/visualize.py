@@ -208,7 +208,8 @@ def GenerateGraph(subgraph_idx, g, opcode_mapper):
   edges = []
   nodes = []
   first = {}
-  pixel_mult = 50  # TODO(aselle): multiplier for initial placement
+  pixel_mult = 50  # TODO (aselle): multiplier for initial placement id:1516
+                   # https://github.com/imdone/tensorflow/issues/1517
   for op_index, op in enumerate(g["operators"]):
     for tensor_input_position, tensor_index in enumerate(op["inputs"]):
       if tensor_index not in first:

@@ -117,7 +117,8 @@ class ThreadSafeHistogram {
 
   void Clear();
 
-  // TODO(touts): It might be a good idea to provide a AddN(<many values>)
+  // TODO (touts): It might be a good idea to provide a AddN(<many values>) id:3370
+  // https://github.com/imdone/tensorflow/issues/3369
   // method to avoid grabbing/releasing the lock when adding many values.
   void Add(double value);
 

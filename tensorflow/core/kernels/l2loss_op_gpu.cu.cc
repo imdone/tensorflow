@@ -28,7 +28,8 @@ namespace tensorflow {
 
 typedef Eigen::GpuDevice GPUDevice;
 
-// TODO(eriche): can add specialization for half2
+// TODO (eriche): can add specialization for half2 id:2197
+// https://github.com/imdone/tensorflow/issues/2196
 template <typename T>
 struct squareHalf {
   __host__ __device__ T operator()(const T& x) const {

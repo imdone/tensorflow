@@ -71,7 +71,8 @@ class FramePair {
                  float* const weights,
                  Point2f* const scales) const;
 
-  // TODO(andrewharp): Make these private.
+  // TODO (andrewharp): Make these private. id:2722
+  // https://github.com/imdone/tensorflow/issues/2721
  public:
   // The time at frame1.
   int64_t start_time_;

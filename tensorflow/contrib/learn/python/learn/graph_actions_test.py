@@ -122,7 +122,8 @@ class GraphActionsTest(test.TestCase):
         expected_added_meta_graphs=expected_meta_graphs,
         expected_session_logs=expected_session_logs)
 
-  # TODO(ptucker): Test number and contents of checkpoint files.
+  # TODO (ptucker): Test number and contents of checkpoint files. id:1463
+  # https://github.com/imdone/tensorflow/issues/1464
   def _assert_ckpt(self, output_dir, expected=True):
     ckpt_state = saver_lib.get_checkpoint_state(output_dir)
     if expected:
@@ -136,7 +137,8 @@ class GraphActionsTest(test.TestCase):
     else:
       self.assertTrue(ckpt_state is None)
 
-  # TODO(ptucker): Test lock, multi-threaded access?
+  # TODO (ptucker): Test lock, multi-threaded access? id:1137
+  # https://github.com/imdone/tensorflow/issues/1138
   def test_summary_writer(self):
     writer = learn.graph_actions.get_summary_writer('log/dir/0')
     self._assert_summaries('log/dir/0', writer)
@@ -147,10 +149,13 @@ class GraphActionsTest(test.TestCase):
         learn.graph_actions.get_summary_writer('log/dir/0') is
         not learn.graph_actions.get_summary_writer('log/dir/1'))
 
-  # TODO(ptucker): Test restore_checkpoint_path for eval; this should obsolete
+  # TODO (ptucker): Test restore_checkpoint_path for eval; this should obsolete id:1035
+  # https://github.com/imdone/tensorflow/issues/1036
   # test_evaluate_with_saver().
-  # TODO(ptucker): Test start_queue_runners for both eval & train.
-  # TODO(ptucker): Test coord.request_stop & coord.join for eval.
+  # TODO (ptucker): Test start_queue_runners for both eval & train. id:850
+  # https://github.com/imdone/tensorflow/issues/851
+  # TODO (ptucker): Test coord.request_stop & coord.join for eval. id:1366
+  # https://github.com/imdone/tensorflow/issues/1367
 
   def _build_inference_graph(self):
     """Build simple inference graph.
@@ -267,7 +272,8 @@ class GraphActionsTest(test.TestCase):
               None, {'c': out}, feed_dict={in0: 4.0}))
       self._assert_ckpt(self._output_dir, False)
 
-  # TODO(ptucker): Test eval for 1 epoch.
+  # TODO (ptucker): Test eval for 1 epoch. id:1465
+  # https://github.com/imdone/tensorflow/issues/1465
 
   def test_evaluate_invalid_args(self):
     with ops.Graph().as_default() as g, self.test_session(g):
@@ -394,13 +400,18 @@ class GraphActionsTest(test.TestCase):
           }},
           expected_session_logs=[])
 
-  # TODO(ptucker): Resume training from previous ckpt.
-  # TODO(ptucker): !supervisor_is_chief
-  # TODO(ptucker): Custom init op for training.
-  # TODO(ptucker): Mock supervisor, and assert all interactions.
+  # TODO (ptucker): Resume training from previous ckpt. id:1141
+  # https://github.com/imdone/tensorflow/issues/1142
+  # TODO (ptucker): !supervisor_is_chief id:1037
+  # https://github.com/imdone/tensorflow/issues/1038
+  # TODO (ptucker): Custom init op for training. id:854
+  # https://github.com/imdone/tensorflow/issues/855
+  # TODO (ptucker): Mock supervisor, and assert all interactions. id:1378
+  # https://github.com/imdone/tensorflow/issues/1379
 
 
-# TODO(ispir): remove following tests after deprecated train.
+# TODO (ispir): remove following tests after deprecated train. id:1467
+# https://github.com/imdone/tensorflow/issues/1468
 class GraphActionsTrainTest(test.TestCase):
   """Tests for train."""
 
@@ -432,7 +443,8 @@ class GraphActionsTrainTest(test.TestCase):
         expected_added_meta_graphs=expected_meta_graphs,
         expected_session_logs=expected_session_logs)
 
-  # TODO(ptucker): Test number and contents of checkpoint files.
+  # TODO (ptucker): Test number and contents of checkpoint files. id:1143
+  # https://github.com/imdone/tensorflow/issues/1144
   def _assert_ckpt(self, output_dir, expected=True):
     ckpt_state = saver_lib.get_checkpoint_state(output_dir)
     if expected:
@@ -496,10 +508,14 @@ class GraphActionsTrainTest(test.TestCase):
             train_op=constant_op.constant(1.0),
             loss_op=loss_op)
 
-  # TODO(ptucker): Resume training from previous ckpt.
-  # TODO(ptucker): !supervisor_is_chief
-  # TODO(ptucker): Custom init op for training.
-  # TODO(ptucker): Mock supervisor, and assert all interactions.
+  # TODO (ptucker): Resume training from previous ckpt. id:1039
+  # https://github.com/imdone/tensorflow/issues/1040
+  # TODO (ptucker): !supervisor_is_chief id:857
+  # https://github.com/imdone/tensorflow/issues/858
+  # TODO (ptucker): Custom init op for training. id:1386
+  # https://github.com/imdone/tensorflow/issues/1387
+  # TODO (ptucker): Mock supervisor, and assert all interactions. id:1469
+  # https://github.com/imdone/tensorflow/issues/1470
 
   def test_train(self):
     with ops.Graph().as_default() as g, self.test_session(g):
@@ -513,7 +529,8 @@ class GraphActionsTrainTest(test.TestCase):
           train_op=train_op,
           loss_op=constant_op.constant(2.0),
           steps=1)
-      # TODO(ebrevdo,ptucker,ispir): this meta_graph_def lacks the
+      # TODO (ebrevdo,ptucker,ispir): this meta_graph_def lacks the id:1146
+      # https://github.com/imdone/tensorflow/issues/1147
       # SaverDef, so we can't add it to the summary assertion test below.
       # meta_graph_def = meta_graph.create_meta_graph_def()
       self.assertEqual(2.0, loss)
@@ -589,7 +606,8 @@ class GraphActionsTrainTest(test.TestCase):
           train_op=train_op,
           loss_op=loss_var.value(),
           steps=6)
-      # TODO(ebrevdo,ptucker,ispir): this meta_graph_def lacks the
+      # TODO (ebrevdo,ptucker,ispir): this meta_graph_def lacks the id:1041
+      # https://github.com/imdone/tensorflow/issues/1042
       # SaverDef, so we can't add it to the summary assertion test below.
       # meta_graph_def = meta_graph.create_meta_graph_def()
       self.assertEqual(4.0, loss)
@@ -610,7 +628,8 @@ class GraphActionsTrainTest(test.TestCase):
           train_op=train_op,
           loss_op=loss_op,
           steps=1)
-      # TODO(ebrevdo,ptucker,ispir): this meta_graph_def lacks the
+      # TODO (ebrevdo,ptucker,ispir): this meta_graph_def lacks the id:860
+      # https://github.com/imdone/tensorflow/issues/861
       # SaverDef, so we can't add it to the summary assertion test below.
       # meta_graph_def = meta_graph.create_meta_graph_def()
       self.assertEqual(2.0, loss)

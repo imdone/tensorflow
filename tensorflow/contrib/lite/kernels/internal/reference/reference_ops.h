@@ -470,7 +470,8 @@ inline void FullyConnected(const float* input_data, const Dims<4>& input_dims,
                            float output_activation_min,
                            float output_activation_max, float* output_data,
                            const Dims<4>& output_dims) {
-  // TODO(benoitjacob): This really should be:
+  // TODO (benoitjacob): This really should be: id:1866
+  // https://github.com/imdone/tensorflow/issues/1866
   //     const int batches = ArraySize(output_dims, 1);
   // but the current --variable_batch hack consists in overwriting the 3rd
   // dimension with the runtime batch size, as we don't keep track for each
@@ -522,7 +523,8 @@ inline void FullyConnected(const uint8* input_data, const Dims<4>& input_dims,
                            gemmlowp::GemmContext* gemm_context) {
   (void)gemm_context;  // only used in optimized code.
   TFLITE_DCHECK_LE(output_activation_min, output_activation_max);
-  // TODO(benoitjacob): This really should be:
+  // TODO (benoitjacob): This really should be: id:1440
+  // https://github.com/imdone/tensorflow/issues/1441
   //     const int batches = ArraySize(output_dims, 1);
   // but the current --variable_batch hack consists in overwriting the 3rd
   // dimension with the runtime batch size, as we don't keep track for each
@@ -566,7 +568,8 @@ inline void FullyConnected(const uint8* input_data, const Dims<4>& input_dims,
   (void)gemm_context;  // only used in optimized code.
   TFLITE_DCHECK_LE(output_activation_min, output_activation_max);
   TFLITE_DCHECK_EQ(output_offset, 0);
-  // TODO(benoitjacob): This really should be:
+  // TODO (benoitjacob): This really should be: id:1157
+  // https://github.com/imdone/tensorflow/issues/1158
   //     const int batches = ArraySize(output_dims, 1);
   // but the current --variable_batch hack consists in overwriting the 3rd
   // dimension with the runtime batch size, as we don't keep track for each
@@ -613,7 +616,8 @@ inline void ExperimentalShuffledFullyConnected(
   (void)gemm_context;  // only used in optimized code.
 
   TFLITE_DCHECK_LE(output_activation_min, output_activation_max);
-  // TODO(benoitjacob): This really should be:
+  // TODO (benoitjacob): This really should be: id:966
+  // https://github.com/imdone/tensorflow/issues/967
   //     const int batches = ArraySize(output_dims, 1);
   // but the current --variable_batch hack consists in overwriting the 3rd
   // dimension with the runtime batch size, as we don't keep track for each
@@ -1076,7 +1080,8 @@ inline void Add(const int16* input1_data, const Dims<4>& input1_dims,
   }
 }
 
-// TODO(jiawen): We can implement BroadcastAdd on buffers of arbitrary
+// TODO (jiawen): We can implement BroadcastAdd on buffers of arbitrary id:1540
+// https://github.com/imdone/tensorflow/issues/1540
 // dimensionality if the runtime code does a single loop over one dimension
 // that handles broadcasting as the base case. The code generator would then
 // generate max(D1, D2) nested for loops.
@@ -1241,7 +1246,8 @@ void Mul(const float* input1_data, const Dims<4>& input1_dims,
       output_activation_max, output_data, output_dims);
 }
 
-// TODO(jiawen): We can implement BroadcastMul on buffers of arbitrary
+// TODO (jiawen): We can implement BroadcastMul on buffers of arbitrary id:1868
+// https://github.com/imdone/tensorflow/issues/1868
 // dimensionality if the runtime code does a single loop over one dimension
 // that handles broadcasting as the base case. The code generator would then
 // generate max(D1, D2) nested for loops.
@@ -1431,7 +1437,8 @@ inline void Div(const float* input1_data, const Dims<4>& input1_dims,
   }
 }
 
-// TODO(jiawen): We can implement BroadcastDiv on buffers of arbitrary
+// TODO (jiawen): We can implement BroadcastDiv on buffers of arbitrary id:1442
+// https://github.com/imdone/tensorflow/issues/1444
 // dimensionality if the runtime code does a single loop over one dimension
 // that handles broadcasting as the base case. The code generator would then
 // generate max(D1, D2) nested for loops.
@@ -1484,7 +1491,8 @@ inline void Sub(const float* input1_data, const Dims<4>& input1_dims,
   }
 }
 
-// TODO(jiawen): We can implement BroadcastSub on buffers of arbitrary
+// TODO (jiawen): We can implement BroadcastSub on buffers of arbitrary id:1161
+// https://github.com/imdone/tensorflow/issues/1162
 // dimensionality if the runtime code does a single loop over one dimension
 // that handles broadcasting as the base case. The code generator would then
 // generate max(D1, D2) nested for loops.
@@ -1616,8 +1624,10 @@ void Concatenation(int concat_dim, const Scalar* const* input_data,
   }
 }
 
-// TODO(prabhumk): This is the same as the optimized implementation.
-// TODO(prabhumk): The quantized implementation of concatentation isn't fully
+// TODO (prabhumk): This is the same as the optimized implementation. id:968
+// https://github.com/imdone/tensorflow/issues/969
+// TODO (prabhumk): The quantized implementation of concatentation isn't fully id:1543
+// https://github.com/imdone/tensorflow/issues/1543
 // quantized as it takes scale as a floating point value. This should be fixed
 // when optimizng this routine further.
 inline void Concatenation(int concat_dim, const uint8* const* input_data,
@@ -2043,7 +2053,8 @@ void TensorFlowSplit(const Scalar* input_data, const Dims<4>& input_dims,
                   output_data, output_dims);
 }
 
-// TODO(benoitjacob) make this a proper reference impl without Eigen!
+// TODO (benoitjacob) make this a proper reference impl without Eigen! id:1870
+// https://github.com/imdone/tensorflow/issues/1870
 template <typename Scalar>
 using MatrixMap = typename std::conditional<
     std::is_const<Scalar>::value,
@@ -2654,7 +2665,8 @@ inline void LogSoftmax(const uint8* input_data, const Dims<4>& input_dims,
       }
     }
 
-    // TODO(b/77858996): Implement fixed-point log().
+    // TODO (b/77858996): Implement fixed-point log(). id:1444
+    // https://github.com/imdone/tensorflow/issues/1446
     // Not a fully-quantized implementation: floating-point log().
     const float float_log_sum_of_exps =
         std::log(static_cast<float>(sum_of_exps.raw()) /
@@ -3185,7 +3197,8 @@ template <typename T>
 inline void Slice(const T* input_data, const Dims<4>& input_dims,
                   const std::vector<int>& begin, const std::vector<int>& size,
                   T* output_data, const Dims<4>& output_dims) {
-  // TODO(dkalenichenko): This op only supports 4D tensors.
+  // TODO (dkalenichenko): This op only supports 4D tensors. id:1172
+  // https://github.com/imdone/tensorflow/issues/1173
   TFLITE_DCHECK_EQ(begin.size(), 4);
   TFLITE_DCHECK_EQ(size.size(), 4);
   const int start_b = begin[3];

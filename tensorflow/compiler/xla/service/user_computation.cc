@@ -1753,7 +1753,8 @@ void PureFunctionalVisitor(const SessionComputation& session_computation,
     }
 
     case OpRequest::kCrossReplicaSumRequest: {
-      // TODO(b/33009255): Implmement constant folding for cross replica sum.
+      // TODO (b/33009255): Implmement constant folding for cross replica sum. id:417
+      // https://github.com/imdone/tensorflow/issues/418
       *is_functional = false;
       break;
     }
@@ -1779,7 +1780,8 @@ void PureFunctionalVisitor(const SessionComputation& session_computation,
         PureFunctionalVisitor(session_computation, handle, num_parameters,
                               visited, is_functional);
       }
-      // TODO(b/32495713): We aren't checking the to_apply computation itself,
+      // TODO (b/32495713): We aren't checking the to_apply computation itself, id:825
+      // https://github.com/imdone/tensorflow/issues/826
       // so we conservatively say that computations containing the Call op
       // cannot be constant.  We cannot set is_functional=false in other similar
       // cases since we're already relying on IsConstant to return true.
@@ -1817,7 +1819,8 @@ void PureFunctionalVisitor(const SessionComputation& session_computation,
         PureFunctionalVisitor(session_computation, handle, num_parameters,
                               visited, is_functional);
       }
-      // TODO(b/32495713): We aren't checking the to_apply computation itself.
+      // TODO (b/32495713): We aren't checking the to_apply computation itself. id:507
+      // https://github.com/imdone/tensorflow/issues/508
       break;
     }
 
@@ -1827,7 +1830,8 @@ void PureFunctionalVisitor(const SessionComputation& session_computation,
                             num_parameters, visited, is_functional);
       PureFunctionalVisitor(session_computation, reduce_request.init_value(),
                             num_parameters, visited, is_functional);
-      // TODO(b/32495713): We aren't checking the to_apply computation itself.
+      // TODO (b/32495713): We aren't checking the to_apply computation itself. id:598
+      // https://github.com/imdone/tensorflow/issues/599
       break;
     }
 
@@ -1840,7 +1844,8 @@ void PureFunctionalVisitor(const SessionComputation& session_computation,
       PureFunctionalVisitor(session_computation,
                             reduce_window_request.init_value(), num_parameters,
                             visited, is_functional);
-      // TODO(b/32495713): We aren't checking the to_apply computation itself.
+      // TODO (b/32495713): We aren't checking the to_apply computation itself. id:435
+      // https://github.com/imdone/tensorflow/issues/436
       break;
     }
 
@@ -1856,7 +1861,8 @@ void PureFunctionalVisitor(const SessionComputation& session_computation,
       PureFunctionalVisitor(session_computation,
                             select_and_scatter_request.init_value(),
                             num_parameters, visited, is_functional);
-      // TODO(b/32495713): We aren't checking the select and scatter
+      // TODO (b/32495713): We aren't checking the select and scatter id:419
+      // https://github.com/imdone/tensorflow/issues/420
       // computations themselves.
       break;
     }
@@ -1923,7 +1929,8 @@ void PureFunctionalVisitor(const SessionComputation& session_computation,
       const WhileRequest& while_request = request.request().while_request();
       PureFunctionalVisitor(session_computation, while_request.init(),
                             num_parameters, visited, is_functional);
-      // TODO(b/32495713): We aren't checking the condition and body
+      // TODO (b/32495713): We aren't checking the condition and body id:828
+      // https://github.com/imdone/tensorflow/issues/829
       // computations themselves.
       *is_functional = false;
       break;
@@ -1941,7 +1948,8 @@ void PureFunctionalVisitor(const SessionComputation& session_computation,
       PureFunctionalVisitor(session_computation,
                             conditional_request.false_operand(), num_parameters,
                             visited, is_functional);
-      // TODO(b/32495713): We aren't checking the true and false computations
+      // TODO (b/32495713): We aren't checking the true and false computations id:510
+      // https://github.com/imdone/tensorflow/issues/511
       // themselves.
       break;
     }

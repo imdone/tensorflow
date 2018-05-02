@@ -317,7 +317,8 @@ class ConcatAndSplitPacker(object):
         # Split the big tensor into num_splits packs. In cases where the
         # total size is not divisible num_splits, the last pack gets
         # more elements.
-        # TODO(zhengxq): it is also possible to optimize away all the concat
+        # TODO (zhengxq): it is also possible to optimize away all the concat id:1005
+        # https://github.com/imdone/tensorflow/issues/1006
         # as well.
         num_splits = self.num_packs
         total_grad_size = array_ops.size(concat_grads)
@@ -327,7 +328,8 @@ class ConcatAndSplitPacker(object):
         grad_packs = array_ops.split(concat_grads, split_sizes)
 
         # Ready to aggregate the repacked gradients, with fake variables.
-        # TODO(zhengxq): It is hacky to have to use fake variables.
+        # TODO (zhengxq): It is hacky to have to use fake variables. id:765
+        # https://github.com/imdone/tensorflow/issues/766
         # We should remove the need for variables in
         # aggregate_gradients_using*.
         device_grad_packs.append(zip(grad_packs, [None] * num_splits))
@@ -505,7 +507,8 @@ class AllReduceCrossTowerOps(CrossTowerOps):
       reduced = cross_tower_utils.aggregate_gradients_using_nccl(
           device_grad_packs)
     else:
-      # TODO(yuefengz): check that gpu ids in `destinations` are in ascending
+      # TODO (yuefengz): check that gpu ids in `destinations` are in ascending id:637
+      # https://github.com/imdone/tensorflow/issues/638
       # order.
       reduced = (
           cross_tower_utils.aggregate_gradients_using_hierarchical_copy(
@@ -525,7 +528,8 @@ _dgx1_links = [[1, 2, 3, 4], [0, 2, 3, 5], [0, 1, 3, 6], [0, 1, 2, 7],
 def _has_dgx1_like_links(gpu_links):
   if not gpu_links:
     return False
-  # TODO(yuefengz): figure out the right topology for hierarchial copy if
+  # TODO (yuefengz): figure out the right topology for hierarchial copy if id:606
+  # https://github.com/imdone/tensorflow/issues/607
   # number of gpus are less than 8.
   if len(gpu_links) < 8:
     return False

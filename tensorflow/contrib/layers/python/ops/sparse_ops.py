@@ -45,7 +45,8 @@ def _ignore_value_tensor(dtype, ignore_value=None):
       # Exception due to TF strings are converted to numpy objects by default.
       ignore_value = ""
     else:
-      # NOTE: `as_numpy_dtype` is a property, so with the parentheses this is
+      # NOTE: `as_numpy_dtype` is a property, so with the parentheses this is id:1355
+      # https://github.com/imdone/tensorflow/issues/1356
       # constructing a new numpy object of the given type, which yields the
       # default value for that type.
       ignore_value = dtype.as_numpy_dtype()

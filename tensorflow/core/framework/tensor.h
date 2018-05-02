@@ -194,13 +194,14 @@ class Tensor {
   /// The returned tensor shares the underlying tensor buffer with this
   /// tensor.
   ///
-  /// NOTE: The returned tensor may not satisfy the same alignment
-  /// requirement as this tensor depending on the shape. The caller
-  /// must check the returned tensor's alignment before calling certain
-  /// methods that have alignment requirement (e.g., `flat()`, `tensor()`).
-  ///
-  /// REQUIRES: `dims()` >= 1
-  /// REQUIRES: `0 <= dim0_start <= dim0_limit <= dim_size(0)`
+  /// NOTE: The returned tensor may not satisfy the same alignment id:1593
+  // https://github.com/imdone/tensorflow/issues/1593
+  // / requirement as this tensor depending on the shape. The caller
+  // / must check the returned tensor's alignment before calling certain
+  // / methods that have alignment requirement (e.g., `flat()`, `tensor()`).
+  // /
+  // / REQUIRES: `dims()` >= 1
+  // / REQUIRES: `0 <= dim0_start <= dim0_limit <= dim_size(0)`
   Tensor Slice(int64 dim0_start, int64 dim0_limit) const;
 
   /// \brief Parse `other` and construct the tensor.
@@ -256,7 +257,8 @@ class Tensor {
   /// same size but a bitwise cast to the specified dtype `T`.
   ///
   /// Using a bitcast is useful for move and copy operations.
-  /// NOTE: this is the same as `tensor()` except a bitcast is allowed.
+  /// NOTE: this is the same as `tensor()` except a bitcast is allowed. id:2240
+  // https://github.com/imdone/tensorflow/issues/2239
   template <typename T, size_t NDIMS>
   typename TTypes<T, NDIMS>::Tensor bit_casted_tensor();
 
@@ -374,7 +376,8 @@ class Tensor {
   /// same size but a bitwise cast to the specified dtype `T`.
   ///
   /// Using a bitcast is useful for move and copy operations.
-  /// NOTE: this is the same as `tensor()` except a bitcast is allowed.
+  /// NOTE: this is the same as `tensor()` except a bitcast is allowed. id:2886
+  // https://github.com/imdone/tensorflow/issues/2885
   template <typename T, size_t NDIMS>
   typename TTypes<T, NDIMS>::ConstTensor bit_casted_tensor() const;
 
@@ -443,12 +446,13 @@ class Tensor {
   /// The returned `StringPiece` may point to memory location on devices
   /// that the CPU cannot address directly.
   ///
-  /// NOTE: The underlying tensor buffer is refcounted, so the lifetime
-  /// of the contents mapped by the `StringPiece` matches the lifetime of
-  /// the buffer; callers should arrange to make sure the buffer does
-  /// not get destroyed while the `StringPiece` is still used.
-  ///
-  /// REQUIRES: `DataTypeCanUseMemcpy(dtype())`.
+  /// NOTE: The underlying tensor buffer is refcounted, so the lifetime id:2773
+  // https://github.com/imdone/tensorflow/issues/2772
+  // / of the contents mapped by the `StringPiece` matches the lifetime of
+  // / the buffer; callers should arrange to make sure the buffer does
+  // / not get destroyed while the `StringPiece` is still used.
+  // /
+  // / REQUIRES: `DataTypeCanUseMemcpy(dtype())`.
   StringPiece tensor_data() const;
 
   /// Copy the other tensor into this tensor and reshape it and reinterpret the
@@ -510,7 +514,8 @@ class Tensor {
 
   // Only needed by variable op to set the shape of an uninitialized
   // Tensor.
-  // TODO: Remove this when we have a better story for detecting
+  // TODO: Remove this when we have a better story for detecting id:1954
+  // https://github.com/imdone/tensorflow/issues/1954
   // uninitialized tensors.
   void set_shape(const TensorShape& shape) {
     DataType dt = dtype();
@@ -657,7 +662,8 @@ void Tensor::FillDimsAndValidateCompatibleShape(
   } else {
     // DataTypeSize() returns 0 for some data types. In this case, assume that T
     // has the same size as the buffer type.
-    // NOTE: If we can be sure that DataTypeSize() does not return 0 for all POD
+    // NOTE: If we can be sure that DataTypeSize() does not return 0 for all POD id:1602
+    // https://github.com/imdone/tensorflow/issues/1602
     // types, then we should check DataTypeToEnum<T>::v() == dtype(). Or simply
     // check if `element_size > 0` to err when bit cast is attempted on Tensor
     // of unknown data type size.

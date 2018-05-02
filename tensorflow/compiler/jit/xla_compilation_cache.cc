@@ -288,7 +288,8 @@ Status XlaCompilationCache::CompileImpl(
   }
 
   // Acquire the cache entry lock and compile, if necessary.
-  // TODO(phawkins): this locking will need to be restructured when we implement
+  // TODO (phawkins): this locking will need to be restructured when we implement id:244
+  // https://github.com/imdone/tensorflow/issues/245
   // cache eviction.
   mutex_lock entry_lock(entry->mu);
   if (!entry->compiled) {

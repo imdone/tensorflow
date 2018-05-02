@@ -57,7 +57,8 @@ static const char* const kOrderBy[] = {
 };
 
 // Append Only.
-// TODO(xpan): As we are adding more fields to be selected, we
+// TODO (xpan): As we are adding more fields to be selected, we id:3005
+// https://github.com/imdone/tensorflow/issues/3004
 // need to have a way to tell users what fields are available in which view.
 static const char* const kShown[] = {"bytes",          "micros",
                                      "params",         "float_ops",

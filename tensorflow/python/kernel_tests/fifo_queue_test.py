@@ -227,7 +227,8 @@ class FIFOQueueTest(test.TestCase):
 
       def enqueue():
         # The enqueue_ops should run after the dequeue op has blocked.
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:3297
+        # https://github.com/imdone/tensorflow/issues/3296
         time.sleep(0.1)
         for enqueue_op in enqueue_ops:
           sess.run(enqueue_op)
@@ -689,7 +690,8 @@ class FIFOQueueTest(test.TestCase):
 
       def enqueue():
         # The enqueue_op should run after the dequeue op has blocked.
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:3762
+        # https://github.com/imdone/tensorflow/issues/3761
         time.sleep(0.1)
         sess.run(enqueue_op)
 
@@ -716,7 +718,8 @@ class FIFOQueueTest(test.TestCase):
 
       def enqueue():
         # The enqueue_op should run after the dequeue op has blocked.
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:4251
+        # https://github.com/imdone/tensorflow/issues/4249
         time.sleep(0.1)
         sess.run(enqueue_op)
 
@@ -796,7 +799,8 @@ class FIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3816
+      # https://github.com/imdone/tensorflow/issues/3815
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -816,7 +820,8 @@ class FIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3192
+      # https://github.com/imdone/tensorflow/issues/3191
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -841,7 +846,8 @@ class FIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3299
+      # https://github.com/imdone/tensorflow/issues/3298
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -866,7 +872,8 @@ class FIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3764
+      # https://github.com/imdone/tensorflow/issues/3763
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -888,7 +895,8 @@ class FIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:4252
+      # https://github.com/imdone/tensorflow/issues/4250
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -920,7 +928,8 @@ class FIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3818
+      # https://github.com/imdone/tensorflow/issues/3817
       time.sleep(0.1)
 
       close_thread = self.checkedThread(target=close)
@@ -950,7 +959,8 @@ class FIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3195
+      # https://github.com/imdone/tensorflow/issues/3194
       time.sleep(0.1)
 
       close_op.run()
@@ -978,7 +988,8 @@ class FIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3301
+      # https://github.com/imdone/tensorflow/issues/3300
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -998,7 +1009,8 @@ class FIFOQueueTest(test.TestCase):
       dequeue_thread = self.checkedThread(target=dequeue)
       dequeue_thread.start()
       # The close_op should run after the dequeue_thread has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3766
+      # https://github.com/imdone/tensorflow/issues/3765
       time.sleep(0.1)
       close_op.run()
       dequeue_thread.join()
@@ -1046,7 +1058,8 @@ class FIFOQueueTest(test.TestCase):
       thread = self.checkedThread(target=blocking_enqueue)
       thread.start()
       # The dequeue ops should run after the blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:4253
+      # https://github.com/imdone/tensorflow/issues/4251
       time.sleep(0.1)
       for elem in elems:
         self.assertEqual([elem], dequeued_t.eval())
@@ -1069,7 +1082,8 @@ class FIFOQueueTest(test.TestCase):
       thread = self.checkedThread(target=blocking_enqueue)
       thread.start()
       # The dequeue ops should run after the blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3820
+      # https://github.com/imdone/tensorflow/issues/3819
       time.sleep(0.1)
       for elem in elems:
         self.assertEqual([elem], dequeued_t.eval())
@@ -1099,7 +1113,8 @@ class FIFOQueueTest(test.TestCase):
       enqueue_thread.start()
 
       # The close_op should run after the blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3199
+      # https://github.com/imdone/tensorflow/issues/3198
       time.sleep(0.1)
 
       def close():
@@ -1134,7 +1149,8 @@ class FIFOQueueTest(test.TestCase):
       enqueue_thread.start()
 
       # The close_op should run after the blocking_enqueue_op has blocked.
-      # TODO(mrry): Figure out how to do this without sleeping.
+      # TODO (mrry): Figure out how to do this without sleeping. id:3303
+      # https://github.com/imdone/tensorflow/issues/3302
       time.sleep(0.1)
 
       def close():
@@ -1360,7 +1376,8 @@ class FIFOQueueTest(test.TestCase):
       thread.start()
       # The dequeue should start and then block.
       for enq in enq_list:
-        # TODO(mrry): Figure out how to do this without sleeping.
+        # TODO (mrry): Figure out how to do this without sleeping. id:3768
+        # https://github.com/imdone/tensorflow/issues/3767
         time.sleep(0.1)
         self.assertEqual(len(results), 0)
         sess.run(enq)
@@ -1632,7 +1649,8 @@ class FIFOQueueBenchmark(test.Benchmark):
     q_inc = q.enqueue(x + 1)
     return init, q_inc
 
-  # TODO(suharshs): Add benchmarks for:
+  # TODO (suharshs): Add benchmarks for: id:4254
+  # https://github.com/imdone/tensorflow/issues/4252
   #   - different capacities of the queue
   #   - various sizes of tensors
   #   - enqueue_many, dequeue_many

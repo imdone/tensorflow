@@ -145,8 +145,9 @@ class Compiler {
   //
   // device_allocator is optional; see RunHloPasses.
   //
-  // TODO(b/68666782): Remove this method after adding support for multiple
-  // modules to RunHloPasses and RunBackends.
+  // TODO (b/68666782): Remove this method after adding support for multiple id:434
+// https://github.com/imdone/tensorflow/issues/435
+// modules to RunHloPasses and RunBackends.
   virtual StatusOr<std::vector<std::unique_ptr<Executable>>> Compile(
       std::vector<std::unique_ptr<HloModule>> modules,
       std::vector<std::vector<se::StreamExecutor*>> stream_exec,

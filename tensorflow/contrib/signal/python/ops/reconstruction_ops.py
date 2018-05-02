@@ -125,7 +125,8 @@ def overlap_and_add(signal, frame_step, name=None):
 
     # Now we shuffle the last [subframes, subframe_length] dimensions to the
     # front.
-    # TODO(rjryan): Add an axis argument to unsorted_segment_sum so we can
+    # TODO (rjryan): Add an axis argument to unsorted_segment_sum so we can id:1208
+    # https://github.com/imdone/tensorflow/issues/1209
     # avoid this pair of transposes.
     subframe_signal = _shuffle_to_front(subframe_signal, 2)
 

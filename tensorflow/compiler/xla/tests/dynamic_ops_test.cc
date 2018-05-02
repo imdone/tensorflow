@@ -481,7 +481,8 @@ class DynamicUpdateSliceTest : public ClientLibraryTestBase {
     T value = static_cast<T>(10);
     update_values.FillIota(static_cast<T>(value));
 
-    // TODO(b/34128753) Expected values may vary depending on backend when
+    // TODO (b/34128753) Expected values may vary depending on backend when id:613
+    // https://github.com/imdone/tensorflow/issues/614
     // the update wraps. According to documentation, the results are technically
     // implementation specific where the update is out of bounds, and hence
     // we don't really know what to pass into ComputeAndCompareR3.
@@ -531,7 +532,8 @@ XLA_TEST_F(DynamicUpdateSliceTest, Int32R0) { TestR0<int32, float>(); }
 XLA_TEST_F(DynamicUpdateSliceTest, Int64R0) { TestR0<int64, float>(); }
 XLA_TEST_F(DynamicUpdateSliceTest, UInt64R0) { TestR0<uint64, float>(); }
 
-// TODO(b/71820067): The CPU parallel backend failed for this on 2018-01-10.
+// TODO (b/71820067): The CPU parallel backend failed for this on 2018-01-10. id:457
+// https://github.com/imdone/tensorflow/issues/458
 XLA_TEST_F(DynamicUpdateSliceTest, Int32R1BF16) { TestR1<int32, bfloat16>(); }
 XLA_TEST_F(DynamicUpdateSliceTest, Int32R1) { TestR1<int32, float>(); }
 XLA_TEST_F(DynamicUpdateSliceTest, Int64R1) { TestR1<int64, float>(); }
@@ -672,7 +674,8 @@ XLA_TEST_F(DynamicUpdateSliceTest, R3ContiguousUnalignedBF16) {
   RunR3Contiguous<bfloat16>(operand_shape, /*index=*/1, /*size=*/1);
 }
 
-// TODO(b/34134076) Disabled on GPU 2016-01-06 due to out-of-memory error.
+// TODO (b/34134076) Disabled on GPU 2016-01-06 due to out-of-memory error. id:437
+// https://github.com/imdone/tensorflow/issues/438
 XLA_TEST_F(DynamicUpdateSliceTest, DISABLED_ON_GPU(R3ContiguousLarger)) {
   std::vector<int32> operand_shape({32, 128, 1024});
   RunR3Contiguous<float>(operand_shape, /*index=*/7, /*size=*/1);

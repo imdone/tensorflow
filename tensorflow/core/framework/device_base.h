@@ -127,7 +127,8 @@ class DeviceBase {
   // supply a DeviceContext for an op in FillContextMap (e.g. when only
   // using a single stream.)
   // "event_mgr" is used to delay deallocation of temporary GPU buffers.
-  // TODO(pbar) Work out how to move this out of DeviceBase.
+  // TODO (pbar) Work out how to move this out of DeviceBase. id:2721
+  // https://github.com/imdone/tensorflow/issues/2720
   // GpuDeviceInfo name is an unfortunate legacy, it is used not only by GPUs
   // but also by TPU devices (to provide default device context).
   struct GpuDeviceInfo {
@@ -223,10 +224,11 @@ class DeviceBase {
   // Materializes the given TensorProto into 'tensor' stored in Device
   // memory.  Most devices will want to override this.
   //
-  // TODO(vrv): We should be able to put this function into
-  // OpKernelContext and handle the copies from device memory via send
-  // and receive nodes, instead of requiring that each device handle
-  // the copies here as well as in copy ops.
+  // TODO (vrv): We should be able to put this function into id:1920
+// https://github.com/imdone/tensorflow/issues/1920
+// OpKernelContext and handle the copies from device memory via send
+// and receive nodes, instead of requiring that each device handle
+// the copies here as well as in copy ops.
   virtual Status MakeTensorFromProto(const TensorProto& tensor_proto,
                                      const AllocatorAttributes alloc_attrs,
                                      Tensor* tensor) {

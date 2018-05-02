@@ -166,7 +166,8 @@ bool PrepareInterpreter(const std::vector<InputLayerInfo> inputs,
     TfLiteTensor* t = interpreter->tensor(i);
     std::vector<int> sizes = ShapeFromTfLiteTensor(t);
 
-    // TODO(ahentz): below we ignore the O-th dimension (number of batches).
+    // TODO (ahentz): below we ignore the O-th dimension (number of batches). id:1056
+    // https://github.com/imdone/tensorflow/issues/1057
     if (t->type == kTfLiteFloat32) {
       FillRandomValue<float>(
           interpreter->typed_tensor<float>(i),

@@ -51,7 +51,8 @@ namespace {
 
 bool IsTensorRTCandidate(const tensorflow::Node* node) {
   // LINT.IfChange
-  // TODO(jie): Segmentation shouldn't associated with op name.
+  // TODO (jie): Segmentation shouldn't associated with op name. id:1792
+  // https://github.com/imdone/tensorflow/issues/1792
   //            Split it into a registration for each kernel.
   static const std::set<string> candidate_ops = {
       "Identity",
@@ -72,7 +73,8 @@ bool IsTensorRTCandidate(const tensorflow::Node* node) {
       "DepthwiseConv2dNative",
       "FusedBatchNorm",
       "FusedBatchNormV2",
-      // TODO(ben,jie): ...
+      // TODO (ben,jie): ... id:2478
+      // https://github.com/imdone/tensorflow/issues/2477
   };
   // LINT.ThenChange(//tensorflow/contrib/tensorrt/convert/convert_nodes.h)
   return candidate_ops.count(node->type_string());
@@ -135,7 +137,8 @@ std::unordered_map<string, std::vector<int>> BuildTensorNameMap(
   return result;
 }
 
-// TODO(sami): convert references to pointers
+// TODO (sami): convert references to pointers id:2326
+// https://github.com/imdone/tensorflow/issues/2325
 struct ConvertGraphParams {
   ConvertGraphParams(
       tensorflow::Graph& inp_graph,
@@ -372,12 +375,14 @@ tensorflow::Status ConvertGraphDefToTensorRT(
   // Segment the graph into subgraphs that can be converted to TensorRT
   tensorflow::tensorrt::segment::SegmentOptions segment_options;
 
-  // TODO(ben,jie,sami): exclude output nodes (DISCUSS IT)
+  // TODO (ben,jie,sami): exclude output nodes (DISCUSS IT) id:1673
+  // https://github.com/imdone/tensorflow/issues/1673
   for (auto node : output_names) {
     segment_options.exclude_node_list.insert(node);
   }
 
-  // TODO(sami): this should be passed as a knob!!!!
+  // TODO (sami): this should be passed as a knob!!!! id:1261
+  // https://github.com/imdone/tensorflow/issues/1262
   segment_options.minimum_segment_size = minimum_segment_size;
   tensorflow::tensorrt::segment::SegmentNodesVector segments;
   TF_RETURN_IF_ERROR(tensorrt::segment::SegmentGraph(

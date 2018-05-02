@@ -76,7 +76,8 @@ class ServingInputReceiver(collections.namedtuple(
               or isinstance(tensor, sparse_tensor.SparseTensor)):
         value_error = ValueError(
             'feature {} must be a Tensor or SparseTensor.'.format(name))
-        # NOTE(ericmc): This if-else block is a specific carve-out for
+        # NOTE (ericmc): This if-else block is a specific carve-out for id:3708
+        # https://github.com/imdone/tensorflow/issues/3707
         # LabeledTensor, which has a `.tensor` attribute and which is
         # convertible to tf.Tensor via ops.convert_to_tensor.
         # Allowing all types convertible to tf.Tensor is considered by soergel@
@@ -244,7 +245,8 @@ def build_raw_serving_input_receiver_fn(features, default_batch_size=None):
       # t.name = "%s:%d" % (t.op.name, t._value_index)
       receiver_tensors[name] = array_ops.placeholder(
           dtype=t.dtype, shape=shape, name=t.op.name)
-    # TODO(b/34885899): remove the unnecessary copy
+    # TODO (b/34885899): remove the unnecessary copy id:2949
+    # https://github.com/imdone/tensorflow/issues/2948
     # The features provided are simply the placeholders, but we defensively copy
     # the dict because it may be mutated.
     return ServingInputReceiver(receiver_tensors, receiver_tensors.copy())
@@ -320,7 +322,8 @@ def _log_signature_report(signature_def_map, excluded_signatures):
   for signature_name, sig in signature_def_map.items():
     sig_names_by_method_name[sig.method_name].append(signature_name)
 
-  # TODO(b/67733540): consider printing the full signatures, not just names
+  # TODO (b/67733540): consider printing the full signatures, not just names id:3160
+  # https://github.com/imdone/tensorflow/issues/3159
   for method_name, sig_names in sig_names_by_method_name.items():
     if method_name in _FRIENDLY_METHOD_NAMES:
       method_name = _FRIENDLY_METHOD_NAMES[method_name]

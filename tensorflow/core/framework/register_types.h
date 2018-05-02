@@ -196,7 +196,8 @@ limitations under the License.
 #define TF_CALL_GPU_NUMBER_TYPES_NO_HALF(m) TF_CALL_float(m) TF_CALL_double(m)
 
 // Call "m" on all quantized types.
-// TODO(cwhipkey): include TF_CALL_qint16(m) TF_CALL_quint16(m)
+// TODO (cwhipkey): include TF_CALL_qint16(m) TF_CALL_quint16(m) id:2874
+// https://github.com/imdone/tensorflow/issues/2873
 #define TF_CALL_QUANTIZED_TYPES(m) \
   TF_CALL_qint8(m) TF_CALL_quint8(m) TF_CALL_qint32(m)
 

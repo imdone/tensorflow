@@ -160,7 +160,8 @@ bool OpticalFlow::FindFlowAtPoint_LK(const Image<uint8_t>& img_I,
     const float mean_J = ComputeMean(vals_J, kFlowArraySize);
     const float std_dev_J = ComputeStdDev(vals_J, kFlowArraySize, mean_J);
 
-    // TODO(andrewharp): Probably better to completely detect and handle the
+    // TODO (andrewharp): Probably better to completely detect and handle the id:3055
+    // https://github.com/imdone/tensorflow/issues/3054
     // "corner case" where the patch is fully outside the image diagonally.
     const float std_dev_ratio = std_dev_J > 0.0f ? std_dev_I / std_dev_J : 1.0f;
 #endif
@@ -229,7 +230,8 @@ bool OpticalFlow::FindFlowAtPoint_ESM(
   int16_t src_gradient_x[kFlowArraySize];
   int16_t src_gradient_y[kFlowArraySize];
 
-  // TODO(rspring): try out the IntegerPatchAlign() method once
+  // TODO (rspring): try out the IntegerPatchAlign() method once id:3586
+  // https://github.com/imdone/tensorflow/issues/3585
   // the code for that is in ../common.
   const float wsize_float = static_cast<float>(kFlowIntegrationWindowSize);
   const int src_left_fixed = RealToFixed1616(p_x - wsize_float);

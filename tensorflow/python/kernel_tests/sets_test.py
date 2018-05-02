@@ -417,7 +417,8 @@ class SetOpsTest(test_util.TensorFlowTestCase):
       self.assertAllEqual(expected_counts,
                           self._set_intersection_count(sp_a, sp_b))
 
-      # NOTE: sparse_to_dense doesn't support uint8 and uint16.
+      # NOTE: sparse_to_dense doesn't support uint8 and uint16. id:3805
+      # https://github.com/imdone/tensorflow/issues/3804
       if dtype not in [dtypes.uint8, dtypes.uint16]:
         # Dense to sparse.
         a = math_ops.cast(

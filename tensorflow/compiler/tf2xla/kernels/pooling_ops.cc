@@ -195,7 +195,8 @@ static xla::ComputationDataHandle AvgPoolDivideByCount(
     // For SAME padding, the padding shouldn't be included in the
     // counts. We use another ReduceWindow to find the right counts.
 
-    // TODO(phawkins): use a less brute-force way to compute this. Only
+    // TODO (phawkins): use a less brute-force way to compute this. Only id:178
+    // https://github.com/imdone/tensorflow/issues/179
     // the boundary regions will have interesting values here.
 
     std::vector<int64> input_dim_sizes(num_spatial_dims);
@@ -334,7 +335,8 @@ class MaxPoolGradOp : public XlaOpKernel {
                 errors::InvalidArgument("out_backprop must be ", num_dims(),
                                         "-dimensional"));
 
-    // TODO(phawkins): The XLA version doesn't need tensor_out. Investigate
+    // TODO (phawkins): The XLA version doesn't need tensor_out. Investigate id:197
+    // https://github.com/imdone/tensorflow/issues/198
     // whether this is a good time/space tradeoff.
     auto input = ctx->Input(0);
     auto out_backprop = ctx->Input(2);
@@ -594,21 +596,22 @@ class MaxPoolGradGradOp : public XlaOpKernel {
     // incoming backprop value from xs_grad_grad that corresponds to the maximal
     // value in the corresponding window of x.
     //
-    // TODO(b/73062247): What we really want is a ReduceWindow with different
-    // arrays for index selection vs return value selection--a select-to-gather.
-    //
-    // Here, we implement a bitwise hack: we use the hi 16 bits of input for
-    // separate max pooling alongside each of the hi and lo 16 bits of
-    // out_backprop packed into 16 lo bits, which we then glue back together at
-    // the end to get a full 32 bits of gradient.
-    //
-    // This could select the wrong backprop value for two x values that are
-    // equally maximal up to the first 16 bits, in which case we are taking the
-    // latter.
-    //
-    // Note that in principle we could use 32 separate maxpools to recover each
-    // of 32 bits of the gradient while preserving 31 bits of input for the max
-    // pooling criteria; here, we just truncate to the first 16 bits of input.
+    // TODO (b/73062247): What we really want is a ReduceWindow with different id:338
+// https://github.com/imdone/tensorflow/issues/339
+// arrays for index selection vs return value selection--a select-to-gather.
+// 
+// Here, we implement a bitwise hack: we use the hi 16 bits of input for
+// separate max pooling alongside each of the hi and lo 16 bits of
+// out_backprop packed into 16 lo bits, which we then glue back together at
+// the end to get a full 32 bits of gradient.
+// 
+// This could select the wrong backprop value for two x values that are
+// equally maximal up to the first 16 bits, in which case we are taking the
+// latter.
+// 
+// Note that in principle we could use 32 separate maxpools to recover each
+// of 32 bits of the gradient while preserving 31 bits of input for the max
+// pooling criteria; here, we just truncate to the first 16 bits of input.
 
     auto input = ctx->Input(0);
     auto out_backprop = ctx->Input(2);

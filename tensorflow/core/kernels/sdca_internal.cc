@@ -308,7 +308,8 @@ void Examples::RandomShuffle() {
   std::random_shuffle(sampled_index_.begin(), sampled_index_.end());
 }
 
-// TODO(sibyl-Aix6ihai): Refactor/shorten this function.
+// TODO (sibyl-Aix6ihai): Refactor/shorten this function. id:3990
+// https://github.com/imdone/tensorflow/issues/3988
 Status Examples::Initialize(OpKernelContext* const context,
                             const ModelWeights& weights,
                             const int num_sparse_features,
@@ -417,7 +418,8 @@ Status Examples::CreateSparseFeatureRepresentation(
           }
           // If features are non empty.
           if (end_id - start_id > 0) {
-            // TODO(sibyl-Aix6ihai): Write this efficiently using vectorized
+            // TODO (sibyl-Aix6ihai): Write this efficiently using vectorized id:2310
+            // https://github.com/imdone/tensorflow/issues/2309
             // operations from eigen.
             for (int64 k = 0; k < sparse_features->indices->size(); ++k) {
               const int64 feature_index = (*sparse_features->indices)(k);
@@ -448,7 +450,8 @@ Status Examples::CreateSparseFeatureRepresentation(
   // For each column, the cost of parsing it is O(num_examples). We use
   // num_examples here, as empirically Shard() creates the right amount of
   // threads based on the problem size.
-  // TODO(sibyl-Aix6ihai): Tune this as a function of dataset size.
+  // TODO (sibyl-Aix6ihai): Tune this as a function of dataset size. id:2183
+  // https://github.com/imdone/tensorflow/issues/2182
   const int64 kCostPerUnit = num_examples;
   Shard(worker_threads.num_threads, worker_threads.workers, num_sparse_features,
         kCostPerUnit, parse_partition);
@@ -480,7 +483,8 @@ Status Examples::CreateDenseFeatureRepresentation(
       }
     }
   };
-  // TODO(sibyl-Aix6ihai): Tune this as a function of dataset size.
+  // TODO (sibyl-Aix6ihai): Tune this as a function of dataset size. id:2711
+  // https://github.com/imdone/tensorflow/issues/2710
   const int64 kCostPerUnit = num_examples;
   Shard(worker_threads.num_threads, worker_threads.workers, num_dense_features,
         kCostPerUnit, parse_partition);
@@ -528,7 +532,8 @@ Status Examples::ComputeSquaredNormPerExample(
       example->squared_norm_ = squared_norm;
     }
   };
-  // TODO(sibyl-Aix6ihai): Compute the cost optimally.
+  // TODO (sibyl-Aix6ihai): Compute the cost optimally. id:3320
+  // https://github.com/imdone/tensorflow/issues/3319
   const int64 kCostPerUnit = num_dense_features + num_sparse_features;
   Shard(worker_threads.num_threads, worker_threads.workers, num_examples,
         kCostPerUnit, compute_example_norm);

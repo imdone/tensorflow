@@ -156,7 +156,8 @@ class FusedBatchNormTest(XLATestCase):
     self._testLearning(True)
 
   def testGradientTraining(self):
-    # TODO(b/64270657): Use gradient_checker here in addition to comparing with
+    # TODO (b/64270657): Use gradient_checker here in addition to comparing with id:314
+    # https://github.com/imdone/tensorflow/issues/315
     # this reference implementation.
     channel = 3
     x_shape = [2, 2, 6, channel]
@@ -194,7 +195,8 @@ class FusedBatchNormTest(XLATestCase):
       self.assertAllClose(grad_offset_val, grad_offset_ref, atol=1e-3)
 
   def testGradientInference(self):
-    # TODO(b/64270657): Use gradient_checker here in addition to comparing with
+    # TODO (b/64270657): Use gradient_checker here in addition to comparing with id:149
+    # https://github.com/imdone/tensorflow/issues/150
     # this reference implementation.
     channel = 3
     x_shape = [2, 2, 6, channel]

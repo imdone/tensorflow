@@ -23,7 +23,8 @@ from tensorflow.python.ops import control_flow_ops
 
 
 def dynamic_is(left, right):
-  # TODO(alexbw) if we're sure we should leave 'is' in place,
+  # TODO (alexbw) if we're sure we should leave 'is' in place, id:1007
+  # https://github.com/imdone/tensorflow/issues/1008
   # then change the semantics in converters/logical_expressions.py
   return left is right
 

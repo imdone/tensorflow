@@ -98,7 +98,8 @@ static std::vector<std::pair<int, int>> CreateSamePadding(
     const nvinfer1::DimsHW& stride, const nvinfer1::DimsHW& kernel,
     const std::vector<int64_t>& input_dims) {
   std::vector<std::pair<int, int>> padding(input_dims.size());
-  CHECK_EQ((size_t)stride.nbDims, input_dims.size());  // TODO(jie): N+C? NC+?
+  CHECK_EQ((size_t)stride.nbDims, input_dims.size());  // TODO (jie): N+C? NC+? id:1794
+                                                       // https://github.com/imdone/tensorflow/issues/1794
 
   for (size_t i = 0; i < input_dims.size(); ++i) {
     // Formula to calculate the padding
@@ -299,7 +300,8 @@ bool TFAttrs::get<bool>(string key) const {
   return this->at(key)->b();
 }
 
-// TODO(jie): reorder4 & reorder2 should be merged?
+// TODO (jie): reorder4 & reorder2 should be merged? id:2483
+// https://github.com/imdone/tensorflow/issues/2482
 template <typename T>
 void Reorder4(nvinfer1::DimsNCHW shape, const T* idata,
               nvinfer1::DimsNCHW istrides, T* odata,
@@ -328,7 +330,8 @@ void Reorder2(nvinfer1::DimsHW shape, const T* idata, nvinfer1::DimsHW istrides,
   }
 }
 
-// TODO(jie): fallback to tensorflow!!
+// TODO (jie): fallback to tensorflow!! id:2329
+// https://github.com/imdone/tensorflow/issues/2328
 void ReorderCKtoKC(const TRT_ShapedWeights& iweights,
                    TRT_ShapedWeights* oweights) {
   int c = iweights.shape_.d[0];
@@ -433,7 +436,8 @@ class Converter {
                                 std::vector<TRT_TensorOrWeights>* inputs) {
     for (auto const& input_name : node_def.input()) {
       /*************************************************************************
-       * TODO(jie) handle case 1) here
+       * TODO (jie) handle case 1) here id:1676
+       * https://github.com/imdone/tensorflow/issues/1676
        * Normalizes the inputs and extracts associated metadata:
        * 1) Inputs can contain a colon followed by a suffix of characters.
        *    That suffix may be a single number (e.g. inputName:1) or several
@@ -476,7 +480,8 @@ class Converter {
   TRT_ShapedWeights get_temp_weights(tensorflow::DataType type,
                                      nvinfer1::Dims shape) {
     TRT_ShapedWeights weights(type, nullptr, shape);
-    // TODO(jie): check weights size_bytes. 0 means type error
+    // TODO (jie): check weights size_bytes. 0 means type error id:1264
+    // https://github.com/imdone/tensorflow/issues/1265
     weight_store_->store_.push_back(std::vector<uint8_t>(weights.size_bytes()));
     weights.SetValues(weight_store_->store_.back().data());
     return weights;
@@ -499,7 +504,8 @@ class Converter {
     TF_RETURN_IF_ERROR(op_converter(*this, node_def, inputs, &outputs));
     for (size_t i = 0; i < outputs.size(); ++i) {
       TRT_TensorOrWeights output = outputs.at(i);
-      // TODO(jie): tf protobuf seems to be omitting the :0 suffix
+      // TODO (jie): tf protobuf seems to be omitting the :0 suffix id:1796
+      // https://github.com/imdone/tensorflow/issues/1796
       string output_name = node_def.name();
       if (i != 0) output_name = StrCat(output_name, ":", i);
       if (output.is_tensor()) {
@@ -531,7 +537,8 @@ class Converter {
                                      std::vector<int> order) {
     auto dims = input_tensor->getDimensions();
 
-    // TODO(jie): change the return to status and properly exit
+    // TODO (jie): change the return to status and properly exit id:2487
+    // https://github.com/imdone/tensorflow/issues/2486
     if (order.size() - 1 != size_t(dims.nbDims))
       LOG(ERROR) << "Dimension does not match, fail gracefully";
 
@@ -568,7 +575,8 @@ TRT_ShapedWeights ConvertFP32ToFP16(Converter& ctx,
 }
 // ****************************************************************************
 // Constant folding functions
-// TODO(jie): once optimizer kicks in, we should have done constant folding
+// TODO (jie): once optimizer kicks in, we should have done constant folding id:2331
+// https://github.com/imdone/tensorflow/issues/2330
 // there.
 //*****************************************************************************/
 struct LambdaFactory {
@@ -788,7 +796,8 @@ tensorflow::Status ConstantFoldUnary(
   // Allocate output weights
   TRT_ShapedWeights weights_output = ctx.get_temp_weights_like(weights_input);
 
-  // FIXME assume type matches input weights
+  // FIXME assume type matches input weights id:1679
+  // https://github.com/imdone/tensorflow/issues/1679
   // Get trt type & shape
   // Maybe this part has to be moved into the block of rsqrt later
   // Check type consistency
@@ -811,7 +820,8 @@ tensorflow::Status ConstantFoldUnary(
   }
 }
 
-// TODO(jie,ben) broadcast is needed yet not implemented
+// TODO (jie,ben) broadcast is needed yet not implemented id:1267
+// https://github.com/imdone/tensorflow/issues/1268
 // Let's get the simple stuff working first. Maybe we should fall back to TF
 //   approach for constant folding
 tensorflow::Status ConstantFoldBinary(
@@ -828,7 +838,8 @@ tensorflow::Status ConstantFoldBinary(
     return tensorflow::errors::Unimplemented(
         "Binary op implicit broadcast not supported: " + node_def.op());
 
-  // TODO(jie): constant fold should really fall back to TF.
+  // TODO (jie): constant fold should really fall back to TF. id:1798
+  // https://github.com/imdone/tensorflow/issues/1798
   int num_dims = weights_input_l.shape_.nbDims;
   nvinfer1::Dims output_shape;
   output_shape.nbDims = num_dims;
@@ -850,7 +861,8 @@ tensorflow::Status ConstantFoldBinary(
             << "output: " << output_shape.d[i];
   }
 
-  // FIXME assume type matches input weights
+  // FIXME assume type matches input weights id:2491
+  // https://github.com/imdone/tensorflow/issues/2490
   // Get trt type & shape
   TFAttrs attrs(node_def);
   // Maybe this part has to be moved into the block of rsqrt later
@@ -881,13 +893,15 @@ tensorflow::Status ConstantFoldBinary(
   return ret;
 }
 
-// TODO(jie): broadcast is needed yet not implemented.
+// TODO (jie): broadcast is needed yet not implemented. id:2334
+// https://github.com/imdone/tensorflow/issues/2333
 // Only implemented channel wise for the time being
 tensorflow::Status BinaryTensorOpWeight(
     Converter& ctx, const tensorflow::NodeDef& node_def,
     const nvinfer1::ITensor* tensor, TRT_ShapedWeights weights,
     std::vector<TRT_TensorOrWeights>* outputs) {
-  // FIXME assume type matches input weights
+  // FIXME assume type matches input weights id:1682
+  // https://github.com/imdone/tensorflow/issues/1682
   // Get trt type & shape
   // Maybe this part has to be moved into the block of rsqrt later
 
@@ -902,7 +916,8 @@ tensorflow::Status BinaryTensorOpWeight(
   // default to element-wise
   auto scale_mode = nvinfer1::ScaleMode::kELEMENTWISE;
 
-  // TODO(jie): maybe use a permutation instead to support more cases;
+  // TODO (jie): maybe use a permutation instead to support more cases; id:1269
+  // https://github.com/imdone/tensorflow/issues/1270
   bool permutation_flag = false;
 
   if (weights.count() == 1) {
@@ -1033,7 +1048,8 @@ tensorflow::Status ConvertConv2DHelper(
                                  {0, 3, 1, 2});
     h_index = 1;
     w_index = 2;
-    // TODO(jie): transpose it
+    // TODO (jie): transpose it id:1800
+    // https://github.com/imdone/tensorflow/issues/1800
   }
 
   // tensor after transpose (NCHW)
@@ -1058,7 +1074,8 @@ tensorflow::Status ConvertConv2DHelper(
   kernel_size.w() = weights.shape_.d[3];
   VLOG(2) << "kernel size: " << kernel_size.h() << ", " << kernel_size.w();
 
-  // TODO(jie): stride. (NHWC/NCHW)
+  // TODO (jie): stride. (NHWC/NCHW) id:2495
+  // https://github.com/imdone/tensorflow/issues/2494
   auto tf_stride = attrs.get<std::vector<int>>("strides");
   VLOG(2) << "h_INDEX" << h_index << ", w_index " << w_index;
   VLOG(2) << "stride!!!: " << tf_stride[0] << tf_stride[1] << tf_stride[2]
@@ -1066,7 +1083,8 @@ tensorflow::Status ConvertConv2DHelper(
   nvinfer1::DimsHW stride(tf_stride[h_index], tf_stride[w_index]);
 
   std::vector<std::pair<int, int>> padding;
-  // TODO(jie): padding.
+  // TODO (jie): padding. id:2337
+  // https://github.com/imdone/tensorflow/issues/2336
   if (attrs.get<string>("padding") == "SAME") {
     // This is NCHW tensor with no batch dimension.
     //  1 -> h
@@ -1080,7 +1098,8 @@ tensorflow::Status ConvertConv2DHelper(
 
   if (padding[0].first != padding[0].second ||
       padding[1].first != padding[1].second) {
-    // TODO(jie): handle asymmetric padding
+    // TODO (jie): handle asymmetric padding id:1685
+    // https://github.com/imdone/tensorflow/issues/1685
     VLOG(2) << "Padding!!!: " << padding[0].first << padding[0].second
             << padding[1].first << padding[1].second;
 
@@ -1113,7 +1132,8 @@ tensorflow::Status ConvertConv2DHelper(
           << dim_after.d[2] << ", " << dim_after.d[3];
 
   if (data_format == "NHWC") {
-    // TODO(jie): transpose it back!
+    // TODO (jie): transpose it back! id:1271
+    // https://github.com/imdone/tensorflow/issues/1272
     output_tensor = ctx.TransposeTensor(output_tensor, {0, 2, 3, 1});
   } else {
     VLOG(2) << "NCHW !!!!";
@@ -1147,7 +1167,8 @@ tensorflow::Status BinaryTensorOpTensor(
       {"Div", nvinfer1::ElementWiseOperation::kDIV},
   };
 
-  // FIXME assume type matches input weights
+  // FIXME assume type matches input weights id:1801
+  // https://github.com/imdone/tensorflow/issues/1801
   // get trt type & shape
   TFAttrs attrs(node_def);
   // maybe this part has to be moved into the block of rsqrt later
@@ -1231,7 +1252,8 @@ tensorflow::Status ConvertPool(Converter& ctx,
     VLOG(2) << "NCHW !!!!";
   }
   nvinfer1::PoolingType type;
-  // TODO(jie): support other pooling type
+  // TODO (jie): support other pooling type id:2498
+  // https://github.com/imdone/tensorflow/issues/2498
   if (node_def.op() == "MaxPool")
     type = nvinfer1::PoolingType::kMAX;
   else if (node_def.op() == "AvgPool")
@@ -1239,7 +1261,8 @@ tensorflow::Status ConvertPool(Converter& ctx,
   else
     return tensorflow::errors::Unimplemented("Only supports Max pool");
 
-  // TODO(jie): NCHW
+  // TODO (jie): NCHW id:2340
+  // https://github.com/imdone/tensorflow/issues/2339
   auto tf_stride = attrs.get<std::vector<int>>("strides");
   nvinfer1::DimsHW stride(tf_stride[h_index], tf_stride[w_index]);
 
@@ -1248,7 +1271,8 @@ tensorflow::Status ConvertPool(Converter& ctx,
 
   auto tensor_dim = tensor->getDimensions();
   std::vector<std::pair<int, int>> padding;
-  // TODO(jie): padding.
+  // TODO (jie): padding. id:1688
+  // https://github.com/imdone/tensorflow/issues/1688
   if (attrs.get<string>("padding") == "SAME") {
     // This is NCHW tensor with no batch dimension.
     //  1 -> h
@@ -1267,7 +1291,8 @@ tensorflow::Status ConvertPool(Converter& ctx,
 
   if (padding[0].first != padding[0].second ||
       padding[1].first != padding[1].second) {
-    // TODO(jie): handle asymmetric padding
+    // TODO (jie): handle asymmetric padding id:1273
+    // https://github.com/imdone/tensorflow/issues/1274
     VLOG(2) << "Padding!!!: " << padding[0].first << padding[0].second
             << padding[1].first << padding[1].second;
     auto pad_layer = ctx.network()->addPadding(
@@ -1287,7 +1312,8 @@ tensorflow::Status ConvertPool(Converter& ctx,
   nvinfer1::ITensor* output_tensor = layer->getOutput(0);
 
   if (data_format == "NHWC") {
-    // TODO(jie): transpose it back!
+    // TODO (jie): transpose it back! id:1803
+    // https://github.com/imdone/tensorflow/issues/1803
     output_tensor = ctx.TransposeTensor(output_tensor, {0, 2, 3, 1});
   } else {
     VLOG(2) << "NCHW !!!!";
@@ -1333,7 +1359,8 @@ tensorflow::Status ConvertScale(Converter& ctx,
   if (data_format == "NHWC") {
     tensor = ctx.TransposeTensor(const_cast<nvinfer1::ITensor*>(tensor),
                                  {0, 3, 1, 2});
-    // TODO(jie): transpose it
+    // TODO (jie): transpose it id:2503
+    // https://github.com/imdone/tensorflow/issues/2502
   } else {
     VLOG(2) << "NCHW !!!!";
   }
@@ -1360,7 +1387,8 @@ tensorflow::Status ConvertScale(Converter& ctx,
 
   nvinfer1::ITensor* output_tensor = layer->getOutput(0);
   if (data_format == "NHWC") {
-    // TODO(jie): transpose it back!
+    // TODO (jie): transpose it back! id:2406
+    // https://github.com/imdone/tensorflow/issues/2405
     output_tensor = ctx.TransposeTensor(output_tensor, {0, 2, 3, 1});
   } else {
     VLOG(2) << "NCHW !!!!";
@@ -1572,7 +1600,8 @@ tensorflow::Status ConvertReduce(Converter& ctx,
   TRT_ShapedWeights index_list = inputs.at(1).weights();
 
   TFAttrs attrs(node_def);
-  // TODO(jie): handle data type.
+  // TODO (jie): handle data type. id:1691
+  // https://github.com/imdone/tensorflow/issues/1691
   // Index type here is done through TF type, so I can leverage their
   // EnumToDataType for my cast
   auto index_type = attrs.get<tensorflow::DataType>("Tidx");
@@ -1670,7 +1699,8 @@ tensorflow::Status ConvertPad(Converter& ctx,
   // Padding type here is done through TF type
   //   so I can leverage their EnumToDataType for my cast
   auto padding_type = attrs.get<tensorflow::DataType>("Tpaddings");
-  // TODO(jie): handle data type conversion for TRT?
+  // TODO (jie): handle data type conversion for TRT? id:1275
+  // https://github.com/imdone/tensorflow/issues/1276
 
   if (pads.shape_.d[0] != nb_dims || pads.shape_.d[1] != 2)
     return tensorflow::errors::InvalidArgument(
@@ -1706,7 +1736,8 @@ tensorflow::Status ConvertPad(Converter& ctx,
         "Padding layer does not support padding on batch dimension");
 
   // Not doing the legit thing here. ignoring padding on dim 1 and 3;
-  // TODO(jie): implement pad as uff parser
+  // TODO (jie): implement pad as uff parser id:1805
+  // https://github.com/imdone/tensorflow/issues/1805
   if (pad_index.size() == 2 && pad_index[0] == 0 && pad_index[1] == 3)
     return tensorflow::errors::Unimplemented(
         "Padding layer does not support padding on dimension 1 and 3 yet");
@@ -1763,7 +1794,8 @@ tensorflow::Status ConvertConcat(Converter& ctx,
   TFAttrs attrs(node_def);
   auto index_type = attrs.get<tensorflow::DataType>("Tidx");
 
-  // TODO(jie): handle data type
+  // TODO (jie): handle data type id:2506
+  // https://github.com/imdone/tensorflow/issues/2505
   // Only expect to handle INT32 as index attributes for now
   if (index_type != tensorflow::DataType::DT_INT32)
     return tensorflow::errors::Unimplemented(
@@ -1771,7 +1803,8 @@ tensorflow::Status ConvertConcat(Converter& ctx,
 
   int index = *(static_cast<int*>(const_cast<void*>(axis.GetValues())));
 
-  // TODO(jie): early termination with no-op (attr_size==1)
+  // TODO (jie): early termination with no-op (attr_size==1) id:2409
+  // https://github.com/imdone/tensorflow/issues/2408
 
   auto dim = inputs.at(0).tensor()->getDimensions();
   // dimension check
@@ -1958,7 +1991,8 @@ tensorflow::Status ConvertMatMul(Converter& ctx,
                                  std::vector<TRT_TensorOrWeights>* outputs) {
   const nvinfer1::ITensor* tensor = inputs.at(0).tensor();
 
-  // TODO(jie): transpose!
+  // TODO (jie): transpose! id:1694
+  // https://github.com/imdone/tensorflow/issues/1694
   TFAttrs attrs(node_def);
 
   TRT_ShapedWeights weights_ck = inputs.at(1).weights();
@@ -2055,9 +2089,10 @@ void Converter::register_op_converters() {
   // This could be really handled as ConvertBinary
   op_registry_["BiasAdd"] = ConvertScale;
   op_registry_["Const"] = ConvertConst;
-  // TODO(ben,jie): this is a temp hack.
-  op_registry_["Identity"] = ConvertIdentity;  // Identity should be removed
-  op_registry_["Snapshot"] = ConvertIdentity;  // Snapshot should be removed
+  // TODO (ben,jie): this is a temp hack. id:1277
+  // https://github.com/imdone/tensorflow/issues/1278
+  //   op_registry_["Identity"] = ConvertIdentity;  // Identity should be removed
+  //   op_registry_["Snapshot"] = ConvertIdentity;  // Snapshot should be removed
 
   // resnet_50_v1 slim implementation
   op_registry_["Add"] = ConvertBinary;
@@ -2066,7 +2101,8 @@ void Converter::register_op_converters() {
   op_registry_["Rsqrt"] = ConvertUnary;
   op_registry_["Mean"] = ConvertReduce;
   op_registry_["Pad"] = ConvertPad;
-  // TODO(ben,jie): Add more ops
+  // TODO (ben,jie): Add more ops id:1807
+  // https://github.com/imdone/tensorflow/issues/1807
 
   op_registry_["ConcatV2"] = ConvertConcat;
   op_registry_["MatMul"] = ConvertMatMul;
@@ -2236,7 +2272,8 @@ tensorflow::Status InjectCalibrationNode(tensorrt::convert::SubGraphParams& s) {
   for (const tensorflow::Node* node : order) {
     subgraph_name_scope = GetCommonNameScope(subgraph_name_scope, node->name());
   }
-  // TODO(sami,ben,jie): proper naming!
+  // TODO (sami,ben,jie): proper naming! id:2509
+  // https://github.com/imdone/tensorflow/issues/2508
   string calib_op_name =
       StrCat(subgraph_name_scope, "my_trt_calib_op_", static_id);
   string engine_name = StrCat(subgraph_name_scope, "my_trt_op", static_id);
@@ -2322,11 +2359,13 @@ tensorflow::Status InjectCalibrationNode(tensorrt::convert::SubGraphParams& s) {
     VLOG(2) << "accessing output index of: " << output_idx
             << ", at node: " << node_name
             << "with output entry from shape_map: " << op_info_vec.size();
-    // TODO(ben,jie): update TRT input format/dimension
+    // TODO (ben,jie): update TRT input format/dimension id:2412
+    // https://github.com/imdone/tensorflow/issues/2411
     nvinfer1::DimsCHW input_dim_psuedo_chw;
     for (int i = 0; i < 3; i++) input_dim_psuedo_chw.d[i] = 1;
 
-    // TODO(jie): TRT 3.x only support 4 dimensional input tensor.
+    // TODO (jie): TRT 3.x only support 4 dimensional input tensor. id:1697
+    // https://github.com/imdone/tensorflow/issues/1697
     //            update the code once TRT 4.0 comes out.
     if (op_info.shape().dim_size() != 4) {
       string err_str = "Require 4 dimensional input.";
@@ -2341,7 +2380,8 @@ tensorflow::Status InjectCalibrationNode(tensorrt::convert::SubGraphParams& s) {
       input_dim_psuedo_chw.d[i - 1] = op_info.shape().dim(i).size();
     }
 
-    // TODO(ben,jie): proper way to restore input tensor name?
+    // TODO (ben,jie): proper way to restore input tensor name? id:1279
+    // https://github.com/imdone/tensorflow/issues/1280
     auto input_tensor_name = node_name;
     if (output_idx != 0) {
       input_tensor_name = StrCat(node_name, ":", output_idx);
@@ -2420,7 +2460,8 @@ tensorflow::Status InjectCalibrationNode(tensorrt::convert::SubGraphParams& s) {
           << " max workspace size= " << s.max_workspace_size_bytes;
 
   // Build the TRT op
-  // TODO(sami,ben,jie): proper naming!
+  // TODO (sami,ben,jie): proper naming! id:1809
+  // https://github.com/imdone/tensorflow/issues/1809
   tensorflow::NodeDefBuilder op_builder(calib_op_name, "TRTCalibOp");
   std::vector<tensorflow::NodeDefBuilder::NodeOut> income_edges;
   for (size_t i = 0; i < input_names.size(); ++i) {
@@ -2497,7 +2538,8 @@ tensorflow::Status ConvertSubGraphToTensorRTNodeDef(
     subgraph_name_scope = GetCommonNameScope(subgraph_name_scope, node->name());
   }
   static int static_id = 0;
-  // TODO(sami,ben,jie): proper naming!
+  // TODO (sami,ben,jie): proper naming! id:2512
+  // https://github.com/imdone/tensorflow/issues/2511
   string engine_name = StrCat(subgraph_name_scope, "my_trt_op");
   engine_name = StrCat(engine_name, static_id++);
   auto trt_rmgr = tensorflow::tensorrt::TRTResourceManager::instance();
@@ -2564,11 +2606,13 @@ tensorflow::Status ConvertSubGraphToTensorRTNodeDef(
     VLOG(2) << "Accessing output index of: " << output_idx
             << ", at node: " << node_name
             << " with output entry from shape_map: " << op_info_vec.size();
-    // TODO(ben,jie): update TRT input format/dimension
+    // TODO (ben,jie): update TRT input format/dimension id:2417
+    // https://github.com/imdone/tensorflow/issues/2416
     nvinfer1::DimsCHW input_dim_psuedo_chw;
     for (int i = 0; i < 3; i++) input_dim_psuedo_chw.d[i] = 1;
 
-    // TODO(jie): TRT 3.x only support 4 dimensional input tensor.
+    // TODO (jie): TRT 3.x only support 4 dimensional input tensor. id:1700
+    // https://github.com/imdone/tensorflow/issues/1700
     //            update the code once TRT 4.0 comes out.
     if (op_info.shape().dim_size() != 4) {
       string err_str = "Require 4 dimensional input.";
@@ -2583,7 +2627,8 @@ tensorflow::Status ConvertSubGraphToTensorRTNodeDef(
       input_dim_psuedo_chw.d[i - 1] = op_info.shape().dim(i).size();
     }
 
-    // TODO(ben,jie): proper way to restore input tensor name?
+    // TODO (ben,jie): proper way to restore input tensor name? id:1281
+    // https://github.com/imdone/tensorflow/issues/1282
     auto input_tensor_name = node_name;
     if (output_idx != 0) {
       input_tensor_name = StrCat(node_name, ":", output_idx);

@@ -281,7 +281,8 @@ Status ToRNNInputMode(TFRNNInputMode tf_input_mode, int num_units,
   return Status::OK();
 }
 
-// TODO(zhengxq): Merge those into stream_executor_util.h.
+// TODO (zhengxq): Merge those into stream_executor_util.h. id:2908
+// https://github.com/imdone/tensorflow/issues/2907
 template <typename T>
 const DeviceMemory<T> AsDeviceMemory(const Tensor* tensor) {
   return DeviceMemory<T>::MakeFromByteSize(
@@ -1673,7 +1674,8 @@ TF_CALL_float(REGISTER_GPU);
 TF_CALL_double(REGISTER_GPU);
 #undef REGISTER_GPU
 
-// TODO(zhengxq): Add the conversion of Cudnn RNN Params from and to
+// TODO (zhengxq): Add the conversion of Cudnn RNN Params from and to id:2110
+// https://github.com/imdone/tensorflow/issues/2109
 // its canonical form.
 
 #endif  // GOOGLE_CUDA

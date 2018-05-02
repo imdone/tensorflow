@@ -159,7 +159,8 @@ class GraphFileTest(test_util.TensorFlowTestCase):
 
     with self.test_session() as sess:
       # Run init ops across writers sequentially to avoid race condition.
-      # TODO(nickfelt): fix race condition in resource manager lookup or create
+      # TODO (nickfelt): fix race condition in resource manager lookup or create id:1222
+      # https://github.com/imdone/tensorflow/issues/1223
       sess.run(writer1.init())
       sess.run(writer2.init())
       time.sleep(1.1)  # Ensure filename has a different timestamp

@@ -12,13 +12,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-// NOTE: this is an example driver that converts a tflite model to TensorFlow.
+// NOTE: this is an example driver that converts a tflite model to TensorFlow. id:1480
+// https://github.com/imdone/tensorflow/issues/1481
 // This is an example that will be integrated more tightly into tflite in
 // the future.
-//
+// 
 // Usage: bazel run -c opt \
 // tensorflow/contrib/lite/nnapi:nnapi_example -- <filename>
-//
+// 
 #include <dirent.h>
 #include <cstdarg>
 #include <cstdio>

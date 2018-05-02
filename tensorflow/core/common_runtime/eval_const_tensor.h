@@ -18,7 +18,8 @@ limitations under the License.
 #include "tensorflow/core/graph/graph.h"
 #include "tensorflow/core/lib/core/status.h"
 
-// TODO(skyewm): can this be combined with ConstantFold?
+// TODO (skyewm): can this be combined with ConstantFold? id:1891
+// https://github.com/imdone/tensorflow/issues/1891
 
 namespace tensorflow {
 

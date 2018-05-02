@@ -1252,7 +1252,8 @@ class SequenceQueueingStateSaver(object):
     # the capacity queue.
     finished_sequences = (math_ops.reduce_sum(
         math_ops.cast(self._sequence_is_done, dtypes.int32)))
-    # TODO(ebrevdo): convert to dequeue_up_to when FIFOQueue supports it.
+    # TODO (ebrevdo): convert to dequeue_up_to when FIFOQueue supports it. id:1842
+    # https://github.com/imdone/tensorflow/issues/1842
     dequeue_op = self._capacity_queue.dequeue_many(finished_sequences)
 
     # Tie the dequeue_op to the received_state, such that it is definitely
@@ -1860,7 +1861,8 @@ def _reconstruct_sparse_tensor_seq(sequence,
                       # Flatten the 2D Tensor [batch_size, num_unroll] of
                       # handles to a 1D Tensor.
                       # Reconstruct the dimensions later.
-                      # TODO(b/34247140): Remove this workaround.
+                      # TODO (b/34247140): Remove this workaround. id:2580
+                      # https://github.com/imdone/tensorflow/issues/2579
                       sparse_handles=_flatten_tensor(s), rank=None)
       for i, s in zip(tensor_op_list, tensor_list)]
   num_unroll = ops.convert_to_tensor(num_unroll, dtype=dtypes.int64,
@@ -1868,7 +1870,8 @@ def _reconstruct_sparse_tensor_seq(sequence,
 
   # Recreate the [batch_size, num_unroll] dimensions in the SparseTensors.
   # The dense_shape will have a +1 higher rank.
-  # TODO(b/34247140): Remove this workaround.
+  # TODO (b/34247140): Remove this workaround. id:2467
+  # https://github.com/imdone/tensorflow/issues/2466
   sp_tensors_higher_dim = [_unflatten_sparse_tensor(s) for s in sp_tensors]
 
   # Set values to SparseTensors for sparse_tensor_keys.

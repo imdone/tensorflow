@@ -30,13 +30,14 @@ limitations under the License.
 namespace xla {
 namespace gpu {
 
-// TODO(b/30467474) Once GPU infeed implementation settles, consider
+// TODO (b/30467474) Once GPU infeed implementation settles, consider id:373
+// https://github.com/imdone/tensorflow/issues/374
 // folding back the cpu and gpu infeed implementations into a generic
 // one if possible.
-//
+// 
 // Current limitations:
 // * Does not handle multiple devices/replicas.
-//
+// 
 // * Buffer space on GPU is allocated on every infeed enqueue request,
 // and it does not handle the case when it runs out of
 // memory. Potential solution is to pre-allocate a fixed amount of
@@ -101,7 +102,8 @@ class InfeedManager {
   se::Stream* GetStream(se::StreamExecutor* executor);
 
  private:
-  // TODO(b/30467474): Revisit if this mutex becomes a point of
+  // TODO (b/30467474): Revisit if this mutex becomes a point of id:372
+  // https://github.com/imdone/tensorflow/issues/373
   // contention.
   tensorflow::mutex mu_;
 

@@ -217,7 +217,8 @@ def _warm_start_var_with_vocab(var,
           full_shape=slice_info.full_shape,
           var_offset=slice_info.var_offset)
 
-    # TODO(eddz): Support cases where class vocabularies need remapping too.
+    # TODO (eddz): Support cases where class vocabularies need remapping too. id:3718
+    # https://github.com/imdone/tensorflow/issues/3717
     init = checkpoint_ops._load_and_remap_matrix_initializer(
         ckpt_path=checkpoint_utils._get_checkpoint_filename(prev_ckpt),
         old_tensor_name=prev_tensor_name,
@@ -280,7 +281,8 @@ def warm_start(ckpt_to_initialize_from,
   # Both vars_to_warm_start = '.*' and
   # vars_to_warm_start = None will match everything here.
   for v in ops.get_collection(
-      # TODO(eddz): Allow for different collections here (to support
+      # TODO (eddz): Allow for different collections here (to support id:3481
+      # https://github.com/imdone/tensorflow/issues/3480
       # warm-starting accumulators).
       ops.GraphKeys.TRAINABLE_VARIABLES,
       scope=vars_to_warm_start):

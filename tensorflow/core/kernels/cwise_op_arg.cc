@@ -26,7 +26,8 @@ namespace tensorflow {
 REGISTER_COMPLEX(CPU, float, complex64);
 REGISTER_COMPLEX(CPU, double, complex128);
 
-// TODO: Enable GPU support for angle op after resolving
+// TODO: Enable GPU support for angle op after resolving id:3127
+// https://github.com/imdone/tensorflow/issues/3126
 // build failures on GPU (See #10643 for context).
 #if 0 && GOOGLE_CUDA
 REGISTER_COMPLEX(GPU, float, complex64);

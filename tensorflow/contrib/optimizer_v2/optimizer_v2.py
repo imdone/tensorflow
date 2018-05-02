@@ -184,7 +184,8 @@ def _is_dynamic(value):
   if callable(value): return True
   # Don't need to do anything special in graph mode, since dynamic values
   # will propagate correctly automatically.
-  # TODO(josh11b): Add per-device caching across steps using variables for
+  # TODO (josh11b): Add per-device caching across steps using variables for id:1699
+  # https://github.com/imdone/tensorflow/issues/1699
   # truly static values once we add distributed support.
   if context.executing_eagerly() and isinstance(
       value, resource_variable_ops.ResourceVariable):
@@ -423,7 +424,8 @@ class _OptimizerV2State(object):
     if v is None:
       if colocate_with is None: colocate_with = self._non_slot_devices
       with self._distribution.colocate_vars_with(colocate_with):
-        # TODO(josh11b): Use get_variable() except for the legacy Adam use case.
+        # TODO (josh11b): Use get_variable() except for the legacy Adam use case. id:2107
+        # https://github.com/imdone/tensorflow/issues/2106
         v = variable_scope.variable(initial_value, name=name, trainable=False)
       self._non_slot_dict[name] = v
       deferred_dependencies_list = self._deferred_dependencies.pop(name, ())
@@ -744,7 +746,8 @@ class OptimizerV2(optimizer_v1.Optimizer):
     and `colocate_gradients_with_ops` are ignored.
     @end_compatibility
     """
-    # TODO(josh11b): Test that we handle weight decay in a reasonable way.
+    # TODO (josh11b): Test that we handle weight decay in a reasonable way. id:1575
+    # https://github.com/imdone/tensorflow/issues/1575
     if callable(loss):
       with backprop.GradientTape() as tape:
         if var_list is not None:
@@ -934,11 +937,13 @@ class OptimizerV2(optimizer_v1.Optimizer):
 
         # We colocate all ops created in _apply_dense or _apply_sparse
         # on the same device as the variable.
-        # TODO(apassos): figure out how to get the variable name here.
+        # TODO (apassos): figure out how to get the variable name here. id:1607
+        # https://github.com/imdone/tensorflow/issues/1607
         scope_name = "" if eager_execution else v.op.name
         # device_policy is set because non-mirrored tensors will be read in
         # `update_op`.
-        # TODO(josh11b): Make different state objects for each device to
+        # TODO (josh11b): Make different state objects for each device to id:1175
+        # https://github.com/imdone/tensorflow/issues/1176
         # avoid needing to set the device_policy.
         with ops.name_scope("update_" + scope_name), \
             context.context().device_policy(context.DEVICE_PLACEMENT_SILENT):
@@ -953,7 +958,8 @@ class OptimizerV2(optimizer_v1.Optimizer):
       # Give the child class a chance to do something after applying
       # gradients
       def finish():
-        # TODO(josh11b): Make different state objects for each device to
+        # TODO (josh11b): Make different state objects for each device to id:1702
+        # https://github.com/imdone/tensorflow/issues/1702
         # avoid needing to set the device_policy.
         with context.context().device_policy(context.DEVICE_PLACEMENT_SILENT):
           return self._finish(state)

@@ -35,7 +35,8 @@ from tensorflow.python.ops.losses import losses as tf_losses
 from tensorflow.python.platform import test
 
 
-# TODO(joelshor): Use `parameterized` tests when opensourced.
+# TODO (joelshor): Use `parameterized` tests when opensourced. id:882
+# https://github.com/imdone/tensorflow/issues/883
 class _LossesTest(object):
 
   def init_constants(self):
@@ -233,8 +234,10 @@ class WassersteinLossTest(test.TestCase, _LossesTest):
     self._d_loss_fn = tfgan_losses.wasserstein_discriminator_loss
 
 
-# TODO(joelshor): Use `parameterized` tests when opensourced.
-# TODO(joelshor): Refactor this test to use the same code as the other losses.
+# TODO (joelshor): Use `parameterized` tests when opensourced. id:771
+# https://github.com/imdone/tensorflow/issues/772
+# TODO (joelshor): Refactor this test to use the same code as the other losses. id:734
+# https://github.com/imdone/tensorflow/issues/735
 class ACGANLossTest(test.TestCase):
   """Tests for wasserstein_xxx_loss."""
 

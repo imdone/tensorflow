@@ -29,7 +29,8 @@ from tensorflow.python.training import server_lib
 class SameVariablesClearTest(test.TestCase):
 
   # Verifies behavior of tf.Session.reset().
-  # TODO(b/34465411): Starting multiple servers with different configurations
+  # TODO (b/34465411): Starting multiple servers with different configurations id:4334
+  # https://github.com/imdone/tensorflow/issues/4332
   # in the same test is flaky. Move this test case back into
   # "server_lib_test.py" when this is no longer the case.
   def testSameVariablesClear(self):

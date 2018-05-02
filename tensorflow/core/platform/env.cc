@@ -493,7 +493,8 @@ Status ReadBinaryProto(Env* env, const string& fname,
   TF_RETURN_IF_ERROR(env->NewRandomAccessFile(fname, &file));
   std::unique_ptr<FileStream> stream(new FileStream(file.get()));
 
-  // TODO(jiayq): the following coded stream is for debugging purposes to allow
+  // TODO (jiayq): the following coded stream is for debugging purposes to allow id:2639
+  // https://github.com/imdone/tensorflow/issues/2638
   // one to parse arbitrarily large messages for MessageLite. One most likely
   // doesn't want to put protobufs larger than 64MB on Android, so we should
   // eventually remove this and quit loud when a large protobuf is passed in.

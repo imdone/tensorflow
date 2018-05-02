@@ -32,7 +32,8 @@ limitations under the License.
 #define EXECUTE_FUNCTION_RETURN(...) return fn != nullptr ? fn(__VA_ARGS__) : 0;
 
 inline void* loadLibrary(const char* name) {
-  // TODO: change RTLD_LOCAL? Assumes there can be multiple instances of nn
+  // TODO: change RTLD_LOCAL? Assumes there can be multiple instances of nn id:1572
+  // https://github.com/imdone/tensorflow/issues/1572
   // api RT
   void* handle = nullptr;
 #ifdef __ANDROID__

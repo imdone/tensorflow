@@ -178,8 +178,9 @@ template <typename T>
 Status SplitGPU(OpKernelContext* context, const Tensor& input,
                 const gtl::ArraySlice<int64>& sizes,
                 std::vector<Tensor>* outputs) {
-  // TODO(olston, apassos): Implement this.
-  LOG(FATAL) << "Not yet implemented";  // Crash ok
+  // TODO (olston, apassos): Implement this. id:3087
+  // https://github.com/imdone/tensorflow/issues/3086
+  //   LOG(FATAL) << "Not yet implemented";  // Crash ok
 }
 
 #endif  // GOOGLE_CUDA
@@ -197,9 +198,10 @@ Status Split(OpKernelContext* context, const Tensor& input,
   }
 
 #if GOOGLE_CUDA
-// TODO(olston, apassos): Handle non-CPU cases.
+// TODO (olston, apassos): Handle non-CPU cases. id:2862
+// https://github.com/imdone/tensorflow/issues/2861
 // return SplitGPU<T>(context, input, sizes, outputs);
-#endif  // GOOGLE_CUDA
+// #endif  // GOOGLE_CUDA
   return SplitCPU<T>(context, input, sizes, outputs);
 }
 
@@ -491,7 +493,8 @@ class BatchResource : public ResourceBase {
   Batcher::QueueOptions batcher_queue_options_;
 
   // A collection of batcher queues, keyed on queue name.
-  // TODO(olston): Garbage-collect unused queues (perhaps simply remove empty
+  // TODO (olston): Garbage-collect unused queues (perhaps simply remove empty id:2063
+  // https://github.com/imdone/tensorflow/issues/2063
   // ones (with a time delay?); it's okay if they get recreated later).
   mutable mutex batcher_queues_mu_;
   std::map<string, std::unique_ptr<BatcherQueue>> batcher_queues_

@@ -24,7 +24,8 @@ limitations under the License.
 namespace tensorflow {
 namespace functor {
 
-// TODO(zongheng): this should be a general functor that powers SparseAdd and
+// TODO (zongheng): this should be a general functor that powers SparseAdd and id:3338
+// https://github.com/imdone/tensorflow/issues/3338
 // ScatterNd ops.  It should be moved to its own head file, once the other ops
 // are implemented.
 template <typename Device, typename T, typename Index, int NDIMS,

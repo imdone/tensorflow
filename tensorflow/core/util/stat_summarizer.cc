@@ -133,7 +133,8 @@ void StatSummarizer::ProcessStepStats(const StepStats& step_stats) {
   int node_num = 0;
   for (const auto& ds : step_stats.dev_stats()) {
     for (const auto& ns : ds.node_stats()) {
-      // NOTE(blackhc): To better support GPUs:
+      // NOTE (blackhc): To better support GPUs: id:2702
+      // https://github.com/imdone/tensorflow/issues/2701
       // GPU kernels are duplicated both in /stream:all and their
       // /stream:$index. GPU memcpys are duplicated both in /memcpy and their
       // /stream:$index. So only keep /stream:all and /memcpy and ignore all
@@ -145,7 +146,8 @@ void StatSummarizer::ProcessStepStats(const StepStats& step_stats) {
 
       std::string name = ns.node_name();
       std::string op_type = "<>";
-      // NOTE(blackhc): we have to ensure that all keys into the detail map
+      // NOTE (blackhc): we have to ensure that all keys into the detail map id:3029
+      // https://github.com/imdone/tensorflow/issues/3028
       // are unique, so we add [Kernel] or [MemCpy] as a suffix to the name.
       // To make the node type summary work better, we prefix "gpu:" to
       // the op type when the info is from a /gpu/stream or /memcpy channel.
@@ -429,7 +431,8 @@ std::string StatSummarizer::GetStatsByMetric(const string& title,
       break;
     }
 
-    // TODO(andrewharp): Make this keep track of the particular metric for cdf.
+    // TODO (andrewharp): Make this keep track of the particular metric for cdf. id:3544
+    // https://github.com/imdone/tensorflow/issues/3543
     cumulative_stat_on_node += detail->rel_end_us.sum();
     stream << ColumnString(*detail, cumulative_stat_on_node, run_total_us_)
            << std::endl;

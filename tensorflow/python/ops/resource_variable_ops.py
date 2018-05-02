@@ -847,7 +847,8 @@ class ResourceVariable(variables.Variable):
       it will return the `Operation` that does the assignment, and when in eager
       mode it will return `None`.
     """
-    # TODO(apassos): this here and below is not atomic. Consider making it
+    # TODO (apassos): this here and below is not atomic. Consider making it id:3640
+    # https://github.com/imdone/tensorflow/issues/3639
     # atomic if there's a way to do so without a performance cost for those who
     # don't need it.
     assign_sub_op = gen_resource_variable_ops.assign_sub_variable_op(

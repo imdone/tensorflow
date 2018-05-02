@@ -262,12 +262,14 @@ def list_to_string(lst):
 
 def graph_func_to_id(func):
   """Returns a hashable object that represents func's computation."""
-  # TODO(b/74201126): replace with Topohash of func's output
+  # TODO (b/74201126): replace with Topohash of func's output id:913
+  # https://github.com/imdone/tensorflow/issues/914
   return func.func_id
 
 
 def graph_func_to_string(func):
-  # TODO(b/74201126): replace with Topohash of func's output
+  # TODO (b/74201126): replace with Topohash of func's output id:864
+  # https://github.com/imdone/tensorflow/issues/865
   return list_to_string(func.func_id)
 
 
@@ -501,7 +503,8 @@ class DenseSquareMatrixFactor(FisherFactor):
   _cov_shape properties.
   """
 
-  # TODO(b/69108481): This class (and its subclasses) should be refactored to
+  # TODO (b/69108481): This class (and its subclasses) should be refactored to id:782
+  # https://github.com/imdone/tensorflow/issues/783
   # serve the matrix quantities it computes as both (potentially stale)
   # variables, updated by the inverse update ops, and fresh values stored in
   # tensors that recomputed once every session.run() call.  Currently matpower
@@ -674,7 +677,8 @@ class DenseSquareMatrixFactor(FisherFactor):
         damping = damping_value_by_id[damping_id]
         ops.append(matpower.assign(utils.posdef_inv(self.get_cov(), damping)))
 
-    # TODO(b/77902055): If inverses are being computed with Cholesky's
+    # TODO (b/77902055): If inverses are being computed with Cholesky's id:1219
+    # https://github.com/imdone/tensorflow/issues/1220
     # we can share the work. Instead this code currently just computes the
     # Cholesky a second time. It does at least share work between requests for
     # Cholesky's and Cholesky inverses with the same damping id.
@@ -995,9 +999,10 @@ class EmbeddingInputKroneckerFactor(DiagonalFactor):
 
     # Transform indices into one-hot vectors.
     #
-    # TODO(b/72714822): There must be a faster way to construct the diagonal
-    # covariance matrix! This operation is O(batch_size * vocab_size), where
-    # it should be O(batch_size * input_size).
+    # TODO (b/72714822): There must be a faster way to construct the diagonal id:1324
+# https://github.com/imdone/tensorflow/issues/1325
+# covariance matrix! This operation is O(batch_size * vocab_size), where
+# it should be O(batch_size * input_size).
     flat_input_ids = array_ops.reshape(input_ids, [-1])
     one_hots = array_ops.one_hot(flat_input_ids,
                                  self._vocab_size)  # [?, vocab_size]
@@ -1005,11 +1010,13 @@ class EmbeddingInputKroneckerFactor(DiagonalFactor):
     # Take average across examples. Note that, because all entries have
     # magnitude zero or one, there's no need to square the entries.
     #
-    # TODO(b/72714822): Support for SparseTensor, other kinds of aggregation
-    # within an example such as average.
-    #
-    # TODO(b/72714822): Support for partitioned embeddings.
-    new_cov = math_ops.reduce_sum(one_hots, axis=0)  # [vocab_size]
+    # TODO (b/72714822): Support for SparseTensor, other kinds of aggregation id:915
+# https://github.com/imdone/tensorflow/issues/916
+# within an example such as average.
+# 
+    # TODO (b/72714822): Support for partitioned embeddings. id:867
+# https://github.com/imdone/tensorflow/issues/868
+#     new_cov = math_ops.reduce_sum(one_hots, axis=0)  # [vocab_size]
     new_cov /= math_ops.cast(batch_size, new_cov.dtype)
 
     return new_cov
@@ -1201,7 +1208,8 @@ class ConvDiagonalFactor(DiagonalFactor):
   def make_covariance_update_op(self, ema_decay):
     filter_height, filter_width, _, _ = self._filter_shape
 
-    # TODO(b/64144716): there is potential here for a big savings in terms
+    # TODO (b/64144716): there is potential here for a big savings in terms id:783
+    # https://github.com/imdone/tensorflow/issues/784
     # of memory use.
     if self._dilations is None:
       rates = (1, 1, 1, 1)
@@ -1399,7 +1407,8 @@ class ConvInputKroneckerFactor(DenseSquareMatrixFactor):
       max_size = int(batch_size * _INPUTS_TO_EXTRACT_PATCHES_FACTOR)
       inputs = _random_tensor_gather(inputs, max_size)
 
-    # TODO(b/64144716): there is potential here for a big savings in terms of
+    # TODO (b/64144716): there is potential here for a big savings in terms of id:1224
+    # https://github.com/imdone/tensorflow/issues/1225
     # memory use.
     if self._extract_patches_fn in [None, "extract_convolution_patches"]:
       patches = utils.extract_convolution_patches(
@@ -1596,7 +1605,8 @@ class FullyConnectedMultiKF(FullyConnectedKroneckerFactor):
       op2 = moving_averages.assign_moving_average(
           self._cov_dt1, new_cov_dt1, ema_decay, zero_debias=ZERO_DEBIAS)
 
-      # TODO(b/69112164):
+      # TODO (b/69112164): id:1327
+      # https://github.com/imdone/tensorflow/issues/1328
       # It's important that _cov and _cov_dt1 remain consistent with each
       # other while the inverse ops are happening. How can we ensure this?
       # We will need to add explicit synchronization for this to
@@ -1726,7 +1736,8 @@ class FullyConnectedMultiKF(FullyConnectedKroneckerFactor):
 
   def make_inverse_update_ops(self):
     """Create and return update ops corresponding to registered computations."""
-    # TODO(b/69918258): Add correctness tests for this method.
+    # TODO (b/69918258): Add correctness tests for this method. id:918
+    # https://github.com/imdone/tensorflow/issues/919
     # pylint: disable=invalid-name
 
     ops = []
@@ -1744,7 +1755,8 @@ class FullyConnectedMultiKF(FullyConnectedKroneckerFactor):
       # Get the eigendecomposition of C0  (= self.get_cov())
       eigen_e, eigen_V = self.get_eigendecomp()
 
-      # TODO(b/69678661): Note, there is an implicit assumption here that C1
+      # TODO (b/69678661): Note, there is an implicit assumption here that C1 id:869
+      # https://github.com/imdone/tensorflow/issues/870
       # and C0 (as represented here by its eigen-decomp) are consistent.  This
       # could fail to be the case if self._cov and self._cov_dt1 are not updated
       # consistently, or are somehow read between or during the cov updates.

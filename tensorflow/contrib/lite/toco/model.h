@@ -137,7 +137,8 @@ enum class OperatorType {
 // Helper to deal with TensorFlow arrays using a different ordering of
 // dimensions
 // ("axes") than our own.
-// TODO(benoitjacob): Ultimately, we shouldn't have any "ordering" of axes,
+// TODO (benoitjacob): Ultimately, we shouldn't have any "ordering" of axes, id:1044
+// https://github.com/imdone/tensorflow/issues/1045
 // we should have associative arrays mapping symbolic axes identifiers (like
 // "output_depth") to dimensions. We would then not need this anymore.
 enum class AxesOrder {
@@ -933,12 +934,13 @@ struct SqueezeOperator : Operator {
 //   inputs[0]: required: the output shape
 //   inputs[1]: required: the weights
 //   inputs[2]: required: the input activations array
-//   NOTE: The input activations is NOT the first input.
-//
-//
+//   NOTE: The input activations is NOT the first input. id:1637
+// https://github.com/imdone/tensorflow/issues/1637
+// 
+// 
 // Outputs:
 //   outputs[0]: required: the output activations array
-//
+// 
 // TensorFlow equivalent: Conv2DBackpropInput
 struct TransposeConvOperator : Operator {
   enum Inputs {

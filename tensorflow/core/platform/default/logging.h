@@ -24,7 +24,8 @@ limitations under the License.
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/types.h"
 
-// TODO(mrry): Prevent this Windows.h #define from leaking out of our headers.
+// TODO (mrry): Prevent this Windows.h #define from leaking out of our headers. id:2974
+// https://github.com/imdone/tensorflow/issues/2973
 #undef ERROR
 
 namespace tensorflow {

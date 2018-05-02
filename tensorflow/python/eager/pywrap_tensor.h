@@ -25,7 +25,8 @@ tensorflow::int64 EagerTensor_id(const PyObject* tensor);
 namespace tensorflow {
 TFE_TensorHandle* ConvertToEagerTensor(PyObject* value, PyObject* dtype);
 
-// TODO(nareshmodi): Move EagerCast and ReadVariableOp (which use the C API to
+// TODO (nareshmodi): Move EagerCast and ReadVariableOp (which use the C API to id:3144
+// https://github.com/imdone/tensorflow/issues/3143
 // execute TFE Ops) to a separate common library.
 TFE_TensorHandle* EagerCast(TFE_Context* ctx, TFE_TensorHandle* handle,
                             TF_DataType src_type_enum,

@@ -373,7 +373,8 @@ class BackendLinearAlgebraTest(test.TestCase):
     xy = keras.backend.batch_dot(x, y, axes=[1, 2])
     self.assertEqual(xy.get_shape().as_list(), [32, 1, 30])
 
-    # TODO(fchollet): insufficiently tested.
+    # TODO (fchollet): insufficiently tested. id:3050
+    # https://github.com/imdone/tensorflow/issues/3049
 
   def test_reduction_ops(self):
     ops_to_test = [

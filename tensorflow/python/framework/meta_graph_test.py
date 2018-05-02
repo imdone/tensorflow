@@ -467,7 +467,8 @@ class ScopedMetaGraphTest(test.TestCase):
       # The unbound input strings are slightly different with the C API enabled
       # ("images" vs "images:0") due to the original import_graph_def code
       # vs. ImportGraphDef in C++.
-      # TODO(skyewm): update the pbtxts once _USE_C_API is removed.
+      # TODO (skyewm): update the pbtxts once _USE_C_API is removed. id:2991
+      # https://github.com/imdone/tensorflow/issues/2990
       del a.collection_def["unbound_inputs"]
       del b.collection_def["unbound_inputs"]
       test_util.assert_meta_graph_protos_equal(self, a, b)

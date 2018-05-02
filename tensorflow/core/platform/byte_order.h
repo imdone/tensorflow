@@ -28,7 +28,8 @@ limitations under the License.
 namespace tensorflow {
 namespace port {
 
-// TODO(jeff,sanjay): Make portable
+// TODO (jeff,sanjay): Make portable id:2429
+// https://github.com/imdone/tensorflow/issues/2428
 constexpr bool kLittleEndian = __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__;
 
 }  // namespace port

@@ -132,7 +132,8 @@ bool SupportsPreallocatedWorkspace(FileFormat format) {
 }
 
 bool IsRealValued(toco::ArrayDataType type) {
-  // TODO(benoitjacob) - this is hardcoding that uint8 and int16 are only used
+  // TODO (benoitjacob) - this is hardcoding that uint8 and int16 are only used id:1648
+  // https://github.com/imdone/tensorflow/issues/1648
   // for quantized real-number values, and no other integer type is ever used
   // for that. This is dirty, should be resolved as part of a more general push
   // to more explicitly distinguish between true-integers and
@@ -162,7 +163,8 @@ void SetFinalDataTypeOnInputs(const TocoFlags& toco_flags, Model* model) {
     auto* array = &model->GetArray(array_name);
     // Note that the notion of changing data types only applies to real-numbers
     // arrays (see the documentation for inference_input_type).
-    // TODO(benoitjacob) this is assuming that uint8 arrays are quantized,
+    // TODO (benoitjacob) this is assuming that uint8 arrays are quantized, id:2060
+    // https://github.com/imdone/tensorflow/issues/2060
     // i.e. represent real numbers by means of quantization parameters,
     // and not plain integer uint8 input arrays.
     if (!IsRealValued(array->data_type)) {
@@ -251,7 +253,8 @@ void Transform(const TocoFlags& toco_flags, Model* model) {
     // See the doc for --reorder_across_fake_quant: that flag is needed to
     // support some existing models, e.g. WordLens, that have FakeQuant
     // nodes in the wrong places.
-    // TODO(benoitjacob): drop special casing when we can.
+    // TODO (benoitjacob): drop special casing when we can. id:1509
+    // https://github.com/imdone/tensorflow/issues/1510
     if ((quantize_output && toco_flags.reorder_across_fake_quant())) {
       transformations.Add(new DropFakeQuant);
     }

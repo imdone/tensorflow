@@ -94,7 +94,8 @@ class ArithmeticOptimizerTest : public GrapplerTest {
     TF_EXPECT_OK(optimizer->Optimize(nullptr, *item, output));
   }
 
-  // TODO(ezhulenev): Make private. After migration to stages each test
+  // TODO (ezhulenev): Make private. After migration to stages each test id:2846
+  // https://github.com/imdone/tensorflow/issues/2845
   // should explicitly enable required optimization for tests isolation
   void DisableAllStages(ArithmeticOptimizer* optimizer) {
     ArithmeticOptimizer::ArithmeticOptimizerOptions options;

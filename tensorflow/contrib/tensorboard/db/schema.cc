@@ -164,7 +164,8 @@ Status SetupTensorboardSqliteDb(Sqlite* db) {
   //   plugin_name: Arbitrary TensorBoard plugin name for dispatch.
   //   plugin_data: Arbitrary data that plugin wants.
   //
-  // TODO(jart): Maybe there should be a Plugins table?
+  // TODO (jart): Maybe there should be a Plugins table? id:2317
+// https://github.com/imdone/tensorflow/issues/2316
   s.Update(Run(db, R"sql(
     CREATE TABLE IF NOT EXISTS Tags (
       rowid INTEGER PRIMARY KEY,
@@ -378,7 +379,8 @@ Status SetupTensorboardSqliteDb(Sqlite* db) {
   //   node_def: Contains the tf.NodeDef proto parts leftover which
   //     haven't been defined in SQL yet.
   //
-  // TODO(jart): Make separate tables for op and device strings.
+  // TODO (jart): Make separate tables for op and device strings. id:1662
+// https://github.com/imdone/tensorflow/issues/1662
   s.Update(Run(db, R"sql(
     CREATE TABLE IF NOT EXISTS Nodes (
       rowid INTEGER PRIMARY KEY,
@@ -419,7 +421,8 @@ Status SetupTensorboardSqliteDb(Sqlite* db) {
   //     dependency, which means this isn't an edge through which
   //     tensors flow. NULL means 0.
   //
-  // TODO(jart): Rename to NodeEdges.
+  // TODO (jart): Rename to NodeEdges. id:1244
+// https://github.com/imdone/tensorflow/issues/1245
   s.Update(Run(db, R"sql(
     CREATE TABLE IF NOT EXISTS NodeInputs (
       rowid INTEGER PRIMARY KEY,

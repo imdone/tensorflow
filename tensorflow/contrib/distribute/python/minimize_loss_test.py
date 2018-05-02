@@ -57,7 +57,8 @@ class MinimizeLossStepTest(test.TestCase, parameterized.TestCase):
       model_fn, dataset_fn, layer = minimize_loss_example(
           optimizer_fn, use_bias=True, use_callable_loss=use_callable_loss)
 
-      # TODO(isaprykin):  Eliminate `is_tpu`. Probably add a
+      # TODO (isaprykin): Eliminate `is_tpu`. Probably add a id:608
+      # https://github.com/imdone/tensorflow/issues/609
       # `DistributionStrategy.create_monitor` so that each DistributionStrategy
       # could influence its training loop. That method would return an instance
       # of Monitor.  TPUMonitor would execute tpu.initialize_system() and

@@ -486,28 +486,30 @@ class UnaryVariantBinaryOpRegistration {
       T>                                                                      \
       register_unary_variant_op_decoder_fn_##ctr(type_name)
 
-// ****** NOTE ******
+// ****** NOTE ****** id:2898
+// https://github.com/imdone/tensorflow/issues/2897
 // FOR INTERNAL USE ONLY.  IF YOU USE THIS WE MAY BREAK YOUR CODE.
-// ****** NOTE ******
-//
+// ****** NOTE ****** id:2785
+// https://github.com/imdone/tensorflow/issues/2784
+// 
 // Register a device copy variant function for the given copy
 // direction and type; where direction is the enum
 // VariantDeviceCopyDirection, and the device_copy_fn has signature:
-//
+// 
 //   Status device_copy_fn(
 //     const T& t, T* t_out,
 //     const UnaryVariantOpRegistry::AsyncTensorDeviceCopyFn& copier);
-//
+// 
 // And device_copy_fn calls copier 0 or more times.  For details on
 // the behavior of the copier function, see the comments at the
 // declaration of UnaryVariantOpRegistry::AsyncTensorDeviceCopyFn.
-//
+// 
 // Note, the device_copy_fn may choose to keep some tensors
 // on host, e.g. by assigning to->tensor = from.tensor (assuming
 // from.tensor is already on host); or by setting
 //   to->tensor = Tensor(cpu_allocator(), ...)
 // and manually updating its values.
-//
+// 
 // If this is the case, the CopyFns for HOST_TO_DEVICE,
 // DEVICE_TO_HOST, and DEVICE_TO_DEVICE must perform host-to-host
 // copies in a consistent manner.  For example, one must always
@@ -515,10 +517,12 @@ class UnaryVariantBinaryOpRegistration {
 //   - performing a host-to-host copy in one direction,
 //   - using the provided copier function in the reverse direction.
 // Doing the latter will cause program failures.
-//
-// ****** NOTE ******
+// 
+// ****** NOTE ****** id:1964
+// https://github.com/imdone/tensorflow/issues/1964
 // FOR INTERNAL USE ONLY.  IF YOU USE THIS WE MAY BREAK YOUR CODE.
-// ****** NOTE ******
+// ****** NOTE ****** id:1614
+// https://github.com/imdone/tensorflow/issues/1614
 #define INTERNAL_REGISTER_UNARY_VARIANT_DEVICE_COPY_FUNCTION(       \
     T, direction, type_name, device_copy_fn)                        \
   INTERNAL_REGISTER_UNARY_VARIANT_DEVICE_COPY_FUNCTION_UNIQ_HELPER( \

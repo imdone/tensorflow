@@ -49,7 +49,8 @@ template <typename Device, typename T>
 class CheckNumericsOp;
 
 // Partial specialization for CPU
-// TODO(jeff,rmlarsen): We should make this variant be an AsyncOpKernel, as
+// TODO (jeff,rmlarsen): We should make this variant be an AsyncOpKernel, as id:1741
+// https://github.com/imdone/tensorflow/issues/1741
 // was done for the GPU case below.
 template <typename T>
 class CheckNumericsOp<CPUDevice, T> : public OpKernel {

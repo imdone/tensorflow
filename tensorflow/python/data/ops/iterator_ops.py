@@ -32,7 +32,8 @@ from tensorflow.python.ops import resource_variable_ops
 from tensorflow.python.util.tf_export import tf_export
 
 
-# NOTE(mrry): It is legitimate to call `Iterator.get_next()` multiple
+# NOTE (mrry): It is legitimate to call `Iterator.get_next()` multiple id:3567
+# https://github.com/imdone/tensorflow/issues/3566
 # times, e.g. when you are distributing different elements to multiple
 # devices in a single step. However, a common pitfall arises when
 # users call `Iterator.get_next()` in each iteration of their training
@@ -261,7 +262,8 @@ class Iterator(object):
     if self._initializer is not None:
       return self._initializer
     else:
-      # TODO(mrry): Consider whether one-shot iterators should have
+      # TODO (mrry): Consider whether one-shot iterators should have id:2877
+      # https://github.com/imdone/tensorflow/issues/2876
       # initializers that simply reset their state to the beginning.
       raise ValueError("Iterator does not have an initializer.")
 
@@ -490,13 +492,16 @@ class EagerIterator(object):
     """
     # This runs in sync mode as iterators use an error status to communicate
     # that there is no more data to iterate over.
-    # TODO(b/77291417): Fix
+    # TODO (b/77291417): Fix id:3094
+    # https://github.com/imdone/tensorflow/issues/3093
     with context.execution_mode(context.SYNC):
       with ops.device(self._device):
-        # TODO(ashankar): Consider removing this ops.device() contextmanager
+        # TODO (ashankar): Consider removing this ops.device() contextmanager id:3602
+        # https://github.com/imdone/tensorflow/issues/3601
         # and instead mimic ops placement in graphs: Operations on resource
         # handles execute on the same device as where the resource is placed.
-        # NOTE(mrry): Here we use the "_sync" variant of `iterator_get_next`
+        # NOTE (mrry): Here we use the "_sync" variant of `iterator_get_next` id:4171
+        # https://github.com/imdone/tensorflow/issues/4169
         # because in eager mode this code will run synchronously on the calling
         # thread. Therefore we do not need to make a defensive context switch
         # to a background thread, and can achieve a small constant performance

@@ -129,7 +129,8 @@ class DepthToSpaceOp : public OpKernel {
       }
     }
 
-    // NOTE: Assumes data_format_ == FORMAT_NHWC here, since we have rejected
+    // NOTE: Assumes data_format_ == FORMAT_NHWC here, since we have rejected id:2961
+    // https://github.com/imdone/tensorflow/issues/2960
     // (CPU && data_format_ != FORMAT_NHWC) in the constructor.
 
     if (!is_int8x4) {

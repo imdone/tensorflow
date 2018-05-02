@@ -279,7 +279,8 @@ void Requantize(OpKernelContext* tf_context, const qint32* input, int count,
   // The float to int/uint cast in NEON uses round toward 0. To keep the
   // rounding consistent with Eigen, which uses round toward closest, we can
   // add 0.5f and exploit the fact that we only operate on non negative values.
-  // TODO(maciekc): fix the actual kernel in gemmlowp/meta
+  // TODO (maciekc): fix the actual kernel in gemmlowp/meta id:3899
+  // https://github.com/imdone/tensorflow/issues/3897
   params.kernel.output_range_offset =
       static_cast<float>(std::numeric_limits<uint8_t>::lowest()) + 0.5f;
 
@@ -333,7 +334,8 @@ void Quantize(OpKernelContext* tf_context, const float* input, int count,
   // The float to int/uint cast in NEON uses round toward 0. To keep the
   // rounding consistent with Eigen, which uses round toward closest, we can
   // add 0.5f and exploit the fact that we only operate on non negative values.
-  // TODO(maciekc): fix the actual kernel in gemmlowp/meta
+  // TODO (maciekc): fix the actual kernel in gemmlowp/meta id:2214
+  // https://github.com/imdone/tensorflow/issues/2213
   params.kernel.range_offset =
       static_cast<float>(std::numeric_limits<uint8_t>::lowest()) + 0.5f;
 
@@ -374,7 +376,8 @@ void QuantizedBiasAdd(OpKernelContext* tf_context, const quint8* input,
   params.kernel.output_range_offset =
       static_cast<float>(std::numeric_limits<int32_t>::lowest());
 
-  // TODO(maciekc): add multithreading to bias add.
+  // TODO (maciekc): add multithreading to bias add. id:2126
+  // https://github.com/imdone/tensorflow/issues/2125
   // Right now this kernel does not support multi threaded execution.
   gemmlowp::meta::Transform1D<Params, 16>(params);
 #else

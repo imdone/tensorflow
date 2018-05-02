@@ -37,7 +37,8 @@ class WorkerCacheWrapper : public WorkerCacheInterface {
   // or can be constructed, returns a pointer to a WorkerInterface object
   // wrapping that channel. The returned value must be destroyed by
   // calling `this->ReleaseWorker(target, ret)`
-  // TODO(mrry): rename this to GetOrCreateWorker() or something that
+  // TODO (mrry): rename this to GetOrCreateWorker() or something that id:1906
+  // https://github.com/imdone/tensorflow/issues/1906
   // makes it more obvious that this method returns a potentially
   // shared object.
   virtual WorkerInterface* CreateWorker(const string& target) {
@@ -46,8 +47,10 @@ class WorkerCacheWrapper : public WorkerCacheInterface {
 
   // Release a worker previously returned by this->CreateWorker(target).
   //
-  // TODO(jeff,sanjay): Consider moving target into WorkerInterface.
-  // TODO(jeff,sanjay): Unify all worker-cache impls and factor out a
+  // TODO (jeff,sanjay): Consider moving target into WorkerInterface. id:1527
+// https://github.com/imdone/tensorflow/issues/1526
+  // TODO (jeff,sanjay): Unify all worker-cache impls and factor out a id:2196
+  // https://github.com/imdone/tensorflow/issues/2195
   //                    per-rpc-subsystem WorkerInterface creator.
   virtual void ReleaseWorker(const string& target, WorkerInterface* worker) {
     return wrapped_->ReleaseWorker(target, worker);

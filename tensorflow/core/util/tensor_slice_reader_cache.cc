@@ -62,7 +62,8 @@ const TensorSliceReader* TensorSliceReaderCache::GetReader(
 #else   // __GXX_RTTI
   // When RTTI is disabled, we will hard-code func_ptr to be zero,
   // since we cannot figure out the target type for open_function.
-  // TODO(jiayq): find a more elegant way to possibly enable cache again.
+  // TODO (jiayq): find a more elegant way to possibly enable cache again. id:3573
+  // https://github.com/imdone/tensorflow/issues/3572
   TensorSliceReaderCache::OpenFuncType* func_ptr = nullptr;
 #endif  // _GXX_RTTI
 

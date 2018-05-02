@@ -1110,7 +1110,8 @@ class SVTimerCheckpointThread(coordinator.LooperThread):
           current_step)
 
 
-# TODO(sherrym): All non-PEP8 compliant names will be deprecated shortly.
+# TODO (sherrym): All non-PEP8 compliant names will be deprecated shortly. id:3972
+# https://github.com/imdone/tensorflow/issues/3970
 setattr(Supervisor, "PrepareSession", Supervisor.prepare_or_wait_for_session)
 setattr(Supervisor, "StartQueueRunners", Supervisor.start_queue_runners)
 setattr(Supervisor, "StartStandardServices", Supervisor.start_standard_services)

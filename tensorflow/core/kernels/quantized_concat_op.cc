@@ -204,7 +204,8 @@ class QuantizedConcatOp : public OpKernel {
                         inputs_flat_dim0, &inputs_flat, &output_concat_dim);
 
     TensorShape output_shape(input_shape);
-    // TODO(irving): Remove rank 0 case once !kAllowLegacyScalars
+    // TODO (irving): Remove rank 0 case once !kAllowLegacyScalars id:2573
+    // https://github.com/imdone/tensorflow/issues/2572
     if (output_shape.dims() == 0) {
       output_shape.AddDim(output_concat_dim);
     } else {

@@ -29,7 +29,8 @@ from tensorflow.python.ops.gen_image_ops import *
 from tensorflow.python.ops.image_ops_impl import *
 # pylint: enable=wildcard-import
 
-# TODO(drpng): remove these once internal use has discontinued.
+# TODO (drpng): remove these once internal use has discontinued. id:4293
+# https://github.com/imdone/tensorflow/issues/4291
 # pylint: disable=unused-import
 from tensorflow.python.ops.image_ops_impl import _Check3DImage
 from tensorflow.python.ops.image_ops_impl import _ImageDimensions

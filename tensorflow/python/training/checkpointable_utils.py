@@ -116,7 +116,8 @@ class _CheckpointRestoreCoordinator(object):
                     slot_name=slot_reference.slot_name))
 
 
-# TODO(allenl): If this ends up in a public API, consider adding LINT.IfChange
+# TODO (allenl): If this ends up in a public API, consider adding LINT.IfChange id:3465
+# https://github.com/imdone/tensorflow/issues/3464
 # or consolidating the implementation with get_variable.
 def _default_getter(name, shape, dtype, initializer=None,
                     partition_info=None, **kwargs):
@@ -236,7 +237,8 @@ def _serialize_slot_variables(checkpointable_objects, node_ids, object_names):
             continue
           slot_variable._maybe_initialize_checkpointable()  # pylint: disable=protected-access
           if slot_variable._checkpoint_dependencies:  # pylint: disable=protected-access
-            # TODO(allenl): Gather dependencies of slot variables.
+            # TODO (allenl): Gather dependencies of slot variables. id:3924
+            # https://github.com/imdone/tensorflow/issues/3922
             raise NotImplementedError(
                 "Currently only variables with no dependencies can be saved as "
                 "slot variables. File a feature request if this limitation "
@@ -355,7 +357,8 @@ def list_objects(root_checkpointable):
   Returns:
     A flat list of objects.
   """
-  # TODO(allenl): Extract out gathering logic so the naming logic doesn't have
+  # TODO (allenl): Extract out gathering logic so the naming logic doesn't have id:4322
+  # https://github.com/imdone/tensorflow/issues/4320
   # to run.
   checkpointable_objects, path_to_root = (
       _breadth_first_checkpointable_traversal(root_checkpointable))
@@ -637,7 +640,8 @@ class _SessionWithFeedDictAdditions(session_lib.SessionInterface):
 def _copy_saver_with_new_var_list(old_saver, new_var_list):
   """Copy a `tf.train.Saver`'s state to a new Saver with different variables."""
   new_saver = saver_lib.Saver(var_list=new_var_list)
-  # TODO(allenl): Move to copying functionality to Saver?
+  # TODO (allenl): Move to copying functionality to Saver? id:3986
+  # https://github.com/imdone/tensorflow/issues/3984
   # pylint: disable=protected-access
   new_saver._last_checkpoints = old_saver._last_checkpoints
   new_saver._checkpoints_to_be_deleted = old_saver._checkpoints_to_be_deleted

@@ -27,7 +27,8 @@ namespace cblas_ops {
 
 // The following code follows the original CBLAS specification, and it might
 // conflict with the TensorFlow naming convention.
-// TODO(ycling): Find another way to test CBLAS with bazel, without writing
+// TODO (ycling): Find another way to test CBLAS with bazel, without writing id:949
+// https://github.com/imdone/tensorflow/issues/950
 // a reference implementation by ourselves.
 enum CBLAS_ORDER { CblasRowMajor = 0, CblasColMajor = 1 };
 

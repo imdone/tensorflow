@@ -38,7 +38,8 @@ namespace {
 //
 // Launch with blocks of (batch x 32)
 //
-// TODO(b/67600500): Try making 'use_peephole' a template parameter.
+// TODO (b/67600500): Try making 'use_peephole' a template parameter. id:2289
+// https://github.com/imdone/tensorflow/issues/2288
 template <typename T, bool use_peephole>
 __global__ void lstm_gates(const T* icfo, const T* b, const T* cs_prev,
                            const T* wci, const T* wcf, const T* wco, T* o, T* h,

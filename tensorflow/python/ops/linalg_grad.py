@@ -129,7 +129,8 @@ def _MatrixSolveGrad(op, grad):
 def _MatrixSolveLsGrad(op, grad):
   """Gradients for MatrixSolveLs."""
 
-  # TODO(rmlarsen): The implementation could be more efficient:
+  # TODO (rmlarsen): The implementation could be more efficient: id:3525
+  # https://github.com/imdone/tensorflow/issues/3524
   #   a) Output the Cholesky factorization from forward op instead of
   #      recomputing it here.
   #   b) Implement a symmetric rank-k update op instead of computing
@@ -287,7 +288,8 @@ def _SvdGrad(op, grad_s, grad_u, grad_v):
 
   full_matrices = op.get_attr("full_matrices")
 
-  # TODO(rmlarsen): Make this work with complex types.
+  # TODO (rmlarsen): Make this work with complex types. id:3403
+  # https://github.com/imdone/tensorflow/issues/3402
   if a.dtype.is_complex:
     raise NotImplementedError(
         "SVD gradient is not implemented for complex types and "
@@ -302,7 +304,8 @@ def _SvdGrad(op, grad_s, grad_u, grad_v):
 
   m = a_shape[-2].value
   n = a_shape[-1].value
-  # TODO(rmlarsen): Make this work with placeholders.
+  # TODO (rmlarsen): Make this work with placeholders. id:3870
+  # https://github.com/imdone/tensorflow/issues/3868
   if m is None or n is None:
     raise NotImplementedError(
         "SVD gradient has not been implemented for input with unknown "

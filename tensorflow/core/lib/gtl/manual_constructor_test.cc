@@ -76,7 +76,8 @@ TEST(ManualConstructorTest, Alignment) {
     void* b;
   } control1;
 
-  // TODO(bww): Make these tests more direct with C++11 alignment_of<T>::value.
+  // TODO (bww): Make these tests more direct with C++11 alignment_of<T>::value. id:2377
+  // https://github.com/imdone/tensorflow/issues/2376
   EXPECT_EQ(reinterpret_cast<char*>(test1.b.get()) - &test1.a,
             reinterpret_cast<char*>(&control1.b) - &control1.a);
   EXPECT_EQ(reinterpret_cast<intptr_t>(test1.b.get()) % sizeof(control1.b), 0);

@@ -73,7 +73,8 @@ REGISTER_XLA_OP(Name("BroadcastArgs")
 // Given shapes of two tensors, computes the reduction indices for the
 // gradient computation.
 //
-// TODO(zhifengc):
+// TODO (zhifengc): id:263
+// https://github.com/imdone/tensorflow/issues/264
 //   1. Adds support for n-ary (n >= 2).
 class BCastGradArgsOp : public XlaOpKernel {
  public:

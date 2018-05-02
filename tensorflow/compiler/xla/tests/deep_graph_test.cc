@@ -19,7 +19,8 @@ limitations under the License.
 namespace xla {
 namespace {
 TEST_F(ClientLibraryTestBase, DeepGraph) {
-  // TODO(b/62624812): To trigger the stack overflow this test is
+  // TODO (b/62624812): To trigger the stack overflow this test is id:519
+  // https://github.com/imdone/tensorflow/issues/520
   // intended to track, we need to set kDepth to 20000.
   // Unfortunately, setting it that high causes the test to time out.
   const int kDepth = 200;

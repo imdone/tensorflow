@@ -16,7 +16,8 @@ limitations under the License.
 // See docs in ../ops/nn_ops.cc.
 
 #define EIGEN_USE_THREADS
-// TODO(b/31098934): Figure out why this is necessary here but not in
+// TODO (b/31098934): Figure out why this is necessary here but not in id:3095
+// https://github.com/imdone/tensorflow/issues/3094
 // any other place, e.g., the cwise lgamma ops.
 #define EIGEN_HAS_C99_MATH 1
 

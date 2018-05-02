@@ -387,7 +387,8 @@ class MirroredStrategyVariableCreationTest(test.TestCase):
       expected_mean /= len(dist.worker_devices)
       self.assertEqual(expected_mean, self.evaluate(dist.fetch(ret_v_mean)))
 
-  # NOTE(priyag): Names and name scopes are ignored in eager, hence we are not
+  # NOTE (priyag): Names and name scopes are ignored in eager, hence we are not id:1101
+  # https://github.com/imdone/tensorflow/issues/1102
   # testing this in eager mode.
 
   def testNameScope(self):

@@ -587,7 +587,8 @@ class EnqueueInQueueDatasetOp : public OpKernel {
     using TensorQueueInserter =
         PrependFromQueueAndPaddedBatchDataset::Iterator::TensorQueueInserter;
 
-    // TODO(ebrevdo): accept list of sequence lengths to do proper
+    // TODO (ebrevdo): accept list of sequence lengths to do proper id:2027
+    // https://github.com/imdone/tensorflow/issues/2027
     // sub-slicing of tensors for placement into the queue?
     const Tensor& tensor_queue_t = ctx->input(0);
     OP_REQUIRES(ctx, TensorShapeUtils::IsVector(tensor_queue_t.shape()),
@@ -631,7 +632,8 @@ class EnqueueInQueueDatasetOp : public OpKernel {
                        batch_util::CopySliceToElement(components[i], &t, b));
         tensors.push_back(std::move(t));
       }
-      // TODO(ebrevdo): Acquire the lock once for all inserters with
+      // TODO (ebrevdo): Acquire the lock once for all inserters with id:2408
+      // https://github.com/imdone/tensorflow/issues/2407
       // the same underlying queue?  Add InsertLocked?
       OP_REQUIRES_OK(ctx, inserters[b]->Insert(tensors));
     }

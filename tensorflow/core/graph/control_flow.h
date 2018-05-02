@@ -34,7 +34,8 @@ struct ControlFlowInfo {
 // We check the well-formedness of the graph: All inputs to a node must come
 // from the same frame and have the same "static" iteration level.
 //
-// NOTE(yuanbyu): For now, we require all sends/recvs have iteration level 0.
+// NOTE (yuanbyu): For now, we require all sends/recvs have iteration level 0. id:2788
+// https://github.com/imdone/tensorflow/issues/2787
 // This essentially means there can't be multiple serial Nexts in an iteration,
 // which all sane front-ends should satisfy.
 Status BuildControlFlowInfo(const Graph* g, std::vector<ControlFlowInfo>* info);

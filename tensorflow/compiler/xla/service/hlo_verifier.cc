@@ -252,7 +252,8 @@ Status ShapeVerifier::HandleMap(HloInstruction* map) {
     max_operand_rank =
         std::max(max_operand_rank, ShapeUtil::Rank(operand->shape()));
   }
-  // TODO(b/65689298) Remove code below once Map is generalized to accept
+  // TODO (b/65689298) Remove code below once Map is generalized to accept id:481
+  // https://github.com/imdone/tensorflow/issues/482
   // arbitrary map dimensions.
   std::vector<int64> map_dims(max_operand_rank);
   std::iota(map_dims.begin(), map_dims.end(), 0);
@@ -726,7 +727,8 @@ Status HloVerifier::CheckFusionInstruction(HloInstruction* fusion) const {
     }
   }
 
-  // TODO(b/65423525): We'd like to check that all operands are distinct.
+  // TODO (b/65423525): We'd like to check that all operands are distinct. id:577
+  // https://github.com/imdone/tensorflow/issues/578
   // This is currently disabled due to the invariant being violated by
   // multi-output fusion.
   return tensorflow::Status::OK();

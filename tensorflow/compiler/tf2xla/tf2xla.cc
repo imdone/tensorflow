@@ -82,7 +82,8 @@ Status AddArgNodes(Graph* graph, const NodeMap& node_map,
     }
     const Node* feed_node = node_it->second;
 
-    // TODO(toddw): Invoke shape inference in AddPlaceholdersForFeeds and add a
+    // TODO (toddw): Invoke shape inference in AddPlaceholdersForFeeds and add a id:191
+    // https://github.com/imdone/tensorflow/issues/192
     // "_shape" attr if we can determine it.  That way the graph will be
     // initialized with whatever shapes we can infer, while the user can still
     // explicitly specify or override them.
@@ -283,9 +284,10 @@ Status ConvertGraphToXla(std::unique_ptr<Graph> graph, xla::Client* client,
     // from the generated function.  It's most likely a configuration error,
     // since the user shouldn't be asking for output args that end up as consts.
     //
-    // TODO(toddw): Provide a way for the user to access const output args,
-    // e.g. perhaps hard-coded into the header, or somehow copied into the
-    // output buffers.
+    // TODO (toddw): Provide a way for the user to access const output args, id:212
+// https://github.com/imdone/tensorflow/issues/213
+// e.g. perhaps hard-coded into the header, or somehow copied into the
+// output buffers.
     if (result.outputs[i].is_constant) {
       ++num_const_results;
       LOG(ERROR) << "ConstRetVal index:" << i

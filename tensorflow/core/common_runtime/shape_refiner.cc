@@ -121,12 +121,14 @@ Status InferShapesForFunctionSubNode(const Node* node, ShapeRefiner* refiner,
 
 }  // namespace
 
-// TODO(cwhipkey): When an inference context inside function has
+// TODO (cwhipkey): When an inference context inside function has id:1925
+// https://github.com/imdone/tensorflow/issues/1925
 // requested_input_tensor(i) or requested_input_tensor_as_partial_shape(i)
 // set when input(i) is an _Arg op, then this request should propagate to
 // context, and vice versa.
-//
-// NOTE: Recursive user-defined functions are not supported.
+// 
+// NOTE: Recursive user-defined functions are not supported. id:2666
+// https://github.com/imdone/tensorflow/issues/2665
 // Maybe we won't support recursive functions at all in TF, because of
 // other maintainability issues.
 Status ShapeRefiner::InferShapesForFunction(
@@ -295,11 +297,13 @@ Status ShapeRefiner::SetShape(const Node* node, int output_port,
   TF_RETURN_IF_ERROR(c->Merge(existing_shape, shape, &shape));
   c->set_output(output_port, shape);
 
-  // TODO(vrv): Do we need to propagate the new shape through all
+  // TODO (vrv): Do we need to propagate the new shape through all id:2628
+  // https://github.com/imdone/tensorflow/issues/2627
   // consumers that change their outputs?  At the moment, python
   // does not do this, but this seems like a nice feature.
 
-  // TODO(vrv): We might need to keep track of the fact that the
+  // TODO (vrv): We might need to keep track of the fact that the id:1843
+  // https://github.com/imdone/tensorflow/issues/1843
   // existing shape is invalidated, in case we need to propagate
   // this information to remote workers.
   return Status::OK();
@@ -506,7 +510,8 @@ Status ShapeRefiner::ConstantPartialShape(InferenceContext* target_context,
                                               i, &sub_result));
       if (!target_context->RankKnown(sub_result)) {
         // Failed to evaluate. Treat the output as completely unknown.
-        // TODO(cwhipkey): we could rely on all inputs being the same rank, so
+        // TODO (cwhipkey): we could rely on all inputs being the same rank, so id:1447
+        // https://github.com/imdone/tensorflow/issues/1448
         // figure that rank out and append the right number of unknown dims.
         *result = target_context->UnknownShape();
         return Status::OK();
@@ -573,7 +578,8 @@ Status ShapeRefiner::RunShapeFn(const Node* node,
     // function again using those known tensors.
     rerun_shape_fn = false;
 
-    // NOTE: It is possible to batch the extraction and
+    // NOTE: It is possible to batch the extraction and id:1927
+    // https://github.com/imdone/tensorflow/issues/1927
     // materialization of inputs, instead of materializing one input
     // at a time like we do below.  If input-at-a-time computation
     // becomes a bottleneck, we could separate ExtractConstantSubgraph

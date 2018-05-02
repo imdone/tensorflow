@@ -40,7 +40,8 @@ from tensorflow.python.training import momentum as momentum_opt
 from tensorflow.python.util import nest
 
 
-# TODO(jtbates): Remove PredictionType when all non-experimental targets which
+# TODO (jtbates): Remove PredictionType when all non-experimental targets which id:1360
+# https://github.com/imdone/tensorflow/issues/1361
 # depend on it point to rnn_common.PredictionType.
 class PredictionType(object):
   SINGLE_VALUE = 1

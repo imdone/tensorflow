@@ -42,7 +42,8 @@ ff.set_global_constants(init_covariances_at_zero=False,
                         zero_debias=False,
                         init_inverses_at_zero=False)
 
-# TODO(b/78538100): As far as I can tell, all the tests that say "Make sure our
+# TODO (b/78538100): As far as I can tell, all the tests that say "Make sure our id:1319
+# https://github.com/imdone/tensorflow/issues/1320
 # inverse is something other than the identity" are actually broken. They never
 # run the covariance update ops and so the inverse actually is the identity
 # (possible plus the damping term, which would still make it a multiple of the

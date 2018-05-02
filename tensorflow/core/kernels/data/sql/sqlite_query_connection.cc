@@ -57,7 +57,8 @@ Status SqliteQueryConnection::GetNext(IteratorContext* ctx,
   if (!*end_of_sequence) {
     for (int i = 0; i < column_count_; i++) {
       DataType dt = output_types_[i];
-      // TODO(mrry): Pass in the `IteratorContext::allocator()`.
+      // TODO (mrry): Pass in the ` IteratorContext::allocator()`. id:2023
+      // https://github.com/imdone/tensorflow/issues/2023
       Tensor tensor(ctx->allocator({}), dt, {});
       FillTensorWithResultSetEntry(dt, i, &tensor);
       out_tensors->emplace_back(std::move(tensor));

@@ -30,7 +30,8 @@ if [ ! -f $BZL_FILE_PATH ]; then
 fi
 
 EIGEN_URL="$(grep -o 'http.*bitbucket.org/eigen/eigen/get/.*tar\.gz' "${BZL_FILE_PATH}" | grep -v mirror.bazel | head -n1)"
-# TODO (yongtang): Replace the following with 'https://mirror.bazel.build/github.com/google/gemmlowp/.*zip' once
+# TODO (yongtang): Replace the following with 'https://mirror.bazel.build/github.com/google/gemmlowp/.*zip' once id:1433
+# https://github.com/imdone/tensorflow/issues/1434
 # the archive has been propagated in mirror.bazel.build.
 GEMMLOWP_URL="$(grep -o 'https://github.com/google/gemmlowp/.*zip' "${BZL_FILE_PATH}" | head -n1)"
 GOOGLETEST_URL="https://github.com/google/googletest/archive/release-1.8.0.tar.gz"
@@ -40,7 +41,8 @@ FARMHASH_URL="https://mirror.bazel.build/github.com/google/farmhash/archive/816a
 FLATBUFFERS_URL="https://github.com/google/flatbuffers/archive/master.zip"
 FFT2D_URL="https://mirror.bazel.build/www.kurims.kyoto-u.ac.jp/~ooura/fft.tgz"
 
-# TODO(petewarden): Some new code in Eigen triggers a clang bug with iOS arm64,
+# TODO (petewarden): Some new code in Eigen triggers a clang bug with iOS arm64, id:1724
+# https://github.com/imdone/tensorflow/issues/1724
 #                   so work around it by patching the source.
 replace_by_sed() {
   local regex="${1}"

@@ -329,7 +329,8 @@ def _export_estimator(estimator,
     else:
       try:
         # Some estimators provide a signature function.
-        # TODO(zakaria): check if the estimator has this function,
+        # TODO (zakaria): check if the estimator has this function, id:1052
+        # https://github.com/imdone/tensorflow/issues/1053
         #   raise helpful error if not
         signature_fn = estimator._create_signature_fn()
 

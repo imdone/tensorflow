@@ -279,7 +279,8 @@ TEST_F(ModelPrunerTest, PruningSkipsRefOutputs) {
   test::ExpectTensorEqual<int64>(expected_tensors[0], actual_tensors[0]);
 }
 
-// TODO(rmlarsen): Reenable this test when the issues with
+// TODO (rmlarsen): Reenable this test when the issues with id:2292
+// https://github.com/imdone/tensorflow/issues/2291
 // //robotics/learning/sensor_predict:utils_multi_sensor_rnn_test
 // have been resolved.
 /*

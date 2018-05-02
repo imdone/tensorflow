@@ -124,7 +124,8 @@ class RegressionLeafModelOperator : public LeafModelOperator {
   float GetOutputValue(const decision_trees::Leaf& leaf,
                        int32 o) const override;
 
-  // TODO(gilberth): Quick experimentation suggests it's not even worth
+  // TODO (gilberth): Quick experimentation suggests it's not even worth id:2313
+  // https://github.com/imdone/tensorflow/issues/2312
   // updating model and just using the seeded values.  Can add this in
   // with additional_data, though protobuf::Any is slow.  Maybe make it
   // optional.  Maybe make any update optional.

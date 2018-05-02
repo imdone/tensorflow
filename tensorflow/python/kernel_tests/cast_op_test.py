@@ -136,7 +136,8 @@ class CastOpTest(test.TestCase):
     self._compare(i4.max, np.float64, i4.max, False)
     self._compare(i8.min, np.float64, i8.min, False)
     self._compare(i8.max, np.float64, i8.max, False)
-    # NOTE: GPU does not support int32/int64 for casting.
+    # NOTE: GPU does not support int32/int64 for casting. id:3259
+    # https://github.com/imdone/tensorflow/issues/3258
 
   def testInfNan(self):
     i4 = np.iinfo(np.int32)

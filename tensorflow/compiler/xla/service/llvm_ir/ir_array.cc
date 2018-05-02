@@ -43,11 +43,12 @@ static void Delinearize(std::vector<llvm::Value*>* multidim,
     // If i is the last dimension, we can skip the mod, because we assume that
     // linear is in bounds.
     //
-    // TODO(jlebar): We could add bounds checks here and elsewhere in this file,
-    // guarded under some sort of xla-memcheck flag.  This might be particularly
-    // useful because cuda-memcheck can't help us much in XLA: Most of our
-    // memory lives in one big allocation, so cuda-memcheck can't detect
-    // out-of-bounds accesses.
+    // TODO (jlebar): We could add bounds checks here and elsewhere in this file, id:416
+// https://github.com/imdone/tensorflow/issues/417
+// guarded under some sort of xla-memcheck flag.  This might be particularly
+// useful because cuda-memcheck can't help us much in XLA: Most of our
+// memory lives in one big allocation, so cuda-memcheck can't detect
+// out-of-bounds accesses.
     auto* quot = ir_builder->CreateUDiv(linear, ir_builder->getInt64(divisor));
     if (i < layout.minor_to_major_size() - 1) {
       (*multidim)[dimension] = ir_builder->CreateURem(

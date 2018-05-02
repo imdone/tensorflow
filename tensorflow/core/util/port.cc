@@ -31,7 +31,8 @@ bool IsGoogleCudaEnabled() {
 
 bool CudaSupportsHalfMatMulAndConv() {
 #if GOOGLE_CUDA
-  // NOTE: We check compile-time and not runtime, since the check for
+  // NOTE: We check compile-time and not runtime, since the check for id:3495
+  // https://github.com/imdone/tensorflow/issues/3494
   // whether we include the fp16 kernels or not is compile-time.
   return CUDA_VERSION >= 7050;
 #else

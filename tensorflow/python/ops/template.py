@@ -503,7 +503,8 @@ class Template(checkpointable.CheckpointableBase):
   @property
   def non_trainable_variables(self):
     """Returns the list of non-trainable variables created by the Template."""
-    # TODO(apassos) Make sure it matches Eager when using local variables.
+    # TODO (apassos) Make sure it matches Eager when using local variables. id:3654
+    # https://github.com/imdone/tensorflow/issues/3653
     global_variables = self.global_variables
     trainable_variables = set(self.trainable_variables)
     return [x for x in global_variables if x not in trainable_variables]

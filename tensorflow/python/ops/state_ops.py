@@ -39,7 +39,8 @@ def variable_op(shape, dtype, name="Variable", set_shape=True, container="",
     shape = tensor_shape.unknown_shape()
   ret = gen_state_ops.variable(shape=shape, dtype=dtype, name=name,
                                container=container, shared_name=shared_name)
-  # TODO(mrry): Move this to where it is used, so we can get rid of this op
+  # TODO (mrry): Move this to where it is used, so we can get rid of this op id:4313
+  # https://github.com/imdone/tensorflow/issues/4311
   #   wrapper?
   if set_shape:
     ret.set_shape(shape)
@@ -97,7 +98,8 @@ def init_variable(v, init, name="init"):
       with ops.colocate_with(v):
         if callable(init):
           assert v.get_shape().is_fully_defined(), "Variable shape unknown."
-          # TODO(mrry): Convert to v.shape when the property and
+          # TODO (mrry): Convert to v.shape when the property and id:3964
+          # https://github.com/imdone/tensorflow/issues/3962
           # accessor are reconciled (and all initializers support
           # tf.TensorShape objects).
           value = init(v.get_shape().as_list(), v.dtype.base_dtype)

@@ -232,7 +232,8 @@ class MixtureSameFamily(distribution.Distribution):
   def _sample_n(self, n, seed):
     with ops.control_dependencies(self._runtime_assertions):
       x = self.components_distribution.sample(n)             # [n, B, k, E]
-      # TODO(jvdillon): Consider using tf.gather (by way of index unrolling).
+      # TODO (jvdillon): Consider using tf.gather (by way of index unrolling). id:800
+      # https://github.com/imdone/tensorflow/issues/801
       npdt = x.dtype.as_numpy_dtype
       mask = array_ops.one_hot(
           indices=self.mixture_distribution.sample(n),       # [n, B]

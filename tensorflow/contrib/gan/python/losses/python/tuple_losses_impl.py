@@ -97,7 +97,8 @@ def _args_to_gan_model(loss_fn):
     A new function that takes a GANModel namedtuples and returns the same loss.
   """
   # Match arguments in `loss_fn` to elements of `namedtuple`.
-  # TODO(joelshor): Properly handle `varargs` and `keywords`.
+  # TODO (joelshor): Properly handle `varargs` and `keywords`. id:1174
+  # https://github.com/imdone/tensorflow/issues/1175
   argspec = tf_inspect.getargspec(loss_fn)
   defaults = argspec.defaults or []
 

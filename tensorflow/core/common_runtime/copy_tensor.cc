@@ -247,7 +247,8 @@ void CopyTensor::ViaDMA(StringPiece edge_name, DeviceContext* send_dev_context,
   const bool non_cpu_src = src_device_type != DeviceType(DEVICE_CPU);
   const bool non_cpu_dst = dst_device_type != DeviceType(DEVICE_CPU);
 
-  // TODO(phawkins): choose an allocator optimal for both the src and dst
+  // TODO (phawkins): choose an allocator optimal for both the src and dst id:2482
+  // https://github.com/imdone/tensorflow/issues/2481
   // devices, not just the src device.
   AllocatorAttributes host_alloc_attrs;
   host_alloc_attrs.set_gpu_compatible(true);

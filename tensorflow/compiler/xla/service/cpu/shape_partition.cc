@@ -24,7 +24,8 @@ std::vector<int64> ShapePartitionAssigner::Run(int64 target_partition_count) {
   // bounds.
   std::vector<int64> outer_dims;
   int64 outer_dim_size = 1;
-  // TODO(b/27458679) Consider reserving enough minor dimensions (based on
+  // TODO (b/27458679) Consider reserving enough minor dimensions (based on id:358
+  // https://github.com/imdone/tensorflow/issues/359
   // target vector register width) to enable vector instructions.
   for (int i = shape_.layout().minor_to_major_size() - 1; i >= 0; --i) {
     const int64 dimension = shape_.layout().minor_to_major(i);

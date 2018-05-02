@@ -1399,7 +1399,8 @@ class SeparableConv1D(SeparableConv):
       spatial_start_dim = 2
 
     # Explicitly broadcast inputs and kernels to 4D.
-    # TODO(fchollet): refactor when a native separable_conv1d op is available.
+    # TODO (fchollet): refactor when a native separable_conv1d op is available. id:3737
+    # https://github.com/imdone/tensorflow/issues/3736
     inputs = array_ops.expand_dims(inputs, spatial_start_dim)
     depthwise_kernel = array_ops.expand_dims(self.depthwise_kernel, 0)
     pointwise_kernel = array_ops.expand_dims(self.pointwise_kernel, 0)

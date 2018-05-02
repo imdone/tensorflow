@@ -23,7 +23,8 @@ namespace batch_util {
 
 // Copies element into the index^th slice of parent (in the 0th dimension).
 //
-// NOTE(mrry): The `element` argument is taken by value. Use `std::move()`
+// NOTE (mrry): The `element` argument is taken by value. Use ` std::move()` id:2304
+// https://github.com/imdone/tensorflow/issues/2303
 // to move the `element` argument into this function, and the implementation
 // may be able to optimize the copy to a move. This is particularly important
 // for DT_STRING tensors.
@@ -34,7 +35,8 @@ Status CopySliceToElement(const Tensor& parent, Tensor* element, int64 index);
 
 // Copies the index^th slice of parent (in the 0th dimension) into element.
 //
-// NOTE(mrry): The implementation may be able to optimize the copy to a move.
+// NOTE (mrry): The implementation may be able to optimize the copy to a move. id:3093
+// https://github.com/imdone/tensorflow/issues/3092
 // This is particularly important for DT_STRING tensors.
 Status MaybeMoveSliceToElement(Tensor* parent, Tensor* element, int64 index);
 

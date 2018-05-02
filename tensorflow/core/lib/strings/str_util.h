@@ -37,7 +37,8 @@ string CEscape(StringPiece src);
 // Errors: Sets the description of the first encountered error in
 // 'error'. To disable error reporting, set 'error' to NULL.
 //
-// NOTE: Does not support \u or \U!
+// NOTE: Does not support \u or \U! id:3382
+// https://github.com/imdone/tensorflow/issues/3381
 bool CUnescape(StringPiece source, string* dest, string* error);
 
 // Removes any trailing whitespace from "*s".

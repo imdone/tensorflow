@@ -32,7 +32,8 @@ _DEFAULT_CALLBACK_ACTION = "raise"
 _VALID_CALLBACK_ACTIONS = (None, "ignore", "print", "raise", "warn")
 
 
-# TODO(cais): Consider moving this exception class to errors_impl.py.
+# TODO (cais): Consider moving this exception class to errors_impl.py. id:3134
+# https://github.com/imdone/tensorflow/issues/3133
 class InfOrNanError(Exception):
   """Exception for inf and/or nan being present in tensor."""
 
@@ -160,7 +161,8 @@ def inf_nan_callback(op_type,
         check_numerics_op_attrs = (
             "message", "Eager-mode inf/nan check",
             "T", outputs[0].dtype.as_datatype_enum)
-        # TODO(cais): Consider moving this into execute.py.
+        # TODO (cais): Consider moving this into execute.py. id:3620
+        # https://github.com/imdone/tensorflow/issues/3619
         # pylint: disable=protected-access
         pywrap_tensorflow.TFE_Py_Execute(
             ctx._handle, output.device, "CheckNumerics", [output],

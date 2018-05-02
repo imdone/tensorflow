@@ -66,7 +66,8 @@ class EmbeddingLookupOpModel : public SingleOpModel {
   int output_;
 };
 
-// TODO(ahentz): write more tests that exercise the details of the op, such as
+// TODO (ahentz): write more tests that exercise the details of the op, such as id:1514
+// https://github.com/imdone/tensorflow/issues/1515
 // lookup errors and variable input shapes.
 TEST(EmbeddingLookupOpTest, SimpleTest) {
   EmbeddingLookupOpModel m({3}, {3, 2, 4});

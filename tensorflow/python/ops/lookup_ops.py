@@ -874,7 +874,8 @@ class IdTableWithHashBuckets(LookupInterface):
     if self._num_oov_buckets == 0:
       ids = self._table.lookup(values, name=name)
     else:
-      # TODO(yleon): Consider moving this functionality to its own kernel.
+      # TODO (yleon): Consider moving this functionality to its own kernel. id:3923
+      # https://github.com/imdone/tensorflow/issues/3921
       with ops.name_scope(name, "%s_Lookup" % self.name) as scope:
         str_to_hash_bucket = self._get_string_to_hash_bucket_fn(
             self._hasher_spec)
@@ -1225,7 +1226,8 @@ def index_to_string_table_from_file(vocabulary_file,
         value_column_index=value_column_index,
         delimiter=delimiter)
 
-    # TODO(yleon): Use a more effienct structure.
+    # TODO (yleon): Use a more effienct structure. id:3528
+    # https://github.com/imdone/tensorflow/issues/3527
     return HashTable(init, default_value, shared_name=shared_name, name=scope)
 
 
@@ -1287,7 +1289,8 @@ def index_to_string_table_from_tensor(vocabulary_list,
     shared_name = ""
     init = KeyValueTensorInitializer(
         keys, vocabulary_list, dtypes.int64, dtypes.string, name="table_init")
-    # TODO(yleon): Use a more effienct structure.
+    # TODO (yleon): Use a more effienct structure. id:3406
+    # https://github.com/imdone/tensorflow/issues/3405
     return HashTable(init, default_value, shared_name=shared_name, name=scope)
 
 

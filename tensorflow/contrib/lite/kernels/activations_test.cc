@@ -75,7 +75,8 @@ class FloatActivationsOpModel : public BaseActivationsOpModel {
   std::vector<float> GetOutput() { return ExtractVector<float>(output_); }
 };
 
-// TODO(ahentz): I don't quite understand the tradeoffs in the quantized
+// TODO (ahentz): I don't quite understand the tradeoffs in the quantized id:1751
+// https://github.com/imdone/tensorflow/issues/1751
 // implementation of sigmoid and software, but a tolerance of twice the output
 // scale seems reasonable. We might want to change this if we have a better
 // theoretical bound.

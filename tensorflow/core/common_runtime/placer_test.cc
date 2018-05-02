@@ -178,7 +178,8 @@ class PlacerTest : public ::testing::Test {
  protected:
   PlacerTest() {
     // Build a set of 10 GPU and 10 CPU devices.
-    // NOTE: this->local_devices_ owns the device objects;
+    // NOTE: this->local_devices_ owns the device objects; id:2585
+    // https://github.com/imdone/tensorflow/issues/2584
     // this->devices_ contains borrowed pointers to the device
     // objects.
     for (int i = 0; i < 10; ++i) {

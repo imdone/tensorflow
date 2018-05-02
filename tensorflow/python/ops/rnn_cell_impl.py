@@ -55,7 +55,8 @@ _BIAS_VARIABLE_NAME = "bias"
 _WEIGHTS_VARIABLE_NAME = "kernel"
 
 
-# TODO(jblespiau): Remove this function when we are sure there are no longer
+# TODO (jblespiau): Remove this function when we are sure there are no longer id:4310
+# https://github.com/imdone/tensorflow/issues/4308
 # any usage (even if protected, it is being used). Prefer assert_like_rnncell.
 def _like_rnncell(cell):
   """Checks that a given object is an RNNCell by using duck typing."""
@@ -1267,7 +1268,8 @@ class MultiRNNCell(RNNCell):
       # Add Checkpointable dependencies on these cells so their variables get
       # saved with this object when using object-based saving.
       if isinstance(cell, checkpointable.CheckpointableBase):
-        # TODO(allenl): Track down non-Checkpointable callers.
+        # TODO (allenl): Track down non-Checkpointable callers. id:3952
+        # https://github.com/imdone/tensorflow/issues/3950
         self._track_checkpointable(cell, name="cell-%d" % (cell_number,))
     self._state_is_tuple = state_is_tuple
     if not state_is_tuple:

@@ -144,7 +144,8 @@ bool AttrSlice::EqualAttrs(AttrSlice other, Scratch* scratch) const {
   for (const auto& attr : *other.attrs_) {
     auto iter = attrs_->find(attr.first);
     if (iter == attrs_->end()) return false;
-    // TODO(irving): Comparing AttrValues by proto is slightly buggy, since
+    // TODO (irving): Comparing AttrValues by proto is slightly buggy, since id:1930
+    // https://github.com/imdone/tensorflow/issues/1930
     // TensorProto is a nonunique representation of Tensor.  This bug will go
     // away once AttrSlice switches over to NodeInfo.
     iter->second.SerializeToString(&scratch->a);
@@ -398,7 +399,8 @@ Status ValidateNodeDef(const NodeDef& node_def, const OpDef& op_def) {
 
   bool seen_control = false;
   size_t num_inputs = 0;
-  // TODO(josh11b): Unify the input field validation.
+  // TODO (josh11b): Unify the input field validation. id:1558
+  // https://github.com/imdone/tensorflow/issues/1558
   for (const string& input : node_def.input()) {
     if (str_util::StartsWith(input, "^")) {
       seen_control = true;

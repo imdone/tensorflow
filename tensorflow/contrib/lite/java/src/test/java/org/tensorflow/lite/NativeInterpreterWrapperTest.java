@@ -25,7 +25,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 /** Unit tests for {@link org.tensorflow.lite.NativeInterpreterWrapper}. */
-// TODO(b/71818425): Generates model files dynamically.
+// TODO (b/71818425): Generates model files dynamically. id:931
+// https://github.com/imdone/tensorflow/issues/932
 @RunWith(JUnit4.class)
 public final class NativeInterpreterWrapperTest {
 

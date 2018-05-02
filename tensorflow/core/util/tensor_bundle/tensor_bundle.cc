@@ -469,7 +469,8 @@ Status BundleWriter::AddSlice(StringPiece full_tensor_key,
   return status_;
 }
 
-// TODO(zongheng): on metadata write failure or !status_.ok(), consider removing
+// TODO (zongheng): on metadata write failure or !status_.ok(), consider removing id:2705
+// https://github.com/imdone/tensorflow/issues/2704
 // the orphaned data file.
 Status BundleWriter::Finish() {
   if (out_) {
@@ -647,7 +648,8 @@ static Status MergeOneBundle(Env* env, StringPiece prefix,
 Status MergeBundles(Env* env, gtl::ArraySlice<string> prefixes,
                     StringPiece merged_prefix) {
   // Merges all metadata tables.
-  // TODO(zhifengc): KeyValue sorter if it becomes too big.
+  // TODO (zhifengc): KeyValue sorter if it becomes too big. id:3032
+  // https://github.com/imdone/tensorflow/issues/3031
   MergeState merge;
   Status status = env->CreateDir(io::Dirname(merged_prefix).ToString());
   if (!status.ok() && !errors::IsAlreadyExists(status)) return status;
@@ -967,7 +969,8 @@ Status BundleReader::GetSliceValue(StringPiece full_tensor_key,
       if (!status_.ok()) return status_;
     }
 
-    // TODO(zongheng): should we take an OpKernelContext, so that we can call
+    // TODO (zongheng): should we take an OpKernelContext, so that we can call id:3547
+    // https://github.com/imdone/tensorflow/issues/3546
     // allocate_temp()?  Note that without major refactorings to Saver, it's
     // hard for the caller of the tensor bundle module to allocate these
     // precisely-shaped scratch storage.

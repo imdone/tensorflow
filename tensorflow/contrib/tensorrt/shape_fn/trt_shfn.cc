@@ -47,7 +47,8 @@ tensorflow::Status TRTEngineOpShapeInference(InferenceContext* context) {
         if (i == 0) {
           num_batch = context->Value(dim_handler);
         } else if (num_batch != context->Value(dim_handler)) {
-          // TODO(jie): TensorRT engine requires consistent batch between inputs
+          // TODO (jie): TensorRT engine requires consistent batch between inputs id:1816
+          // https://github.com/imdone/tensorflow/issues/1816
           //            tensors. Segmenter should be aware of this.
           LOG(FATAL) << "TensorRT engine requires consistent batch size";
         }

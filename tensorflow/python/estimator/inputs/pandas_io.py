@@ -89,7 +89,8 @@ def pandas_input_fn(x,
                        'Index for y: %s\n' % (x.index, y.index))
     x[target_column] = y
 
-  # TODO(mdan): These are memory copies. We probably don't need 4x slack space.
+  # TODO (mdan): These are memory copies. We probably don't need 4x slack space. id:4203
+  # https://github.com/imdone/tensorflow/issues/4201
   # The sizes below are consistent with what I've seen elsewhere.
   if queue_capacity is None:
     if shuffle:

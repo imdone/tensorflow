@@ -38,7 +38,7 @@ like this:
 
 ```
 I0730 16:53:44.766740   55030 train.py:176] Training from step: 1
-I0730 16:53:47.289078   55030 train.py:217] Step #1: rate 0.001000, accuracy 7.0%, cross entropy 2.611571
+I0730 16:53:47.289078   55030 train.py:217] Step #1: rate 0.001000, accuracy 7.0%, cross entropy 2.611571 id:3508
 ```
 
 This shows that the initialization process is done and the training loop has

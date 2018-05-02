@@ -408,7 +408,8 @@ def make_csv_dataset(
     dataset = dataset.repeat(num_epochs)
 
   # Use map_and_batch for perf
-  # TODO(b/76425672): use num_parallel_calls for better performance tuning when
+  # TODO (b/76425672): use num_parallel_calls for better performance tuning when id:633
+  # https://github.com/imdone/tensorflow/issues/634
   # that is added
   dataset = dataset.apply(
       batching.map_and_batch(
@@ -558,7 +559,8 @@ def make_batched_features_dataset(file_pattern,
       lambda x: parsing_ops.parse_example(x, features),
       num_parallel_calls=parser_num_threads)
 
-  # TODO(rachelim): Add an optional label_name argument for extracting the label
+  # TODO (rachelim): Add an optional label_name argument for extracting the label id:600
+  # https://github.com/imdone/tensorflow/issues/601
   # from the features dictionary, to comply with the type expected by the
   # input_fn to a `tf.Estimator.train` or `tf.Estimator.evaluate` function.
   dataset = dataset.prefetch(prefetch_buffer_size)

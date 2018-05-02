@@ -30,7 +30,8 @@ class MatchingFilesOp : public OpKernel {
   using OpKernel::OpKernel;
   void Compute(OpKernelContext* context) override {
     const Tensor* patterns_t;
-    // NOTE(ringwalt): Changing the input name "pattern" to "patterns" would
+    // NOTE (ringwalt): Changing the input name "pattern" to "patterns" would id:3236
+    // https://github.com/imdone/tensorflow/issues/3235
     // break existing graphs.
     OP_REQUIRES_OK(context, context->input("pattern", &patterns_t));
     OP_REQUIRES(

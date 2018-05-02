@@ -24,7 +24,8 @@ limitations under the License.
 namespace tensorflow {
 
 // HVX internal supported ops names
-// TODO(satok): Remove this map once hexnn lib supports an API to retrieve op id
+// TODO (satok): Remove this map once hexnn lib supports an API to retrieve op id id:2497
+// https://github.com/imdone/tensorflow/issues/2497
 // from op name and data type
 enum class HexagonOpsDefinitions::SupportedOpType {
   INPUT,

@@ -277,7 +277,8 @@ def input_layer(features,
                                trainable, cols_to_vars)
 
 
-# TODO(akshayka): InputLayer should be a subclass of Layer, and it
+# TODO (akshayka): InputLayer should be a subclass of Layer, and it id:3164
+# https://github.com/imdone/tensorflow/issues/3163
 # should implement the logic in input_layer using Layer's build-and-call
 # paradigm; input_layer should create an instance of InputLayer and
 # return the result of inovking its apply method, just as functional layers do.
@@ -422,7 +423,8 @@ def linear_model(features,
 
 
 def _add_to_collections(var, weight_collections):
-  # TODO(rohanj): Explore adding a _get_variable_list method on `Variable`
+  # TODO (rohanj): Explore adding a _get_variable_list method on `Variable` id:3642
+  # https://github.com/imdone/tensorflow/issues/3641
   # so that we don't have to do this check.
   if isinstance(var, variables.PartitionedVariable):
     for constituent_var in list(var):
@@ -604,7 +606,8 @@ class _LinearModel(training.Model):
   def _add_layers(self, layers):
     # "Magic" required for keras.Model classes to track all the variables in
     # a list of layers.Layer objects.
-    # TODO(ashankar): Figure out API so user code doesn't have to do this.
+    # TODO (ashankar): Figure out API so user code doesn't have to do this. id:4205
+    # https://github.com/imdone/tensorflow/issues/4203
     for name, layer in layers.items():
       setattr(self, 'layer-%s' % name, layer)
     return layers
@@ -1754,7 +1757,8 @@ def crossed_column(keys, hash_bucket_size, hash_key=None):
       hash_key=hash_key)
 
 
-# TODO(rohanj): Clearly define semantics of this layer.
+# TODO (rohanj): Clearly define semantics of this layer. id:3717
+# https://github.com/imdone/tensorflow/issues/3716
 class _EmbeddingColumnLayer(base.Layer):
   """A layer that stores all the state required for a embedding column."""
 
@@ -2216,7 +2220,8 @@ class _LazyBuilder(object):
           lambda: feature_tensor)
 
 
-# TODO(ptucker): Move to third_party/tensorflow/python/ops/sparse_ops.py
+# TODO (ptucker): Move to third_party/tensorflow/python/ops/sparse_ops.py id:2955
+# https://github.com/imdone/tensorflow/issues/2954
 def _shape_offsets(shape):
   """Returns moving offset for each dimension given shape."""
   offsets = []
@@ -2229,7 +2234,8 @@ def _shape_offsets(shape):
   return offsets
 
 
-# TODO(ptucker): Move to third_party/tensorflow/python/ops/sparse_ops.py
+# TODO (ptucker): Move to third_party/tensorflow/python/ops/sparse_ops.py id:3166
+# https://github.com/imdone/tensorflow/issues/3165
 def _to_sparse_input(input_tensor, ignore_value=None):
   """Converts a `Tensor` to a `SparseTensor`, dropping ignore_value cells.
 
@@ -2259,7 +2265,8 @@ def _to_sparse_input(input_tensor, ignore_value=None):
       elif input_tensor.dtype.is_integer:
         ignore_value = -1  # -1 has a special meaning of missing feature
       else:
-        # NOTE: `as_numpy_dtype` is a property, so with the parentheses this is
+        # NOTE: `as_numpy_dtype` is a property, so with the parentheses this is id:3645
+        # https://github.com/imdone/tensorflow/issues/3644
         # constructing a new numpy object of the given type, which yields the
         # default value for that type.
         ignore_value = input_tensor.dtype.as_numpy_dtype()
@@ -3065,7 +3072,8 @@ def _collect_leaf_level_keys(cross):
   return leaf_level_keys
 
 
-# TODO(zakaria): Move this to embedding_ops and make it public.
+# TODO (zakaria): Move this to embedding_ops and make it public. id:4206
+# https://github.com/imdone/tensorflow/issues/4204
 def _safe_embedding_lookup_sparse(embedding_weights,
                                   sparse_ids,
                                   sparse_weights=None,

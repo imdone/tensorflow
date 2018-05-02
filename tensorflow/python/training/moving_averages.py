@@ -29,7 +29,8 @@ from tensorflow.python.training import slot_creator
 from tensorflow.python.util.tf_export import tf_export
 
 
-# TODO(touts): switch to variables.Variable.
+# TODO (touts): switch to variables.Variable. id:3698
+# https://github.com/imdone/tensorflow/issues/3697
 def assign_moving_average(variable, value, decay, zero_debias=True, name=None):
   """Compute the moving average of a variable.
 
@@ -375,7 +376,8 @@ class ExponentialMovingAverage(object):
       ValueError: If the moving average of one of the variables is already
         being computed.
     """
-    # TODO(touts): op_scope
+    # TODO (touts): op_scope id:3474
+    # https://github.com/imdone/tensorflow/issues/3473
     if var_list is None:
       var_list = variables.trainable_variables()
     zero_debias_true = set()  # set of vars to set `zero_debias=True`
@@ -396,7 +398,8 @@ class ExponentialMovingAverage(object):
                                          var.initialized_value(),
                                          self._name,
                                          colocate_with_primary=True)
-          # NOTE(mrry): We only add `tf.Variable` objects to the
+          # NOTE (mrry): We only add `tf.Variable` objects to the id:3950
+          # https://github.com/imdone/tensorflow/issues/3948
           # `MOVING_AVERAGE_VARIABLES` collection.
           ops.add_to_collection(ops.GraphKeys.MOVING_AVERAGE_VARIABLES, var)
         else:

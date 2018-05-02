@@ -144,7 +144,8 @@ BuiltinOpResolver::BuiltinOpResolver() {
   AddBuiltin(BuiltinOperator_LESS, Register_LESS());
   AddBuiltin(BuiltinOperator_FLOOR, Register_FLOOR());
 
-  // TODO(andrewharp, ahentz): Move these somewhere more appropriate so that
+  // TODO (andrewharp, ahentz): Move these somewhere more appropriate so that id:1553
+  // https://github.com/imdone/tensorflow/issues/1553
   // custom ops aren't always included by default.
   AddCustom("Mfcc", tflite::ops::custom::Register_MFCC());
   AddCustom("AudioSpectrogram",

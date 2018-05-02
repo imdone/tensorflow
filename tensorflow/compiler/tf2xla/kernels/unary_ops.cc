@@ -100,7 +100,8 @@ XLAJIT_MAKE_UNARY(Cosh,
 XLAJIT_MAKE_UNARY(Sin, b->Sin(x));
 XLAJIT_MAKE_UNARY(Exp, b->Exp(x));
 
-// TODO(b/34703906): use a more accurate implementation of expm1.
+// TODO (b/34703906): use a more accurate implementation of expm1. id:275
+// https://github.com/imdone/tensorflow/issues/276
 XLAJIT_MAKE_UNARY(Expm1, b->Sub(b->Exp(x), XlaHelpers::One(b, input_type(0))));
 
 XLAJIT_MAKE_UNARY(Floor, b->Floor(x));
@@ -115,7 +116,8 @@ XLAJIT_MAKE_UNARY(Inv, b->Div(XlaHelpers::One(b, input_type(0)), x));
 XLAJIT_MAKE_UNARY(Reciprocal, b->Div(XlaHelpers::One(b, input_type(0)), x));
 XLAJIT_MAKE_UNARY(Log, b->Log(x));
 
-// TODO(b/34703906): use a more accurate implementation of log1p.
+// TODO (b/34703906): use a more accurate implementation of log1p. id:270
+// https://github.com/imdone/tensorflow/issues/271
 XLAJIT_MAKE_UNARY(Log1p, b->Log(b->Add(XlaHelpers::One(b, input_type(0)), x)));
 
 XLAJIT_MAKE_UNARY(Invert, b->Not(x));

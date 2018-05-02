@@ -68,7 +68,8 @@ bool soc_interface_ReadOutputNodeFloat(const char* const node_name,
                                        uint8_t** buf, uint64_t* buf_byte_size);
 
 // Setup graph
-// TODO(satok): Remove and use runtime version
+// TODO (satok): Remove and use runtime version id:1190
+// https://github.com/imdone/tensorflow/issues/1191
 bool soc_interface_setupDummyGraph(int version);
 
 // Allocate memory for params of node inputs and node outputs

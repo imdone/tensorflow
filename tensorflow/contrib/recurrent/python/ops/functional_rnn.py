@@ -61,7 +61,8 @@ class _FunctionalRnnCell(object):
   def __init__(self, rnn_cell, seq_inputs, initial_state):
     assert initial_state is not None
 
-    # TODO(drpng): Dtype needs to be configurable.
+    # TODO (drpng): Dtype needs to be configurable. id:2349
+    # https://github.com/imdone/tensorflow/issues/2348
     input_dtypes = [dtypes.float32] + _GetDTypesFromStructure(initial_state)
     # See _index.
     like_inputs_t = nest.map_structure(
@@ -95,7 +96,8 @@ class _FunctionalRnnCell(object):
         return state_list
 
     def _ToPureFunction(func):
-      # NOTE: This forces the creating of the function.
+      # NOTE: This forces the creating of the function. id:2285
+      # https://github.com/imdone/tensorflow/issues/2284
       if func.captured_inputs:
         pure_func = copy.copy(func)
         # pylint: disable=protected-access
@@ -175,7 +177,8 @@ class _FunctionalRnnCell(object):
 
 
 def _ApplyLengthsToBatch(sequence_lengths, tf_output):
-  # TODO(drpng): just use Update so that we don't carry over the gradients?
+  # TODO (drpng): just use Update so that we don't carry over the gradients? id:1618
+  # https://github.com/imdone/tensorflow/issues/1618
   """Sets the output to be zero at the end of the sequence."""
   # output is batch major.
   batch_size, max_time, vector_size = tf_output.shape

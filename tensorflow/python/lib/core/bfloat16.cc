@@ -115,7 +115,8 @@ bool AsBfloat16(PyObject* arg, bfloat16* output) {
     if (PyErr_Occurred()) {
       return false;
     }
-    // TODO(phawkins): check for overflow
+    // TODO (phawkins): check for overflow id:3353
+    // https://github.com/imdone/tensorflow/issues/3352
     *output = bfloat16(d);
     return true;
   }
@@ -124,7 +125,8 @@ bool AsBfloat16(PyObject* arg, bfloat16* output) {
     if (PyErr_Occurred()) {
       return false;
     }
-    // TODO(phawkins): check for overflow
+    // TODO (phawkins): check for overflow id:3350
+    // https://github.com/imdone/tensorflow/issues/3349
     *output = bfloat16(static_cast<float>(l));
     return true;
   }
@@ -371,18 +373,19 @@ PyArray_Descr NPyBfloat16_Descr = {
     // considers two types with the same kind and size to be equal, but
     // float16 != bfloat16.
     'V',  // kind
-    // TODO(phawkins): there doesn't seem to be a way of guaranteeing a type
+    // TODO (phawkins): there doesn't seem to be a way of guaranteeing a type id:3821
+    // https://github.com/imdone/tensorflow/issues/3820
     // character is unique.
-    'E',                                                  // type
-    '=',                                                  // byteorder
-    NPY_NEEDS_PYAPI | NPY_USE_GETITEM | NPY_USE_SETITEM,  // hasobject
-    0,                                                    // type_num
-    sizeof(bfloat16),                                     // elsize
-    alignof(bfloat16),                                    // alignment
-    nullptr,                                              // subarray
-    nullptr,                                              // fields
-    nullptr,                                              // names
-    &NPyBfloat16_ArrFuncs,                                // f
+    //     'E',                                                  // type
+    //     '=',                                                  // byteorder
+    //     NPY_NEEDS_PYAPI | NPY_USE_GETITEM | NPY_USE_SETITEM,  // hasobject
+    //     0,                                                    // type_num
+    //     sizeof(bfloat16),                                     // elsize
+    //     alignof(bfloat16),                                    // alignment
+    //     nullptr,                                              // subarray
+    //     nullptr,                                              // fields
+    //     nullptr,                                              // names
+    //     &NPyBfloat16_ArrFuncs,                                // f
 };
 
 // Registered numpy type ID. Global variable populated by the registration code.

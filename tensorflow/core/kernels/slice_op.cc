@@ -177,7 +177,8 @@ class SliceOp : public OpKernel {
           DataTypeCanUseMemcpy(DataTypeToEnum<T>::v())) {
         auto input = context->input(0).tensor<T, 2>();
         auto output = result->tensor<T, 2>();
-        // TODO(agarwal): Consider multi-threading this loop for cases where
+        // TODO (agarwal): Consider multi-threading this loop for cases where id:2194
+        // https://github.com/imdone/tensorflow/issues/2193
         // size[0] is very large.
         for (int i = 0; i < size[0]; ++i) {
           const int64 row = begin[0] + i;
@@ -252,7 +253,8 @@ class MklSliceOp : public OpKernel {
           DataTypeCanUseMemcpy(DataTypeToEnum<T>::v())) {
         auto input = context->input(0).tensor<T, 2>();
         auto output = result->tensor<T, 2>();
-        // TODO(agarwal): Consider multi-threading this loop for cases where
+        // TODO (agarwal): Consider multi-threading this loop for cases where id:2727
+        // https://github.com/imdone/tensorflow/issues/2726
         // size[0] is very large.
         for (int i = 0; i < size[0]; ++i) {
           const int64 row = begin[0] + i;
@@ -512,7 +514,8 @@ TF_CALL_complex128(REGISTER_GPU);
 TF_CALL_bfloat16(REGISTER_GPU);
 
 // A special GPU kernel for int32.
-// TODO(b/25387198): Also enable int32 in device memory. This kernel
+// TODO (b/25387198): Also enable int32 in device memory. This kernel id:3330
+// https://github.com/imdone/tensorflow/issues/3329
 // registration requires all int32 inputs and outputs to be in host memory.
 REGISTER_KERNEL_BUILDER(Name("Slice")
                             .Device(DEVICE_GPU)

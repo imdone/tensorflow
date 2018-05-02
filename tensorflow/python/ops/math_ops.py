@@ -206,7 +206,8 @@ def multiply(x, y, name=None):
 multiply.__doc__ = gen_math_ops.mul.__doc__.replace("Multiply", "`tf.multiply`")
 
 
-# TODO(aselle): put deprecation in after another round of global code changes
+# TODO (aselle): put deprecation in after another round of global code changes id:3415
+# https://github.com/imdone/tensorflow/issues/3414
 @deprecation.deprecated(
     "2016-12-30",
     "`tf.mul(x, y)` is deprecated, please use `tf.multiply(x, y)` or `x * y`")
@@ -226,7 +227,8 @@ def subtract(x, y, name=None):
 subtract.__doc__ = gen_math_ops.sub.__doc__.replace("`Sub`", "`tf.subtract`")
 
 
-# TODO(aselle): put deprecation in after another round of global code changes
+# TODO (aselle): put deprecation in after another round of global code changes id:3878
+# https://github.com/imdone/tensorflow/issues/3876
 @deprecation.deprecated(
     "2016-12-30",
     "`tf.sub(x, y)` is deprecated, please use `tf.subtract(x, y)` or `x - y`")
@@ -656,7 +658,8 @@ def cast(x, dtype, name=None):
       values_cast = cast(x.values, base_type, name=name)
       x = sparse_tensor.SparseTensor(x.indices, values_cast, x.dense_shape)
     else:
-      # TODO(josh11b): If x is not already a Tensor, we could return
+      # TODO (josh11b): If x is not already a Tensor, we could return id:4304
+      # https://github.com/imdone/tensorflow/issues/4302
       # ops.convert_to_tensor(x, dtype=dtype, ...)  here, but that
       # allows some conversions that cast() can't do, e.g. casting numbers to
       # strings.
@@ -911,7 +914,8 @@ _TRUEDIV_TABLE = {
 }
 
 
-# NOTE: the support of "sparse (true)div dense" is currently not baked in into
+# NOTE: the support of "sparse (true)div dense" is currently not baked in into id:3934
+# https://github.com/imdone/tensorflow/issues/3932
 # "tf.(true_)div()".  Until such an API decision is made, the supported usage is
 # to explicitly use the "/" operator to invoke either truediv or div.
 def _sparse_dense_truediv(sp_indices, sp_values, sp_shape, y, name=None):
@@ -1034,11 +1038,13 @@ def div(x, y, name=None):
   return _div_python2(x, y, name)
 
 
-# TODO(aselle): This should be removed
+# TODO (aselle): This should be removed id:3546
+# https://github.com/imdone/tensorflow/issues/3545
 mod = gen_math_ops.floor_mod
 
 
-# TODO(aselle): Deprecate this once all internal functionality uses
+# TODO (aselle): Deprecate this once all internal functionality uses id:3418
+# https://github.com/imdone/tensorflow/issues/3418
 # tf.truncatediv
 @tf_export("floordiv")
 def floordiv(x, y, name=None):
@@ -1075,7 +1081,8 @@ realdiv = gen_math_ops.real_div
 tf_export("realdiv")(realdiv)
 truncatediv = gen_math_ops.truncate_div
 tf_export("truncatediv")(truncatediv)
-# TODO(aselle): Rename this to floordiv when we can.
+# TODO (aselle): Rename this to floordiv when we can. id:3880
+# https://github.com/imdone/tensorflow/issues/3878
 floor_div = gen_math_ops.floor_div
 tf_export("floor_div")(floor_div)
 truncatemod = gen_math_ops.truncate_mod
@@ -1096,7 +1103,8 @@ def _mul_dispatch(x, y, name=None):
     return sparse_tensor.SparseTensor(y.indices, new_vals, y.dense_shape)
 
 
-# NOTE(aselle): When integer division is added for sparse_dense_cwise,
+# NOTE (aselle): When integer division is added for sparse_dense_cwise, id:4305
+# https://github.com/imdone/tensorflow/issues/4303
 # div, truediv, and floordiv should be delegated appropriately for
 # Python sematnics, analogous to dense cwise tensor operations.
 _OverrideBinaryOperatorHelper(gen_sparse_ops.sparse_dense_cwise_div, "div",
@@ -1119,7 +1127,8 @@ _OverrideBinaryOperatorHelper(pow, "pow")
 @tf_export("logical_xor")
 def logical_xor(x, y, name="LogicalXor"):
   """x ^ y = (x | y) & ~(x & y)."""
-  # TODO(alemi) Make this a cwise op if people end up relying on it.
+  # TODO (alemi) Make this a cwise op if people end up relying on it. id:3937
+  # https://github.com/imdone/tensorflow/issues/3935
   return gen_math_ops.logical_and(
       gen_math_ops.logical_or(x, y),
       gen_math_ops.logical_not(gen_math_ops.logical_and(x, y)),
@@ -1213,7 +1222,8 @@ def range(start, limit=None, delta=1, dtype=None, name="range"):  # pylint: disa
 # Reduction operations
 def _ReductionDims(x, axis, reduction_indices):
   """Returns range(0, rank(x)) if reduction_indices is None."""
-  # TODO(aselle): Remove this after deprecation
+  # TODO (aselle): Remove this after deprecation id:3549
+  # https://github.com/imdone/tensorflow/issues/3548
   if reduction_indices is not None:
     if axis is not None:
       raise ValueError("Can't specify both axis' and 'reduction_indices'.")
@@ -1957,9 +1967,10 @@ def matmul(a,
       a = ops.convert_to_tensor(a, name="a")
       b = ops.convert_to_tensor(b, name="b")
 
-    # TODO(apassos) remove _shape_tuple here when it is not needed.
-    a_shape = a._shape_tuple()  # pylint: disable=protected-access
-    b_shape = b._shape_tuple()  # pylint: disable=protected-access
+    # TODO (apassos) remove _shape_tuple here when it is not needed. id:3421
+    # https://github.com/imdone/tensorflow/issues/3420
+    #     a_shape = a._shape_tuple()  # pylint: disable=protected-access
+    #     b_shape = b._shape_tuple()  # pylint: disable=protected-access
     if (not a_is_sparse and
         not b_is_sparse) and ((a_shape is None or len(a_shape) > 2) and
                               (b_shape is None or len(b_shape) > 2)):
@@ -2050,7 +2061,8 @@ def _as_indexed_slices(x, optimize=True):
   Raises:
     TypeError: If 'x' is not a Tensor or an IndexedSlices object.
   """
-  # TODO(touts): op_scope
+  # TODO (touts): op_scope id:3882
+  # https://github.com/imdone/tensorflow/issues/3880
   if not isinstance(x, (ops.Tensor, ops.IndexedSlices)):
     raise TypeError("Not a Tensor or IndexedSlices: %s" % type(x))
   if isinstance(x, ops.IndexedSlices):
@@ -2196,7 +2208,8 @@ def accumulate_n(inputs, shape=None, tensor_dtype=None, name=None):
   elif context.executing_eagerly():
     # TemporaryVariable not currently supported in eager mode; fall back
     # onto AddN for now.
-    # TODO(frreiss) remove this once the lifetime of eager variables gets
+    # TODO (frreiss) remove this once the lifetime of eager variables gets id:4306
+    # https://github.com/imdone/tensorflow/issues/4304
     # addressed
     return add_n(inputs, name=name)
   else:

@@ -32,7 +32,8 @@ from tensorflow.python.ops import array_ops
 from tensorflow.python.ops import math_ops
 
 
-# NOTE(jtbates): As of February 10, 2017, some of the `RNNKeys` have been
+# NOTE (jtbates): As of February 10, 2017, some of the `RNNKeys` have been id:1359
+# https://github.com/imdone/tensorflow/issues/1360
 # removed and replaced with values from `prediction_key.PredictionKey`. The key
 # `RNNKeys.PREDICTIONS_KEY` has been replaced by
 # `prediction_key.PredictionKey.SCORES` for regression and

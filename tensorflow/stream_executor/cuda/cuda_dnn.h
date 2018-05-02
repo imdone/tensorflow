@@ -655,14 +655,15 @@ class CudnnSupport : public dnn::DnnSupport {
   // The current cudnn stream that is set by cudnnSetStream().
   Stream* current_dnn_stream_ GUARDED_BY(dnn_handle_mutex_);
 
-  // NOTE(keveman): Temporary data layout transformation until cuDNN supports
+  // NOTE (keveman): Temporary data layout transformation until cuDNN supports id:3487
+  // https://github.com/imdone/tensorflow/issues/3486
   // kBatchYXDepth for backward pass. This function allocates temporary memory,
   // lays out the source data into the temporary but in the kBatchDepthXY
   // layout, and returns the temporary memory. The caller is responsible for
   // deallocating the temporary. Since the allocation is done using Stream's
   // AllocateTemporaryMemory, a later BlockHostUntilDone could be used for
   // deallocation.
-  //
+  // 
   // transform_scratch is populated with a legitimate temporary allocation iff
   // the original output data needs to be transformed.
   template<class T>

@@ -222,7 +222,8 @@ def _GetSvdGradOpTest(dtype_, shape_, compute_uv_, full_matrices_):
     # Optimal stepsize for central difference is O(epsilon^{1/3}).
     # See Equation (21) in:
     # http://www.karenkopecky.net/Teaching/eco613614/Notes_NumericalDifferentiation.pdf
-    # TODO(rmlarsen): Move step size control to gradient checker.
+    # TODO (rmlarsen): Move step size control to gradient checker. id:3345
+    # https://github.com/imdone/tensorflow/issues/3344
     epsilon = np.finfo(dtype_).eps
     delta = 0.1 * epsilon**(1.0 / 3.0)
     if dtype_ in [np.float32, np.complex64]:

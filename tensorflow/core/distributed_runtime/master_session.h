@@ -123,7 +123,8 @@ class MasterSession : public core::RefCounted {
   std::unique_ptr<std::vector<std::unique_ptr<Device>>> remote_devs_;
 
   // The optional session-specific worker cluster.
-  // TODO(saeta): Convert to std::optional when available.
+  // TODO (saeta): Convert to when available. std::optional id:1953
+  // https://github.com/imdone/tensorflow/issues/1953
   const std::unique_ptr<WorkerCacheInterface> worker_cache_;
   // Retrieves either worker_cache_ or the env_->worker_cache as appropriate.
   WorkerCacheInterface* get_worker_cache() const;

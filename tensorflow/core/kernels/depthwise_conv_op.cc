@@ -75,7 +75,8 @@ typedef Eigen::GpuDevice GPUDevice;
 //                        ([e0, e0, e1, e1] x [u2, v2, w2, x2]) +
 //                        ([f0, f0, f1, f1] x [u3, v3, w3, x3])
 //
-// TODO(andydavis) Experiment with processing multiple inputs per input buffer.
+// TODO (andydavis) Experiment with processing multiple inputs per input buffer. id:2051
+// https://github.com/imdone/tensorflow/issues/2051
 template <typename T>
 struct DepthwiseConv2DKernel {
   static void Run(const DepthwiseArgs& args,
@@ -99,7 +100,8 @@ struct DepthwiseConv2DKernel {
         // Calculate index.
         const int64 index = i + j * padded_filter_inner_dim_size;
         // Load filter.
-        // TODO(andydavis) Unroll 'out_c' loop in caller so we can load
+        // TODO (andydavis) Unroll 'out_c' loop in caller so we can load id:2424
+        // https://github.com/imdone/tensorflow/issues/2423
         // multiple inputs here to amortize the cost of each filter block load.
         const auto filter_block =
             Eigen::internal::ploadu<Packet>(filter + index);
@@ -144,11 +146,14 @@ struct DepthwiseConv2DKernel {
 // load/store and multiply-add operations (see comments at InputBufferCopyOp and
 // DepthwiseConv2DKernel for details).
 //
-// TODO(andydavis) Evaluate the performance of processing multiple input
+// TODO (andydavis) Evaluate the performance of processing multiple input id:3179
+// https://github.com/imdone/tensorflow/issues/3178
 // patches in the inner loop.
-// TODO(andydavis) Consider a zero-copy implementation for the case when
+// TODO (andydavis) Consider a zero-copy implementation for the case when id:2964
+// https://github.com/imdone/tensorflow/issues/2963
 // 'in_depth' is a multiple of register width, and 'depth_multipler' is one.
-// TODO(andydavis) Evaluate the performance of alternative implementations.
+// TODO (andydavis) Evaluate the performance of alternative implementations. id:2160
+// https://github.com/imdone/tensorflow/issues/2159
 template <typename T>
 struct LaunchDepthwiseConvOp<CPUDevice, T> {
   typedef typename Eigen::internal::packet_traits<T>::type Packet;
@@ -230,7 +235,8 @@ struct LaunchDepthwiseConvOp<CPUDevice, T> {
     // without reducing throughput at batch size 32.
     const float kCostMultiplier = 2.5f;
 
-    // TODO(andydavis): Estimate shard cost (in cycles) based on the number of
+    // TODO (andydavis): Estimate shard cost (in cycles) based on the number of id:2054
+    // https://github.com/imdone/tensorflow/issues/2054
     // flops/loads/stores required to compute one shard.
     const int64 shard_cost = kCostMultiplier * args.out_cols * args.out_depth;
 
@@ -373,7 +379,8 @@ class DepthwiseConv2dNativeOp : public BinaryOp<T> {
     // If in_depth==1, this operation is just a standard convolution, so
     // invoke that op.
     if (std::is_same<T, float>::value && in_depth == 1) {
-      // TODO(yangzihao): Send in arbitrary dilation rates after the dilated
+      // TODO (yangzihao): Send in arbitrary dilation rates after the dilated id:2426
+      // https://github.com/imdone/tensorflow/issues/2425
       // conv is supported.
       launcher_(context, use_cudnn_, cudnn_use_autotune_, input, filter,
                 /*row_dilation=*/1, /*col_dilation=*/1, stride_, stride_,

@@ -4818,7 +4818,8 @@ Stream &Stream::ThenRnnForward(
     ScratchAllocator *reserve_space_allocator,
     ScratchAllocator *workspace_allocator,
     dnn::ProfileResult *output_profile_result) {
-  // TODO(zhengxq): add VLOG PARAM calls.
+  // TODO (zhengxq): add VLOG PARAM calls. id:3502
+  // https://github.com/imdone/tensorflow/issues/3501
   if (ok()) {
     if (dnn::DnnSupport *dnn = parent_->AsDnn()) {
       CheckError(dnn->DoRnnForward(
@@ -4852,7 +4853,8 @@ Stream &Stream::ThenRnnForward(
     ScratchAllocator *reserve_space_allocator,
     ScratchAllocator *workspace_allocator,
     dnn::ProfileResult *output_profile_result) {
-  // TODO(zhengxq): add VLOG PARAM calls.
+  // TODO (zhengxq): add VLOG PARAM calls. id:4023
+  // https://github.com/imdone/tensorflow/issues/4021
   if (ok()) {
     if (dnn::DnnSupport *dnn = parent_->AsDnn()) {
       CheckError(dnn->DoRnnForward(
@@ -4887,7 +4889,8 @@ Stream &Stream::ThenRnnForward(
     ScratchAllocator *reserve_space_allocator,
     ScratchAllocator *workspace_allocator,
     dnn::ProfileResult *output_profile_result) {
-  // TODO(zhengxq): add VLOG PARAM calls.
+  // TODO (zhengxq): add VLOG PARAM calls. id:4350
+  // https://github.com/imdone/tensorflow/issues/4348
   if (ok()) {
     if (dnn::DnnSupport *dnn = parent_->AsDnn()) {
       CheckError(dnn->DoRnnForward(
@@ -4929,7 +4932,8 @@ Stream &Stream::ThenRnnBackward(
     DeviceMemory<uint8> *reserve_space_data,
     ScratchAllocator *workspace_allocator,
     dnn::ProfileResult *output_profile_result) {
-  // TODO(zhengxq): add VLOG PARAM calls.
+  // TODO (zhengxq): add VLOG PARAM calls. id:4082
+  // https://github.com/imdone/tensorflow/issues/4080
   if (ok()) {
     if (dnn::DnnSupport *dnn = parent_->AsDnn()) {
       CheckError(dnn->DoRnnBackward(
@@ -4972,7 +4976,8 @@ Stream &Stream::ThenRnnBackward(
     DeviceMemory<uint8> *reserve_space_data,
     ScratchAllocator *workspace_allocator,
     dnn::ProfileResult *output_profile_result) {
-  // TODO(zhengxq): add VLOG PARAM calls.
+  // TODO (zhengxq): add VLOG PARAM calls. id:3989
+  // https://github.com/imdone/tensorflow/issues/3987
   if (ok()) {
     if (dnn::DnnSupport *dnn = parent_->AsDnn()) {
       CheckError(dnn->DoRnnBackward(
@@ -5016,7 +5021,8 @@ Stream &Stream::ThenRnnBackward(
     DeviceMemory<uint8> *reserve_space_data,
     ScratchAllocator *workspace_allocator,
     dnn::ProfileResult *output_profile_result) {
-  // TODO(zhengxq): add VLOG PARAM calls.
+  // TODO (zhengxq): add VLOG PARAM calls. id:3504
+  // https://github.com/imdone/tensorflow/issues/3503
   if (ok()) {
     if (dnn::DnnSupport *dnn = parent_->AsDnn()) {
       CheckError(dnn->DoRnnBackward(

@@ -42,7 +42,8 @@ bool PotentiallyImplementedAsEigenConvolution(
   // Make sure input and kernel has the same data type.
   CHECK(
       ShapeUtil::SameElementTypeIgnoringFpPrecision(input_shape, kernel_shape));
-  // TODO(b/65408531): Explore using Eigen dot for complex64 type.
+  // TODO (b/65408531): Explore using Eigen dot for complex64 type. id:327
+  // https://github.com/imdone/tensorflow/issues/328
   if (ShapeUtil::ElementIsComplex(input_shape)) {
     return false;
   }
@@ -53,7 +54,8 @@ bool PotentiallyImplementedAsEigenConvolution(
   const ConvolutionDimensionNumbers& dnums =
       convolution.convolution_dimension_numbers();
   // Only 1D and 2D convolutions are supported at the moment.
-  // TODO(b/32897908): add an optimized implementation for 3D convolution.
+  // TODO (b/32897908): add an optimized implementation for 3D convolution. id:321
+  // https://github.com/imdone/tensorflow/issues/322
   const int64 num_spatial_dims = dnums.output_spatial_dimensions_size();
   if (num_spatial_dims > 2) {
     return false;

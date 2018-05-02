@@ -314,7 +314,8 @@ TEST(BasicInterpreter, ResizingTensors) {
   EXPECT_EQ(tensor->bytes, 8 * sizeof(float));
   ASSERT_EQ(interpreter.AllocateTensors(), kTfLiteOk);
 
-  // TODO(ahentz): We shouldn't have to force reallocation, but
+  // TODO (ahentz): We shouldn't have to force reallocation, but id:1097
+  // https://github.com/imdone/tensorflow/issues/1098
   // ResizeInputTensor doesn't realloc dynamic tensors. Also note that
   // TfLiteTensorRealloc(tensor->bytes, tensor) is a no-op.
   TfLiteTensorRealloc(9 * sizeof(float), tensor);
@@ -324,7 +325,8 @@ TEST(BasicInterpreter, ResizingTensors) {
   EXPECT_EQ(tensor->bytes, 16 * sizeof(float));
   ASSERT_EQ(interpreter.AllocateTensors(), kTfLiteOk);
 
-  // TODO(ahentz): We shouldn't have to force reallocation, but
+  // TODO (ahentz): We shouldn't have to force reallocation, but id:926
+  // https://github.com/imdone/tensorflow/issues/927
   // ResizeInputTensor doesn't realloc dynamic tensors. Also note that
   // TfLiteTensorRealloc(tensor->bytes, tensor) is a no-op.
   TfLiteTensorRealloc(17 * sizeof(float), tensor);
@@ -890,13 +892,15 @@ class TestDelegate : public ::testing::Test {
       delegate_.CopyToBufferHandle =
           [](TfLiteDelegate* delegate, TfLiteBufferHandle buffer_handle,
              void* data, size_t size) -> TfLiteStatus {
-        // TODO(ycling): Implement tests to test buffer copying logic.
+        // TODO (ycling): Implement tests to test buffer copying logic. id:1490
+        // https://github.com/imdone/tensorflow/issues/1491
         return kTfLiteOk;
       };
       delegate_.CopyFromBufferHandle =
           [](TfLiteDelegate* delegate, TfLiteBufferHandle buffer_handle,
              void* data, size_t size) -> TfLiteStatus {
-        // TODO(ycling): Implement tests to test buffer copying logic.
+        // TODO (ycling): Implement tests to test buffer copying logic. id:1746
+        // https://github.com/imdone/tensorflow/issues/1746
         return kTfLiteOk;
       };
       delegate_.FreeBufferHandle = [](TfLiteDelegate* delegate,

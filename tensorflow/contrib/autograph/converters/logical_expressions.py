@@ -29,7 +29,8 @@ from tensorflow.contrib.autograph.pyct import templates
 from tensorflow.contrib.autograph.pyct import transformer
 
 
-# TODO(mdan): Properly extrack boolean ops according to lazy eval rules.
+# TODO (mdan): Properly extrack boolean ops according to lazy eval rules. id:503
+# https://github.com/imdone/tensorflow/issues/505
 # Note that this isn't completely safe either, because tensors may have control
 # dependencies.
 # Note that for loops that should be done after the loop was converted to
@@ -44,8 +45,10 @@ class LogicalExpressionTransformer(transformer.Base):
 
   def __init__(self, context):
     super(LogicalExpressionTransformer, self).__init__(context)
-    # TODO(mdan): Look into replacing with bitwise operators instead.
-    # TODO(mdan): Skip replacing if the function is trivial.
+    # TODO (mdan): Look into replacing with bitwise operators instead. id:493
+    # https://github.com/imdone/tensorflow/issues/494
+    # TODO (mdan): Skip replacing if the function is trivial. id:960
+    # https://github.com/imdone/tensorflow/issues/961
     self.op_mapping = {
         gast.And: 'tf.logical_and',
         gast.Eq: 'tf.equal',

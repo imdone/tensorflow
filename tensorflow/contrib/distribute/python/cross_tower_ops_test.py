@@ -76,7 +76,8 @@ class CrossTowerOpsTest(test.TestCase, parameterized.TestCase):
           self.assertEqual(
               sess.run(list(left._index.values())), list(right._index.values()))
 
-  # TODO(yuefengz): decouple the num_gpus check from distribution in
+  # TODO (yuefengz): decouple the num_gpus check from distribution in id:1093
+  # https://github.com/imdone/tensorflow/issues/1094
   # combinations module so that we can pass in devices instead of a distribution
   # strategy.
   reduction_to_one_combinations = combinations.combine(

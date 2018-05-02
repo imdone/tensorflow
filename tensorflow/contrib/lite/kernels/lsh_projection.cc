@@ -43,7 +43,8 @@ limitations under the License.
 //     Output.Dim == { Tensor[0].Dim[0] }
 //     A tensor of int32 that represents hash signatures,
 //
-//     NOTE: To avoid collisions across hash functions, an offset value of
+//     NOTE: To avoid collisions across hash functions, an offset value of id:971
+// https://github.com/imdone/tensorflow/issues/972
 //     k * (1 << Tensor[0].Dim[1]) will be added to each signature,
 //     k is the index of the hash function.
 //   Dense:
@@ -108,10 +109,11 @@ TfLiteStatus Resize(TfLiteContext* context, TfLiteNode* node) {
 }
 
 // Compute sign bit of dot product of hash(seed, input) and weight.
-// NOTE: use float as seed, and convert it to double as a temporary solution
+// NOTE: use float as seed, and convert it to double as a temporary solution id:1548
+// https://github.com/imdone/tensorflow/issues/1548
 //       to match the trained model. This is going to be changed once the new
 //       model is trained in an optimized method.
-//
+// 
 int RunningSignBit(const TfLiteTensor* input, const TfLiteTensor* weight,
                    float seed) {
   double score = 0.0;

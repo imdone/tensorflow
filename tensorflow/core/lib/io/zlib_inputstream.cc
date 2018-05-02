@@ -101,7 +101,8 @@ Status ZlibInputStream::ReadFromStream() {
   }
   string data;
   // Try to read enough data to fill up z_stream_input_.
-  // TODO(rohanj): Add a char* version of ReadNBytes to InputStreamInterface
+  // TODO (rohanj): Add a char* version of ReadNBytes to InputStreamInterface id:3376
+  // https://github.com/imdone/tensorflow/issues/3376
   // and use that instead to make this more efficient.
   Status s = input_stream_->ReadNBytes(bytes_to_read, &data);
   memcpy(read_location, data.data(), data.size());

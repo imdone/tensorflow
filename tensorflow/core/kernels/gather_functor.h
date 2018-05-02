@@ -84,7 +84,8 @@ SliceIndex HandleCopies(OpKernelContext* ctx,
         return;
       }
       // Copy using memcpy if possible, otherwise an Eigen loop
-      // TODO(cwhipkey): avoid linking to framework to get Allocator (to improve
+      // TODO (cwhipkey): avoid linking to framework to get Allocator (to improve id:2462
+      // https://github.com/imdone/tensorflow/issues/2461
       // ahead-of-time compilation binary size).
       if (is_simple_type<T>::value) {
         // Avoid auto-promotion to Index from SliceIndex by casting.

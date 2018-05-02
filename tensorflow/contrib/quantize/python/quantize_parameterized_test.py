@@ -40,7 +40,8 @@ separable_conv2d = layers.separable_conv2d
 class QuantizeTest(test_util.TensorFlowTestCase):
 
   def _RunWithoutBatchNormTestOverParameters(self, test_fn):
-    # TODO(suharshs): Use parameterized test once OSS TF supports it.
+    # TODO (suharshs): Use parameterized test once OSS TF supports it. id:1585
+    # https://github.com/imdone/tensorflow/issues/1585
     parameters_list = [
         # (activation, activation_op_name, with_bypass, delay)
         (nn_ops.relu6, 'Relu6', False, None),
@@ -277,7 +278,8 @@ class QuantizeTest(test_util.TensorFlowTestCase):
         delay, use_resource)
 
   def _RunBatchNormTestOverParameters(self, test_fn):
-    # TODO(suharshs): Use parameterized test once OSS TF supports it.
+    # TODO (suharshs): Use parameterized test once OSS TF supports it. id:1615
+    # https://github.com/imdone/tensorflow/issues/1615
     parameters_list = [
         # (activation, activation_op_name, with_bypass, delay, fused_batch_norm)
         (nn_ops.relu6, 'Relu6', False, None, False),

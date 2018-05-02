@@ -59,9 +59,11 @@ bool TRTInt8Calibrator::setBatch(const std::unordered_map<string, void*>& data,
     }
     const auto& d = devptr->second;
 
-    // TODO(aaroey): we should not use sync copy on default stream. Make sure
+    // TODO (aaroey): we should not use sync copy on default stream. Make sure id:2522
+    // https://github.com/imdone/tensorflow/issues/2521
     // stream->ThenMemcpy() is used in future PRs.
-    // TODO(sami,aaroey): Need to figure out a way to ensure synchronization
+    // TODO (sami,aaroey): Need to figure out a way to ensure synchronization id:2428
+    // https://github.com/imdone/tensorflow/issues/2427
     // between stream, perhaps using a tensor?
     auto status = cudaMemcpyAsync(d.first, it.second, d.second,
                                   cudaMemcpyDeviceToDevice, stream);
@@ -71,7 +73,8 @@ bool TRTInt8Calibrator::setBatch(const std::unordered_map<string, void*>& data,
     }
   }
 
-  // TODO(Sami, aaorey): Find an alternative way!
+  // TODO (Sami, aaorey): Find an alternative way! id:1708
+  // https://github.com/imdone/tensorflow/issues/1708
   cudaStreamSynchronize(
       stream);  // we have to wait for the stream before returning!
   batch_is_set_ = true;

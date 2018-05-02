@@ -44,7 +44,8 @@ def _head_is_valid_for_sdca(head):
 def _add_bias_column(feature_columns, columns_to_tensors, bias_variable,
                      columns_to_variables):
   """Adds a fake bias feature column filled with all 1s."""
-  # TODO(b/31008490): Move definition to a common constants place.
+  # TODO (b/31008490): Move definition to a common constants place. id:1422
+  # https://github.com/imdone/tensorflow/issues/1423
   bias_column_name = "tf_virtual_bias_column"
   if any(col.name is bias_column_name for col in feature_columns):
     raise ValueError("%s is a reserved column name." % bias_column_name)

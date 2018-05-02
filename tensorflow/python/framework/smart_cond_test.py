@@ -148,7 +148,8 @@ class SmartCaseTest(test_util.TensorFlowTestCase):
 @test_util.with_c_api
 class SmartConstantValueTest(test_util.TensorFlowTestCase):
 
-  # TODO(skyewm): this is essentially a regression test for
+  # TODO (skyewm): this is essentially a regression test for id:3033
+  # https://github.com/imdone/tensorflow/issues/3032
   # TF_TryEvaluateConstant, and is not really a valid smart_constant_value test
   # (smart_constant_value is only supposed to return bools). Move the
   # TF_TryEvaluateConstant call to tensor_util.constant_value and make this a

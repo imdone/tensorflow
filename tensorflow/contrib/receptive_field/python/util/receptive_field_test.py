@@ -31,7 +31,8 @@ from tensorflow.python.ops import nn
 from tensorflow.python.platform import test
 
 
-# TODO(andrearaujo): Rename the create_test_network_* functions in order to have
+# TODO (andrearaujo): Rename the create_test_network_* functions in order to have id:1185
+# https://github.com/imdone/tensorflow/issues/1186
 # more descriptive names.
 def create_test_network_1():
   """Aligned network for test.

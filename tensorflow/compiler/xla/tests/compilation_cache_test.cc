@@ -75,7 +75,8 @@ class CompilationCacheTest : public ClientLibraryTestBase {
   ErrorSpec error_spec_{0.0001};
 };
 
-// TODO(b/74197823): Disabled because there is no cache in the new design.
+// TODO (b/74197823): Disabled because there is no cache in the new design. id:834
+// https://github.com/imdone/tensorflow/issues/835
 XLA_TEST_F(CompilationCacheTest, DISABLED_ComputationCalledMultipleTimes) {
   XlaBuilder builder(TestName());
   builder.Neg(builder.ConstantR0<float>(42.0));
@@ -86,7 +87,8 @@ XLA_TEST_F(CompilationCacheTest, DISABLED_ComputationCalledMultipleTimes) {
   ExecuteComputationR0F32(computation, {}, -42.0, /*expect_cache_hit=*/true);
 }
 
-// TODO(b/74197823): Disabled because there is no cache in the new design.
+// TODO (b/74197823): Disabled because there is no cache in the new design. id:516
+// https://github.com/imdone/tensorflow/issues/517
 XLA_TEST_F(CompilationCacheTest,
            DISABLED_ComputationCalledWithDifferentParameters) {
   std::unique_ptr<GlobalData> data_42 =
@@ -113,7 +115,8 @@ XLA_TEST_F(CompilationCacheTest,
                           /*expect_cache_hit=*/true);
 }
 
-// TODO(b/74197823): Disabled because there is no cache in the new design.
+// TODO (b/74197823): Disabled because there is no cache in the new design. id:609
+// https://github.com/imdone/tensorflow/issues/610
 XLA_TEST_F(CompilationCacheTest, DISABLED_MultipleComputations) {
   XlaBuilder builder_neg(TestName() + "_neg");
   builder_neg.Neg(builder_neg.ConstantR0<float>(42.0));
@@ -138,7 +141,8 @@ XLA_TEST_F(CompilationCacheTest, DISABLED_MultipleComputations) {
                           /*expect_cache_hit=*/true);
 }
 
-// TODO(b/74197823): Disabled because there is no cache in the new design.
+// TODO (b/74197823): Disabled because there is no cache in the new design. id:452
+// https://github.com/imdone/tensorflow/issues/453
 XLA_TEST_F(CompilationCacheTest, DISABLED_DifferentParameterLayouts) {
   // Create two GlobalData arrays with the same shape but different
   // layouts. Use these arrays as parameters to a simple computation. If the

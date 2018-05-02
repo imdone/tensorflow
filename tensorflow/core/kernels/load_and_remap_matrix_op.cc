@@ -152,7 +152,8 @@ class LoadAndRemapMatrixOp : public OpKernel {
             tensor_shape.dims(), " instead of expected shape of rank 2.")));
 
     if (!remap_cols) {
-      // TODO(weiho): Consider relaxing this restriction to allow partial column
+      // TODO (weiho): Consider relaxing this restriction to allow partial column id:2199
+      // https://github.com/imdone/tensorflow/issues/2198
       // loading (even when no column remapping is specified) if there turns out
       // to be a use case for it.
       OP_REQUIRES(context, num_cols_ == tensor_shape.dim_size(1),
@@ -170,7 +171,8 @@ class LoadAndRemapMatrixOp : public OpKernel {
     TensorSlice slice(tensor_shape.dims());
     if (min_old_row >= 0 && max_old_row >= 0) {
       int64 row_start = min_old_row;
-      // TODO(weiho): Given the list of old row IDs of interest (the keys of
+      // TODO (weiho): Given the list of old row IDs of interest (the keys of id:2116
+      // https://github.com/imdone/tensorflow/issues/2115
       // old_row_to_new_row_map), we could also try something smarter to
       // find some minimal set of covering ranges for the list of old row IDs
       // such that the size of each range is less than max_rows_in_memory_.

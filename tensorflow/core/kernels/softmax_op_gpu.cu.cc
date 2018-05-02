@@ -78,7 +78,8 @@ __global__ void GenerateNormalizedProb(const T* logits, const U* sum_probs,
   const int row = tid / num_cols;
   const int col = tid % num_cols;
 
-  // TODO(jamesqin): change to half2 load when inputs are Eigen::half.
+  // TODO (jamesqin): change to half2 load when inputs are Eigen::half. id:2474
+  // https://github.com/imdone/tensorflow/issues/2473
   U input = strict_cast<U>(logits[tid]);
   U max_val = strict_cast<U>(ldg(max_logits + row));
   U result;
@@ -101,7 +102,8 @@ struct SubtractAndExpFunctor {
       : logits_(logits), max_logits_(max_logits), num_cols_(num_cols) {}
 
   __host__ __device__ U operator()(const int gid) const {
-    // TODO(jamesqin): change to half2 load when inputs are Eigen::half.
+    // TODO (jamesqin): change to half2 load when inputs are Eigen::half. id:2730
+    // https://github.com/imdone/tensorflow/issues/2729
     const U diff =
         strict_cast<U>(logits_[gid] - ldg(max_logits_ + gid / num_cols_));
     return exp(diff);

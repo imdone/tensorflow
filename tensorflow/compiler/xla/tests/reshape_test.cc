@@ -125,7 +125,8 @@ XLA_TEST_P(ReshapeTest, ScalarToSingleElementArray) {
                            zero_error_spec_);
 }
 
-// TODO(b/29185393): Make this work with the GPU backend. The GPU backend
+// TODO (b/29185393): Make this work with the GPU backend. The GPU backend id:940
+// https://github.com/imdone/tensorflow/issues/941
 // does not handle zero-sized shapes correctly. Failed last on 2017-11-30
 // with an incorrect result rank.
 XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(Trivial0x3)) {
@@ -141,7 +142,8 @@ XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(Trivial0x3)) {
                            zero_error_spec_);
 }
 
-// TODO(b/29185393): Make this work with the GPU backend. The GPU backend
+// TODO (b/29185393): Make this work with the GPU backend. The GPU backend id:543
+// https://github.com/imdone/tensorflow/issues/544
 // does not handle zero-sized shapes correctly. Failed last on 2017-05-15
 // with an incorrect result rank.
 XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(Trivial0x3WithParameter)) {
@@ -158,7 +160,8 @@ XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(Trivial0x3WithParameter)) {
                            zero_error_spec_);
 }
 
-// TODO(b/29185393): Make this work with the GPU backend. The GPU backend
+// TODO (b/29185393): Make this work with the GPU backend. The GPU backend id:632
+// https://github.com/imdone/tensorflow/issues/633
 // does not handle zero-sized shapes correctly. Failed last on 2017-11-30
 // with an incorrect result rank.
 XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(Trivial3x0)) {
@@ -200,10 +203,11 @@ XLA_TEST_P(ReshapeTest, Trivial3x1) {
                            zero_error_spec_);
 }
 
-// TODO(b/29185393): Make this work with the GPU backend. The GPU backend
+// TODO (b/29185393): Make this work with the GPU backend. The GPU backend id:477
+// https://github.com/imdone/tensorflow/issues/478
 // does not handle zero-sized shapes correctly. Failed last on 2017-11-30
 // with an incorrect result rank.
-//
+// 
 // Splits an empty vector into an empty matrix.
 XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(R1ToR2_0_To_2x0)) {
   XlaBuilder builder(TestName());
@@ -234,10 +238,11 @@ XLA_TEST_P(ReshapeTest, R1ToR2_6_To_2x3) {
                            zero_error_spec_);
 }
 
-// TODO(b/29185393): Make this work with the GPU backend. The GPU backend
+// TODO (b/29185393): Make this work with the GPU backend. The GPU backend id:463
+// https://github.com/imdone/tensorflow/issues/464
 // does not handle zero-sized shapes correctly. Failed last on 2017-11-30
 // with an incorrect result rank.
-//
+// 
 // Transposes a 2x0 array to a 0x2 array.
 XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(Reshape0x2To2x0)) {
   XlaBuilder builder(TestName());
@@ -286,10 +291,11 @@ XLA_TEST_P(ReshapeTest, TransposeAsReshape) {
                            zero_error_spec_);
 }
 
-// TODO(b/29185393): Make this work with the GPU backend. The GPU backend
+// TODO (b/29185393): Make this work with the GPU backend. The GPU backend id:942
+// https://github.com/imdone/tensorflow/issues/943
 // does not handle zero-sized shapes correctly. Failed last on 2017-11-30
 // with an incorrect result rank.
-//
+// 
 // Transposes a 0x4 array with XlaBuilder::Transpose.
 XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(Transpose0x4)) {
   XlaBuilder builder(TestName());
@@ -319,10 +325,11 @@ XLA_TEST_P(ReshapeTest, Transpose4x3) {
                            zero_error_spec_);
 }
 
-// TODO(b/29185393): Make this work with the GPU backend. The GPU backend
+// TODO (b/29185393): Make this work with the GPU backend. The GPU backend id:548
+// https://github.com/imdone/tensorflow/issues/549
 // does not handle zero-sized shapes correctly. Failed last on 2017-11-30
 // with an incorrect result rank.
-//
+// 
 // Reshapes an empty 2-dimensional array with dimensions that are not just a
 // rearrangement of the originals (split), but no reordering (no shuffle).
 XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(ReshapeSplitNoShuffleZeroElements)) {
@@ -338,7 +345,8 @@ XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(ReshapeSplitNoShuffleZeroElements)) {
                            zero_error_spec_);
 }
 
-// TODO(b/29185393): Make this work with the GPU backend. The GPU backend
+// TODO (b/29185393): Make this work with the GPU backend. The GPU backend id:634
+// https://github.com/imdone/tensorflow/issues/635
 // does not handle zero-sized shapes correctly. Failed last on 2017-11-30
 // with an incorrect result rank.
 XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(ReshapeR4ToR2ZeroElements)) {
@@ -372,10 +380,11 @@ XLA_TEST_P(ReshapeTest, ReshapeSplitNoShuffle) {
                            zero_error_spec_);
 }
 
-// TODO(b/29185393): Make this work with the GPU backend. The GPU backend
+// TODO (b/29185393): Make this work with the GPU backend. The GPU backend id:479
+// https://github.com/imdone/tensorflow/issues/480
 // does not handle zero-sized shapes correctly. Failed last on 2017-11-30
 // with an incorrect result rank.
-//
+// 
 XLA_TEST_P(ReshapeTest, DISABLED_ON_GPU(ReshapeSplitAndShuffleZeroElements)) {
   XlaBuilder builder(TestName());
   auto input_literal = Literal::CreateFromArray(Array2D<float>(0, 6));
@@ -409,7 +418,8 @@ XLA_TEST_P(ReshapeTest, ReshapeSplitAndShuffle) {
 
 // The following tests use the same input 3D array; they test the examples we
 // show for the Reshape operation in the operation_semantics document.
-// TODO(b/34503277): find a way to show this code in the documentation without
+// TODO (b/34503277): find a way to show this code in the documentation without id:467
+// https://github.com/imdone/tensorflow/issues/468
 // duplication on the TF documentation server.
 static Array3D<float> ArrayForDocR3Tests() {
   return Array3D<float>({{{10, 11, 12}, {15, 16, 17}},

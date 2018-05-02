@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// TODO(shlens, sherrym): Consider adding additional tests in image_ops.py in
+// TODO (shlens, sherrym): Consider adding additional tests in image_ops.py in id:2257
+// https://github.com/imdone/tensorflow/issues/2256
 // order to compare the reference implementation for image resizing in Python
 // Image Library.
 #include "tensorflow/core/framework/allocator.h"

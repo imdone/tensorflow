@@ -197,8 +197,9 @@ def compute_weighted_loss(
   with ops.name_scope(scope, "weighted_loss", (losses, weights)):
     # Save the `reduction` argument for loss normalization when distributing
     # to multiple towers.
-    # TODO(josh11b): Associate it with the returned op for more precision.
-    ops.get_default_graph()._last_loss_reduction = reduction  # pylint: disable=protected-access
+    # TODO (josh11b): Associate it with the returned op for more precision. id:3872
+    # https://github.com/imdone/tensorflow/issues/3870
+    #     ops.get_default_graph()._last_loss_reduction = reduction  # pylint: disable=protected-access
 
     with ops.control_dependencies((
         weights_broadcast_ops.assert_broadcastable(weights, losses),)):
@@ -492,7 +493,8 @@ def log_loss(labels, predictions, weights=1.0, epsilon=1e-7, scope=None,
         losses, weights, scope, loss_collection, reduction=reduction)
 
 
-# TODO(b/37208492): Add reduction arg.
+# TODO (b/37208492): Add reduction arg. id:4301
+# https://github.com/imdone/tensorflow/issues/4299
 @tf_export("losses.mean_pairwise_squared_error")
 def mean_pairwise_squared_error(
     labels, predictions, weights=1.0, scope=None,
@@ -755,7 +757,8 @@ def softmax_cross_entropy(
         losses, weights, scope, loss_collection, reduction=reduction)
 
 
-# TODO(ptucker): Merge this with similar method in metrics_impl.
+# TODO (ptucker): Merge this with similar method in metrics_impl. id:3925
+# https://github.com/imdone/tensorflow/issues/3923
 def _remove_squeezable_dimensions(
     labels, predictions, weights=None, expected_rank_diff=0):
   """Internal version of _remove_squeezable_dimensions which handles weights.

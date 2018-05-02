@@ -84,7 +84,8 @@ _TPU_TRAIN_OP = '_tpu_train_op'
 _RESERVED_PARAMS_KEYS = [_BATCH_SIZE_KEY]
 
 
-# TODO(b/65703635): Flip the value and remove all dead code. Currently, this is
+# TODO (b/65703635): Flip the value and remove all dead code. Currently, this is id:1747
+# https://github.com/imdone/tensorflow/issues/1747
 # only used for per-core based deployments. For per-host based pipelines, if a
 # user returns a Dataset instance it will be automatically wrapped in a
 # tf.while_loop (This can be disabled by returning features and labels
@@ -619,16 +620,17 @@ class _StoppingPredictHook(session_run_hook.SessionRunHook):
     _ = run_context
     scalar_stopping_signal = run_values.results
     if _StopSignals.should_stop(scalar_stopping_signal):
-      # NOTE(xiejw): In prediction, stopping signals are inserted for each
+      # NOTE (xiejw): In prediction, stopping signals are inserted for each id:1326
+      # https://github.com/imdone/tensorflow/issues/1327
       # batch. And we append one more batch to signal the system it should stop.
       # The data flow might look like
-      #
+      # 
       #  batch   0: images, labels, stop = 0  (user provided)
       #  batch   1: images, labels, stop = 0  (user provided)
       #  ...
       #  batch  99: images, labels, stop = 0  (user provided)
       #  batch 100: images, labels, stop = 1  (TPUEstimator appended)
-      #
+      # 
       # where the final batch (id = 100) is appended by TPUEstimator, so we
       # should drop it before returning the predictions to user.
       # To achieve that, we throw the OutOfRangeError in after_run. Once
@@ -703,7 +705,8 @@ def generate_per_host_enqueue_ops_fn_for_host(
     if is_dataset:
       hooks.append(inputs.dataset_initializer_hook())
 
-  # TODO(ylc): Refactoring the code to merge the tpu ordinal logic here and the
+  # TODO (ylc): Refactoring the code to merge the tpu ordinal logic here and the id:1836
+  # https://github.com/imdone/tensorflow/issues/1836
   # _TPUContext.tpu_ordinal_function. We should either introduce another
   # abstraction or a different helper method.
   def _tpu_ordinal_function_impl(shard_index_in_host):
@@ -769,7 +772,8 @@ def generate_per_host_v2_enqueue_ops_fn_for_host(
       raise TypeError('`input_fn` must return a `Dataset` for the PER_HOST_V2 '
                       'input pipeline configuration.')
     if ctx.mode == model_fn_lib.ModeKeys.PREDICT:
-      # TODO(b/XXX): Add predict support for PER_HOST_V2
+      # TODO (b/XXX): Add predict support for PER_HOST_V2 id:2572
+      # https://github.com/imdone/tensorflow/issues/2571
       raise TypeError('Most PREDICT not yet supported in PER_HOST_V2 mode.')
 
     hooks.append(inputs.dataset_initializer_hook())
@@ -1057,13 +1061,14 @@ class _InputPipeline(object):
                       host_device, host_id))
             all_hooks.extend(hooks)
 
-            # NOTE(xiejw): We dispatch here based on the return type of the
+            # NOTE (xiejw): We dispatch here based on the return type of the id:2458
+            # https://github.com/imdone/tensorflow/issues/2457
             # users `input_fn`.
-            #
+            # 
             # 1. If input_fn returns a Dataset instance, we initialize the
             # iterator outside of tf.while_loop, and call the iterator.get_next
             # inside tf.while_loop.  This should be always safe.
-            #
+            # 
             # 2. If input_fn returns (features, labels), it is too late to wrap
             # them inside tf.while_loop, as resource initialization cannot be
             # handled in TF control flow properly. In this case, we will use
@@ -1264,8 +1269,10 @@ class _ModelFnWrapper(object):
       captured_scaffold_fn.capture(tpu_estimator_spec.scaffold_fn)
       to_record = {}
       identity_fn = lambda **kwargs: kwargs
-      # TODO(xiejw): Adds validation for prediction dictionrary.
-      # TODO(xiejw): Adds support for single tensor as predictions.
+      # TODO (xiejw): Adds validation for prediction dictionrary. id:1749
+      # https://github.com/imdone/tensorflow/issues/1749
+      # TODO (xiejw): Adds support for single tensor as predictions. id:1330
+      # https://github.com/imdone/tensorflow/issues/1331
       if not isinstance(tpu_estimator_spec.predictions, dict):
         raise TypeError('TPUEstimatorSpec.predictions must be dict of Tensors.')
       to_record['predictions'] = [identity_fn, tpu_estimator_spec.predictions]
@@ -1435,7 +1442,8 @@ class _OutfeedHostCall(object):
       return []
 
     tensors = []
-    # TODO(jhseu): Consider deduping tensors.
+    # TODO (jhseu): Consider deduping tensors. id:1838
+    # https://github.com/imdone/tensorflow/issues/1838
     for name in self._names:
       tensors.extend(self._tensors[name])
 
@@ -1494,7 +1502,8 @@ class _OutfeedHostCall(object):
     # It is assumed evaluation always happens on single host TPU system. So,
     # place all ops on tpu host if possible.
     #
-    # TODO(jhseu): Evaluate whether this is right for summaries.
+    # TODO (jhseu): Evaluate whether this is right for summaries. id:2575
+# https://github.com/imdone/tensorflow/issues/2574
     with ops.device(self._ctx.tpu_host_placement_function(core_id=0)):
       for name in self._names:
         dequeue_ops = dequeue_ops_by_name[name]
@@ -1503,7 +1512,8 @@ class _OutfeedHostCall(object):
             raise RuntimeError(
                 'All tensors outfed from TPU should preserve batch size '
                 'dimension, but got scalar {}'.format(dequeue_ops[i][0]))
-          # TODO(xiejw): Allow users to specify the axis for batch size
+          # TODO (xiejw): Allow users to specify the axis for batch size id:2461
+          # https://github.com/imdone/tensorflow/issues/2460
           # dimension.
           dequeue_ops[i] = array_ops.concat(dequeue_ops[i], axis=0)
 
@@ -1534,7 +1544,8 @@ class _OutfeedHostCallHook(session_run_hook.SessionRunHook):
     # We duplicate this code from the TPUInfeedOutfeedSessionHook rather than
     # create a separate hook to guarantee execution order, because summaries
     # need to be initialized before the outfeed thread starts.
-    # TODO(jhseu): Make a wrapper hook instead?
+    # TODO (jhseu): Make a wrapper hook instead? id:1750
+    # https://github.com/imdone/tensorflow/issues/1750
     self._init_ops = contrib_summary.summary_writer_initializer_op()
     # Get all the writer resources from the initializer, so we know what to
     # flush.

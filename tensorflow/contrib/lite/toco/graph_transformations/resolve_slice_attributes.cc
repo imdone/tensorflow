@@ -45,7 +45,8 @@ bool ResolveSliceAttributes::Run(Model* model, std::size_t op_index) {
   op->begin = begin_array.GetBuffer<ArrayDataType::kInt32>().data;
   op->size = size_array.GetBuffer<ArrayDataType::kInt32>().data;
 
-  // TODO(dkalenichenko): Delete the extra inputs?
+  // TODO (dkalenichenko): Delete the extra inputs? id:1248
+  // https://github.com/imdone/tensorflow/issues/1249
 
   return true;
 }

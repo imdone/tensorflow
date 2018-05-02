@@ -217,7 +217,8 @@ class BroadcastSimpleTest(test.TestCase):
       tf_gpu = out.eval()
     self.assertAllClose(np_ans, tf_gpu)
     self.assertShapeEqual(np_ans, out)
-    # TODO(zhifengc/ke): make gradient checker work on GPU.
+    # TODO (zhifengc/ke): make gradient checker work on GPU. id:3798
+    # https://github.com/imdone/tensorflow/issues/3797
 
   def testGradient(self):
     x = (1 + np.linspace(0, 5, np.prod([1, 3, 2]))).astype(np.float32).reshape(

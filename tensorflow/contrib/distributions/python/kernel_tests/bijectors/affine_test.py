@@ -561,7 +561,8 @@ class AffineBijectorTest(test.TestCase):
 
           scale *= np.ones(shape=x.shape[:-1], dtype=scale.dtype)
           ildj = -np.log(np.abs(np.linalg.det(scale)))
-          # TODO(jvdillon): We need to make it so the scale_identity_multiplier
+          # TODO (jvdillon): We need to make it so the scale_identity_multiplier id:1102
+          # https://github.com/imdone/tensorflow/issues/1103
           # case does not deviate in expected shape. Fixing this will get rid of
           # these special cases.
           if (ildj.ndim > 0 and (len(scale_args) == 1 or (

@@ -70,7 +70,8 @@ public class ObjectTracker {
 
   /**
    * How many frames of optical flow deltas to record.
-   * TODO(andrewharp): Push this down to the native level so it can be polled
+   * TODO (andrewharp): Push this down to the native level so it can be polled id:4157
+   * https://github.com/imdone/tensorflow/issues/4154
    * efficiently into a an array for upload, instead of keeping a duplicate
    * copy in Java.
    */

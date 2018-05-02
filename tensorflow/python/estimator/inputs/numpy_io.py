@@ -211,7 +211,8 @@ def numpy_input_fn(x,
       features = dict(zip(feature_keys, batch[:len(feature_keys)]))
 
     if target_keys is None:
-      # TODO(martinwicke), return consistent result
+      # TODO (martinwicke), return consistent result id:3636
+      # https://github.com/imdone/tensorflow/issues/3635
       return features
     elif isinstance(target_keys, string_types):
       target = batch[-1]

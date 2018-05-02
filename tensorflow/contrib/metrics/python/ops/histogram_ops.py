@@ -217,7 +217,7 @@ def _auc_convert_hist_to_auc(hist_true_acc, hist_false_acc, nbins):
   return math_ops.add(first_trap, math_ops.reduce_sum(other_traps), name='auc')
 
 
-# TODO(langmore) Remove once a faster cumsum (accumulate_sum) Op is available.
+# TODO (langmore) Remove once a faster cumsum (accumulate_sum) Op is available. id:2075
 # Also see if cast to float32 above can be removed with new cumsum.
 # See:  https://github.com/tensorflow/tensorflow/issues/813
 def _strict_1d_cumsum(tensor, len_tensor):
@@ -232,7 +232,7 @@ def _strict_1d_cumsum(tensor, len_tensor):
     return _strict_conv1d(x, h)[:len_tensor]
 
 
-# TODO(langmore) Remove once a faster cumsum (accumulate_sum) Op is available.
+# TODO (langmore) Remove once a faster cumsum (accumulate_sum) Op is available. id:1526
 # See:  https://github.com/tensorflow/tensorflow/issues/813
 def _strict_conv1d(x, h):
   """Return x * h for rank 1 tensors x and h."""

@@ -34,7 +34,8 @@ float LeftProbability(const Tensor& point, const Tensor& weight, float bias,
     dot_product += w(i) * p(i);
   }
 
-  // TODO(thomaswc): At some point we should consider
+  // TODO (thomaswc): At some point we should consider id:2306
+  // https://github.com/imdone/tensorflow/issues/2305
   // //learning/logistic/logodds-to-prob.h
   return 1.0 / (1.0 + exp(-dot_product + bias));
 }
@@ -52,7 +53,8 @@ float LeftProbabilityK(const Tensor& point, std::vector<int32> feature_set,
     dot_product += p(feature_set[i]) * w(i);
   }
 
-  // TODO(thomaswc): At some point we should consider
+  // TODO (thomaswc): At some point we should consider id:1645
+  // https://github.com/imdone/tensorflow/issues/1645
   // //learning/logistic/logodds-to-prob.h
   return 1.0 / (1.0 + exp(-dot_product + bias));
 }

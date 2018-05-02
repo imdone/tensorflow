@@ -30,7 +30,8 @@ DataColumnTypes FindDenseFeatureSpec(
 
 DataColumnTypes FindSparseFeatureSpec(
     int32 input_feature, const tensorforest::TensorForestDataSpec& spec) {
-  // TODO(thomaswc): Binary search here, especially when we start using more
+  // TODO (thomaswc): Binary search here, especially when we start using more id:1649
+  // https://github.com/imdone/tensorflow/issues/1649
   // than one sparse column
   int32 size_sum = spec.sparse(0).size();
   int32 column_num = 0;
@@ -93,7 +94,8 @@ void GetTwoBestClassification(const Tensor& total_counts,
   const auto tc =
       total_counts.Slice(accumulator, accumulator + 1).unaligned_flat<float>();
 
-  // TODO(gilberth): See if we can delay evaluation here by templating the
+  // TODO (gilberth): See if we can delay evaluation here by templating the id:1231
+  // https://github.com/imdone/tensorflow/issues/1232
   // arguments to ClassificationSplitScore.
   const Eigen::Tensor<float, 1, Eigen::RowMajor> splits =
       split_counts.Slice(accumulator, accumulator + 1).unaligned_flat<float>();
@@ -210,7 +212,8 @@ bool BestSplitDominatesRegression(const Tensor& total_sums,
                                   const Tensor& split_sums,
                                   const Tensor& split_squares,
                                   int32 accumulator) {
-  // TODO(thomaswc): Implement this, probably as part of v3.
+  // TODO (thomaswc): Implement this, probably as part of v3. id:1776
+  // https://github.com/imdone/tensorflow/issues/1776
   return false;
 }
 
@@ -485,7 +488,8 @@ double getChebyshevEpsilon(const std::vector<float>& mu1,
   }
 
   double sdiscrim = sqrt(discrim);
-  // TODO(thomaswc): Analyze whatever one of these is always closer.
+  // TODO (thomaswc): Analyze whatever one of these is always closer. id:2453
+  // https://github.com/imdone/tensorflow/issues/2452
   double v1 = (-b + sdiscrim) / (2 * a);
   double v2 = (-b - sdiscrim) / (2 * a);
   double dist1 = getDistanceFromLambda3(v1, mu1, mu2);

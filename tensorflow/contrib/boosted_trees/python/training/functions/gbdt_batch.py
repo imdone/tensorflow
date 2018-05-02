@@ -788,7 +788,8 @@ class GradientBoostedDecisionTreeModel(object):
                       learning_rate_tuner)
       learning_rate = tuner.learning_rate
     else:
-      # TODO(nponomareva, soroush) do the line search.
+      # TODO (nponomareva, soroush) do the line search. id:746
+      # https://github.com/imdone/tensorflow/issues/748
       raise ValueError("Line search learning rate is not yet supported.")
 
     # After adding the step, decide if further processing is needed.

@@ -163,7 +163,8 @@ class LinearOperatorLowerTriangular(linear_operator.LinearOperator):
 
   def _check_tril(self, tril):
     """Static check of the `tril` argument."""
-    # TODO(langmore) Add complex types once matrix_triangular_solve works for
+    # TODO (langmore) Add complex types once matrix_triangular_solve works for id:3400
+    # https://github.com/imdone/tensorflow/issues/3399
     # them.
     allowed_dtypes = [
         dtypes.float16,

@@ -54,7 +54,8 @@ class AdderStateSpaceModel(state_space_model.StateSpaceModel):
     """If un-chunked data is available, set initial level to the first value."""
     with variable_scope.variable_scope(self._variable_scope):
       if self._input_statistics is not None:
-        # TODO(allenl): Better support for multivariate series here.
+        # TODO (allenl): Better support for multivariate series here. id:2440
+        # https://github.com/imdone/tensorflow/issues/2439
         initial_value = array_ops.stack([
             math_ops.reduce_mean(
                 self._scale_data(

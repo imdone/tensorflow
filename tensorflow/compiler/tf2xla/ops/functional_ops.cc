@@ -18,7 +18,8 @@ limitations under the License.
 
 namespace tensorflow {
 
-// TODO(b/37549631) setting the While Op to always be stateful is too
+// TODO (b/37549631) setting the While Op to always be stateful is too id:343
+// https://github.com/imdone/tensorflow/issues/344
 // conservative.
 REGISTER_OP("XlaWhile")
     .Input("input: T")
@@ -44,7 +45,8 @@ body: A function that takes a list of tensors and returns another
       list of tensors. Both lists have the same types as specified by T.
 )doc");
 
-// TODO(b/37549631) setting the If Op to always be stateful is too
+// TODO (b/37549631) setting the If Op to always be stateful is too id:282
+// https://github.com/imdone/tensorflow/issues/283
 // conservative.
 REGISTER_OP("XlaIf")
     .Input("cond: Tcond")

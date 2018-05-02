@@ -256,18 +256,21 @@ def _freeze_saved_model(saved_model_dir, input_arrays, input_shapes,
 
   graph = ops.Graph()
   with session.Session(graph=graph) as sess:
-    # TODO(nupurgarg): Throw ValueError if SavedModel has assets/ directory.
+    # TODO (nupurgarg): Throw ValueError if SavedModel has assets/ directory. id:1212
+    # https://github.com/imdone/tensorflow/issues/1213
     loader.load(sess, meta_graph.meta_info_def.tags, saved_model_dir)
 
     # Gets input and output tensors.
-    # TODO(zhixianyan): Use TFLite supported Op list to filter outputs.
+    # TODO (zhixianyan): Use TFLite supported Op list to filter outputs. id:1011
+    # https://github.com/imdone/tensorflow/issues/1012
     in_tensors = _get_tensors(graph, inputs, input_arrays)
     out_tensors = _get_tensors(graph, outputs, output_arrays)
 
     # Gets fully defined tensor shape. An input tensor with None in the first
     # dimension, e.g. (None, 224, 224, 3), is replaced with the batch_size.
     # Shapes with None after the first dimension result in a ValueError.
-    # TODO(zhixianyan): Add supports for input tensor with more None in shape.
+    # TODO (zhixianyan): Add supports for input tensor with more None in shape. id:1589
+    # https://github.com/imdone/tensorflow/issues/1589
     for tensor in in_tensors:
       if (input_shapes and tensor.name in input_shapes and
           input_shapes[tensor.name] is not None):

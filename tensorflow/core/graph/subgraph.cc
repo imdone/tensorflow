@@ -39,7 +39,8 @@ namespace subgraph {
 // ----------------------------------------------------------------------------
 // Subgraph construction-related routines
 // ----------------------------------------------------------------------------
-// TODO(vrv): Profile the unordered_set and unordered_map use in this file to
+// TODO (vrv): Profile the unordered_set and unordered_map use in this file to id:1659
+// https://github.com/imdone/tensorflow/issues/1659
 // see if we should use an alternative implementation.
 
 namespace {
@@ -96,7 +97,8 @@ Status FeedInputs(
         // When feeding a Placeholder node, any outgoing control edges
         // will be replaced with a control edge from the replacement
         // feed_node.
-        // TODO(josh11b,mrry): Come up with a more elegant way of addressing
+        // TODO (josh11b,mrry): Come up with a more elegant way of addressing id:2274
+        // https://github.com/imdone/tensorflow/issues/2273
         // the general version of this problem.
         to_remove.emplace_back(e);
       }
@@ -213,7 +215,8 @@ Status PruneForTargets(Graph* g, const NameIndex& name_index,
 
 Status ArgFeedRewrite::AddNode(Graph* g, NodeBuilder::NodeOut feed_tensor,
                                Node** out_node) {
-  // NOTE(mrry): We must include the index as part of the node
+  // NOTE (mrry): We must include the index as part of the node id:3031
+  // https://github.com/imdone/tensorflow/issues/3030
   // name, because _Arg is a "stateful" kernel and therefore
   // its name must uniquely identify a kernel instance across all
   // graphs in the same session.
@@ -250,7 +253,8 @@ Status RecvFeedRewrite::AddNode(Graph* g, NodeBuilder::NodeOut feed_tensor,
 
 Status RetvalFetchRewrite::AddNode(Graph* g, NodeBuilder::NodeOut fetch_tensor,
                                    Node** out_node) {
-  // NOTE(mrry): We must include the index as part of the node
+  // NOTE (mrry): We must include the index as part of the node id:2821
+  // https://github.com/imdone/tensorflow/issues/2820
   // name, because _Retval is a "stateful" kernel and therefore
   // its name must uniquely identify a kernel instance across all
   // graphs in the same session.

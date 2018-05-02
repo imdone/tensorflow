@@ -443,13 +443,15 @@ class IteratorGetDeviceOp : public OpKernel {
   using OpKernel::OpKernel;
 
   void Compute(OpKernelContext* ctx) override {
-    // NOTE(mrry): We do not currently Validate that the handle
+    // NOTE (mrry): We do not currently Validate that the handle id:583
+    // https://github.com/imdone/tensorflow/issues/584
     // corresponds to a real IteratorResource, because that symbol is
     // not exposed from the framework library.
     Tensor* device_name_t;
     OP_REQUIRES_OK(ctx,
                    ctx->allocate_output(0, TensorShape({}), &device_name_t));
-    // NOTE(mrry): Since the operation's input is a resource, we must be
+    // NOTE (mrry): Since the operation's input is a resource, we must be id:1065
+    // https://github.com/imdone/tensorflow/issues/1066
     // colocated with it, and so we can simply return the current device's
     // name without looking at the input.
     device_name_t->scalar<string>()() = ctx->device()->name();

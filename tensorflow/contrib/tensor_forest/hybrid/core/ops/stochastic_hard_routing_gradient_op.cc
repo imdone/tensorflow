@@ -185,7 +185,8 @@ class StochasticHardRoutingGradient : public OpKernel {
         CHECK_GT(node, -1);
 
         // Compute data, parameter, and bias gradients.
-        // TODO(atwoodj): Should these be normalized?  Loss looks pretty large.
+        // TODO (atwoodj): Should these be normalized? Loss looks pretty large. id:2383
+        // https://github.com/imdone/tensorflow/issues/2382
         for (int k = 0; k < num_features; k++) {
           out_data(node, k) = tree_parameters(node, k);
           out_parameters(i, node, k) = out_parameters(i, node, k) + data(i, k);

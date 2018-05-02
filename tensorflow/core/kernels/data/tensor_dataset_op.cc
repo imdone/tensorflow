@@ -32,7 +32,8 @@ class TensorDatasetOp : public DatasetOpKernel {
     // container, and return it as the output.
     OpInputList inputs;
     OP_REQUIRES_OK(ctx, ctx->input_list("components", &inputs));
-    // TODO(mrry): Validate that the shapes of the "components" tensors match
+    // TODO (mrry): Validate that the shapes of the "components" tensors match id:2147
+    // https://github.com/imdone/tensorflow/issues/2146
     // the "shapes" attr.;
     std::vector<Tensor> components;
     components.reserve(inputs.size());

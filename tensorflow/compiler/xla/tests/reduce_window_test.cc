@@ -860,7 +860,8 @@ INSTANTIATE_TEST_CASE_P(
 
 class R4ReduceWindowAnyDimsTest : public R4ReduceWindowTest {};
 
-// TODO(b/72234705): Fix the test cases failed on CPU and GPU.
+// TODO (b/72234705): Fix the test cases failed on CPU and GPU. id:629
+// https://github.com/imdone/tensorflow/issues/630
 XLA_TEST_P(R4ReduceWindowAnyDimsTest, DISABLED_ON_CPU(DISABLED_ON_GPU(DoIt))) {
   DoIt();
 }
@@ -1022,7 +1023,8 @@ struct R2ReduceWindowTestData {
      /*strides=*/{2, 99}, /*pad_low=*/{0, 0}, /*pad_high=*/{35, 35},
      /*layout=*/{0, 1},
      /*reducer=*/Reducer::kAdd},
-// TODO(b/74260408): This test last failed on GPU on 2018-03-08, likely due to a
+// TODO (b/74260408): This test last failed on GPU on 2018-03-08, likely due to a id:474
+// https://github.com/imdone/tensorflow/issues/475
 // ptxas bug.
 #ifndef XLA_TEST_BACKEND_GPU
     {/*base_bounds=*/{6, 152}, /*window_bounds=*/{2, 25},
@@ -1148,7 +1150,8 @@ INSTANTIATE_TEST_CASE_P(
 
 class R2ReduceWindowFailingCpuGpuBf16Test : public R2ReduceWindowTest {};
 
-// TODO(b/72234705): Fix the test cases failed on CPU and GPU.
+// TODO (b/72234705): Fix the test cases failed on CPU and GPU. id:459
+// https://github.com/imdone/tensorflow/issues/460
 XLA_TEST_P(R2ReduceWindowFailingCpuGpuBf16Test,
            DISABLED_ON_CPU(DISABLED_ON_GPU(DoIt))) {
   DoIt();

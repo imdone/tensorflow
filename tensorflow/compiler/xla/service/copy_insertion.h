@@ -60,7 +60,8 @@ class CopyInsertion : public HloPassInterface {
   // visibility across computation boundaries. This method adds these necessary
   // copies. Returns whether the module was modified.
   //
-  // TODO(b/62548313): Remove this when buffer assignment is module-scoped.
+  // TODO (b/62548313): Remove this when buffer assignment is module-scoped. id:322
+// https://github.com/imdone/tensorflow/issues/323
   static StatusOr<bool> AddCopiesForBufferAssignment(HloModule* module);
 };
 

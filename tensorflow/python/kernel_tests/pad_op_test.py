@@ -213,7 +213,8 @@ class PadOpTest(test.TestCase):
         self.assertShapeEqual(np_val, tf_val)
 
   def testIntTypes(self):
-    # TODO(touts): Figure out why the padding tests do not work on GPU
+    # TODO (touts): Figure out why the padding tests do not work on GPU id:3778
+    # https://github.com/imdone/tensorflow/issues/3778
     # for int types and rank > 2.
     for t in [np.int8, np.int32, np.int64]:
       self._testAll(

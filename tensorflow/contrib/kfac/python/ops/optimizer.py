@@ -655,7 +655,8 @@ class KfacOptimizer(gradient_descent.GradientDescentOptimizer):
     def _update_velocity(vec, var):
       velocity = self._zeros_slot(var, "velocity", self._name)
       with ops.colocate_with(velocity):
-        # NOTE(mattjj): read/modify/write race condition not suitable for async.
+        # NOTE (mattjj): read/modify/write race condition not suitable for async. id:924
+        # https://github.com/imdone/tensorflow/issues/925
 
         # Compute the new velocity for this variable.
         new_velocity = decay * velocity + vec_coeff * vec

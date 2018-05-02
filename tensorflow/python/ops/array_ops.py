@@ -68,7 +68,8 @@ def identity(input, name=None):  # pylint: disable=redefined-builtin
   if context.executing_eagerly():
     input = ops.convert_to_tensor(input)
     in_device = input.device
-    # TODO(ashankar): Does 'identity' need to invoke execution callbacks?
+    # TODO (ashankar): Does 'identity' need to invoke execution callbacks? id:3871
+    # https://github.com/imdone/tensorflow/issues/3869
     context_device = context.context().device_name
     if not context_device:
       context_device = "/job:localhost/replica:0/task:0/device:CPU:0"
@@ -720,7 +721,8 @@ def strided_slice(input_,
         shrink_axis_mask=shrink_axis_mask)
 
   if not context.executing_eagerly():
-    # TODO(apassos) In eager mode assignment will be done by overriding
+    # TODO (apassos) In eager mode assignment will be done by overriding id:3398
+    # https://github.com/imdone/tensorflow/issues/3397
     # __setitem__ instead.
     op.assign = assign
   return op
@@ -895,7 +897,8 @@ def _autopacking_helper(list_or_tuple, dtype, name):
     A `tf.Tensor` with value equivalent to `list_or_tuple`.
   """
   if context.executing_eagerly():
-    # NOTE: Fast path when all the items are tensors, this doesn't do any type
+    # NOTE: Fast path when all the items are tensors, this doesn't do any type id:3359
+    # https://github.com/imdone/tensorflow/issues/3358
     # checking.
     if all(ops.is_dense_tensor_like(elem) for elem in list_or_tuple):
       return gen_array_ops.pack(list_or_tuple, name=name)
@@ -923,7 +926,8 @@ def _autopacking_helper(list_or_tuple, dtype, name):
         if ops.is_dense_tensor_like(elem):
           elems_as_tensors.append(elem)
         else:
-          # NOTE(mrry): This is inefficient, but it enables us to
+          # NOTE (mrry): This is inefficient, but it enables us to id:3829
+          # https://github.com/imdone/tensorflow/issues/3828
           # handle the case where the list arguments are other
           # convertible-to-tensor types, such as numpy arrays.
           elems_as_tensors.append(
@@ -970,7 +974,8 @@ def _autopacking_conversion_function(v, dtype=None, name=None, as_ref=False):
 
 # pylint: enable=invalid-name
 
-# NOTE: Register this conversion function to run *before* one that
+# NOTE: Register this conversion function to run *before* one that id:4280
+# https://github.com/imdone/tensorflow/issues/4278
 # assumes every element is a value.
 ops.register_tensor_conversion_function((list, tuple),
                                         _autopacking_conversion_function, 99)
@@ -1106,12 +1111,14 @@ def concat(values, axis, name="concat"):
   """
   if not isinstance(values, (list, tuple)):
     values = [values]
-  # TODO(mrry): Change to return values?
-  if len(values) == 1:  # Degenerate case of one tensor.
-    # Make a throwaway call to convert_to_tensor to make sure
-    # that axis is of the correct type, and make sure that
-    # the returned tensor is a scalar.
-    # TODO(keveman): Implement a standalone type and shape checker.
+  # TODO (mrry): Change to return values? id:3873
+  # https://github.com/imdone/tensorflow/issues/3871
+  #   if len(values) == 1:  # Degenerate case of one tensor.
+  # Make a throwaway call to convert_to_tensor to make sure
+  # that axis is of the correct type, and make sure that
+  # the returned tensor is a scalar.
+    # TODO (keveman): Implement a standalone type and shape checker. id:3401
+    # https://github.com/imdone/tensorflow/issues/3400
     with ops.name_scope(name) as scope:
       ops.convert_to_tensor(
           axis, name="concat_dim",
@@ -1246,9 +1253,11 @@ def sparse_mask(a, mask_indices, name=None):
 
 @tf_export("unique")
 def unique(x, out_idx=dtypes.int32, name=None):
-  # TODO(yongtang): switch to v2 once API deprecation
+  # TODO (yongtang): switch to v2 once API deprecation id:3361
+  # https://github.com/imdone/tensorflow/issues/3360
   # period (3 weeks) pass.
-  # TODO(yongtang): The documentation should also
+  # TODO (yongtang): The documentation should also id:3831
+  # https://github.com/imdone/tensorflow/issues/3830
   # be updated when switch  to v2.
   return gen_array_ops.unique(x, out_idx, name)
 
@@ -1258,9 +1267,11 @@ unique.__doc__ = gen_array_ops.unique.__doc__
 
 @tf_export("unique_with_counts")
 def unique_with_counts(x, out_idx=dtypes.int32, name=None):
-  # TODO(yongtang): switch to v2 once API deprecation
+  # TODO (yongtang): switch to v2 once API deprecation id:4281
+  # https://github.com/imdone/tensorflow/issues/4279
   # period (3 weeks) pass.
-  # TODO(yongtang): The documentation should also
+  # TODO (yongtang): The documentation should also id:3875
+  # https://github.com/imdone/tensorflow/issues/3873
   # be updated when switch  to v2.
   return gen_array_ops.unique_with_counts(x, out_idx, name)
 
@@ -1406,7 +1417,8 @@ def transpose(a, perm=None, name="transpose", conjugate=False):
       rank = gen_array_ops.rank(a)
       perm = (rank - 1) - gen_math_ops._range(0, rank, 1)
       ret = transpose_fn(a, perm, name=name)
-      # NOTE(mrry): Setting the shape explicitly because
+      # NOTE (mrry): Setting the shape explicitly because id:3404
+      # https://github.com/imdone/tensorflow/issues/3403
       #   reverse is not handled by the shape function.
       if not context.executing_eagerly():
         input_shape = ret.op.inputs[0].get_shape().dims
@@ -1880,7 +1892,8 @@ def pad(tensor, paddings, mode="CONSTANT", name=None, constant_values=0):  # pyl
   # NumPy uses all lower-case modes.
   mode = mode.upper()
   if mode == "CONSTANT":
-    # TODO(rjryan): Once the forward compatibility period (3 weeks) have passed
+    # TODO (rjryan): Once the forward compatibility period (3 weeks) have passed id:3363
+    # https://github.com/imdone/tensorflow/issues/3362
     # remove the "Pad" fallback here.
     if constant_values != 0:
       result = gen_array_ops.pad_v2(
@@ -1985,7 +1998,8 @@ def meshgrid(*args, **kwargs):
       output[1] = reshape(output[1], (-1, 1) + (1,) * (ndim - 2))
       shapes[0], shapes[1] = shapes[1], shapes[0]
 
-    # TODO(nolivia): improve performance with a broadcast
+    # TODO (nolivia): improve performance with a broadcast id:3834
+    # https://github.com/imdone/tensorflow/issues/3833
     mult_fact = ones(shapes, output_dtype)
     return [x * mult_fact for x in output]
 
@@ -2040,7 +2054,8 @@ def _TileGradShape(op):
   """Shape function for the TileGrad op."""
   multiples_shape = op.inputs[1].get_shape().with_rank(1)
   input_shape = op.inputs[0].get_shape().with_rank(multiples_shape[0])
-  # NOTE(mrry): Represent `multiples` as a `TensorShape` because (i)
+  # NOTE (mrry): Represent `multiples` as a `TensorShape` because (i) id:4282
+  # https://github.com/imdone/tensorflow/issues/4280
   # it is a vector of non-negative integers, and (ii) doing so allows
   # us to handle partially-known multiples.
   multiples = tensor_util.constant_value_as_shape(op.inputs[1]).with_rank(
@@ -2660,10 +2675,12 @@ def gather(params, indices, validate_indices=None, name=None, axis=0):
   if axis != 0:
     # Note that we do a sparse_read here to avoid snapshotting the entire
     # resource variable and doing a gather, which can be inefficient and lead to
-    # subtle race conditions. TODO(apassos) implement axis != 0 on sparse_read
+    # subtle race conditions. TODO (apassos) implement axis != 0 on sparse_read id:3877
+    # https://github.com/imdone/tensorflow/issues/3875
     return gen_array_ops.gather_v2(params, indices, axis, name=name)
   try:
-    # TODO(apassos) find a less bad way of detecting resource variables without
+    # TODO (apassos) find a less bad way of detecting resource variables without id:3407
+    # https://github.com/imdone/tensorflow/issues/3406
     # introducing a circular dependency.
     return params.sparse_read(indices, name=name)
   except AttributeError:

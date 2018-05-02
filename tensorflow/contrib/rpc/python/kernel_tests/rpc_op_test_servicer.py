@@ -83,7 +83,8 @@ class RpcOpTestServicer(test_example_pb2_grpc.TestCaseServiceServicer):
     Returns:
       output TestCase.
     """
-    # TODO(ebrevdo): Make this async wait like the stubby version.
+    # TODO (ebrevdo): Make this async wait like the stubby version. id:1628
+    # https://github.com/imdone/tensorflow/issues/1628
     time.sleep(5)
 
   def SometimesSleepForever(self, request, context):

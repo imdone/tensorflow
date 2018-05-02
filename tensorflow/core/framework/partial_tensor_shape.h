@@ -16,7 +16,8 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_PARTIAL_TENSOR_SHAPE_H_
 #define TENSORFLOW_CORE_FRAMEWORK_PARTIAL_TENSOR_SHAPE_H_
 
-// TODO(irving): Remove this forwarding header
+// TODO (irving): Remove this forwarding header id:1944
+// https://github.com/imdone/tensorflow/issues/1944
 #include "tensorflow/core/framework/tensor_shape.h"
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_PARTIAL_TENSOR_SHAPE_H_

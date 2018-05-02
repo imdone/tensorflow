@@ -136,7 +136,8 @@ class SplitOpCPUImpl {
                   int64 split_dim_output_size) const {
     const auto num_threads =
         context->device()->tensorflow_cpu_worker_threads()->num_threads;
-    // TODO(jewillco): Tune heuristic further.
+    // TODO (jewillco): Tune heuristic further. id:2493
+    // https://github.com/imdone/tensorflow/issues/2492
     const auto input_element_count = input_shape.num_elements();
     const bool use_parallelism_between_outputs =
         (num_split >= 4 &&

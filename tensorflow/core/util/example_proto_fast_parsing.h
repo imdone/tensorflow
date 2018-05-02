@@ -79,7 +79,8 @@ Status FastParseExample(const FastParseExampleConfig& config,
                         gtl::ArraySlice<string> example_names,
                         thread::ThreadPool* thread_pool, Result* result);
 
-// TODO(mrry): Move the hash table construction into the config object.
+// TODO (mrry): Move the hash table construction into the config object. id:3019
+// https://github.com/imdone/tensorflow/issues/3018
 typedef FastParseExampleConfig FastParseSingleExampleConfig;
 
 Status FastParseSingleExample(const FastParseSingleExampleConfig& config,

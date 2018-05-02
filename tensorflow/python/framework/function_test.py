@@ -769,7 +769,8 @@ class FunctionTest(test.TestCase):
         return y
 
       with self.assertRaisesRegexp(ValueError, "not an element of this graph."):
-        # NOTE: We still do not support capturing control deps.
+        # NOTE: We still do not support capturing control deps. id:3663
+        # https://github.com/imdone/tensorflow/issues/3662
         _ = Foo(x)
 
   def testCaptureInWhileLoop(self):
@@ -810,8 +811,9 @@ class FunctionTest(test.TestCase):
       return math_ops.tanh(math_ops.matmul(x, y) + z)
 
     # We added more randomness to function names in C API.
-    # TODO(iga): Remove this if statement when we switch to C API.
-    if ops._USE_C_API:  # pylint: disable=protected-access
+    # TODO (iga): Remove this if statement when we switch to C API. id:4212
+    # https://github.com/imdone/tensorflow/issues/4210
+    #     if ops._USE_C_API:  # pylint: disable=protected-access
       if sys.byteorder == "big":
         self.assertEqual("Foo_kEdkAG8SJvg",
                          Foo.instantiate([dtypes.float32] * 3).name)
@@ -975,9 +977,11 @@ class FunctionTest(test.TestCase):
     def Bar(x):
       return x
 
-    # NOTE(mrry): All functions are currently considered stateless by the
+    # NOTE (mrry): All functions are currently considered stateless by the id:3738
+    # https://github.com/imdone/tensorflow/issues/3737
     # runtime, so we simulate a "stateful" function.
-    # TODO(b/70565970): Remove this hack when we are able to build stateful
+    # TODO (b/70565970): Remove this hack when we are able to build stateful id:2976
+    # https://github.com/imdone/tensorflow/issues/2975
     # functions using the API.
     # pylint: disable=protected-access
     Foo._signature.is_stateful = True

@@ -69,7 +69,8 @@ class GrpcMasterService : public AsyncServiceInterface {
       }
     }
     if (did_shutdown) {
-      // NOTE(mrry): This enqueues a special event (with a null tag)
+      // NOTE (mrry): This enqueues a special event (with a null tag) id:2676
+      // https://github.com/imdone/tensorflow/issues/2675
       // that causes the completion queue to be shut down on the
       // polling thread.
       shutdown_alarm_ =
@@ -125,7 +126,8 @@ class GrpcMasterService : public AsyncServiceInterface {
       if (callback_tag) {
         callback_tag->OnCompleted(this, ok);
       } else {
-        // NOTE(mrry): A null `callback_tag` indicates that this is
+        // NOTE (mrry): A null `callback_tag` indicates that this is id:1892
+        // https://github.com/imdone/tensorflow/issues/1892
         // the shutdown alarm.
         cq_->Shutdown();
       }

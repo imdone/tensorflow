@@ -362,7 +362,8 @@ class AdditiveExternalRegretOptimizer(_ExternalRegretOptimizer):
     return state
 
   def _constraint_grad_and_var(self, state, gradient):
-    # TODO(acotter): tf.colocate_with(), if colocate_gradients_with_ops is True?
+    # TODO (acotter): tf.colocate_with(), if colocate_gradients_with_ops is True? id:739
+    # https://github.com/imdone/tensorflow/issues/740
     return (-gradient, state)
 
   def _projection_op(self, state, name=None):

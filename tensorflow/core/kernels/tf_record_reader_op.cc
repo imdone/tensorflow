@@ -70,7 +70,8 @@ class TFRecordReader : public ReaderBase {
     return ReaderBase::ResetLocked();
   }
 
-  // TODO(josh11b): Implement serializing and restoring the state.
+  // TODO (josh11b): Implement serializing and restoring the state. id:2517
+  // https://github.com/imdone/tensorflow/issues/2516
 
  private:
   Env* const env_;

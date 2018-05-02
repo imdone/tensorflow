@@ -88,7 +88,8 @@ class TocoFromProtosTest(googletest.TestCase):
       # This is a valid mdoel
       self._run(sess, img, out, True)
       # This uses an invalid function.
-      # TODO(aselle): Check to make sure a warning is included.
+      # TODO (aselle): Check to make sure a warning is included. id:1501
+      # https://github.com/imdone/tensorflow/issues/1502
       self._run(sess, img, out2, True)
       # This is an identity graph, which doesn't work
       self._run(sess, img, img, False)

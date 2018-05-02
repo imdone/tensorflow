@@ -48,7 +48,8 @@ Status CompileXla(xla::CompileOnlyClient* client,
                   const xla::cpu::CpuAotCompilationOptions& aot_opts,
                   CompileResult* compile_result) {
   // Retrieves arg and result layouts from the computation.
-  // TODO(toddw): Should we let the user choose the major/minor ordering?
+  // TODO (toddw): Should we let the user choose the major/minor ordering? id:103
+  // https://github.com/imdone/tensorflow/issues/104
   xla::StatusOr<std::unique_ptr<xla::ProgramShape>> pshape_or =
       client->GetComputationShape(computation);
   if (!pshape_or.ok()) {
@@ -87,7 +88,8 @@ Status CompileGraph(const GraphDef& graph_def, const tf2xla::Config& config,
                     const MainFlags& flags, CompileResult* compile_result) {
   // Converts the graph into an XLA computation, and compiles the
   // computation.
-  // TODO(toddw): Should we let the user pick the XLA cpu vs. gpu client?
+  // TODO (toddw): Should we let the user pick the XLA cpu vs. gpu client? id:131
+  // https://github.com/imdone/tensorflow/issues/132
   se::Platform* cpu_platform =
       se::MultiPlatformManager::PlatformWithName("Host").ValueOrDie();
   xla::CompileOnlyClient* client =

@@ -102,11 +102,13 @@ class PaddedBatchDatasetOp : public UnaryDatasetOpKernel {
           input_(input) {
       input_->Ref();
 
-      // NOTE(mrry): Currently we implement "batch up to"
+      // NOTE (mrry): Currently we implement "batch up to" id:2011
+      // https://github.com/imdone/tensorflow/issues/2011
       // semantics. If we could tell statically that the input dataset
       // is infinite, then we could always report `batch_size` as the
       // 0th dimension.
-      // TODO(mrry): Need to validate that the input shape and the
+      // TODO (mrry): Need to validate that the input shape and the id:2398
+      // https://github.com/imdone/tensorflow/issues/2397
       // padded shape are "compatible" (i.e. that padded shape is >=
       // input shape, with both static and dynamic checks as appropriate).
       const auto& input_shapes = input_->output_shapes();
@@ -225,7 +227,8 @@ class PaddedBatchDatasetOp : public UnaryDatasetOpKernel {
 
         // Copy the retrieved batch elements into one output tensor
         // per tuple component.
-        // NOTE(mrry): If the input or output sizes are statically
+        // NOTE (mrry): If the input or output sizes are statically id:3159
+        // https://github.com/imdone/tensorflow/issues/3158
         // known, we could potentially read the input values in-place
         // into their respective slice locations. This would require a
         // different GetNext() overload that supports zero-copy, and might
@@ -250,7 +253,8 @@ class PaddedBatchDatasetOp : public UnaryDatasetOpKernel {
           for (int64 i = 0; i < num_batch_elements; ++i) {
             const TensorShape& element_shape =
                 batch_elements[i][component_index].shape();
-            // TODO(mrry): Perform this check in the shape function if
+            // TODO (mrry): Perform this check in the shape function if id:2942
+            // https://github.com/imdone/tensorflow/issues/2941
             // enough static information is available to do so.
             if (element_shape.dims() != padded_shape.dims()) {
               return errors::InvalidArgument(

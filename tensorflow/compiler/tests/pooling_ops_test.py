@@ -314,14 +314,16 @@ class PoolGradTest(XLATestCase):
       pool_grad_grad_func: Second-order gradient function, if available.
     """
     total_size = np.prod(input_sizes)
-    # TODO(b/73062247): MaxPoolGradGrad can confuse gradients when x is equally
+    # TODO (b/73062247): MaxPoolGradGrad can confuse gradients when x is equally id:317
+    # https://github.com/imdone/tensorflow/issues/318
     # maximal at 16 bits. Switch to np.random.randn when resolved.
     x = np.arange(1, total_size + 1, dtype=np.float32)
     x *= (np.random.randint(2, size=total_size) * 2 - 1)  # Flip signs randomly
     # Verify some specifically interesting values...
     x[np.random.choice(total_size)] = np.inf
     x[np.random.choice(total_size)] = -np.inf
-    # TODO(b/74222344): Fix nan handling for max pool grad.
+    # TODO (b/74222344): Fix nan handling for max pool grad. id:154
+    # https://github.com/imdone/tensorflow/issues/155
     # x[np.random.choice(total_size)] = np.nan
     x = x.reshape(input_sizes)
     with self.test_session() as sess:

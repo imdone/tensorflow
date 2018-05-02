@@ -82,7 +82,8 @@ def make_fn(shared_variable_store, device_id):
     try:
       variable_index = variable_scope_access_index.get(canonical_name, 0)
       v = shared_variable_store[canonical_name][variable_index]
-      # TODO(priyag): Make this variable re-use more robust by adding checks
+      # TODO (priyag): Make this variable re-use more robust by adding checks id:1107
+      # https://github.com/imdone/tensorflow/issues/1108
       # that the requested shape and dtype match the existing variable.
       variable_scope_access_index[canonical_name] = variable_index + 1
       return v

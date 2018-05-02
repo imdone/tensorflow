@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// TODO(simister): Re-enable once binary size is under control.
+// TODO (simister): Re-enable once binary size is under control. id:2308
+// https://github.com/imdone/tensorflow/issues/2307
 // #define CPU_PROVIDED_IXDIM 0
 // #include "tensorflow/core/kernels/scatter_nd_op_cpu_impl.h"
 // #undef CPU_PROVIDED_IXDIM

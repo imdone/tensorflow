@@ -86,7 +86,8 @@ void LogMessage::GenerateLogMessage() {
   strftime(time_buffer, time_buffer_size, "%Y-%m-%d %H:%M:%S",
            localtime(&now_seconds));
 
-  // TODO(jeff,sanjay): Replace this with something that logs through the env.
+  // TODO (jeff,sanjay): Replace this with something that logs through the env. id:2635
+  // https://github.com/imdone/tensorflow/issues/2634
   fprintf(stderr, "%s.%06d: %c %s:%d] %s\n", time_buffer, micros_remainder,
           "IWEF"[severity_], fname_, line_, str().c_str());
 }

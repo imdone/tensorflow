@@ -110,7 +110,8 @@ class TruncatedNormalTest(test.TestCase):
   # to see the same sequence of values. Will catch buggy
   # implementations which uses the same random number seed.
   def testDistinct(self):
-    # NOTE: TruncatedNormal on GPU is not supported.
+    # NOTE: TruncatedNormal on GPU is not supported. id:3327
+    # https://github.com/imdone/tensorflow/issues/3326
     if not test.is_gpu_available():
       for dt in dtypes.float16, dtypes.float32, dtypes.float64:
         sampler = self._Sampler(1000, 0.0, 1.0, dt, use_gpu=False)

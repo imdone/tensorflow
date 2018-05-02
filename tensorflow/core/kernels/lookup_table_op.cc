@@ -138,7 +138,8 @@ class MutableHashTableOfScalars final : public LookupInterface {
   }
 
  private:
-  // TODO(andreasst): consider using a read/write lock or a concurrent map
+  // TODO (andreasst): consider using a read/write lock or a concurrent map id:2504
+  // https://github.com/imdone/tensorflow/issues/2503
   mutable mutex mu_;
   std::unordered_map<K, V> table_ GUARDED_BY(mu_);
 };
@@ -268,7 +269,8 @@ class MutableHashTableOfTensors final : public LookupInterface {
 
  private:
   TensorShape value_shape_;
-  // TODO(andreasst): consider using a read/write lock or a concurrent map
+  // TODO (andreasst): consider using a read/write lock or a concurrent map id:3230
+  // https://github.com/imdone/tensorflow/issues/3229
   mutable mutex mu_;
   typedef gtl::InlinedVector<V, 4> ValueArray;
   std::unordered_map<K, ValueArray> table_ GUARDED_BY(mu_);
@@ -363,7 +365,8 @@ class MutableDenseHashTable final : public LookupInterface {
     const auto empty_key_matrix =
         empty_key_.AccessTensor(ctx)->template shaped<K, 2>({1, key_size});
     const int64 bit_mask = num_buckets_ - 1;
-    // TODO(andreasst): parallelize using work_sharder
+    // TODO (andreasst): parallelize using work_sharder id:3290
+    // https://github.com/imdone/tensorflow/issues/3289
     for (int64 i = 0; i < num_elements; ++i) {
       const uint64 key_hash = HashKey(key_matrix, i);
       if (empty_key_hash_ == key_hash &&
@@ -376,7 +379,8 @@ class MutableDenseHashTable final : public LookupInterface {
       while (true) {
         if (IsEqualKey(key_buckets_matrix, bucket_index, key_matrix, i)) {
           for (int64 j = 0; j < value_size; ++j) {
-            // TODO(andreasst): check if we can get rid of SubtleMustCopy
+            // TODO (andreasst): check if we can get rid of SubtleMustCopy id:2201
+            // https://github.com/imdone/tensorflow/issues/2200
             // here and elsewhere in this file.
             value_matrix(i, j) =
                 SubtleMustCopyIfIntegral(value_buckets_matrix(bucket_index, j));

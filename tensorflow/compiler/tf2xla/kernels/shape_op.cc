@@ -110,7 +110,8 @@ class ExpandDimsOp : public XlaOpKernel {
     const TensorShape input_shape = ctx->InputShape(0);
     const TensorShape dim_shape = ctx->InputShape(1);
 
-    // TODO(phawkins): the standard implementation of ExpandDimsOp seems to
+    // TODO (phawkins): the standard implementation of ExpandDimsOp seems to id:271
+    // https://github.com/imdone/tensorflow/issues/272
     // accept legacy scalars, even when they should be forbidden by the graphdef
     // version.
     OP_REQUIRES(ctx, dim_shape.num_elements() == 1,

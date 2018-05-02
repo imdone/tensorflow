@@ -117,7 +117,8 @@ struct ComputeOptions {
   Regularizations regularizations;
 };
 
-// TODO(shengx): The helper classes/methods are changed to support multiclass
+// TODO (shengx): The helper classes/methods are changed to support multiclass id:3993
+// https://github.com/imdone/tensorflow/issues/3991
 // SDCA, which lead to changes within this function. Need to revisit the
 // convergence once the multiclass SDCA is in.
 void DoCompute(const ComputeOptions& options, OpKernelContext* const context) {
@@ -211,7 +212,8 @@ void DoCompute(const ComputeOptions& options, OpKernelContext* const context) {
       example_state_data(example_index, 3) = example_weight;
     }
   };
-  // TODO(sibyl-Aix6ihai): Tune this properly based on sparsity of the data,
+  // TODO (sibyl-Aix6ihai): Tune this properly based on sparsity of the data, id:2312
+  // https://github.com/imdone/tensorflow/issues/2311
   // number of cpus, and cost per example.
   const int64 kCostPerUnit = examples.num_features();
   const DeviceBase::CpuWorkerThreads& worker_threads =
@@ -235,7 +237,8 @@ class SdcaOptimizer : public OpKernel {
   }
 
  private:
-  // TODO(sibyl-Aix6ihai): We could use the type-constraint on loss_type, and
+  // TODO (sibyl-Aix6ihai): We could use the type-constraint on loss_type, and id:2185
+  // https://github.com/imdone/tensorflow/issues/2184
   // template the entire class to avoid the virtual table lookup penalty in
   // the inner loop.
   ComputeOptions options_;
@@ -268,7 +271,8 @@ class SdcaShrinkL1 : public OpKernel {
       for (int i = 0; i < weights_inputs.size(); ++i) {
         num_weights += weights_inputs.at(i, /*lock_held=*/true).NumElements();
       }
-      // TODO(sibyl-Aix6ihai): Tune this value.
+      // TODO (sibyl-Aix6ihai): Tune this value. id:2714
+      // https://github.com/imdone/tensorflow/issues/2713
       const int64 kCostPerUnit = (num_weights * 50) / weights_inputs.size();
       const DeviceBase::CpuWorkerThreads& worker_threads =
           *context->device()->tensorflow_cpu_worker_threads();

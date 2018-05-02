@@ -49,7 +49,8 @@ class FuzzStringSplit : public FuzzSession {
           reinterpret_cast<const char*>(data + delim_len), size - delim_len);
     }
 
-    // TODO(b/32704451): Don't just ignore the ::tensorflow::Status object!
+    // TODO (b/32704451): Don't just ignore the :: object! tensorflow::Status id:2176
+    // https://github.com/imdone/tensorflow/issues/2175
     RunTwoInputs(input_tensor, delimeter_tensor).IgnoreError();
   }
 };

@@ -280,11 +280,12 @@ class Reshape(bijector.Bijector):
       return constant_op.constant(0., dtype=x.dtype)
 
   def _forward_event_shape(self, input_shape):
-    # NOTE: this method and the other *_event_shape* methods
+    # NOTE: this method and the other *_event_shape* methods id:663
+    # https://github.com/imdone/tensorflow/issues/664
     # compute shape by explicit transformation of a dummy
     # variable. This approach is not generally recommended because it
     # bloats the graph and could in general trigger side effects.
-    #
+    # 
     # In this particular case of the Reshape bijector, the
     # forward and inverse transforms have no side effects, and we
     # believe the reduction in code complexity from delegating the

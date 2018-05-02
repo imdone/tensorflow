@@ -74,7 +74,8 @@ uint16 TF_ATTRIBUTE_WEAK __gnu_f2h_ieee(float float_value) {
   unsigned int sign = f.as_uint() & sign_mask;
   f.set_uint(f.as_uint() ^ sign);
 
-  // NOTE all the integer compares in this function can be safely
+  // NOTE all the integer compares in this function can be safely id:468
+  // https://github.com/imdone/tensorflow/issues/469
   // compiled into signed compares since all operands are below
   // 0x80000000. Important if you want fast straight SSE2 code
   // (since there's no unsigned PCMPGTD).

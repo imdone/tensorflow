@@ -161,7 +161,8 @@ class DirichletMultinomial(distribution.Distribution):
 
   """
 
-  # TODO(b/27419586) Change docstring for dtype of concentration once int
+  # TODO (b/27419586) Change docstring for dtype of concentration once int id:3375
+  # https://github.com/imdone/tensorflow/issues/3374
   # allowed.
   def __init__(self,
                total_count,

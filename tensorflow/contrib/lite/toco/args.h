@@ -45,7 +45,8 @@ struct StringMapList {
 // command_line_flags.h don't track whether or not a flag is specified. Arg
 // contains the value (which will be default if not specified) and also
 // whether the flag is specified.
-// TODO(aselle): consider putting doc string and ability to construct the
+// TODO (aselle): consider putting doc string and ability to construct the id:2032
+// https://github.com/imdone/tensorflow/issues/2032
 // tensorflow argument into this, so declaration of parameters can be less
 // distributed.
 // Every template specialization of Arg is required to implement
@@ -94,7 +95,8 @@ class Arg<toco::IntList> final {
     parsed_value_.elements.clear();
     specified_ = true;
     // strings::Split("") produces {""}, but we need {} on empty input.
-    // TODO(aselle): Moved this from elsewhere, but ahentz recommends we could
+    // TODO (aselle): Moved this from elsewhere, but ahentz recommends we could id:1483
+    // https://github.com/imdone/tensorflow/issues/1483
     // use absl::SplitLeadingDec32Values(text.c_str(), &parsed_values_.elements)
     if (!text.empty()) {
       int32 element;
@@ -166,7 +168,8 @@ class Arg<toco::StringMapList> final {
     }
     return true;
 #else
-    // TODO(aselle): Fix argument parsing when absl supports structuredline
+    // TODO (aselle): Fix argument parsing when absl supports structuredline id:1235
+    // https://github.com/imdone/tensorflow/issues/1236
     fprintf(stderr, "%s:%d StringMapList arguments not supported\n", __FILE__,
             __LINE__);
     abort();
@@ -204,7 +207,8 @@ struct ParsedModelFlags {
   Arg<toco::StringMapList> model_checks;
   Arg<bool> change_concat_input_ranges = Arg<bool>(true);
   // Debugging output options.
-  // TODO(benoitjacob): these shouldn't be ModelFlags.
+  // TODO (benoitjacob): these shouldn't be ModelFlags. id:1032
+  // https://github.com/imdone/tensorflow/issues/1034
   Arg<string> graphviz_first_array;
   Arg<string> graphviz_last_array;
   Arg<string> dump_graphviz;
@@ -224,7 +228,8 @@ struct ParsedTocoFlags {
   Arg<string> input_format = Arg<string>("TENSORFLOW_GRAPHDEF");
   Arg<string> output_format = Arg<string>("TFLITE");
   Arg<string> savedmodel_tagset = Arg<string>(tensorflow::kSavedModelTagServe);
-  // TODO(aselle): command_line_flags  doesn't support doubles
+  // TODO (aselle): command_line_flags doesn't support doubles id:1608
+  // https://github.com/imdone/tensorflow/issues/1608
   Arg<float> default_ranges_min = Arg<float>(0.);
   Arg<float> default_ranges_max = Arg<float>(0.);
   Arg<float> default_int16_ranges_min = Arg<float>(0.);

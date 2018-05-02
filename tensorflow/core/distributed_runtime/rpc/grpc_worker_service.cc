@@ -51,7 +51,8 @@ namespace tensorflow {
 namespace {
 
 class GrpcWorkerService : public AsyncServiceInterface {
-  // TODO(ncteisen): consider adding a config var or flag for this
+  // TODO (ncteisen): consider adding a config var or flag for this id:2795
+  // https://github.com/imdone/tensorflow/issues/2793
   static constexpr const size_t kGrpcWorkerServiceThreadCount = 8;
 
  public:
@@ -147,7 +148,8 @@ class GrpcWorkerService : public AsyncServiceInterface {
 
    private:
     void HandleRPCsLoop() {
-      // TODO(ncteisen): This may require performance engineering. We can
+      // TODO (ncteisen): This may require performance engineering. We can id:2690
+      // https://github.com/imdone/tensorflow/issues/2689
       // change the number of threads, the number of handlers per thread,
       // or even decide to specialize certain threads to certain methods.
       ENQUEUE_REQUEST(GetStatus, false);
@@ -157,7 +159,8 @@ class GrpcWorkerService : public AsyncServiceInterface {
       ENQUEUE_REQUEST(RegisterGraph, false);
       ENQUEUE_REQUEST(DeregisterGraph, false);
 
-      // TODO(ncteisen): Determine a better policy for enqueuing the
+      // TODO (ncteisen): Determine a better policy for enqueuing the id:1900
+      // https://github.com/imdone/tensorflow/issues/1900
       // appropriate number of each request type.
       for (int i = 0; i < 1000; ++i) {
         EnqueueRecvTensorRequestRaw();

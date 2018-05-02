@@ -53,7 +53,8 @@ class GrpcServerTest(test.TestCase):
       d = constant_op.constant([[1], [2]])
       e = math_ops.matmul(c, d)
       self.assertAllEqual([[4]], sess.run(e))
-    # TODO(mrry): Add `server.stop()` and `server.join()` when these work.
+    # TODO (mrry): Add `server.stop()` and `server.join()` when these work. id:3479
+    # https://github.com/imdone/tensorflow/issues/3478
 
   def testMultipleSessions(self):
     server = self._cached_server
@@ -70,7 +71,8 @@ class GrpcServerTest(test.TestCase):
 
     sess_1.close()
     sess_2.close()
-    # TODO(mrry): Add `server.stop()` and `server.join()` when these work.
+    # TODO (mrry): Add `server.stop()` and `server.join()` when these work. id:3967
+    # https://github.com/imdone/tensorflow/issues/3965
 
   # Verifies various reset failures.
   def testResetFails(self):
@@ -488,7 +490,8 @@ class ClusterSpecTest(test.TestCase):
     with self.assertRaises(ValueError):
       cluster_spec.task_indices("unknown")
 
-    # NOTE(mrry): `ClusterSpec.job_tasks()` is not recommended for use
+    # NOTE (mrry): `ClusterSpec.job_tasks()` is not recommended for use id:4335
+    # https://github.com/imdone/tensorflow/issues/4333
     # with sparse jobs.
     self.assertEqual(["ps0:2222", "ps1:2222"], cluster_spec.job_tasks("ps"))
     self.assertEqual(["worker0:2222", "worker1:2222", "worker2:2222"],

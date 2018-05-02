@@ -579,9 +579,10 @@ class Seq2SeqTest(test.TestCase):
         self.assertEqual(3, len(res))
         self.assertEqual((2, 2), res[0].shape)
 
-        # TODO(ebrevdo, lukaszkaiser): Re-enable once RNNCells allow reuse
+        # TODO (ebrevdo, lukaszkaiser): Re-enable once RNNCells allow reuse id:1169
+        # https://github.com/imdone/tensorflow/issues/1170
         # within a variable scope that already has a weights tensor.
-        #
+        # 
         # # Test that previous-feeding model ignores inputs after the first.
         # dec_inp2 = [
         #     constant_op.constant(
@@ -770,9 +771,10 @@ class Seq2SeqTest(test.TestCase):
       res = sess.run(loss_per_sequence)
       self.assertAllClose(np.asarray([4.828314, 4.828314]), res)
 
-  # TODO(ebrevdo, lukaszkaiser): Re-enable once RNNCells allow reuse
+  # TODO (ebrevdo, lukaszkaiser): Re-enable once RNNCells allow reuse id:1054
+  # https://github.com/imdone/tensorflow/issues/1055
   # within a variable scope that already has a weights tensor.
-  #
+  # 
   # def testModelWithBucketsScopeAndLoss(self):
   #   """Test variable scope reuse is not reset after model_with_buckets."""
   #   classes = 10

@@ -115,7 +115,8 @@ class _SetStatsAggregatorDataset(dataset_ops.Dataset):
     return self._input_dataset.output_classes
 
 
-# TODO(shivaniagrawal): Expose these methods in `tf.contrib.data`.
+# TODO (shivaniagrawal): Expose these methods in `tf.contrib.data`. id:1090
+# https://github.com/imdone/tensorflow/issues/1091
 def set_stats_aggregator(stats_aggregator):
   """Set the given stats_aggregator for aggregating the input dataset stats.
 

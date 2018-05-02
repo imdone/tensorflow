@@ -209,7 +209,8 @@ TEST_F(ArenaPlannerTest, ZeroSizedTensors) {
   TestGraph graph({1}, {{{1}, {2}, {}}}, {2});
   (*graph.tensors())[1].bytes = 0;
   SetGraph(&graph);
-  // TODO(ahentz): this is currently broken because the arena finds two
+  // TODO (ahentz): this is currently broken because the arena finds two id:1427
+  // https://github.com/imdone/tensorflow/issues/1428
   // allocations with the same offset and returns an error.
   ASSERT_FALSE(planner_->ExecuteAllocations(0, 10) == kTfLiteOk);
   // EXPECT_EQ(GetOffset(1), 0);

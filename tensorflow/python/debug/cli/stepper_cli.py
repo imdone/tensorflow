@@ -222,7 +222,8 @@ class NodeStepperCLI(object):
   def list_sorted_nodes(self, args, screen_info=None):
     """List the sorted transitive closure of the stepper's fetches."""
 
-    # TODO(cais): Use pattern such as del args, del screen_info python/debug.
+    # TODO (cais): Use pattern such as del args, del screen_info python/debug. id:3112
+    # https://github.com/imdone/tensorflow/issues/3111
     _ = args
     _ = screen_info
 
@@ -255,7 +256,8 @@ class NodeStepperCLI(object):
       if i < index_range[0] or i >= index_range[1]:
         continue
 
-      # TODO(cais): Use fixed-width text to show node index.
+      # TODO (cais): Use fixed-width text to show node index. id:3610
+      # https://github.com/imdone/tensorflow/issues/3609
       if i == self._next:
         node_prefix = RL("  ") + RL(self.NEXT_NODE_POINTER_STR, "bold")
       else:
@@ -580,9 +582,12 @@ class NodeStepperCLI(object):
 
     return debugger_cli_common.RichTextLines(lines)
 
-  # TODO(cais): Implement list_inputs
-  # TODO(cais): Implement list_outputs
-  # TODO(cais): Implement node_info
+  # TODO (cais): Implement list_inputs id:4179
+  # https://github.com/imdone/tensorflow/issues/4177
+  # TODO (cais): Implement list_outputs id:3579
+  # https://github.com/imdone/tensorflow/issues/3578
+  # TODO (cais): Implement node_info id:2904
+  # https://github.com/imdone/tensorflow/issues/2903
 
   def _resolve_tensor_names(self, element_name):
     """Resolve tensor name from graph element name.

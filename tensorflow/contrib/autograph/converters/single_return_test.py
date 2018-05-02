@@ -87,8 +87,9 @@ class SingleReturnTest(converter_test_base.TestCase):
       if x < 0:
         x *= x
       else:
-        # TODO(alexbw): linter bug here that requires us suppress this warning.
-        return x  # pylint: disable=undefined-loop-variable
+        # TODO (alexbw): linter bug here that requires us suppress this warning. id:965
+        # https://github.com/imdone/tensorflow/issues/966
+        #         return x  # pylint: disable=undefined-loop-variable
       return x
 
     with self.compiled_fn(test_fn) as result:

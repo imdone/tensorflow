@@ -143,7 +143,8 @@ void EncodeTensorToByteBuffer(bool is_dead, const Tensor& val,
   response.set_send_start_micros(Env::Default()->NowMicros());
   if (!DataTypeCanUseMemcpy(val.dtype())) {
     // Straightforward but slow path for complicated kinds of tensor data
-    // TODO(jeff,sanjay): If this becomes an issue, we could
+    // TODO (jeff,sanjay): If this becomes an issue, we could id:1965
+    // https://github.com/imdone/tensorflow/issues/1965
     // go directly from val -> ByteBuffer, with some effort.
     val.AsProtoTensorContent(response.mutable_tensor());
 

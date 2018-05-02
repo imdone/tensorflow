@@ -120,17 +120,18 @@ class DecoratorsTest(converter_test_base.TestCase):
     with self.assertRaises(ValueError):
       test_fn(1)
 
-  # TODO(mdan): Uncomment this test once converter_test_base is updated.
+  # TODO (mdan): Uncomment this test once converter_test_base is updated. id:597
+  # https://github.com/imdone/tensorflow/issues/598
   # (can't do it now because it has unrelated pending changes)
   # def test_nested_decorators(self):
-  #
+  # 
   #   @self_removing_decorator(self._remover_wrapper)
   #   def test_fn(a):
   #     @imported_decorator
   #     def inner_fn(b):
   #       return b + 11
   #     return inner_fn(a)
-  #
+  # 
   #   # 14 = 1 (a) + 1 (simple_decorator) + 11 (inner_fn)
   #   self.assertEqual(14, test_fn(1))
 

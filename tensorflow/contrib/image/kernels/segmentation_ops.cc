@@ -131,7 +131,8 @@ TF_CALL_bool(REGISTER_IMAGE_CONNECTED_COMPONENTS);
 TF_CALL_string(REGISTER_IMAGE_CONNECTED_COMPONENTS);
 #undef REGISTER_IMAGE_CONNECTED_COMPONENTS
 
-// TODO(ringwalt): Implement on GPU. We probably want to stick to the original
+// TODO (ringwalt): Implement on GPU. We probably want to stick to the original id:849
+// https://github.com/imdone/tensorflow/issues/850
 // algorithm by Stava and Benes there for efficiency (computing small blocks in
 // shared memory in CUDA thread blocks, instead of starting with single-pixel
 // blocks).

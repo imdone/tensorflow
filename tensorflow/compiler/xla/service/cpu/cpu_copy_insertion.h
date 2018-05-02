@@ -28,7 +28,8 @@ namespace xla {
 // assignment. Specifically, buffer assignment is computation-scoped and does
 // not recognized aliasing between arguments and outputs of computations.
 //
-// TODO(b/62548313): Remove this when buffer assignment is smarter
+// TODO (b/62548313): Remove this when buffer assignment is smarter id:318
+// https://github.com/imdone/tensorflow/issues/319
 // (module-scoped).
 class CpuCopyInsertion : public HloPassInterface {
  public:

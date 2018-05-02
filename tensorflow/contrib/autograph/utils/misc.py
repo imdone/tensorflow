@@ -40,8 +40,10 @@ def alias_tensors(*args):
   def alias_if_tensor(a):
     return array_ops.identity(a) if isinstance(a, ops.Tensor) else a
 
-  # TODO(mdan): Recurse into containers?
-  # TODO(mdan): Anything we can do about variables? Fake a scope reuse?
+  # TODO (mdan): Recurse into containers? id:558
+  # https://github.com/imdone/tensorflow/issues/560
+  # TODO (mdan): Anything we can do about variables? Fake a scope reuse? id:545
+  # https://github.com/imdone/tensorflow/issues/546
   if len(args) > 1:
     return (alias_if_tensor(a) for a in args)
   elif len(args) == 1:

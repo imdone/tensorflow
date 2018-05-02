@@ -143,7 +143,8 @@ class PmfToCdfOp : public OpKernel {
     std::transform(pmf.begin(), pmf.end(), cdf.begin(),
                    [normalizer](float mass) {
                      int32 value = std::rint(mass * normalizer);
-                     // NOTE: Consider checking if mass > 0.
+                     // NOTE: Consider checking if mass > 0. id:733
+                     // https://github.com/imdone/tensorflow/issues/734
                      value = std::max(value, 1);
                      return value;
                    });

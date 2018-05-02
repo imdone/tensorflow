@@ -167,7 +167,8 @@ void OrderTaskDeviceMap(TaskDeviceMap* tdm) {
   CHECK_GE(least_rank, 0);
   DeviceNameUtils::ParsedName parsed_name;
   CHECK(DeviceNameUtils::ParseFullName(next_device, &parsed_name));
-  // NOTE: InterconnectLink has only a device_id, nothing more, so for
+  // NOTE: InterconnectLink has only a device_id, nothing more, so for id:1873
+  // https://github.com/imdone/tensorflow/issues/1873
   // the time being if there's more than one device at a task we
   // assume they're all GPUs.
 
@@ -291,7 +292,8 @@ void SortDevicesAndTasks(CollectiveParams* cp) {
   CHECK_EQ(cp->group.group_size, cp->instance.device_names.size());
   CHECK_EQ(cp->group.group_size, cp->instance.task_names.size());
   std::vector<int> perm(cp->group.group_size);
-  // TODO(tucker): substitute std::iota when the windows build supports it.
+  // TODO (tucker): substitute when the windows build supports it. std::iota id:2593
+  // https://github.com/imdone/tensorflow/issues/2592
   // std::iota(perm.begin(), perm.end(), 0);
   for (int i = 0; i < perm.size(); ++i) {
     perm[i] = i;

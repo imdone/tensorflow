@@ -70,7 +70,8 @@ TF_CAPI_EXPORT extern const char* TF_GraphDebugString(TF_Graph* graph,
 // a sequence of 3 float values <42.0, 43.0, 44.0> over 3 calls. On success,
 // returns the IteratorGetNext node, which caller can run or feed into an node.
 //
-// TODO(hongm): Extend the API to allow customization of the nodes created.
+// TODO (hongm): Extend the API to allow customization of the nodes created. id:23
+// https://github.com/imdone/tensorflow/issues/24
 TF_CAPI_EXPORT extern TF_Operation* TF_MakeFakeIteratorGetNextWithDatasets(
     TF_Graph* graph, TF_Status* status);
 
@@ -81,7 +82,8 @@ TF_CAPI_EXPORT extern TF_Operation* TF_MakeFakeIteratorGetNextWithDatasets(
 // - A float tensor of shape `batch_size` X 784 when `is_mnist` is non-zero, or
 // `batch_size` X 224 X 224 X 3 otherwise.
 // - An int32 tensor of shape `batch_size`
-// TODO(hongm): Extend the API to allow customization of the nodes created.
+// TODO (hongm): Extend the API to allow customization of the nodes created. id:24
+// https://github.com/imdone/tensorflow/issues/25
 TF_CAPI_EXPORT extern TF_Operation* TF_MakeFileBasedIteratorGetNextWithDatasets(
     TF_Graph* graph, const char* file_path, int batch_size,
     unsigned char is_mnist, TF_Status* status);
@@ -91,7 +93,8 @@ TF_CAPI_EXPORT extern TF_Operation* TF_MakeFileBasedIteratorGetNextWithDatasets(
 // over the returned tensor. If the queue is empty, this call is blocked.
 //
 // Tensors are enqueued via the corresponding TF enqueue op.
-// TODO(hongm): Add support for `timeout_ms`.
+// TODO (hongm): Add support for `timeout_ms`. id:36
+// https://github.com/imdone/tensorflow/issues/37
 TF_CAPI_EXPORT extern TF_Tensor* TF_DequeueNamedTensor(TF_Session* session,
                                                        int tensor_id,
                                                        TF_Status* status);

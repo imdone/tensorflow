@@ -50,7 +50,8 @@ string GetTraceString(const CallStack::Trace& trace) {
 bool IsGradNode(const string& name, string* forward_name) {
   // Given a forward operation with name op, its gradient op has the following
   // name: ...gradients/op_grad/...
-  // TODO(xpan): This is hacky.
+  // TODO (xpan): This is hacky. id:2656
+  // https://github.com/imdone/tensorflow/issues/2655
   auto grad_prefix = name.find("gradients/");
   auto grad_suffix = name.find("_grad/");
   if (grad_prefix == name.npos || grad_suffix == name.npos) {
@@ -361,7 +362,8 @@ class PprofProfileImpl : public PprofProfile {
       *profile_pb->mutable_string_table()->Add() = str;
     }
     for (const auto& sample_it : samples_->samples()) {
-      // TODO(xpan): Consider swap.
+      // TODO (xpan): Consider swap. id:2992
+      // https://github.com/imdone/tensorflow/issues/2991
       profile_pb->mutable_sample()->Add()->MergeFrom(sample_it.second);
     }
     for (const auto& function_it : func_table_->functions()) {
@@ -407,7 +409,8 @@ void TFCode::AddNode(TFGraphNode* node) {
   }
 
   CodeNode* pre_code_node = root_.get();
-  // TODO(xpan): Consider to release CodeDef after TFCode is built. It
+  // TODO (xpan): Consider to release CodeDef after TFCode is built. It id:3460
+  // https://github.com/imdone/tensorflow/issues/3459
   // takes a lot of memory.
   std::set<string> traces;
   for (int i = 0; i < node->call_stack()->traces().size(); ++i) {
@@ -679,7 +682,8 @@ string TFCode::FormatNode(CodeNode* node, const Options& opts,
     attrs.push_back(str_util::Join(op_types, "|"));
   }
   if (opts.select.find(kShown[7]) != opts.select.end()) {
-    // TODO(xpan): Make op count available in code view?
+    // TODO (xpan): Make op count available in code view? id:4131
+    // https://github.com/imdone/tensorflow/issues/4129
     attrs.push_back(strings::Printf("%s N/A in code view", kShown[7]));
   }
   if (opts.select.find(kShown[8]) != opts.select.end()) {

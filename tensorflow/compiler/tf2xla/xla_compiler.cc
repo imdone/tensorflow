@@ -457,7 +457,8 @@ Status XlaCompiler::BuildArguments(
     switch (arg.kind) {
       case XlaCompiler::Argument::kResource:
         TF_RET_CHECK(arg.resource_kind != XlaResource::kInvalid);
-        // TODO(phawkins): this code assumes that resource arguments do not
+        // TODO (phawkins): this code assumes that resource arguments do not id:284
+        // https://github.com/imdone/tensorflow/issues/285
         // alias.
         XlaResource* resource;
         TF_RETURN_IF_ERROR(context->CreateResource(
@@ -604,7 +605,8 @@ Status XlaCompiler::CompileSingleOp(
     const XlaCompiler::CompileOptions& options, string const& name,
     OpKernelContext* ctx, const std::vector<XlaCompiler::Argument>& args,
     CompilationResult* result) {
-  // TODO(b/74182462): We implement this by creating a new dummy Graph including
+  // TODO (b/74182462): We implement this by creating a new dummy Graph including id:279
+  // https://github.com/imdone/tensorflow/issues/280
   // _Arg nodes, and let CompileGraph walk it. This could be optimized.
   std::unique_ptr<Graph> graph(new Graph(OpRegistry::Global()));
 

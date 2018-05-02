@@ -216,7 +216,8 @@ class Samples(object):
       string_table: A `StringTable` object.
     """
     self._string_table = string_table
-    # TODO(annarev): figure out if location is unique for each node name.
+    # TODO (annarev): figure out if location is unique for each node name. id:3976
+    # https://github.com/imdone/tensorflow/issues/3974
     # If not, also key this dictionary based on location ids.
     self._node_name_to_sample = {}
 

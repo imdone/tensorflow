@@ -151,7 +151,8 @@ class FilterDatasetOp : public UnaryDatasetOpKernel {
       Status GetNextInternal(IteratorContext* ctx,
                              std::vector<Tensor>* out_tensors,
                              bool* end_of_sequence) override {
-        // NOTE(mrry): This method is thread-safe as long as
+        // NOTE (mrry): This method is thread-safe as long as id:2388
+        // https://github.com/imdone/tensorflow/issues/2387
         // `input_impl_` and `f` are thread-safe. However, if multiple
         // threads enter this method, outputs may be observed in a
         // non-deterministic order.
@@ -224,7 +225,8 @@ class FilterDatasetOp : public UnaryDatasetOpKernel {
     Status EvaluatePredicate(IteratorContext* ctx,
                              const std::vector<Tensor>& element,
                              bool* out_matched) const override {
-      // TODO(mrry): Avoid blocking a threadpool thread. We will need to
+      // TODO (mrry): Avoid blocking a threadpool thread. We will need to id:3149
+      // https://github.com/imdone/tensorflow/issues/3148
       // stack-rip the iterators and use async kernels.
       std::vector<Tensor> result;
       TF_RETURN_IF_ERROR(

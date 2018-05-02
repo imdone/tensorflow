@@ -131,7 +131,8 @@ static float fully_connected_golden_output[] = {
 
 class BaseFullyConnectedOpModel : public SingleOpModel {
  public:
-  // TODO(ahentz): test different activation types too.
+  // TODO (ahentz): test different activation types too. id:1517
+  // https://github.com/imdone/tensorflow/issues/1518
   BaseFullyConnectedOpModel(TfLiteRegistration* registration, int units,
                             int batches, const TensorData& input,
                             const TensorData& output = {TensorType_FLOAT32})
@@ -238,7 +239,8 @@ class FullyConnectedOpTest : public SingleOpTest {
   }
 };
 
-// TODO(ahentz): add more small tests like this one, focused on making sure the
+// TODO (ahentz): add more small tests like this one, focused on making sure the id:1802
+// https://github.com/imdone/tensorflow/issues/1802
 // calculations are correct.
 TEST_P(FullyConnectedOpTest, SimpleTest) {
   FloatFullyConnectedOpModel m(GetRegistration(), 3, 2,
@@ -348,7 +350,8 @@ INSTANTIATE_TEST_CASE_P(
     FullyConnectedOpTest, FullyConnectedOpTest,
     ::testing::ValuesIn(SingleOpTest::GetKernelTags(*kKernelMap)));
 
-// TODO(ahentz): Reconsider this test. Having arbitrary weights makes it hard
+// TODO (ahentz): Reconsider this test. Having arbitrary weights makes it hard id:1412
+// https://github.com/imdone/tensorflow/issues/1413
 // to debug errors and doesn't necessarily test all the important details.
 TEST_P(FullyConnectedOpTest, BlackBoxTest) {
   FloatFullyConnectedOpModel m(GetRegistration(), 16, 2,
@@ -384,7 +387,8 @@ TEST_P(FullyConnectedOpTest, BlackBoxTest) {
                                   sizeof(float) /
                                   (m.input_size() * m.num_batches());
   for (int i = 0; i < input_sequence_size; i++) {
-    // TODO(ahentz): This is what the original test was doing: two equal
+    // TODO (ahentz): This is what the original test was doing: two equal id:1130
+    // https://github.com/imdone/tensorflow/issues/1131
     // batches per invocation. We could instead use two different batches.
     float* batch_start = fully_connected_input + i * m.input_size();
     float* batch_end = batch_start + m.input_size();

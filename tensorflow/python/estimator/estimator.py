@@ -186,7 +186,8 @@ class Estimator(object):
     model_dir = compat_internal.path_to_str(model_dir)
     if (model_dir is not None) and (self._config.model_dir is not None):
       if model_dir != self._config.model_dir:
-        # TODO(alanyee): remove this suppression after it is no longer needed
+        # TODO (alanyee): remove this suppression after it is no longer needed id:3633
+        # https://github.com/imdone/tensorflow/issues/3632
         # pylint: disable=g-doc-exception
         raise ValueError(
             "model_dir are set both in constructor and RunConfig, but with "
@@ -252,7 +253,8 @@ class Estimator(object):
 
     return public_model_fn
 
-  # TODO(ispir): support a list of names
+  # TODO (ispir): support a list of names id:4201
+  # https://github.com/imdone/tensorflow/issues/4197
   def get_variable_value(self, name):
     """Returns value of the variable given by name.
 
@@ -634,7 +636,8 @@ class Estimator(object):
         export_dir = get_timestamped_export_dir(export_dir_base)
         temp_export_dir = get_temp_export_dir(export_dir)
 
-        # TODO(soergel): Consider whether MonitoredSession makes sense here
+        # TODO (soergel): Consider whether MonitoredSession makes sense here id:3705
+        # https://github.com/imdone/tensorflow/issues/3704
         with tf_session.Session(config=self._session_config) as session:
 
           saver_for_restore = estimator_spec.scaffold.saver or saver.Saver(
@@ -880,7 +883,8 @@ class Estimator(object):
             model_fn_lib.ModeKeys.TRAIN,
             self.config)
 
-        # TODO(anjalisridhar): Figure out how to resolve the folowing scaffold
+        # TODO (anjalisridhar): Figure out how to resolve the folowing scaffold id:2947
+        # https://github.com/imdone/tensorflow/issues/2946
         # parameters: init_feed_dict, init_fn.
         scaffold_list = self._distribution.unwrap(
             grouped_estimator_spec.scaffold)

@@ -687,9 +687,11 @@ class Model(Network):
                          'Received: %s' % (x, y))
       if not context.executing_eagerly():
         x, y = x.get_next()
-        # TODO(fchollet): handle case of `get_next` not returning 2 tensors?
+        # TODO (fchollet): handle case of `get_next` not returning 2 tensors? id:3732
+        # https://github.com/imdone/tensorflow/issues/3731
       else:
-        # TODO(psv): implement this. The way to support it will be to typecheck
+        # TODO (psv): implement this. The way to support it will be to typecheck id:4237
+        # https://github.com/imdone/tensorflow/issues/4235
         # for `iterator` before `_standardize_user_data` is called and redirect
         # to new training/eval functions in `training_eager.py`. The model
         # may need to get built using the specs of the data from the first batch
@@ -745,7 +747,8 @@ class Model(Network):
                              'You passed: y=' + str(y))
 
         # Typecheck that all inputs are *either* value *or* symbolic.
-        # TODO(fchollet): this check could be removed in Eager mode?
+        # TODO (fchollet): this check could be removed in Eager mode? id:3789
+        # https://github.com/imdone/tensorflow/issues/3788
         if y is not None:
           if isinstance(y, (list, tuple)):
             all_inputs += list(y)
@@ -807,13 +810,15 @@ class Model(Network):
         feed_output_names = self.output_names
         feed_output_shapes = None
         # Sample weighting not supported in this case.
-        # TODO(fchollet): consider supporting it.
+        # TODO (fchollet): consider supporting it. id:3061
+        # https://github.com/imdone/tensorflow/issues/3060
         feed_sample_weight_modes = [None for _ in self.outputs]
       elif not self._is_graph_network:
         feed_output_names = self._feed_output_names
         feed_output_shapes = None
         # Sample weighting not supported in this case.
-        # TODO(fchollet): consider supporting it.
+        # TODO (fchollet): consider supporting it. id:3249
+        # https://github.com/imdone/tensorflow/issues/3248
         feed_sample_weight_modes = [None for _ in self.outputs]
       else:
         feed_output_names = self._feed_output_names
@@ -1007,7 +1012,8 @@ class Model(Network):
         self._feed_input_names.append(name)
         self._feed_input_shapes.append(shape)
       else:
-        # Assumed tensor - TODO(fchollet) additional type check?
+        # Assumed tensor - TODO (fchollet) additional type check? id:3735
+        # https://github.com/imdone/tensorflow/issues/3734
         self.inputs.append(v)
         if K.is_placeholder(v):
           self._feed_inputs.append(v)
@@ -1151,7 +1157,8 @@ class Model(Network):
         ValueError: In case of mismatch between the provided input data
             and what the model expects.
     """
-    # TODO(fchollet): this method may be creating reference cycles, which would
+    # TODO (fchollet): this method may be creating reference cycles, which would id:4238
+    # https://github.com/imdone/tensorflow/issues/4236
     # lead to accumulating garbage in memory when called in a loop. Investigate.
 
     # Backwards compatibility

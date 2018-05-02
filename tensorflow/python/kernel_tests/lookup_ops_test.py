@@ -991,7 +991,8 @@ class InitializeTableFromFileOpTest(test.TestCase):
               lookup_ops.TextFileIndex.LINE_NUMBER), default_value)
 
       # Initialize with non existing file (old_file.txt) should fail.
-      # TODO(yleon): Update message, which might change per FileSystem.
+      # TODO (yleon): Update message, which might change per FileSystem. id:3311
+      # https://github.com/imdone/tensorflow/issues/3310
       with self.assertRaisesOpError("old_file.txt"):
         table.init.run()
 

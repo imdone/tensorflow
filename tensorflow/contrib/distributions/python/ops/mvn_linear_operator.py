@@ -51,7 +51,8 @@ or
 """
 
 
-# TODO(b/35290280): Import in `../../__init__.py` after adding unit-tests.
+# TODO (b/35290280): Import in `../../__init__.py` after adding unit-tests. id:665
+# https://github.com/imdone/tensorflow/issues/666
 class MultivariateNormalLinearOperator(
     transformed_distribution.TransformedDistribution):
   """The multivariate normal distribution on `R^k`.
@@ -302,7 +303,8 @@ def _kl_brute_force(a, b, name=None):
     # return math_ops.square(linalg_ops.norm(x, ord="fro", axis=[-2, -1]))
     return math_ops.reduce_sum(math_ops.square(x), axis=[-2, -1])
 
-  # TODO(b/35041439): See also b/35040945. Remove this function once LinOp
+  # TODO (b/35041439): See also b/35040945. Remove this function once LinOp id:664
+  # https://github.com/imdone/tensorflow/issues/665
   # supports something like:
   #   A.inverse().solve(B).norm(order='fro', axis=[-1, -2])
   def is_diagonal(x):

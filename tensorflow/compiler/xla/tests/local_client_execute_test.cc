@@ -409,9 +409,11 @@ XLA_TEST_F(LocalClientExecuteTest, LargeTuple) {
 
   // A larger number of elements would make for a better, more strenuous test,
   // but:
-  // TODO(b/66959878): On cpu a large number of elements results in long
+  // TODO (b/66959878): On cpu a large number of elements results in long id:526
+  // https://github.com/imdone/tensorflow/issues/527
   //   compilation time.
-  // TODO(b/66954197): On gpu a large number of elements OOMs.
+  // TODO (b/66954197): On gpu a large number of elements OOMs. id:620
+  // https://github.com/imdone/tensorflow/issues/621
   const int kElementCount = 100;
 
   // Each element is a 2-element vector.
@@ -848,7 +850,8 @@ XLA_TEST_F(LocalClientExecuteTest, ShapeBufferToLiteralConversion64bit) {
                            Literal::CreateR0<int64>(123456789000LL).get()}));
 }
 
-// TODO(b/34359662): Support infeed/outfeed on GPU and CPU parallel.
+// TODO (b/34359662): Support infeed/outfeed on GPU and CPU parallel. id:464
+// https://github.com/imdone/tensorflow/issues/465
 // 2017-10-18.
 XLA_TEST_F(LocalClientExecuteTest, DISABLED_ON_GPU(InfeedOutfeedTest)) {
   XlaBuilder builder(TestName());

@@ -41,7 +41,8 @@ namespace gpu {
 // determined by the ConvolutionDimensionNumbers argument. Y is spatial
 // dimension 0, and X is spatial dimension 1.
 //
-// TODO(b/29399649): Be more flexible about handling layouts of cuDNN calls.
+// TODO (b/29399649): Be more flexible about handling layouts of cuDNN calls. id:411
+// https://github.com/imdone/tensorflow/issues/412
 static Status AddBackendConstraintsToDnnConvCustomCall(
     HloInstruction* instr, LayoutConstraints* constraints) {
   CHECK(IsCustomCallToDnnConvolution(*instr)) << instr->ToString();
@@ -69,7 +70,8 @@ static Status AddBackendConstraintsToDnnConvCustomCall(
   // Construct minor-to-major dimension orders for operands and result.
   // cuDNN's convolution APIs support the BDYX layout for activations/output
   // and the OIYX layout for weights.
-  // TODO(b/29399649): Be more flexible about handling layouts of cuDNN
+  // TODO (b/29399649): Be more flexible about handling layouts of cuDNN id:530
+  // https://github.com/imdone/tensorflow/issues/531
   // calls after we switch to cuDNN v5.
   const ConvolutionDimensionNumbers& dimension_numbers =
       instr->convolution_dimension_numbers();

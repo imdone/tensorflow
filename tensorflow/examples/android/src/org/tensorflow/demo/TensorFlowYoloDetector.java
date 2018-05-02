@@ -38,7 +38,8 @@ public class TensorFlowYoloDetector implements Classifier {
 
   private static final int NUM_BOXES_PER_BLOCK = 5;
 
-  // TODO(andrewharp): allow loading anchors and classes
+  // TODO (andrewharp): allow loading anchors and classes id:3588
+  // https://github.com/imdone/tensorflow/issues/3587
   // from files.
   private static final double[] ANCHORS = {
     1.08, 1.19,

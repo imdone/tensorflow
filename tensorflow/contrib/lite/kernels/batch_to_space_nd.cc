@@ -48,7 +48,8 @@ struct BatchToSpaceNDContext {
 
 // Currently, only 4D NHWC input/output op_context are supported.
 // The 4D array need to have exactly 2 spatial dimensions.
-// TODO(ycling): Support arbitrary dimension in BatchToSpaceND.
+// TODO (ycling): Support arbitrary dimension in BatchToSpaceND. id:1391
+// https://github.com/imdone/tensorflow/issues/1392
 const int kInputDimensionNum = 4;
 const int kBlockSizeDimensionNum = 1;
 const int kSpatialDimensionNum = 2;
@@ -66,7 +67,8 @@ TfLiteStatus ResizeOutputTensor(TfLiteContext* context,
   TF_LITE_ENSURE_EQ(context, NumDimensions(op_context->crops),
                     kSpatialDimensionNum);
 
-  // TODO(ycling): Add crops as part of calculation. Remove check for a crops
+  // TODO (ycling): Add crops as part of calculation. Remove check for a crops id:1106
+  // https://github.com/imdone/tensorflow/issues/1107
   // containing all zeroes.
   TF_LITE_ENSURE_EQ(context, crops[0], 0);
   TF_LITE_ENSURE_EQ(context, crops[1], 0);

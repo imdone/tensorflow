@@ -178,13 +178,15 @@ Allocator* ProcessState::GetGPUAllocator(const GPUOptions& options,
 Allocator* ProcessState::GetCPUAllocator(int numa_node) {
   // Although we're temporarily ignoring numa_node, check for legality.
   CHECK_GE(numa_node, 0);
-  // TODO(tucker): actually maintain separate CPUAllocators for
+  // TODO (tucker): actually maintain separate CPUAllocators for id:2638
+  // https://github.com/imdone/tensorflow/issues/2637
   // different numa_nodes.  For now, just one.
   numa_node = 0;
   mutex_lock lock(mu_);
   while (cpu_allocators_.size() <= static_cast<size_t>(numa_node)) {
     bool use_bfc_allocator = false;
-    // TODO(reedwm): Switch default to BGFAllocator if it's at least as fast and
+    // TODO (reedwm): Switch default to BGFAllocator if it's at least as fast and id:2563
+    // https://github.com/imdone/tensorflow/issues/2562
     // efficient.
     Status status = ReadBoolFromEnvVar("TF_CPU_ALLOCATOR_USE_BFC", false,
                                        &use_bfc_allocator);
@@ -193,7 +195,8 @@ Allocator* ProcessState::GetCPUAllocator(int numa_node) {
     }
     VisitableAllocator* allocator;
     if (use_bfc_allocator) {
-      // TODO(reedwm): evaluate whether 64GB by default is the best choice.
+      // TODO (reedwm): evaluate whether 64GB by default is the best choice. id:1819
+      // https://github.com/imdone/tensorflow/issues/1819
       int64 cpu_mem_limit_in_mb = -1;
       Status status = ReadInt64FromEnvVar("TF_CPU_BFC_MEM_LIMIT_IN_MB",
                                           1LL << 16 /*64GB max by default*/,
@@ -229,7 +232,8 @@ Allocator* ProcessState::GetCUDAHostAllocator(int numa_node) {
   }
   // Although we're temporarily ignoring numa_node, check for legality.
   CHECK_GE(numa_node, 0);
-  // TODO(tucker): actually maintain separate CPUAllocators for
+  // TODO (tucker): actually maintain separate CPUAllocators for id:1421
+  // https://github.com/imdone/tensorflow/issues/1422
   // different numa_nodes.  For now, just one.
   numa_node = 0;
 
@@ -268,7 +272,8 @@ Allocator* ProcessState::GetCUDAHostAllocator(int numa_node) {
   CHECK_NE(nullptr, se);
 
   while (static_cast<int>(cuda_host_allocators_.size()) <= numa_node) {
-    // TODO(zheng-xq): evaluate whether 64GB by default is the best choice.
+    // TODO (zheng-xq): evaluate whether 64GB by default is the best choice. id:1909
+    // https://github.com/imdone/tensorflow/issues/1909
     int64 cuda_host_mem_limit_in_mb = -1;
     Status status = ReadInt64FromEnvVar("TF_CUDA_HOST_MEM_LIMIT_IN_MB",
                                         1LL << 16 /*64GB max by default*/,

@@ -16,7 +16,8 @@ namespace internal {
 // These optimizations require vector instructions
 #ifdef EIGEN_VECTORIZE
 
-// TODO: Consolidate this part of the code with the image patch extraction code
+// TODO: Consolidate this part of the code with the image patch extraction code id:4124
+// https://github.com/imdone/tensorflow/issues/4122
 // since they are both very similar.
 template <typename NewDimension, DenseIndex Rows, DenseIndex Cols, typename ArgType, typename Device,
           typename Scalar_, typename Index,
@@ -763,7 +764,8 @@ SpatialConvolution(const Input& input, const Kernel& kernel, const DenseIndex st
     kernel_dims[0] = kernelChannels * kernelRows * kernelCols;
     kernel_dims[1] = kernelFilters;
   }
-  // TODO(yangke): choose() is defined in TensorContraction.h -- consider
+  // TODO (yangke): choose() is defined in TensorContraction.h -- consider id:4035
+  // https://github.com/imdone/tensorflow/issues/4033
   // moving it to somewhere more "common".
   return choose(Cond<internal::traits<Input>::Layout == ColMajor>(),
                 kernel.reshape(kernel_dims).contract(input.extract_image_patches(kernelRows, kernelCols, stride, stride, in_stride, in_stride, padding_type).reshape(pre_contract_dims), contract_dims).reshape(post_contract_dims),

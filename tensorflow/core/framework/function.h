@@ -127,7 +127,8 @@ class FunctionDefHelper {
                             gtl::ArraySlice<std::pair<string, string>> ret_def);
 
   // The two Define() functions use the old FunctionDef::Node field.
-  // TODO(josh11b): Get rid of these and transition to the one above.
+  // TODO (josh11b): Get rid of these and transition to the one above. id:1922
+  // https://github.com/imdone/tensorflow/issues/1922
   static FunctionDef Define(const string& function_name,
                             gtl::ArraySlice<string> arg_def,
                             gtl::ArraySlice<string> ret_def,
@@ -355,7 +356,8 @@ class FunctionLibraryDefinition : public OpRegistryInterface {
   // Given a node def 'ndef', inspects attributes of the callee
   // function to derive the attribute 'value' for 'attr'. Returns OK
   // iff the attribute is given by the function's definition.
-  // TODO(irving): Remove; keep only the const Node& version.
+  // TODO (irving): Remove; keep only the const Node& version. id:1544
+  // https://github.com/imdone/tensorflow/issues/1544
   template <typename T>
   Status GetAttr(const NodeDef& ndef, const string& attr, T* value) const;
 
@@ -431,10 +433,12 @@ class FunctionLibraryRuntime {
     // If non-null, the runtime will use `overlay_lib` to resolve
     // function(s) named in `function_name` and `attrs`. Otherwise,
     // the runtime will use its internal library.
-    // NOTE(mrry): If provided, all functions defined in `overlay_lib`
+    // NOTE (mrry): If provided, all functions defined in `overlay_lib` id:2207
+    // https://github.com/imdone/tensorflow/issues/2206
     // must be self-contained, and cannot refer to functions defined
     // in other libraries.
-    // TODO(mrry): Provide a mechanism for sharing core functions
+    // TODO (mrry): Provide a mechanism for sharing core functions id:2847
+    // https://github.com/imdone/tensorflow/issues/2846
     // between a set of libraries (e.g. by allowing a
     // `FunctionLibraryDefinition` to store an `outer_scope` pointer
     // and implementing name resolution across libraries).
@@ -517,7 +521,8 @@ class FunctionLibraryRuntime {
   virtual Status CreateKernel(const NodeDef& ndef, OpKernel** kernel) = 0;
 
   // Returns true iff the function named `function_name` is stateful.
-  // NOTE(mrry): This method assumes that the runtime is associated with a
+  // NOTE (mrry): This method assumes that the runtime is associated with a id:2726
+  // https://github.com/imdone/tensorflow/issues/2725
   // default function library, and looks up `function_name` in that library.
   // It does not support overlay libraries.
   virtual bool IsStateful(const string& function_name) = 0;
@@ -529,7 +534,8 @@ class FunctionLibraryRuntime {
   virtual const DeviceMgr* device_mgr() const = 0;
 
   // Returns the function library definition that backs this runtime.
-  // NOTE(mrry): The returned library definition is the default function library
+  // NOTE (mrry): The returned library definition is the default function library id:1924
+  // https://github.com/imdone/tensorflow/issues/1924
   // for this runtime. The runtime may instantiate functions from separate
   // overlay libraries, which are not returned by this function.
   virtual const FunctionLibraryDefinition* GetFunctionLibraryDefinition()
@@ -644,10 +650,12 @@ Status ArgNumType(AttrSlice attrs, const OpDef::ArgDef& arg_def,
 //   return Status::OK();
 // }
 //
-// NOTE: $T is substituted with the type variable "T" when the
+// NOTE: $T is substituted with the type variable "T" when the id:1547
+// https://github.com/imdone/tensorflow/issues/1547
 // gradient function MatMul is instantiated.
-//
-// TODO(zhifengc): Better documentation somewhere.
+// 
+// TODO (zhifengc): Better documentation somewhere. id:2209
+// https://github.com/imdone/tensorflow/issues/2208
 
 // Macros to define a gradient function factory for a primitive
 // operation.

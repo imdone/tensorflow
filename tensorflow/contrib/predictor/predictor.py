@@ -60,7 +60,8 @@ class Predictor(object):
     Raises:
       ValueError: `input_dict` does not match `feed_tensors`.
     """
-    # TODO(jamieas): make validation optional?
+    # TODO (jamieas): make validation optional? id:1705
+    # https://github.com/imdone/tensorflow/issues/1705
     input_keys = set(input_dict.keys())
     expected_keys = set(self.feed_tensors.keys())
     unexpected_keys = input_keys - expected_keys

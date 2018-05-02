@@ -48,7 +48,8 @@ class ClassifierParseExampleSpec(test.TestCase):
     }
     self.assertDictEqual(expected_spec, parsing_spec)
 
-  # TODO(ispir): test label_default_value compatibility with label_dtype
+  # TODO (ispir): test label_default_value compatibility with label_dtype id:3156
+  # https://github.com/imdone/tensorflow/issues/3155
   def test_label_default_value(self):
     parsing_spec = parsing_utils.classifier_parse_example_spec(
         feature_columns=[fc.numeric_column('a')],
